@@ -12,21 +12,21 @@ namespace alba
 namespace chess
 {
 
-TEST(ChessPeekTest, SaveBitmapOnScreenWorks)
+TEST(ChessPeekTest, DISABLED_SaveBitmapOnScreenWorks)
 {
     ChessPeek chessPeek;
 
     chessPeek.saveBitmapOnScreen();
 }
 
-TEST(ChessPeekTest, CheckScreenAndSaveDetailsWorks)
+TEST(ChessPeekTest, DISABLED_CheckScreenAndSaveDetailsWorks)
 {
     ChessPeek chessPeek;
 
     chessPeek.checkScreenAndSaveDetails();
 }
 
-TEST(ChessPeekTest, StartNewAnalysisUsingEngineWorks)
+TEST(ChessPeekTest, DISABLED_StartNewAnalysisUsingEngineWorks)
 {
     ChessPeek chessPeek;
 
@@ -34,7 +34,7 @@ TEST(ChessPeekTest, StartNewAnalysisUsingEngineWorks)
     Sleep(10000);
 }
 
-TEST(ChessPeekTest, RunOneIterationWorks)
+TEST(ChessPeekTest, DISABLED_RunOneIterationWorks)
 {
     ChessPeek chessPeek;
 
@@ -42,7 +42,7 @@ TEST(ChessPeekTest, RunOneIterationWorks)
     Sleep(10000);
 }
 
-TEST(ChessPeekTest, RunForeverWorks)
+TEST(ChessPeekTest, DISABLED_RunForeverWorks)
 {
     ChessPeek chessPeek;
 

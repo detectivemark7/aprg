@@ -26,7 +26,7 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnInfoEx
     EXPECT_EQ(5200U, actualDetails.nodes);
     EXPECT_EQ(57777U, actualDetails.nodesPerSecond);
     EXPECT_EQ(expectedPv, actualDetails.pvMovesInBestLine);
-    EXPECT_EQ(0U, actualDetails.scoreInCentipawns);
+    EXPECT_EQ(0, actualDetails.scoreInCentipawns);
     EXPECT_EQ(1U, actualDetails.mateInNumberOfMoves);
     EXPECT_TRUE(actualDetails.currentlySearchingMoves.empty());
     EXPECT_TRUE(actualDetails.bestMove.empty());
