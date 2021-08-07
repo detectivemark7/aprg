@@ -29,7 +29,7 @@ include(${DD_CREATOR_DIR}/cmake/CommonFilesAndDirectories.cmake)
 #Feature include
 set(FEATURE_FOLDER "CNI21985")
 include(${DD_CREATOR_DIR}/cmake/FeatureFilesAndDirectories.cmake)
-add_definitions(-DLOG_LOCATION="${APRG_DIR}/DesignDocumentCreator/DesignDocumentCreatorLogs/RP001749")
+add_definitions(-DLOG_LOCATION="${DD_CREATOR_DIR}/../DesignDocumentCreatorLogs")
 
 #Assign Sack Directory
 set(SackDirectory "N:/Branches/ControlPlane/sbts1/tcom")
