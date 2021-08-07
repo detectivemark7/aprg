@@ -288,7 +288,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
     {
         stringstream streamTemp;
         streamTemp<<"0x"<<cpu<<" "<<(cpu%20==0 ? "TN" : "N");
-        table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center, DisplayTableCellMode::center);
+        table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center);
     }
     for(auto const& addressToFspPair : m_fspAddressToFspMap)
     {
@@ -301,7 +301,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
             Dsp& dsp(m_dspAddressToDspMap.at(dspAddress));
             stringstream streamTemp;
             streamTemp<<"LCG:"<<dsp.getLcgId()<<"\n"<<dsp.getNbicString()<<dsp.getModeString();
-            table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center, DisplayTableCellMode::center);
+            table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center);
         }
         if((printFlags & 1) > 0) //users
         {
@@ -312,7 +312,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
                 Dsp& dsp(m_dspAddressToDspMap.at(dspAddress));
                 stringstream streamTemp;
                 streamTemp<<"Users:"<<dsp.getNumberOfDchUsers();
-                table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center, DisplayTableCellMode::center);
+                table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center);
             }
         }
         if((printFlags & 2) > 0) //DLI
@@ -324,7 +324,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
                 Dsp& dsp(m_dspAddressToDspMap.at(dspAddress));
                 stringstream streamTemp;
                 streamTemp<<"DLI:"<<dsp.getDliPool();
-                table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center, DisplayTableCellMode::center);
+                table.getLastRow().addCell(streamTemp.str(), DisplayTableCellMode::center);
             }
         }
     }

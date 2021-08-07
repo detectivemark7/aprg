@@ -2,6 +2,8 @@
 
 #include <Common/State/AlbaBaseStateMachine.hpp>
 
+#include <string>
+
 namespace alba
 {
 
