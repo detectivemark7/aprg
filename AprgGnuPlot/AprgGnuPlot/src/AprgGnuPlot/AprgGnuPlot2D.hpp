@@ -1,7 +1,7 @@
 #pragma once
 
 #include <AprgGnuPlot/AprgGnuPlotBase.hpp>
-#include <Geometry/TwoDimensions/Point.hpp>
+#include <Geometry/TwoDimensions/Constructs/Point.hpp>
 
 namespace alba
 {
