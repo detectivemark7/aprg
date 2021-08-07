@@ -8,7 +8,8 @@ namespace alba
 {
 
 AlbaStreamBitReader::AlbaStreamBitReader(istream& stream)
-    : m_stream(stream)
+    : m_endianType(AlbaStreamBitEndianType::BigEndian)
+    , m_stream(stream)
 {}
 
 bool AlbaStreamBitReader::noRemainingBitsInBuffer() const
