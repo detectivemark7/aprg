@@ -67,6 +67,15 @@ TEST(PermutationsExamplesTest, BasicExamplesWorks)
     // -> This is true because these loop around permutations are equal in circular table: {1,2,3,4} {2,3,4,1} {3,4,1,2} {4,1,2,3}
     // All permutations: [Permutations for linear table] / [Permutations to cancel out for loop around]
     EXPECT_EQ(6U, getFactorial(4U)/4U);
+
+
+    // What is the number of permutations of the characters in LILAC so that no character appears in its original position,
+    // if the two L’s are indistinguishable?
+    // There are 3 choices for the first slot, and then 2 for the third slot.
+    // That leaves one letter out of I,A,C unchosen and there are 2 slots that one might occupy.
+    // After that, the L′s must go in the 2 unfilled slots.
+    // Hence the answer is, 3×2×1×2 = 12
+    EXPECT_EQ(12U, 3U*2U*1U*2U);
 }
 
 TEST(PermutationsExamplesTest, SeatsWithPeopleExampleScenario1Works)
