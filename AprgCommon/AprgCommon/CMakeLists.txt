@@ -6,13 +6,7 @@ set(OUTFILE ${PROJECT_NAME})
 set(APRG_COMMON_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 #Locate APRG Directory first because its used on other cmakes
-get_filename_component(ABSOLUTE_CURRENT_DIR "${CMAKE_CURRENT_LIST_DIR}" ABSOLUTE)
-get_filename_component(CURRENT_DIR_NAME "$${ABSOLUTE_CURRENT_DIR}" NAME)
-while(NOT ${CURRENT_DIR_NAME} MATCHES "aprg")
-    get_filename_component(ABSOLUTE_CURRENT_DIR "${ABSOLUTE_CURRENT_DIR}/.." ABSOLUTE)
-    get_filename_component(CURRENT_DIR_NAME "$${ABSOLUTE_CURRENT_DIR}" NAME)
-endwhile()
-set(APRG_DIR ${ABSOLUTE_CURRENT_DIR})
+include(${APRG_COMMON_DIR}/cmake/LocateAprgDirectory.cmake)
 
 #Assign common flags, definitions and macros
 include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
@@ -31,3 +25,4 @@ add_executable(${OUTFILE} ${APRG_COMMON_SOURCES_AND_TESTS})
 include_directories(${APRG_COMMON_INCLUDE_DIRECTORIES} ${APRG_COMMON_TEST_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
 target_link_libraries(${OUTFILE} gtest ${CMAKE_THREAD_LIBS_INIT})
 add_test(${OUTFILE} ${OUTFILE})
+include(${APRG_DIR}/AprgCMakeHelpers/LastStep.cmake)
