@@ -5,9 +5,6 @@ using namespace std;
 namespace alba
 {
 
-constexpr FibonacciExample::Number FibonacciExample::UNUSED_VALUE;
-
-
 FibonacciExample::FibonacciExample()
 {
     initialize();
@@ -37,7 +34,7 @@ FibonacciExample::Number FibonacciExample::getFibonacciUsingMemoization(Number c
 
     if(m_memoizationData.size() <= number+1)
     {
-        m_memoizationData.resize(number+1, UNUSED_VALUE);
+        m_memoizationData.resize(number+1, static_cast<unsigned int>(UNUSED_VALUE));
     }
 
     Number & resultForNumber(m_memoizationData[number]);
@@ -65,7 +62,7 @@ FibonacciExample::Number FibonacciExample::getFibonacciUsingTabulation(Number co
     Number newStart = m_tabulationData.size();
     if(m_tabulationData.size() <= number+1)
     {
-        m_tabulationData.resize(number+1, UNUSED_VALUE);
+        m_tabulationData.resize(number+1, static_cast<unsigned int>(UNUSED_VALUE));
     }
 
     for (Number i=newStart; i<=number; i++)

@@ -67,7 +67,7 @@ public:
 
 private:
     Value getMaxAvailableCoin() const;
-    Value getMaxOfTotalPlusOneAndMaxCoin(Value const total) const;
+    Value getMaxOfTotalAndMaxCoinPlusOne(Value const total) const;
 
     // fewest coins
     unsigned int getNumberOfFewestCoinsUsingMemoizationDPInternal(CountPerValue & countPerValue, Value const total) const;

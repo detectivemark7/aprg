@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <functional>
+#include <numeric>
 #include <type_traits>
 
 namespace alba
