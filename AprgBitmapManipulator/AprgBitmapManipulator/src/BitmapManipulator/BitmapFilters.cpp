@@ -9,8 +9,7 @@
 #include <Common/Container/AlbaOptional.hpp>
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/PathHandler/AlbaLocalPathHandler.hpp>
-#include <Geometry/TwoDimensions/TwoDimensionsHelper.hpp>
-
+#include <Geometry/TwoDimensions/Utilities/TwoDimensionsUtilities.hpp>
 
 using namespace alba::AprgBitmap::ColorUtilities;
 using namespace alba::mathHelper;
@@ -674,8 +673,8 @@ bool BitmapFilters::isThisPenCircleBetter(
     if(circleToCheck.getRadius() == circleToCompare.getRadius())
     {
         Point penPoint(convertBitmapXYToPoint(penBitmapXY));
-        isBetter = twoDimensionsHelper::getDistance(penPoint, circleToCheck.getCenter())
-                < twoDimensionsHelper::getDistance(penPoint, circleToCompare.getCenter());
+        isBetter = twoDimensionsUtilities::getDistance(penPoint, circleToCheck.getCenter())
+                < twoDimensionsUtilities::getDistance(penPoint, circleToCompare.getCenter());
     }
     else
     {
@@ -736,7 +735,7 @@ uint32_t BitmapFilters::getBlurredColorUsingACircle(
         if(isIncludedInBlur(centerColor, currentColor, pointInCircle))
         {
             isChanged=true;
-            double distanceFromCenter(twoDimensionsHelper::getDistance(convertBitmapXYToPoint(centerXY), convertBitmapXYToPoint(pointInCircle)));
+            double distanceFromCenter(twoDimensionsUtilities::getDistance(convertBitmapXYToPoint(centerXY), convertBitmapXYToPoint(pointInCircle)));
             double blurWeight(getBlurWeight(distanceFromCenter, blurRadius));
             totalBlurredColorRed+=blurWeight*extractRed(currentColor);
             totalBlurredColorGreen+=blurWeight*extractGreen(currentColor);

@@ -2,8 +2,8 @@
 
 #include <Bitmap/BitmapSnippet.hpp>
 #include <Bitmap/CommonTypes.hpp>
-#include <Geometry/TwoDimensions/Circle.hpp>
-#include <Geometry/TwoDimensions/Quadrilateral.hpp>
+#include <Geometry/TwoDimensions/Constructs/Circle.hpp>
+#include <Geometry/TwoDimensions/Constructs/Quadrilateral.hpp>
 
 #include <functional>
 

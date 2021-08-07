@@ -3,16 +3,16 @@
 #include <BitmapManipulator/ColorUtilities.hpp>
 #include <BitmapManipulator/Utilities.hpp>
 #include <Common/Math/Angle/AlbaAngle.hpp>
-#include <Geometry/TwoDimensions/Circle.hpp>
-#include <Geometry/TwoDimensions/Line.hpp>
-#include <Geometry/TwoDimensions/TwoDimensionsHelper.hpp>
+#include <Geometry/TwoDimensions/Constructs/Circle.hpp>
+#include <Geometry/TwoDimensions/Constructs/Line.hpp>
+#include <Geometry/TwoDimensions/Utilities/TwoDimensionsUtilities.hpp>
 
 #include <cmath>
 #include <set>
 
 using namespace alba::AprgBitmap::ColorUtilities;
 using namespace alba::TwoDimensions;
-using namespace alba::TwoDimensions::twoDimensionsHelper;
+using namespace alba::TwoDimensions::twoDimensionsUtilities;
 using namespace std;
 
 namespace alba
@@ -221,7 +221,7 @@ void PenCirclesDrawer::putCircleConnectionsAndRemoveProcessedCircles()
                 swap(details1, details2);
             }
             Point referenceDelta(centerPoint2-centerPoint1);
-            AlbaAngle referenceAngle(getAngleBasedOnAPointAndOrigin(referenceDelta));
+            AlbaAngle referenceAngle(getAngleOfPointWithRespectToOrigin(referenceDelta));
             double radiusDifference = circle1.getRadius() - circle2.getRadius();
             double distanceOfCenters = getDistance(centerPoint1, centerPoint2);
             double ratioForArcCos = radiusDifference/distanceOfCenters;
