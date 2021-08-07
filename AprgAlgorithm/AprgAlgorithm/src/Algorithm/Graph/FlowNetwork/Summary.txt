@@ -1,0 +1,137 @@
+
+Mincut problem:
+-> Input: Edge weighted digraph with flow and capacity, and source vertex "s" and target vertex "t"
+-> A st-cut is partition of the vertices into two disjoint sets, with s in one set A and t in the other set B.
+---> Its capacity is the sum of the capacities from A to B.
+-> The minimum st-cut (mincut) problem: Find a cut of minimum capacity.
+
+Mincut applications:
+-> "Free world" goal. (Cut supplies if cold war turns into real war)
+-> Government in power's goal. Cur off communication to set of people.
+
+Max flow problem
+-> Input: Edge weighted digraph with flow and capacity, and source vertex "s" and target vertex "t"
+-> An st-flow (flow) is an assignment of values to the edges such that:
+----> Flow constraint: 0 <= flow <= capacity
+----> Local equilibrium: inflow=outflow at ever vertex (except s and t).
+-> The value of a flow is the inflow at t.
+-> Maximum st-flow (maxflow) problem. Find a flow of maximum value.
+
+Maxflow applications:
+-> Soviet union goal: Maximize flow of supplies to Eastern Europe.
+-> "Free world" goal. Maximize flow of information to specified set of people.
+
+Mincut problem and maxflow problem are essentially the same problem
+
+Relationship between flows and cuts
+-> The net flow across a cut (A, B) is the sum of the flows on its edges from A to B minus the sum of the flows on its edges from B to A.
+-> Flow value lemma: Let f be any flow and let (A, B) be any cut. Then the net flow across (A, B) equals the value of f.
+
+Proof: By induction on the size of B
+-> Base case: B={t}
+-> Induction step: remains true by local equilibrium when moving any vertex from A to B.
+
+Outflow from s == Inflow to t == Value of flow
+
+Weak duality. 
+-> Let f be any flow and let (A, B) be any cut.
+-> Then, the value of the flow <= the capacity of the cut.
+-> Proof:
+---> Value of the flow f = net flow across cut (A, B) <= capacity of cut (A,B)
+
+Augmenting path:
+-> Find an undirected path from s to t such that:
+---> Can increase flow on forward edges (not full)
+---> Can decrease flow on backward edge (not empty)
+
+Maxflow-mincut theorem:
+-> Augmenting path theorem. A flow f is a maxflow iff no augmenting paths.
+-> Maxflow-mincut theorem. Value of the maxflow = capacity of the mincut.
+-> Proof:
+---> The following three conditions are equivalent for any flow f:
+-----> (1) There exists a cut whose capacity equals the value of the flow f.
+-----> (2) f is a max flow
+-----> (3) There is no augmenting path with respect to f.
+---> 1 implies 2
+-----> Suppose that (A, B) is a cut with capacity equal to the value of f.
+-----> Then, the value of any flow f' <= capacity of (A,B) = value of f. (by weak duality)
+-----> Thus, f is a max flow.
+---> 2 implies 3, We prove the contrapositive: ~3 -> ~2
+-----> Suppose that there is an augmenting path with respect to f.
+-----> Can improve flow f by sending flow along this path.
+-----> Thus, f is not a max flow.
+---> 3 implies 1
+-----> Suppose that there is no augmenting path with respect to f.
+-------> Let (A, B) be a cut where A is the set of vertices connected to s by an undirected path with no full forward or empty backward edges.
+-------> By definition, "s" is in A; since there is no augmenting path, "t" is in B.
+---> Capacity of cut = net flow across cut (forward edges are full, backward edges are empty)
+                     = value of flow f. (flow value lemma)
+
+Computing a mincut from a max flow:
+-> To compute mincut (A, B) from maxflow f:
+---> By augmenting path theorem, no augmenting paths with respect to f. 
+---> Compute A = set of vertices connected to s by an undirected path with no full forward or empty backward edges.
+
+
+Maxflow and mincut applications
+-> Data mining
+-> Open-pit mining
+-> Bipartite matching
+-> Network reliability
+-> Baseball elimination
+-> Image segmentation
+-> Network connectivity
+-> Distributed computing
+-> Egalitarian stable matching
+-> Security of statistical data
+-> Multi-camera scene reconstruction
+-> Sensor placement for homeland security
+
+Bipartite matching problem
+1) N students apply for N jobs
+2) Each gets several offers
+3) Is there a way to match all students to jobs?
+-> Given a bipartite graph, find a perfect matching.
+
+Network flow formulation of bipartite matching
+-> Create s, t, one vertex for each student and one vertex for each job.
+-> Add edge from s to each student (capacity 1)
+-> Add edge from each job to t (capacity 1)
+-> Add edge from student to each job offered (infinite capacity)
+
+What the mincut tells us?
+-> Goal: When no perfect matching explain why? Check mincut
+
+Baseball elimination problem?
+-> Question: Which teams have a chance of finishing the season with the most wins?
+
+
+
+
+
+Other discussions:
+
+Flows and cuts
+In this chapter, we focus on the following two problems:
+• Finding a maximum flow: What is the maximum amount of flow we can send from a node to another node?
+• Finding a minimum cut: What is a minimum-weight set of edges that separates two nodes of the graph?
+The input for both these problems is a directed, weighted graph that contains two special nodes: the source is a node with no incoming edges, and the sink is a node with no outgoing edges.
+
+Maximum flow
+In the maximum flow problem, our task is to send as much flow as possible from the source to the sink. 
+The weight of each edge is a capacity that restricts the flow that can go through the edge. 
+In each intermediate node, the incoming and outgoing flow has to be equal.
+The notation v/k means that a flow of v units is routed through an edge whose capacity is k units.
+
+Minimum cut
+In the minimum cut problem, our task is to remove a set of edges from the graph such that there will be no path from the source to the sink after the removal and the total weight of the removed edges is minimum.
+
+It is not a coincidence that the maximum size of a flow and the minimum size of a cut are the same. (BECAUSE THEY ARE THE SAME)
+It turns out that a maximum flow and a minimum cut are always equally large, so the concepts are two sides of the same coin.
+
+
+
+
+
+
+

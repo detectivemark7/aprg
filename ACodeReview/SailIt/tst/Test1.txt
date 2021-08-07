@@ -1,0 +1,1 @@
+const char *__mingw_get_crt_info(void);
