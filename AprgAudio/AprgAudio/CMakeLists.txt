@@ -9,13 +9,7 @@ set(APRG_AUDIO_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(TEST_MODE "ON")
 
 #Locate APRG Directory first because its used on other cmakes
-get_filename_component(ABSOLUTE_CURRENT_DIR "${CMAKE_CURRENT_LIST_DIR}" ABSOLUTE)
-get_filename_component(CURRENT_DIR_NAME "$${ABSOLUTE_CURRENT_DIR}" NAME)
-while(NOT ${CURRENT_DIR_NAME} MATCHES "APRG")
-    get_filename_component(ABSOLUTE_CURRENT_DIR "${ABSOLUTE_CURRENT_DIR}/.." ABSOLUTE)
-    get_filename_component(CURRENT_DIR_NAME "$${ABSOLUTE_CURRENT_DIR}" NAME)
-endwhile()
-set(APRG_DIR ${ABSOLUTE_CURRENT_DIR})
+include(${APRG_AUDIO_DIR}/cmake/LocateAprgDirectory.cmake)
 
 #Assign common flags, definitions and macros
 include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
@@ -47,3 +41,4 @@ else()
     include_directories(${APRG_AUDIO_INCLUDE_DIRECTORIES})
     target_link_libraries(${OUTFILE} APRG_COMMON)
 endif()
+include(${APRG_DIR}/AprgCMakeHelpers/LastStep.cmake)
