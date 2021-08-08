@@ -129,6 +129,7 @@ Less common commands:
 -----> git diff BranchName
 ---> merge diff of the specified branch to the current branch
 -----> git merge BranchName
+-----> git merge --verbose BranchName
 -------> useful to merge a feature branch to master (for pushing changes to remote master)
 -------> useful to merge a master to a feature branch (for keeping up with remote master)
 -------> If there is a conflict, manually change the file (delete "<<<<<<< HEAD" "=======" and ">>>>>>> master" ), then use git commit to apply the changes.
