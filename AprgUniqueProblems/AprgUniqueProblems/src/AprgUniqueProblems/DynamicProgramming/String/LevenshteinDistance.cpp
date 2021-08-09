@@ -12,7 +12,7 @@ LevenshteinDistance::LevenshteinDistance(string const& string1, string const& st
     , m_string2(string2)
 {}
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingNaiveRecursion() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingNaiveRecursion() const
 {
     // The time complexity of above solution is exponential.
     // In worst case, we may end up doing O(3m) operations.
@@ -21,7 +21,7 @@ LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingNaive
     return getLevenshteinDistanceUsingNaiveRecursion(m_string1.length(), m_string2.length());
 }
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingTabularDP() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabularDP() const
 {
     // Time Complexity: O(m x n)
     // Auxiliary Space: O(m x n)
@@ -43,7 +43,7 @@ LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingTabul
     // ---------------------
     // Note that first column is for null string and first row is for null string (thats why there is a plus one in column/row size)
 
-    IndexGrid indexGrid(m_string1.length()+1, m_string2.length()+1);
+    CountGrid indexGrid(m_string1.length()+1, m_string2.length()+1);
     indexGrid.iterateAllThroughYAndThenX([&](Index const x, Index const y)
     {
         if(x==0)
@@ -70,12 +70,16 @@ LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingTabul
     return indexGrid.getEntry(indexGrid.getNumberOfColumns()-1, indexGrid.getNumberOfRows()-1);
 }
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingEfficientSpaceDP() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabularDPAndSpaceEfficient() const
 {
     // Note this is same implementation in AlbaStringHelper
 
     // Time Complexity: O(m x n)
     // Auxiliary Space: O(m)
+
+    // Space efficiency analysis:
+    // Since accessing the previous partial values requires only one column or one row above,
+    // we only really need 2 rows (not a matrix) to keep track partial values.
 
     // Space Complex Solution:
     // In the other solution we require O(m x n) space.
@@ -85,36 +89,36 @@ LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingEffic
     // So we simply create a DP array of 2 x str1 length.
     // This approach reduces the space complexity.
 
-    string otherString(m_string1), basisString(m_string2); // use string2 as basis
-    Indices current(basisString.length() + 1);
-    Indices previous(basisString.length() + 1);
-    iota(previous.begin(), previous.end(), 0);
-
     // current and previous are the rows in the dynamic programming solution
-    for(Index otherIndex=0; otherIndex<otherString.length(); ++otherIndex)
+    vector<Counts> previousAndCurrentCounts(2, Counts(m_string1.length()+1)); // string1 as basis
+    Counts & firstPrevious(previousAndCurrentCounts[0]);
+    iota(firstPrevious.begin(), firstPrevious.end(), 0); // first row
+
+    for(Index index2Minus1=0; index2Minus1<m_string2.length(); ++index2Minus1)
     {
-        current[0] = otherIndex+1;
-        for (unsigned int basisIndex=0; basisIndex<basisString.length(); ++basisIndex)
+        Counts & previousCounts(previousAndCurrentCounts[index2Minus1%2]);
+        Counts & currentCounts(previousAndCurrentCounts[(index2Minus1+1)%2]);
+
+        currentCounts[0] = index2Minus1+1; // first column
+        for (Index index1Minus1=0; index1Minus1<m_string1.length(); ++index1Minus1)
         {
-            // next value is the minimum of
-            // 1) index-1 in current // remove operation
-            // 2) index in previous // insert operation
-            // 2) index-1 in previous // modify operation (if characters are different)
-            unsigned int cost = otherString.at(otherIndex)==basisString.at(basisIndex) ? 0 : 1;
-            current[basisIndex+1] = min(min(current.at(basisIndex)+1, previous.at(basisIndex+1)+1), previous.at(basisIndex)+cost);
+            unsigned int cost = m_string1.at(index1Minus1)==m_string2.at(index2Minus1) ? 0 : 1;
+            currentCounts[index1Minus1+1]
+                    = min(min(currentCounts.at(index1Minus1)+1, previousCounts.at(index1Minus1+1)+1), previousCounts.at(index1Minus1)+cost);
         }
-        current.swap(previous);
     }
-    return previous.at(basisString.length());
+
+    Counts const& lastPrevious(previousAndCurrentCounts.at(m_string2.length()%2));
+    return lastPrevious.at(m_string1.length());
 }
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingMemoizationDP() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingMemoizationDP() const
 {
-    IndexGrid indexGrid(m_string1.length()+1, m_string2.length()+1, UNUSED_INDEX);
+    CountGrid indexGrid(m_string1.length()+1, m_string2.length()+1, UNUSED_INDEX);
     return getLevenshteinDistanceUsingMemoizationDP(indexGrid, m_string1.length(), m_string2.length());
 }
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingNaiveRecursion(
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingNaiveRecursion(
         Index const index1,
         Index const index2) const
 {
@@ -139,8 +143,8 @@ LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingNaive
     }
 }
 
-LevenshteinDistance::Index LevenshteinDistance::getLevenshteinDistanceUsingMemoizationDP(
-        IndexGrid & indexGrid,
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingMemoizationDP(
+        CountGrid & indexGrid,
         Index const index1,
         Index const index2) const
 {

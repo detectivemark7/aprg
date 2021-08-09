@@ -61,6 +61,10 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabul
     // Time Complexity: O(n*k)
     // Auxiliary Space: O(k)
 
+    // Space efficiency analysis:
+    // Since accessing the previous partial values requires only one row above,
+    // we only really need 1 row (not a matrix) to keep track partial values.
+
     // Explanation of the algorithm:
     // 1==========>> n = 0, C(0,0) = 1
     // 1–1========>> n = 1, C(1,0) = 1, C(1,1) = 1

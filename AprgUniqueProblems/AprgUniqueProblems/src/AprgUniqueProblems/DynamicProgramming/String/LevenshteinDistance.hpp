@@ -11,19 +11,20 @@ class LevenshteinDistance
 {
 public:
     using Index = unsigned int;
-    using Indices = std::vector<Index>;
-    using IndexGrid = matrix::AlbaMatrix<Index>;
+    using Count = unsigned int;
+    using Counts = std::vector<Count>;
+    using CountGrid = matrix::AlbaMatrix<Count>;
     static constexpr Index UNUSED_INDEX = std::numeric_limits<Index>::max();
 
     LevenshteinDistance(std::string const& string1, std::string const& string2);
 
-    Index getLevenshteinDistanceUsingNaiveRecursion() const;
-    Index getLevenshteinDistanceUsingTabularDP() const;
-    Index getLevenshteinDistanceUsingEfficientSpaceDP() const;
-    Index getLevenshteinDistanceUsingMemoizationDP() const;
+    Count getLevenshteinDistanceUsingNaiveRecursion() const;
+    Count getLevenshteinDistanceUsingTabularDP() const;
+    Count getLevenshteinDistanceUsingTabularDPAndSpaceEfficient() const;
+    Count getLevenshteinDistanceUsingMemoizationDP() const;
 private:
-    Index getLevenshteinDistanceUsingNaiveRecursion(Index const index1, Index const index2) const;
-    Index getLevenshteinDistanceUsingMemoizationDP(IndexGrid & indexGrid, Index const index1, Index const index2) const;
+    Count getLevenshteinDistanceUsingNaiveRecursion(Index const index1, Index const index2) const;
+    Count getLevenshteinDistanceUsingMemoizationDP(CountGrid & indexGrid, Index const index1, Index const index2) const;
     std::string m_string1;
     std::string m_string2;
 };
