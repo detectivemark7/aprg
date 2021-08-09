@@ -71,7 +71,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestCommonSubseq
     }
 
     Counts const& lastPrevious(previousAndCurrentCounts.at(m_sequence1.size()%2));
-    return lastPrevious.at(m_sequence2.size());
+    return lastPrevious.back();
 }
 
 LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestCommonSubsequenceLengthUsingMemoizationDP() const

@@ -99,7 +99,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabul
                 partialValues[k] += partialValues.at(k-1);
             }
         }
-        result = partialValues.at(m_k);
+        result = partialValues.back();
     }
     return result;
 }
@@ -142,25 +142,26 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoi
         Value const n,
         Value const k) const
 {
-    if(n<k)
+    Value result = valueMatrix.getEntry(n, k);
+    if(UNUSED_VALUE == result)
     {
-        return 0;
-    }
-    else if(k==0 || n==k)
-    {
-        return 1;
-    }
-    else
-    {
-        Value result = valueMatrix.getEntry(n, k);
-        if(UNUSED_VALUE == result)
+        if(n<k)
         {
-            result=getBinomialCoefficientUsingMemoizationDP(valueMatrix, n-1, k)
-                    + getBinomialCoefficientUsingMemoizationDP(valueMatrix, n-1, k-1);
-            valueMatrix.setEntry(n, k, result);
+            result = 0;
         }
-        return result;
+        else if(k==0 || n==k)
+        {
+            result = 1;
+        }
+        else
+        {
+            result = getBinomialCoefficientUsingMemoizationDP(valueMatrix, n-1, k)
+                    + getBinomialCoefficientUsingMemoizationDP(valueMatrix, n-1, k-1);
+        }
+        valueMatrix.setEntry(n, k, result);
     }
+    return result;
+
 }
 
 BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingGcf() const

@@ -109,7 +109,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabul
     }
 
     Counts const& lastPrevious(previousAndCurrentCounts.at(m_string2.length()%2));
-    return lastPrevious.at(m_string1.length());
+    return lastPrevious.back();
 }
 
 LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingMemoizationDP() const
