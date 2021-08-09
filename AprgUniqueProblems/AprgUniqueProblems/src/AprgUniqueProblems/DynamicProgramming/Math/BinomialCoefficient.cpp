@@ -23,6 +23,20 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingNaive
     return getBinomialCoefficientUsingNaiveRecursion(m_n, m_k);
 }
 
+BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoizationDP() const
+{
+    // Time Complexity: O(n*k) (should be same as Tabular DP)
+    // Auxiliary Space: O(n*k)
+
+    Value result(0);
+    if(m_n>=m_k)
+    {
+        ValueMatrix valueMatrix(m_n+1, m_k+1, static_cast<Value>(UNUSED_VALUE));
+        result = getBinomialCoefficientUsingMemoizationDP(valueMatrix, m_n, m_k);
+    }
+    return result;
+}
+
 BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabularDP() const
 {
     // Time Complexity: O(n*k)
@@ -103,17 +117,43 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabul
     }
     return result;
 }
-
-BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoizationDP() const
+BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingGcf() const
 {
-    // Time Complexity: O(n*k) (should be same as Tabular DP)
-    // Auxiliary Space: O(n*k)
+    // Time Complexity: O(n*log(n))
+    // Auxiliary Space: O(1)
+
+    // Same as with mathHelper
 
     Value result(0);
-    if(m_n>=m_k)
+    if(m_n >= m_k)
     {
-        ValueMatrix valueMatrix(m_n+1, m_k+1, static_cast<Value>(UNUSED_VALUE));
-        result = getBinomialCoefficientUsingMemoizationDP(valueMatrix, m_n, m_k);
+        result = 1;
+        Value numerator=m_n;
+        Value denominator=m_k;
+        Value accumulatedNumerator=1;
+        Value accumulatedDenominator=1;
+        bool shouldContinue=true;
+        while(shouldContinue)
+        {
+            shouldContinue = false;
+            if(numerator > m_n-m_k)
+            {
+                accumulatedNumerator *= numerator--;
+                shouldContinue = true;
+            }
+            if(denominator > 1)
+            {
+                accumulatedDenominator *= denominator--;
+                shouldContinue = true;
+            }
+            if(shouldContinue && accumulatedDenominator>1 && mathHelper::isValueBeyondLimits<Value>(static_cast<double>(accumulatedNumerator)*numerator))
+            {
+                Value gcf = mathHelper::getGreatestCommonFactor(accumulatedNumerator, accumulatedDenominator);
+                accumulatedNumerator /= gcf;
+                accumulatedDenominator /= gcf;
+            }
+        }
+        result = accumulatedNumerator/accumulatedDenominator;
     }
     return result;
 }
@@ -161,48 +201,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoi
         valueMatrix.setEntry(n, k, result);
     }
     return result;
-
 }
 
-BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingGcf() const
-{
-    // Time Complexity: O(n*log(n))
-    // Auxiliary Space: O(1)
-
-    // Same as with mathHelper
-
-    Value result(0);
-    if(m_n >= m_k)
-    {
-        result = 1;
-        Value numerator=m_n;
-        Value denominator=m_k;
-        Value accumulatedNumerator=1;
-        Value accumulatedDenominator=1;
-        bool shouldContinue=true;
-        while(shouldContinue)
-        {
-            shouldContinue = false;
-            if(numerator > m_n-m_k)
-            {
-                accumulatedNumerator *= numerator--;
-                shouldContinue = true;
-            }
-            if(denominator > 1)
-            {
-                accumulatedDenominator *= denominator--;
-                shouldContinue = true;
-            }
-            if(shouldContinue && accumulatedDenominator>1 && mathHelper::isValueBeyondLimits<Value>(static_cast<double>(accumulatedNumerator)*numerator))
-            {
-                Value gcf = mathHelper::getGreatestCommonFactor(accumulatedNumerator, accumulatedDenominator);
-                accumulatedNumerator /= gcf;
-                accumulatedDenominator /= gcf;
-            }
-        }
-        result = accumulatedNumerator/accumulatedDenominator;
-    }
-    return result;
-}
 
 }

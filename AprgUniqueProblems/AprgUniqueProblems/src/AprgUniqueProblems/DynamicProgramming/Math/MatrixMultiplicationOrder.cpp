@@ -22,6 +22,20 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
     return result;
 }
 
+MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOperationsUsingMemoizationDP() const
+{
+    // Time Complexity: O(n^3) (should be same as Tabular DP)
+    // Auxiliary Space: O(n^2)
+
+    Count result(0);
+    if(!m_dimensions.empty())
+    {
+        CountMatrix countMatrix(m_dimensions.size(), m_dimensions.size(), MAX_COUNT);
+        result = getMinimumNumberOfOperationsUsingMemoizationDP(countMatrix, 0, m_dimensions.size()-1);
+    }
+    return result;
+}
+
 MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOperationsUsingTabularDP() const
 {
     // Time Complexity: O(n^3)
@@ -49,20 +63,6 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
             }
         }
         result = countMatrix.getEntry(0, countMatrix.getNumberOfRows()-1);
-    }
-    return result;
-}
-
-MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOperationsUsingMemoizationDP() const
-{
-    // Time Complexity: O(n^3) (should be same as Tabular DP)
-    // Auxiliary Space: O(n^2)
-
-    Count result(0);
-    if(!m_dimensions.empty())
-    {
-        CountMatrix countMatrix(m_dimensions.size(), m_dimensions.size(), MAX_COUNT);
-        result = getMinimumNumberOfOperationsUsingMemoizationDP(countMatrix, 0, m_dimensions.size()-1);
     }
     return result;
 }
