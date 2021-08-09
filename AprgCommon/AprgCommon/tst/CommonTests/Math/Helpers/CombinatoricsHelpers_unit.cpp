@@ -37,6 +37,7 @@ TEST(CombinatoricsHelpersTest, GetNumberOfPermutationsWorks)
 
 TEST(CombinatoricsHelpersTest, GetNumberOfCombinationsWorks)
 {
+    EXPECT_EQ(10U, getNumberOfCombinations(5U, 2U));
     EXPECT_EQ(1U, getNumberOfCombinations(4U, 4U));
     EXPECT_EQ(1U, getNumberOfCombinations(4U, 0U));
     EXPECT_EQ(4U, getNumberOfCombinations(4U, 1U));
