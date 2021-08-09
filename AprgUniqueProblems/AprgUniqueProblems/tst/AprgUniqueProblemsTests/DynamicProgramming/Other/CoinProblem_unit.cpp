@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/CoinProblem.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Other/CoinProblem.hpp>
 
 #include <gtest/gtest.h>
 

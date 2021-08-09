@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/CountingTilings.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Other/CountingTilings.hpp>
 
 #include <gtest/gtest.h>
 
