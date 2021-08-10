@@ -9,10 +9,10 @@ LongestIncreasingSubsequenceWithLinearithmicTime::LongestIncreasingSubsequenceWi
     : m_sequenceToCheck(sequenceToCheck)
 {}
 
-LongestIncreasingSubsequenceWithLinearithmicTime::Index LongestIncreasingSubsequenceWithLinearithmicTime::getLongestIncreasingSubsequenceLength() const
+LongestIncreasingSubsequenceWithLinearithmicTime::Index LongestIncreasingSubsequenceWithLinearithmicTime::getLongestLength() const
 {
     Index longestLength(0U);
-    if (!m_sequenceToCheck.empty())
+    if(!m_sequenceToCheck.empty())
     {
         IndexToValue lengthToEndValue(m_sequenceToCheck.size(), 0U); // dynamic programming
         lengthToEndValue[0] = m_sequenceToCheck.front();
@@ -22,7 +22,7 @@ LongestIncreasingSubsequenceWithLinearithmicTime::Index LongestIncreasingSubsequ
             auto beginIt = lengthToEndValue.begin(), endIt = lengthToEndValue.begin() + longestLength;
             auto lowerBoundItForEndValue = lower_bound(beginIt, endIt, *itValue);
 
-            if (lowerBoundItForEndValue == endIt) // if current value is the highest
+            if(lowerBoundItForEndValue == endIt) // if current value is the highest
             {
                 lengthToEndValue[longestLength++] = *itValue; // extend
             }
@@ -35,10 +35,10 @@ LongestIncreasingSubsequenceWithLinearithmicTime::Index LongestIncreasingSubsequ
     return longestLength;
 }
 
-LongestIncreasingSubsequenceWithLinearithmicTime::Sequence LongestIncreasingSubsequenceWithLinearithmicTime::getLongestIncreasingSubsequence() const
+LongestIncreasingSubsequenceWithLinearithmicTime::Sequence LongestIncreasingSubsequenceWithLinearithmicTime::getLongestSubsequence() const
 {
     Sequence longestSequence;
-    if (!m_sequenceToCheck.empty())
+    if(!m_sequenceToCheck.empty())
     {
         Index longestLength(1U);
         Value unusedValue(UNUSED_VALUE);
@@ -52,7 +52,7 @@ LongestIncreasingSubsequenceWithLinearithmicTime::Sequence LongestIncreasingSubs
             auto beginIt = lengthToEndValue.begin(), endIt = lengthToEndValue.begin() + longestLength;
             auto lowerBoundItForEndValue = lower_bound(beginIt, endIt, value);
 
-            if (lowerBoundItForEndValue == endIt) // if current value is the highest
+            if(lowerBoundItForEndValue == endIt) // if current value is the highest
             {
                 indexToPreviousIndex[i] = lengthToEndIndex.at(longestLength-1);
                 lengthToEndIndex[longestLength] = i;

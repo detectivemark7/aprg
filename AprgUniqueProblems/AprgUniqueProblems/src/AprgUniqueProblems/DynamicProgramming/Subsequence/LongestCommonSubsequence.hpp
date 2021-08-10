@@ -17,19 +17,19 @@ public:
     using Sequence = std::vector<Value>;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
-    static constexpr Value UNUSED_COUNT=std::numeric_limits<Count>::max();
+    static constexpr Count UNUSED_COUNT=std::numeric_limits<Count>::max();
 
     LongestCommonSubsequence(Sequence const& sequence1, Sequence const& sequence2);
 
-    Count getLongestCommonSubsequenceLengthUsingNaiveRecursion() const;
-    Count getLongestCommonSubsequenceLengthUsingMemoizationDP() const;
-    Count getLongestCommonSubsequenceLengthUsingTabularDP() const;
-    Count getLongestCommonSubsequenceLengthUsingTabularDPAndSpaceEfficient() const;
+    Count getLongestLengthUsingNaiveRecursion() const;
+    Count getLongestLengthUsingMemoizationDP() const;
+    Count getLongestLengthUsingTabularDP() const;
+    Count getLongestLengthUsingTabularDPAndSpaceEfficient() const;
 
 private:
 
-    Count getLongestCommonSubsequenceLengthUsingNaiveRecursion(Index const index1, Index const index2) const;
-    Count getLongestCommonSubsequenceLengthUsingMemoizationDP(CountMatrix & lengthMatrix, Index const index1, Index const index2) const;
+    Count getLongestLengthUsingNaiveRecursion(Index const index1, Index const index2) const;
+    Count getLongestLengthUsingMemoizationDP(CountMatrix & lengthMatrix, Index const index1, Index const index2) const;
     Sequence m_sequence1;
     Sequence m_sequence2;
 

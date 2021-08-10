@@ -11,7 +11,7 @@ LongestIncreasingSubsequence::LongestIncreasingSubsequence(Sequence const& seque
     : m_sequenceToCheck(sequenceToCheck)
 {}
 
-LongestIncreasingSubsequence::Index LongestIncreasingSubsequence::getLongestIncreasingSubsequenceLength()
+LongestIncreasingSubsequence::Index LongestIncreasingSubsequence::getLongestLength()
 {
     Index result(0U);
     if(!m_sequenceToCheck.empty())
@@ -37,7 +37,7 @@ LongestIncreasingSubsequence::Index LongestIncreasingSubsequence::getLongestIncr
     return result;
 }
 
-LongestIncreasingSubsequence::Sequence LongestIncreasingSubsequence::getLongestIncreasingSubsequence()
+LongestIncreasingSubsequence::Sequence LongestIncreasingSubsequence::getLongestSubsequence()
 {
     Sequence longestSequence;
     if(!m_sequenceToCheck.empty())

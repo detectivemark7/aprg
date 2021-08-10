@@ -12,7 +12,7 @@ FibonacciExample::FibonacciExample()
 
 FibonacciExample::Number FibonacciExample::getFibonacciUsingNaiveRecursion(Number const number) const
 {
-    if (number<=1)
+    if(number<=1)
     {
         return number;
     }
@@ -38,9 +38,9 @@ FibonacciExample::Number FibonacciExample::getFibonacciUsingMemoization(Number c
     }
 
     Number & resultForNumber(m_memoizationData[number]);
-    if (resultForNumber == UNUSED_VALUE)
+    if(resultForNumber == UNUSED_VALUE)
     {
-        if (number<=1)
+        if(number<=1)
         {
             resultForNumber = number;
         }

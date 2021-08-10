@@ -94,7 +94,7 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitInKnapsa
     Profit result(0);
     if(!m_items.empty())
     {
-        ProfitMatrix profitMatrix(m_maximumWeight+1, m_items.size(), static_cast<Profit>(UNUSED_VALUE));
+        ProfitMatrix profitMatrix(m_maximumWeight+1, m_items.size()+1, static_cast<Profit>(UNUSED_VALUE));
         result = getBestProfitInKnapsackUsingMemoizationDP(profitMatrix, m_maximumWeight, 0);
     }
     return result;
@@ -133,8 +133,8 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitInKnapsa
             Profit itemProfit(m_items.at(itemIndex).second);
             if(remainingWeight >= itemWeight)
             {
-                result = max(getBestProfitInKnapsackUsingNaiveRecursion(remainingWeight, itemIndex+1),
-                             itemProfit + getBestProfitInKnapsackUsingNaiveRecursion(remainingWeight-itemWeight, itemIndex+1));
+                result = max(getBestProfitInKnapsackUsingMemoizationDP(profitMatrix, remainingWeight, itemIndex+1),
+                             itemProfit + getBestProfitInKnapsackUsingMemoizationDP(profitMatrix, remainingWeight-itemWeight, itemIndex+1));
             }
         }
         profitMatrix.setEntry(remainingWeight, itemIndex, result);
