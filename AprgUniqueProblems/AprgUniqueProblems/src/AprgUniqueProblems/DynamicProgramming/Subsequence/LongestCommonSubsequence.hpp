@@ -14,12 +14,12 @@ public:
     using Index = unsigned int;
     using Count = unsigned int;
     using Value = unsigned int;
-    using Sequence = std::vector<Value>;
+    using Values = std::vector<Value>;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
     static constexpr Count UNUSED_COUNT=std::numeric_limits<Count>::max();
 
-    LongestCommonSubsequence(Sequence const& sequence1, Sequence const& sequence2);
+    LongestCommonSubsequence(Values const& sequence1, Values const& sequence2);
 
     Count getLongestLengthUsingNaiveRecursion() const;
     Count getLongestLengthUsingMemoizationDP() const;
@@ -30,8 +30,8 @@ private:
 
     Count getLongestLengthUsingNaiveRecursion(Index const index1, Index const index2) const;
     Count getLongestLengthUsingMemoizationDP(CountMatrix & lengthMatrix, Index const index1, Index const index2) const;
-    Sequence m_sequence1;
-    Sequence m_sequence2;
+    Values m_sequence1;
+    Values m_sequence2;
 
 };
 
@@ -58,8 +58,8 @@ private:
 // and has applications in bioinformatics.
 
 // Examples:
-// LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.
-// LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
+// LCS for input Valuess “ABCDGH” and “AEDFHR” is “ADH” of length 3.
+// LCS for input Valuess “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
 
 // The naive solution for this problem is to generate all subsequences of both given sequences and find the longest matching subsequence.
 // This solution is exponential in term of time complexity.

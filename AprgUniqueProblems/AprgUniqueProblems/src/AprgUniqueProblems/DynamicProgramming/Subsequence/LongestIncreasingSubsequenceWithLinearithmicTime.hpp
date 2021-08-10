@@ -11,17 +11,17 @@ class LongestIncreasingSubsequenceWithLinearithmicTime
 public:
     using Index = unsigned int;
     using Value = unsigned int;
-    using Sequence = std::vector<Value>;
+    using Values = std::vector<Value>;
     using IndexToIndex = std::vector<Index>;
     using IndexToValue = std::vector<Value>;
     static constexpr Value UNUSED_VALUE=std::numeric_limits<Value>::max();
 
-    LongestIncreasingSubsequenceWithLinearithmicTime(Sequence const& sequenceToCheck);
+    LongestIncreasingSubsequenceWithLinearithmicTime(Values const& sequence);
 
     Index getLongestLength() const;
-    Sequence getLongestSubsequence() const;
+    Values getLongestSubsequence() const;
 private:
-    Sequence m_sequenceToCheck;
+    Values m_sequence;
 
 };
 

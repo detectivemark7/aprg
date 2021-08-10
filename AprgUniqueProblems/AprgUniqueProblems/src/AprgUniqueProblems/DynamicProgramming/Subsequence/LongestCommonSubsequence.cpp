@@ -5,7 +5,7 @@ using namespace std;
 namespace alba
 {
 
-LongestCommonSubsequence::LongestCommonSubsequence(Sequence const& sequence1, Sequence const& sequence2)
+LongestCommonSubsequence::LongestCommonSubsequence(Values const& sequence1, Values const& sequence2)
     : m_sequence1(sequence1)
     , m_sequence2(sequence2)
 {}
