@@ -40,13 +40,13 @@ unsigned int getLevenshteinDistance(string const& otherString, string const& bas
     using Counts = vector<unsigned int>;
 
     vector<Counts> previousAndCurrentCounts(2, Counts(basisString.length()+1)); // string1 as basis
-    Counts & firstPrevious(previousAndCurrentCounts[1]);
+    Counts & firstPrevious(previousAndCurrentCounts[0]);
     iota(firstPrevious.begin(), firstPrevious.end(), 0); // first row
 
     for(unsigned int otherIndex=1; otherIndex<=otherString.length(); otherIndex++)
     {
-        Counts & previousCounts(previousAndCurrentCounts[otherIndex%2]);
-        Counts & currentCounts(previousAndCurrentCounts[(otherIndex+1)%2]);
+        Counts & previousCounts(previousAndCurrentCounts[(otherIndex-1)%2]);
+        Counts & currentCounts(previousAndCurrentCounts[otherIndex%2]);
 
         currentCounts[0] = otherIndex; // first column
         for (unsigned int basisIndex=1; basisIndex<=basisString.length(); basisIndex++)
@@ -57,7 +57,7 @@ unsigned int getLevenshteinDistance(string const& otherString, string const& bas
         }
     }
 
-    Counts const& lastCurrent(previousAndCurrentCounts.at((otherString.length()+1)%2));
+    Counts const& lastCurrent(previousAndCurrentCounts.at(otherString.length()%2));
     return lastCurrent.back();
 }
 
