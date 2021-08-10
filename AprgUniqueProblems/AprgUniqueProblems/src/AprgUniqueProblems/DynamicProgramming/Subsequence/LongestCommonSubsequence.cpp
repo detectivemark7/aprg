@@ -32,6 +32,9 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingM
 
 LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingTabularDP() const
 {
+    // Time Complexity: O(m x n)
+    // Auxiliary Space: O(m x n)
+
     CountMatrix lengthMatrix(m_sequence1.size()+1U, m_sequence2.size()+1U, 0U);
 
     for(Index index1=1; index1<lengthMatrix.getNumberOfColumns(); index1++)
