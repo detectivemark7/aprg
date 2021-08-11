@@ -16,8 +16,8 @@ public:
 
     LongestIncreasingSubsequence(Values const& sequence);
 
-    Index getLongestLength();
-    Values getLongestSubsequence();
+    Index getLongestLength() const;
+    Values getLongestSubsequence() const;
 private:
     Values m_sequence;
 

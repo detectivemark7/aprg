@@ -13,14 +13,14 @@ MaximumSumIncreasingSubsequence::Value MaximumSumIncreasingSubsequence::getMaxim
 {
     // Quadratic time because of double loop
 
-    Value result(0U);
+    Value result(0);
     if(!m_sequence.empty())
     {
-        Values partialSums(m_sequence.size(), 0U);
-        for (Index index=0U; index<m_sequence.size(); index++)
+        Values partialSums(m_sequence.size(), 0);
+        for (Index index(0); index<m_sequence.size(); index++)
         {
             Value & partialSum(partialSums[index]);
-            for (Index lowerIndex=0U; lowerIndex<index; lowerIndex++)
+            for (Index lowerIndex=0; lowerIndex<index; lowerIndex++)
             {
                 if(m_sequence.at(lowerIndex) < m_sequence.at(index))
                 {
@@ -41,21 +41,21 @@ MaximumSumIncreasingSubsequence::Values MaximumSumIncreasingSubsequence::getSubs
     Values result;
     if(!m_sequence.empty())
     {
-        Values partialSums(m_sequence.size(), 0U);
+        Values partialSums(m_sequence.size(), 0);
         IndexToIndex indexToPreviousIndex(m_sequence.size());
         iota(indexToPreviousIndex.begin(), indexToPreviousIndex.end(), 0);
 
-        for (Index index=0U; index<m_sequence.size(); index++)
+        for (Index index(0); index<m_sequence.size(); index++)
         {
             Value & partialSum(partialSums[index]);
             Value & previousIndex(indexToPreviousIndex[index]);
-            for (Index lowerIndex=0U; lowerIndex<index; lowerIndex++)
+            for (Index lowerIndex=0; lowerIndex<index; lowerIndex++)
             {
                 if(m_sequence.at(lowerIndex) < m_sequence.at(index)
                         && partialSum < partialSums.at(lowerIndex))
                 {
                     partialSum = partialSums.at(lowerIndex);
-                    previousIndex = lowerIndex; // save maximum
+                    previousIndex = lowerIndex;
                 }
             }
             partialSum += m_sequence.at(index);

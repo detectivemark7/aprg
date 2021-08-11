@@ -11,12 +11,12 @@ LongestIncreasingSubsequenceWithLinearithmicTime::LongestIncreasingSubsequenceWi
 
 LongestIncreasingSubsequenceWithLinearithmicTime::Index LongestIncreasingSubsequenceWithLinearithmicTime::getLongestLength() const
 {
-    Index longestLength(0U);
+    Index longestLength(0);
     if(!m_sequence.empty())
     {
-        IndexToValue lengthToEndValue(m_sequence.size(), 0U); // dynamic programming
+        IndexToValue lengthToEndValue(m_sequence.size(), 0); // dynamic programming
         lengthToEndValue[0] = m_sequence.front();
-        longestLength = 1U;
+        longestLength = 1;
         for (auto itValue=m_sequence.cbegin()+1; itValue!=m_sequence.cend(); itValue++)
         {
             auto beginIt = lengthToEndValue.begin(), endIt = lengthToEndValue.begin() + longestLength;
@@ -40,9 +40,9 @@ LongestIncreasingSubsequenceWithLinearithmicTime::Values LongestIncreasingSubseq
     Values result;
     if(!m_sequence.empty())
     {
-        Index longestLength(1U);
+        Index longestLength(1);
         Value unusedValue(UNUSED_VALUE);
-        IndexToValue lengthToEndValue(m_sequence.size(), 0U); // dynamic programming
+        IndexToValue lengthToEndValue(m_sequence.size(), 0); // dynamic programming
         IndexToIndex lengthToEndIndex(m_sequence.size(), unusedValue);
         IndexToIndex indexToPreviousIndex(m_sequence.size(), unusedValue);
         lengthToEndValue[0] = m_sequence.front();

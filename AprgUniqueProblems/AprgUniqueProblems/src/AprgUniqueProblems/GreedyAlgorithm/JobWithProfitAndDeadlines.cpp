@@ -22,7 +22,7 @@ JobWithProfitAndDeadlines::JobNames JobWithProfitAndDeadlines::getJobsOrderWithM
         return job1.profit > job2.profit;
     });
 
-    PreviousFreeIndex availableSchedule(getMaximumDeadline() + 1U); // plus one because deadline should indexable
+    PreviousFreeIndex availableSchedule(getMaximumDeadline() + 1); // plus one because deadline should indexable
     for(Job const& job : jobToSchedule)
     {
         unsigned int availableTime = availableSchedule.getPreviousFreeIndexAt(job.deadline);

@@ -17,7 +17,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingN
 
 LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingMemoizationDP() const
 {
-    CountMatrix lengthMatrix(m_sequence1.size()+1U, m_sequence2.size()+1U, static_cast<Count>(UNUSED_COUNT));
+    CountMatrix lengthMatrix(m_sequence1.size()+1, m_sequence2.size()+1, static_cast<Count>(UNUSED_COUNT));
     for(Index index1=1; index1<lengthMatrix.getNumberOfColumns(); index1++)
     {
         lengthMatrix.setEntry(index1, 0, 0);
@@ -35,7 +35,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingT
     // Time Complexity: O(m x n)
     // Auxiliary Space: O(m x n)
 
-    CountMatrix lengthMatrix(m_sequence1.size()+1U, m_sequence2.size()+1U, 0U);
+    CountMatrix lengthMatrix(m_sequence1.size()+1, m_sequence2.size()+1, 0);
 
     for(Index index1=1; index1<lengthMatrix.getNumberOfColumns(); index1++)
     {
@@ -70,7 +70,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingT
     // we only really need 2 rows (not a matrix) to keep track partial values.
 
     // current and previous are the rows in the dynamic programming solution
-    vector<Counts> previousAndCurrentCounts(2, Counts(m_sequence1.size()+1, 0U)); // set first row to zero
+    vector<Counts> previousAndCurrentCounts(2, Counts(m_sequence1.size()+1, 0)); // set first row to zero
     for(Index index2=1; index2<=m_sequence2.size(); index2++)
     {
         Counts & previousCounts(previousAndCurrentCounts[index2%2]);

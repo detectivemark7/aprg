@@ -39,7 +39,7 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
     if(!m_string.empty())
     {
         Index stringLength = m_string.length();
-        CountMatrix lengthMatrix(stringLength, stringLength, 0U);
+        CountMatrix lengthMatrix(stringLength, stringLength, 0);
 
         for(Index index2=0; index2<stringLength; index2++)
         {
@@ -78,7 +78,7 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
 
     // current and previous are the rows in the dynamic programming solution
     Index stringLength = m_string.length();
-    vector<Counts> previousAndCurrentCounts(2, Counts(stringLength, 0U)); // set first row to zero
+    vector<Counts> previousAndCurrentCounts(2, Counts(stringLength, 0)); // set first row to zero
     for(Index index2=0; index2<stringLength; index2++)
     {
         Counts & previousCounts(previousAndCurrentCounts[index2%2]);

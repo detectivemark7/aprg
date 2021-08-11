@@ -135,12 +135,12 @@ unsigned int StringConstruction::countSquareRootAlgorithm(unsigned int const pre
 
         // Note that getHashCodeOfSubstring is on constant time.
         if(subStringLength < prefixLength
-                && subStringHash == mainHashFunction.getHashCodeOfSubstring(prefixLength-subStringLength, prefixLength-1U))
+                && subStringHash == mainHashFunction.getHashCodeOfSubstring(prefixLength-subStringLength, prefixLength-1))
         {
             result += getCountSquareRootAlgorithm(prefixLength-subStringLength);
         }
         else if(subStringLength == prefixLength
-                && subStringHash == mainHashFunction.getHashCodeOfSubstring(0U, prefixLength-1U))
+                && subStringHash == mainHashFunction.getHashCodeOfSubstring(0U, prefixLength-1))
         {
             result++;
         }
