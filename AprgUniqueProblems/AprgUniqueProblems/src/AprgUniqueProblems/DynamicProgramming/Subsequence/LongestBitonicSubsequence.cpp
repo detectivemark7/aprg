@@ -14,7 +14,8 @@ LongestBitonicSubsequence::LongestBitonicSubsequence(Values const& sequence)
 
 LongestBitonicSubsequence::Index LongestBitonicSubsequence::getLongestLength() const
 {
-    // Quadratic time because of double loop
+    // Time Complexity: O(n^2)
+    // Auxiliary Space: O(n)
 
     Index result(0);
     if(!m_sequence.empty())
@@ -54,7 +55,8 @@ LongestBitonicSubsequence::Index LongestBitonicSubsequence::getLongestLength() c
 
 LongestBitonicSubsequence::Values LongestBitonicSubsequence::getLongestSubsequence() const
 {
-    // Quadratic time because of double loop
+    // Time Complexity: O(n^2)
+    // Auxiliary Space: O(n)
 
     Values result;
     if(!m_sequence.empty())
