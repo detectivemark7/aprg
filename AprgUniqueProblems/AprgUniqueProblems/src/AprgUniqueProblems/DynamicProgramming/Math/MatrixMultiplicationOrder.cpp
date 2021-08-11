@@ -11,7 +11,7 @@ MatrixMultiplicationOrder::MatrixMultiplicationOrder(Dimensions const& dimension
 
 MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOperationsUsingNaiveRecursion() const
 {
-    // Time Complexity: Exponential -> Since there are two calls per iteration:  O(2^n)
+    // Time Complexity: Exponential
     // Auxiliary Space: Constant
 
     Count result(0);
