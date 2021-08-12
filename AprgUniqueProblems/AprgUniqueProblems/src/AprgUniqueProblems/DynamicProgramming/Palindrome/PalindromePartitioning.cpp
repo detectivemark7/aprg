@@ -75,7 +75,7 @@ PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsin
 PalindromePartitioning::Count PalindromePartitioning::getLongestLengthUsingTabularDPAndTimeEfficient() const
 {
     // Time Complexity: O(n^2)
-    // Auxiliary Space: O(n^2) (count is linear, but isPalindrome is quadratic)
+    // Auxiliary Space: O(n^2) (partialCounts is linear, but isSubstrAPalindrome is quadratic)
 
     Count result(0);
     if(!m_string.empty())
