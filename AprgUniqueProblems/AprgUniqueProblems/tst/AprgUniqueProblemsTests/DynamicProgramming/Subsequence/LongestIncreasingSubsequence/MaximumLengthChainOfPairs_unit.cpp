@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/MaximumLengthChainOfPairs.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Subsequence/LongestIncreasingSubsequence/MaximumLengthChainOfPairs.hpp>
 
 #include <gtest/gtest.h>
 
