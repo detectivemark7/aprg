@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/LongestIncreasingSubsequence/BuildingBridges.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Subsequence/IncreasingSubsequence/BuildingBridges.hpp>
 
 #include <gtest/gtest.h>
 

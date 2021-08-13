@@ -1,6 +1,6 @@
 #include "BuildingBridges.hpp"
 
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/LongestIncreasingSubsequence/LongestIncreasingSubsequenceWithLinearithmicTime.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Subsequence/IncreasingSubsequence/LongestIncreasingSubsequenceWithLinearithmicTime.hpp>
 
 #include <algorithm>
 #include <numeric>

@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/MaximumSumIncreasingSubsequence.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Subsequence/IncreasingSubsequence/MaximumSumIncreasingSubsequence.hpp>
 
 #include <gtest/gtest.h>
 
