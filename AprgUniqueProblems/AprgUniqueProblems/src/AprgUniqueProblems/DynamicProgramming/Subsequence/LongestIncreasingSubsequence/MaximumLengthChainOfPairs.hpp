@@ -10,16 +10,16 @@ class MaximumLengthChainOfPairs
 {
 public:
     using Index = unsigned int;
-    using Value = std::pair<unsigned int, unsigned int>;
-    using Values = std::vector<Value>;
+    using Pair = std::pair<unsigned int, unsigned int>;
+    using Pairs = std::vector<Pair>;
     using IndexToIndex = std::vector<Index>;
 
-    MaximumLengthChainOfPairs(Values const& sequence);
+    MaximumLengthChainOfPairs(Pairs const& sequence);
 
     Index getLongestLength() const;
-    Values getLongestSubsequence() const;
+    Pairs getLongestSubsequence() const;
 private:
-    Values m_sequence;
+    Pairs m_sequence;
 
 };
 

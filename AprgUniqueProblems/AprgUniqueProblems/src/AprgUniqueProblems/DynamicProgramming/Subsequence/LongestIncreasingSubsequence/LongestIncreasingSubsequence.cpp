@@ -1,6 +1,7 @@
 #include "LongestIncreasingSubsequence.hpp"
 
 #include <algorithm>
+#include <numeric>
 
 using namespace std;
 

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <list>
+#include <numeric>
 
 using namespace std;
 

@@ -9,7 +9,7 @@ namespace alba
 
 namespace
 {
-using Values=MaximumLengthChainOfPairs::Values;
+using Values=MaximumLengthChainOfPairs::Pairs;
 }
 
 TEST(MaximumLengthChainOfPairsTest, GetLongestLengthWorksOnExample1)
