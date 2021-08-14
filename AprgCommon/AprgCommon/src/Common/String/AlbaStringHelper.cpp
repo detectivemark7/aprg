@@ -162,6 +162,25 @@ bool isOneWord(string const& mainString)
     return (!mainString.empty()) && none_of(mainString.begin(), mainString.end(), [](char const character){ return isWhiteSpace(character);});
 }
 
+bool isPalindrome(string const& mainString)
+{
+    bool result(false);
+    if(!mainString.empty())
+    {
+        result=true;
+        unsigned int left(0), right(mainString.length()-1);
+        while(left<right)
+        {
+            if(mainString.at(left++) != mainString.at(right--))
+            {
+                result=false;
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 bool isSubstring(string const& mainString, string const& subString)
 {
     // A substring is a sequence of consecutive characters in a string.

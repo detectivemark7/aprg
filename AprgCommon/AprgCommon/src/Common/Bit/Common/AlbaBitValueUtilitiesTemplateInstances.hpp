@@ -2,6 +2,8 @@
 
 #include <Common/Bit/AlbaBitValueUtilities.hpp>
 
+#include <array>
+
 namespace alba
 {
 

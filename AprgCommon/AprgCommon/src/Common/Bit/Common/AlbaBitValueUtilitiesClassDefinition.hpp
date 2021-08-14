@@ -1,8 +1,10 @@
 #pragma once
 
-#include <array>
+#include <Common/Bit/AlbaBitConstants.hpp>
+#include <Common/Math/Helpers/DivisibilityHelpers.hpp>
+
 #include <cmath>
-#include <limits>
+#include <type_traits>
 
 namespace alba
 {
@@ -33,15 +35,18 @@ public:
 
         static_assert(std::is_integral<DataTypeToManipulate>::value, "DataTypeToManipulate must be an integer");
 
-        return getNumberOfOnes(value)%2 == 0;
+        return mathHelper::isEven(getNumberOfOnes(value));
     }
 
     static constexpr inline unsigned int getNumberOfBits()
     {
         static_assert(std::is_integral<DataTypeToManipulate>::value, "DataTypeToManipulate must be an integer");
 
-        return std::numeric_limits<DataTypeToManipulate>::digits
-                + (std::numeric_limits<DataTypeToManipulate>::is_signed ? 1 : 0);
+        // return std::numeric_limits<DataTypeToManipulate>::digits + (std::numeric_limits<DataTypeToManipulate>::is_signed ? 1 : 0);
+
+        // Use sizeof instead.
+        // -> sizeof: Yields the size in bytes of the object representation of type.
+        return sizeof(DataTypeToManipulate) * AlbaBitConstants::BYTE_SIZE_IN_BITS;
     }
 
     static constexpr inline unsigned int getNumberOfOnes(DataTypeToManipulate const)

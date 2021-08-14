@@ -615,6 +615,14 @@ TEST(BooleanStringTest, IsOneWordTest)
     EXPECT_FALSE(isOneWord(testString5));
 }
 
+TEST(BooleanStringTest, IsPalindromeTest)
+{
+    EXPECT_FALSE(isPalindrome(string()));
+    EXPECT_TRUE(isPalindrome("abcba"));
+    EXPECT_TRUE(isPalindrome("abba"));
+    EXPECT_FALSE(isPalindrome("abca"));
+}
+
 TEST(BooleanStringTest, IsSubstringTest)
 {
     // For example, the substrings of ABCD are A, B, C, D, AB, BC, CD, ABC, BCD and ABCD.

@@ -22,6 +22,16 @@ TEST(FactorAndMulitplesHelpersTest, IsPrimeWorks)
     EXPECT_TRUE(isPrime(67U));
 }
 
+TEST(FactorAndMulitplesHelpersTest, IsPowerOfTwoWorks)
+{
+    EXPECT_TRUE(isPowerOfTwo(0U));
+    EXPECT_TRUE(isPowerOfTwo(1U));
+    EXPECT_TRUE(isPowerOfTwo(2U));
+    EXPECT_FALSE(isPowerOfTwo(3U));
+    EXPECT_TRUE(isPowerOfTwo(4U));
+    EXPECT_FALSE(isPowerOfTwo(6U));
+}
+
 TEST(FactorAndMulitplesHelpersTest, GetGreatestCommonPowerOf2FactorWorks)
 {
     EXPECT_EQ(0U, getGreatestPowerOf2Factor(0U));

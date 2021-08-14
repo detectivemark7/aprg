@@ -119,6 +119,7 @@ bool isWhiteSpace(std::string const& mainString);
 bool isNewline(std::string const& mainString);
 bool isIdentifier(std::string const& mainString);
 bool isOneWord(std::string const& mainString);
+bool isPalindrome(std::string const& mainString);
 bool isSubstring(std::string const& mainString, std::string const& subString);
 bool isSubsequence(std::string const& mainString, std::string const& subsequence);
 bool isPrefix(std::string const& mainString, std::string const& prefix);

@@ -36,6 +36,13 @@ template <typename NumberType> bool isPrime(NumberType const number)
     return result;
 }
 
+template <typename NumberType> NumberType isPowerOfTwo(NumberType const number)
+{
+    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+
+    return AlbaBitValueUtilities<NumberType>::isPowerOfTwo(number);
+}
+
 template <typename NumberType> NumberType getGreatestPowerOf2Factor(NumberType const number)
 {
     static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
