@@ -1,8 +1,10 @@
 #include <Common/Container/AlbaContainerHelper.hpp>
+#include <Common/Math/Helpers/DivisibilityHelpers.hpp>
 #include <Math/Set/MathSet.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace alba::mathHelper;
 using namespace std;
 
 namespace alba
@@ -74,7 +76,7 @@ TEST(MathSetTest, MathSetCreatedWithASetRuleWorks)
 {
     IntegerSet mathSet("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     EXPECT_TRUE(mathSet.contains(2));
@@ -90,7 +92,7 @@ TEST(MathSetTest, IsASubsetOfWorks)
     IntegerSet mathSet1({2,4});
     IntegerSet mathSet2("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     EXPECT_TRUE(mathSet1.isASubsetOf(mathSet2, generateNumbersFromZeroToTen));
@@ -102,7 +104,7 @@ TEST(MathSetTest, IsASupersetOfWorks)
     IntegerSet mathSet1({3,5});
     IntegerSet mathSet2("set of odd numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 1;
+        return isOdd(elementToCheck);
     });
 
     EXPECT_TRUE(mathSet2.isASupersetOf(mathSet1, generateNumbersFromZeroToTen));
@@ -113,11 +115,11 @@ TEST(MathSetTest, IsDisjointWithWorks)
 {
     IntegerSet mathSet1("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
     IntegerSet mathSet2("set of odd numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 1;
+        return isOdd(elementToCheck);
     });
     IntegerSet mathSet3({2,4});
 
@@ -131,7 +133,7 @@ TEST(MathSetTest, GetComplementWorks)
 {
     IntegerSet mathSet("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     IntegerSet complementSet(mathSet.getComplement());
@@ -149,7 +151,7 @@ TEST(MathSetTest, GetUnionWithWorks)
     IntegerSet mathSet1({1,2,3});
     IntegerSet mathSet2("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     IntegerSet unionSet(mathSet1.getUnionWith(mathSet2));
@@ -167,7 +169,7 @@ TEST(MathSetTest, GetIntersectionWithWorks)
     IntegerSet mathSet1({1,2,3});
     IntegerSet mathSet2("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     IntegerSet intersectionSet(mathSet1.getIntersectionWith(mathSet2));
@@ -185,7 +187,7 @@ TEST(MathSetTest, GetDifferenceWithWorks)
     IntegerSet mathSet1({1,2,3});
     IntegerSet mathSet2("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     IntegerSet differenceSet(mathSet1.getDifferenceWith(mathSet2));
@@ -213,7 +215,7 @@ TEST(MathSetTest, GetUnionWorks)
     IntegerSet mathSet1({3,4,5});
     IntegerSet mathSet2("set of odd numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 1;
+        return isOdd(elementToCheck);
     });
 
     IntegerSet unionSet(getUnion(mathSet1, mathSet2));
@@ -231,7 +233,7 @@ TEST(MathSetTest, GetIntersectionWorks)
     IntegerSet mathSet1({3,4,5});
     IntegerSet mathSet2("set of odd numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 1;
+        return isOdd(elementToCheck);
     });
 
     IntegerSet intersectionSet(getIntersection(mathSet1, mathSet2));
@@ -249,7 +251,7 @@ TEST(MathSetTest, GetDifferenceWorks)
     IntegerSet mathSet1({1,2,3});
     IntegerSet mathSet2("set of even numbers", [](unsigned int const& elementToCheck)
     {
-        return elementToCheck % 2 == 0;
+        return isEven(elementToCheck);
     });
 
     IntegerSet differenceSet(getDifference(mathSet1, mathSet2));

@@ -14,6 +14,10 @@ UnsignedIntegerPair getNextFibonacciNumbersUsingLinearRecurrence(
 {
     // Linear recurrence: f(n) = f(n-1) + f(n-2)
 
+    // Matrix representation:
+    // |f(n-1)|f(n)  |
+    // |f(n)  |f(n+1)|
+
     UnsignedIntegerMatrix formulaicTransform(2U, 2U,
     {0U, 1U,
      1U, 1U});

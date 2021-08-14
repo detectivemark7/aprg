@@ -1,6 +1,7 @@
 #include "PrimeAndFactorUtilities.hpp"
 
 #include <Algorithm/Search/SumSearch/TwoSum.hpp>
+#include <Common/Math/Helpers/DivisibilityHelpers.hpp>
 #include <Common/Math/Helpers/FactorAndMulitplesHelpers.hpp>
 #include <Common/Math/Helpers/PowerHelpers.hpp>
 #include <Math/NumberTheory/ModularArithmetic.hpp>
@@ -37,7 +38,7 @@ bool isGoldbachConjectureTrue(UnsignedInteger const evenNumber)
     // Goldbach’s conjecture: Each even integer n > 2 can be represented as a sum n = a+b so that both a and b are primes.
 
     bool result(false); // set as false when input is wrong
-    if(evenNumber > 2 && evenNumber%2 == 0)
+    if(evenNumber > 2 && isEven(evenNumber))
     {
         UnsignedIntegers numbers(getPrimesBelowThisNumber(evenNumber));
         TwoSum<UnsignedIntegers> twoSum(numbers);
