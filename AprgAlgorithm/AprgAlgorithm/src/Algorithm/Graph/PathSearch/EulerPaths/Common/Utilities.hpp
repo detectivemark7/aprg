@@ -4,6 +4,7 @@
 #include <Algorithm/Graph/Types/GraphTypes.hpp>
 #include <Algorithm/Graph/UndirectedGraph/BaseUndirectedGraph.hpp>
 #include <Algorithm/Graph/Utilities/GraphUtilities.hpp>
+#include <Common/Math/Helpers/DivisibilityHelpers.hpp>
 
 namespace alba
 {
@@ -17,16 +18,11 @@ namespace
 template <typename Vertex>
 bool areAllDegreesEven(BaseUndirectedGraph<Vertex> const& graph)
 {
-    bool result(true);
-    for(Vertex const& vertex : graph.getVertices())
+    auto vertices(graph.getVertices());
+    return std::all_of(vertices.cbegin(), vertices.cend(), [&graph](Vertex const& vertex)
     {
-        result = (GraphUtilities::getDegreeAt(graph, vertex) % 2) == 0;
-        if(!result)
-        {
-            break;
-        }
-    }
-    return result;
+        return mathHelper::isEven(GraphUtilities::getDegreeAt(graph, vertex));
+    });
 }
 
 template <typename Vertex>
@@ -35,7 +31,7 @@ bool isAtMostTwoVerticesHaveOddDegrees(BaseUndirectedGraph<Vertex> const& graph)
     unsigned int countOfOdd(0U);
     for(Vertex const& vertex : graph.getVertices())
     {
-        if((GraphUtilities::getDegreeAt(graph, vertex) % 2) == 1)
+        if(mathHelper::isOdd(GraphUtilities::getDegreeAt(graph, vertex)))
         {
             countOfOdd++;
         }

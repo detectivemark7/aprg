@@ -240,10 +240,10 @@ std::ostream & operator<<(std::ostream & out, typename PathSearchUsingFloydWarsh
 // which represents the following graph
 //              10
 //        (0)------->(3)
-//         |         /|\
+//         |          |UP
 //       5 |          |
 //         |          | 1
-//        \|/         |
+//         |DOWN      |
 //        (1)------->(2)
 //             3
 // Note that the value of graph[i][j] is 0 if i is equal to j

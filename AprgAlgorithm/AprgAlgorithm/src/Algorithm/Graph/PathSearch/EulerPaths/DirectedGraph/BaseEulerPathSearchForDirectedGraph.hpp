@@ -65,7 +65,7 @@ protected:
             result = vertices.front();
             for(Vertex const& vertex : vertices)
             {
-                if((GraphUtilities::getDegreeAt(m_graph, vertex) % 2) == 1)
+                if(mathHelper::isOdd(GraphUtilities::getDegreeAt(m_graph, vertex)))
                 {
                     result = vertex;
                     break;
