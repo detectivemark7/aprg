@@ -158,7 +158,7 @@ bool TermTranslator::hasStringConstant(string & lineString, int& index)
                 slashCharacterIndex--;
             }
         }
-        while(slashCount % 2);
+        while(isEven(slashCount));
         m_termBuilder.addConstantString(stringLiteral);
         return true;
     }
@@ -184,7 +184,7 @@ bool TermTranslator::hasCharacterConstant(string & lineString, int& index)
                 slashCharacterIndex--;
             }
         }
-        while(slashCount % 2);
+        while(isEven(slashCount));
         m_termBuilder.addConstantCharacter(stringLiteral);
         return true;
     }
