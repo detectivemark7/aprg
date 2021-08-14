@@ -1,11 +1,13 @@
 #include "HardwareConfiguration.hpp"
 
+#include <Common/Math/Helpers/DivisibilityHelpers.hpp>
 #include <Common/User/DisplayTable.hpp>
 
 #include <cassert>
 #include <iostream>
 #include <sstream>
 
+using namespace alba::mathHelper;
 using namespace std;
 
 namespace alba
@@ -374,7 +376,7 @@ void HardwareConfiguration::setLcgIdOfDsps(LcgIds const& lcgIds)
 
 NyquistType HardwareConfiguration::computeNyquistTypeBasedOnDspAddress(unsigned int const dspAddress) const
 {
-    bool isCpuEven = ((dspAddress & 0x00F0) >> 4) % 2 == 0;
+    bool isCpuEven = isEven((dspAddress & 0x00F0) >> 4);
     return isCpuEven ? NyquistType::TurboNyquist : NyquistType::Nyquist;
 }
 
