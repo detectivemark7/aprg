@@ -72,7 +72,7 @@ PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsin
     return result;
 }
 
-PalindromePartitioning::Count PalindromePartitioning::getLongestLengthUsingTabularDPAndTimeEfficient() const
+PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsingTabularDPAndTimeEfficient() const
 {
     // Time Complexity: O(n^2)
     // Auxiliary Space: O(n^2) (partialCounts is linear, but isSubstrAPalindrome is quadratic)
@@ -84,25 +84,23 @@ PalindromePartitioning::Count PalindromePartitioning::getLongestLengthUsingTabul
         Counts partialCounts(stringLength, 0);
         BoolMatrix isSubstrAPalindrome(stringLength, stringLength, false);
 
-        for(Index index=0; index<stringLength; index++)
+        for(Index index=0; index<stringLength; index++)  // length = 1
         {
-            isSubstrAPalindrome.setEntry(index, index, 1);
+            isSubstrAPalindrome.setEntry(index, index, true);
         }
-        for(Index length=2; length<=stringLength; length++)
+        for(Index index=0; index+1<stringLength; index++) // length = 2
+        {
+            isSubstrAPalindrome.setEntry(index, index+1, m_string.at(index)==m_string.at(index+1));
+        }
+        for(Index length=3; length<=stringLength; length++) // length = >3
         {
             for(Index left=0; left+length<=stringLength; left++)
             {
                 Index right = left+length-1;
-                bool isCurrentSubstrAPalindrome(false);
-                if(length==2)
+                if(m_string.at(left)==m_string.at(right) && isSubstrAPalindrome.getEntry(left+1, right-1))
                 {
-                    isCurrentSubstrAPalindrome = m_string.at(left)==m_string.at(right);
+                    isSubstrAPalindrome.setEntry(left, right, true);
                 }
-                else
-                {
-                    isCurrentSubstrAPalindrome = m_string.at(left)==m_string.at(right) && isSubstrAPalindrome.getEntry(left+1, right-1);
-                }
-                isSubstrAPalindrome.setEntry(left, right, isCurrentSubstrAPalindrome);
             }
         }
 

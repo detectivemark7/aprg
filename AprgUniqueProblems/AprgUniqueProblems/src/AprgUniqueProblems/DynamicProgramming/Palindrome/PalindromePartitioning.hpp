@@ -13,7 +13,6 @@ class PalindromePartitioning
 public:
     using Index = unsigned int;
     using Count = unsigned int;
-    using Value = unsigned int;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
     using BoolMatrix = matrix::AlbaMatrix<bool>;
@@ -24,7 +23,7 @@ public:
     Count getMinimumNumberOfCutsUsingNaiveRecursion() const;
     Count getMinimumNumberOfCutsUsingMemoizationDP() const;
     Count getMinimumNumberOfCutsUsingTabularDP() const;
-    Count getLongestLengthUsingTabularDPAndTimeEfficient() const;
+    Count getMinimumNumberOfCutsUsingTabularDPAndTimeEfficient() const;
 
 private:
     bool isPalindrome(Index const left, Index const right) const;
