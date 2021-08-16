@@ -1,4 +1,4 @@
-#include <Algorithm/Graph/Tree/AncestorsInTree.hpp>
+#include <Algorithm/Graph/Tree/ChildrenInTree.hpp>
 #include <Algorithm/Graph/UndirectedGraph/UndirectedGraphWithListOfEdges.hpp>
 
 #include <gtest/gtest.h>
@@ -13,10 +13,11 @@ namespace
 {
 using VertexForTest = unsigned int;
 using GraphForTest = UndirectedGraphWithListOfEdges<VertexForTest>;
-using QueryForTest = AncestorsInTree<VertexForTest>;
+using QueryForTest = ChildrenInTree<VertexForTest>;
+using VerticesForTest = QueryForTest::Vertices;
 }
 
-TEST(AncestorsInTreeTest, GetAncestorWorks)
+TEST(ChildrenInTreeTest, GetChildrenWorks)
 {
     GraphForTest graph;
     graph.connect(1U, 2U);
@@ -28,10 +29,10 @@ TEST(AncestorsInTreeTest, GetAncestorWorks)
     graph.connect(7U, 8U);
     QueryForTest query(graph, 1U);
 
-    EXPECT_EQ(1U, query.getAncestor(2U, 1U));
-    EXPECT_EQ(7U, query.getAncestor(8U, 1U));
-    EXPECT_EQ(4U, query.getAncestor(8U, 2U));
-    EXPECT_EQ(1U, query.getAncestor(8U, 3U));
+    EXPECT_EQ((VerticesForTest{2U, 4U, 5U}), query.getChildren(1U));
+    EXPECT_EQ((VerticesForTest{6U}), query.getChildren(2U));
+    EXPECT_EQ((VerticesForTest{3U, 7U}), query.getChildren(4U));
+    EXPECT_EQ((VerticesForTest{8U}), query.getChildren(7U));
 }
 
 }
