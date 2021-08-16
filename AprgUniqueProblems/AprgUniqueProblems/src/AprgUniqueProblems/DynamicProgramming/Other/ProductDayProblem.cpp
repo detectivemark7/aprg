@@ -16,7 +16,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP() 
     Price result(0);
     if(!m_pricesInDayByProduct.isEmpty())
     {
-        PriceMatrix minimumPrices(getNumberOfDays(), getNumberOfProductsSubsets(), static_cast<Price>(MAX_PRICE));
+        PriceMatrix minimumPrices(getNumberOfDays(), getNumberOfProductsSubsets(), static_cast<Price>(UNUSED_PRICE));
         for(Day day=0; day<getNumberOfDays(); day++) // set zero cost on empty product bits
         {
             minimumPrices.setEntry(day, 0, 0);
@@ -33,7 +33,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP() 
 ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingTabularDP() const
 {
     // set half max to all entries (half max because theres addition so values might exceed if we use max)
-    PriceMatrix minimumPrices(getNumberOfDays(), getNumberOfProductsSubsets(), static_cast<Price>(MAX_PRICE));
+    PriceMatrix minimumPrices(getNumberOfDays(), getNumberOfProductsSubsets(), static_cast<Price>(UNUSED_PRICE));
 
     for(Day day=0; day<getNumberOfDays(); day++) // set zero cost on empty product bits
     {
@@ -56,7 +56,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingTabularDP() cons
                 if(isProductIncluded(productBits, product))
                 {
                     Price previousDayWithoutProduct = minimumPrices.getEntry(day-1, removeProduct(productBits, product));
-                    if(MAX_PRICE != previousDayWithoutProduct)
+                    if(UNUSED_PRICE != previousDayWithoutProduct)
                     {
                         Price currentMinimum = min(
                                     minimumPrices.getEntry(day, productBits), // current value
@@ -84,7 +84,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP(
     if(day<getNumberOfDays())
     {
         Price result(minimumPrices.getEntry(day, productBits));
-        if(MAX_PRICE == result)
+        if(UNUSED_PRICE == result)
         {
             result = getMinimumPriceUsingMemoizationDP(minimumPrices, day-1, productBits); // put total of previous day
             for(Product product=0; product<getNumberOfProducts(); product++)
@@ -92,7 +92,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP(
                 if(isProductIncluded(productBits, product))
                 {
                     Price previousDayWithoutProduct = getMinimumPriceUsingMemoizationDP(minimumPrices, day-1, removeProduct(productBits, product));
-                    if(MAX_PRICE != previousDayWithoutProduct)
+                    if(INVALID_PRICE != previousDayWithoutProduct)
                     {
                         result = min(result, // current value
                                      previousDayWithoutProduct // get total of previous day without the product
@@ -106,7 +106,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP(
     }
     else
     {
-        return MAX_PRICE;
+        return INVALID_PRICE;
     }
 }
 

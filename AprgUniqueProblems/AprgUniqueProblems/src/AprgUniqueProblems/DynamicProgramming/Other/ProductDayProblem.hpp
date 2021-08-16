@@ -19,7 +19,8 @@ public:
     using PriceMatrix = matrix::AlbaMatrix<Price>;
     using ProductAndDayPair = std::pair<Product, Day>;
     using ProductAndDayPairs = std::vector<ProductAndDayPair>;
-    static constexpr Price MAX_PRICE = std::numeric_limits<Price>::max();
+    static constexpr Price INVALID_PRICE = std::numeric_limits<Price>::max();
+    static constexpr Price UNUSED_PRICE = INVALID_PRICE-1;
 
     ProductDayProblem(PriceMatrix const& pricesInDayByProduct);
 
