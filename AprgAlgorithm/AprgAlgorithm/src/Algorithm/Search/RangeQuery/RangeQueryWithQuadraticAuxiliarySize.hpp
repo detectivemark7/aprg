@@ -11,7 +11,7 @@ namespace algorithm
 {
 
 template <typename Values>
-class RangeQueryWithQuadraticSize
+class RangeQueryWithQuadraticAuxiliarySize
 {
 public:
     // This supports "accumulator" and "selector" type queries.
@@ -21,7 +21,7 @@ public:
     using ValueMatrix = matrix::AlbaMatrix<Value>;
     using Function = std::function<Value(Value const&, Value const&)>;
 
-    RangeQueryWithQuadraticSize(Values const& valuesToCheck, Function const& selector)
+    RangeQueryWithQuadraticAuxiliarySize(Values const& valuesToCheck, Function const& selector)
         : m_partialValueMatrix(valuesToCheck.size(), valuesToCheck.size(), 0U)
         , m_function(selector)
     {
