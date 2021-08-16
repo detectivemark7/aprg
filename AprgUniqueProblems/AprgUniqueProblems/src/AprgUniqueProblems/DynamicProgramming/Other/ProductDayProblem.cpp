@@ -110,42 +110,42 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP(
     }
 }
 
-bool ProductDayProblem::isProductIncluded(ProductBits const productBits, Product const product) const
+inline bool ProductDayProblem::isProductIncluded(ProductBits const productBits, Product const product) const
 {
     return productBits & getProductBits(product);
 }
 
-ProductDayProblem::Product ProductDayProblem::getNumberOfProducts() const
+inline ProductDayProblem::Product ProductDayProblem::getNumberOfProducts() const
 {
     return m_pricesInDayByProduct.getNumberOfRows();
 }
 
-ProductDayProblem::Day ProductDayProblem::getNumberOfDays() const
+inline ProductDayProblem::Day ProductDayProblem::getNumberOfDays() const
 {
     return m_pricesInDayByProduct.getNumberOfColumns();
 }
 
-ProductDayProblem::ProductBits ProductDayProblem::getNumberOfProductsSubsets() const
+inline ProductDayProblem::ProductBits ProductDayProblem::getNumberOfProductsSubsets() const
 {
     return 1<<getNumberOfProducts();
 }
 
-ProductDayProblem::ProductBits ProductDayProblem::getProductBitsWithAllProducts() const
+inline ProductDayProblem::ProductBits ProductDayProblem::getProductBitsWithAllProducts() const
 {
     return AlbaBitValueUtilities<ProductBits>::generateOnesWithNumberOfBits(getNumberOfProducts());
 }
 
-ProductDayProblem::ProductBits ProductDayProblem::getProductBits(Product const product) const
+inline ProductDayProblem::ProductBits ProductDayProblem::getProductBits(Product const product) const
 {
     return 1<<product;
 }
 
-ProductDayProblem::ProductBits ProductDayProblem::addProduct(ProductBits const productBits, Product const product) const
+inline ProductDayProblem::ProductBits ProductDayProblem::addProduct(ProductBits const productBits, Product const product) const
 {
     return productBits | (1 << product);
 }
 
-ProductDayProblem::ProductBits ProductDayProblem::removeProduct(ProductBits const productBits, Product const product) const
+inline ProductDayProblem::ProductBits ProductDayProblem::removeProduct(ProductBits const productBits, Product const product) const
 {
     return productBits & ~(1 << product);
 }
