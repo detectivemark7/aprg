@@ -170,6 +170,7 @@ MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOne
     return result;
 }
 
+// inline optimization can work here because the usage belongs to same translation unit
 inline MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getUnitAt(
         Index const x,
         Index const y) const
