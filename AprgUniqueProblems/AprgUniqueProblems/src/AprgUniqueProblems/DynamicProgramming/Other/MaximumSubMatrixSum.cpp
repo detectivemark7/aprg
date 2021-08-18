@@ -16,8 +16,8 @@ MaximumSubMatrixSum::Value MaximumSubMatrixSum::getMaximumSubMatrixSum() const
 {
     // Uses Kadane’s algorithm
 
-    // Time Complexity: O(n)
-    // Auxiliary Space: O(1)
+    // Time Complexity: O(n^3)
+    // Auxiliary Space: O(n)
 
     Value result = MIN_VALUE;
     for (Index left = 0; left < m_valueMatrix.getNumberOfColumns(); left++)
@@ -27,7 +27,7 @@ MaximumSubMatrixSum::Value MaximumSubMatrixSum::getMaximumSubMatrixSum() const
         for (Index right = left+1; right < m_valueMatrix.getNumberOfColumns(); right++)
         {
             MaximumSubArraySum maximumSubArraySum(accumulatedColumn);
-            result = max(result, maximumSubArraySum.getMaximumSubArraySum());
+            result = max(result, maximumSubArraySum.getMaximumSubArraySum()); // linear
 
             for (Index rowIndex = 0; rowIndex < m_valueMatrix.getNumberOfRows(); rowIndex++) // add next column
             {
@@ -40,6 +40,9 @@ MaximumSubMatrixSum::Value MaximumSubMatrixSum::getMaximumSubMatrixSum() const
 
 MaximumSubMatrixSum::SubArrayDetails MaximumSubMatrixSum::getMaximumSubMatrixSumWithDetails() const
 {
+    // Time Complexity: O(n^3)
+    // Auxiliary Space: O(n)
+
     SubArrayDetails result{0U, 0U, 0U, 0U, MIN_VALUE};
     for (Index left = 0; left < m_valueMatrix.getNumberOfColumns(); left++)
     {
@@ -49,7 +52,7 @@ MaximumSubMatrixSum::SubArrayDetails MaximumSubMatrixSum::getMaximumSubMatrixSum
         {
             MaximumSubArraySum maximumSubArraySum(accumulatedColumn);
 
-            auto columnSumDetails(maximumSubArraySum.getMaximumSubArraySumWithDetails());
+            auto columnSumDetails(maximumSubArraySum.getMaximumSubArraySumWithDetails()); // linear
             if(result.sum < columnSumDetails.sum)
             {
                 result.sum = columnSumDetails.sum;
