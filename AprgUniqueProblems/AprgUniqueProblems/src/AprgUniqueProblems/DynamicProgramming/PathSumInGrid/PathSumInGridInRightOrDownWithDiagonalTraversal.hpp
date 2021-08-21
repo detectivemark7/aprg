@@ -32,7 +32,7 @@ public:
     using MinMaxFunction = std::function<Value(Value const&, Value const&)>;
     static constexpr Index UNUSED_VALUE = std::numeric_limits<Index>::max();
 
-    PathSumInGridInRightOrDownWithDiagonalTraversal(Type const type, Grid const& gridToCheck);
+    PathSumInGridInRightOrDownWithDiagonalTraversal(Type const type, Grid const& inputGrid);
 
     Value getBestPathSumUsingNaiveRecursion() const;
     Value getBestPathSumUsingMemoizationDP() const;
@@ -45,7 +45,7 @@ private:
     Grid getPartialSumGridUsingTabularDP() const;
     Value getBestPathSumUsingMemoizationDP(Grid & partialSumGrid, Index const x, Index const y) const;
     void initialize(Type const type);
-    Grid m_gridToCheck;
+    Grid m_inputGrid;
     CompareFunction m_compareFunction;
     MinMaxFunction m_minMaxFunction;
 };

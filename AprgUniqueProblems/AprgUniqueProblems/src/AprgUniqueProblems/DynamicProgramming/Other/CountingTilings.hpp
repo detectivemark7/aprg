@@ -12,12 +12,6 @@ namespace alba
 class CountingTilings
 {
 public:
-    // Sometimes the states of a dynamic programming solution are more complex than fixed combinations of numbers.
-    // As an example, consider the problem of calculating the number of distinct ways to fill an nxm grid using 1x2 and 2x1 size tiles.
-
-    // Recursive formulation:
-    // -> Next non filled row = all possible permutations of current row (based on previous "Next non filled row")
-    // -> Thus on the last row, all the complete solutions have the "Next non filled row" to be empty
 
     using Count = unsigned int;
     using Grid = matrix::AlbaMatrix<char>;
@@ -57,3 +51,10 @@ private:
 };
 
 }
+
+// Sometimes the states of a dynamic programming solution are more complex than fixed combinations of numbers.
+// As an example, consider the problem of calculating the number of distinct ways to fill an nxm grid using 1x2 and 2x1 size tiles.
+
+// Recursive formulation:
+// -> Next non filled row = all possible permutations of current row (based on previous "Next non filled row")
+// -> Thus on the last row, all the complete solutions have the "Next non filled row" to be empty
