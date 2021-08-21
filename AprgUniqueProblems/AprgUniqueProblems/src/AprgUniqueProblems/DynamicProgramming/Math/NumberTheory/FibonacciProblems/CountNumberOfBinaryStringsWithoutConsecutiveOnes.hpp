@@ -22,10 +22,6 @@ public:
     Count getCountUsingTabularDP() const;
     Count getCountUsingTabularDPAndSpaceEfficient() const;
     Count getCountUsingFibonacci() const;
-
-    Count getCountUsingMultipleReturns() const;
-    Count getCountUsingSingleReturn() const;
-    Count getCountUsingTernaryReturn() const;
 private:
     Count getCountUsingNaiveRecursion(bool const previousValue, Count const length) const;
     // no memoization because there is no recomputation
