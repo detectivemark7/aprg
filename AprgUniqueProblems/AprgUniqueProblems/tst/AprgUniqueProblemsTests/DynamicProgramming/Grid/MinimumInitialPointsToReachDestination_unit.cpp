@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/PathSumInGrid/MinimumInitialPointsToReachDestination.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Grid/MinimumInitialPointsToReachDestination.hpp>
 
 #include <gtest/gtest.h>
 

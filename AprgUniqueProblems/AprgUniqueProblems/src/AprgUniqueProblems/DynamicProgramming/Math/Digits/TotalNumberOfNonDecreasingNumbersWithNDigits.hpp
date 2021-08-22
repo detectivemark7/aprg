@@ -22,6 +22,7 @@ public:
     Count getCountUsingMemoizationDP() const;
     Count getCountUsingTabularDP() const;
     Count getCountUsingTabularDPAndSpaceEfficient() const;
+    Count getCountUsingSummationFormula() const;
 
 private:
     Count getCountUsingNaiveRecursion(Value const digitValue, Count const digitIndex) const;
