@@ -10,9 +10,9 @@ namespace alba
 
 CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum(
         Count const numberOfDigits,
-        Value const sum)
+        Value const sumOfDigits)
     : m_numberOfDigits(numberOfDigits)
-    , m_sumOfDigits(sum)
+    , m_sumOfDigits(sumOfDigits)
 {}
 
 CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::getCountUsingNaiveRecursion() const
@@ -23,7 +23,7 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
     Count result(0);
     if(m_numberOfDigits>0)
     {
-        result = getCountUsingNaiveRecursion(m_numberOfDigits-1, m_sumOfDigits);
+        result = getCountUsingNaiveRecursion(m_sumOfDigits, m_numberOfDigits-1);
     }
     return result;
 }
@@ -36,8 +36,8 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
     Count result(0);
     if(m_numberOfDigits>0)
     {
-        CountMatrix countMatrix(m_numberOfDigits, m_sumOfDigits+1, UNUSED_COUNT);
-        result = getCountUsingMemoizationDP(countMatrix, m_numberOfDigits-1, m_sumOfDigits);
+        CountMatrix countMatrix(m_sumOfDigits+1, m_numberOfDigits, UNUSED_COUNT);
+        result = getCountUsingMemoizationDP(countMatrix, m_sumOfDigits, m_numberOfDigits-1);
     }
     return result;
 }
@@ -50,20 +50,20 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
     Count result(0);
     if(m_numberOfDigits>0)
     {
-        CountMatrix countMatrix(m_numberOfDigits, m_sumOfDigits+1, 0U);
+        CountMatrix countMatrix(m_sumOfDigits+1, m_numberOfDigits, 0U);
 
         for(Value digitValue=0; digitValue<=min(m_sumOfDigits, 9U); digitValue++)
         {
-            countMatrix.setEntry(0U, digitValue, 1);
+            countMatrix.setEntry(digitValue, 0, 1);
         }
         for(Count digitIndex=1; digitIndex<m_numberOfDigits; digitIndex++)
         {
-            countMatrix.setEntry(digitIndex, 0, 1);
+            countMatrix.setEntry(0, digitIndex, 1);
             for(Value partialSum=1; partialSum<=m_sumOfDigits; partialSum++)
             {
                 for(Value digitValue=0; digitValue<=min(partialSum-1, 9U); digitValue++)
                 {
-                    countMatrix.getEntryReference(digitIndex, partialSum) += countMatrix.getEntry(digitIndex-1, partialSum-digitValue);
+                    countMatrix.getEntryReference(partialSum, digitIndex) += countMatrix.getEntry(partialSum-digitValue, digitIndex-1);
                 }
             }
         }
@@ -130,8 +130,8 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
 }
 
 CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::getCountUsingNaiveRecursion(
-        Count const digitIndex,
-        Value const partialSum) const
+        Value const partialSum,
+        Count const digitIndex) const
 {
     Count result(0);
     if(digitIndex>0)
@@ -141,7 +141,7 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
             Value lastDigitValue = min(partialSum-1, 9U);
             for(Value digitValue=0; digitValue<=lastDigitValue; digitValue++)
             {
-                result += getCountUsingNaiveRecursion(digitIndex-1, partialSum-digitValue);
+                result += getCountUsingNaiveRecursion(partialSum-digitValue, digitIndex-1);
             }
         }
         else
@@ -158,10 +158,10 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
 
 CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::getCountUsingMemoizationDP(
         CountMatrix & countMatrix,
-        Count const digitIndex,
-        Value const partialSum) const
+        Value const partialSum,
+        Count const digitIndex) const
 {
-    Count result(countMatrix.getEntry(digitIndex, partialSum));
+    Count result(countMatrix.getEntry(partialSum, digitIndex));
     if(UNUSED_COUNT == result)
     {
         result = 0;
@@ -172,7 +172,7 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
                 Value lastDigitValue = min(partialSum-1, 9U);
                 for(Value digitValue=0; digitValue<=lastDigitValue; digitValue++)
                 {
-                    result += getCountUsingMemoizationDP(countMatrix, digitIndex-1, partialSum-digitValue);
+                    result += getCountUsingMemoizationDP(countMatrix, partialSum-digitValue, digitIndex-1);
                 }
             }
             else
@@ -184,7 +184,7 @@ CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum::Count CountOfNDigitNumbers
         {
             result = 1;
         }
-        countMatrix.setEntry(digitIndex, partialSum, result);
+        countMatrix.setEntry(partialSum, digitIndex, result);
     }
     return result;
 }

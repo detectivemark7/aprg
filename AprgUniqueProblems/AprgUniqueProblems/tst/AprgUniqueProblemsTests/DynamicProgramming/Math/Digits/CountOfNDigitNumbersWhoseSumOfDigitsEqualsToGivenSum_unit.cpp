@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Math/CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Math/Digits/CountOfNDigitNumbersWhoseSumOfDigitsEqualsToGivenSum.hpp>
 
 #include <gtest/gtest.h>
 
