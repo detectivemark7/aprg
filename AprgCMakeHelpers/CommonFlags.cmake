@@ -5,6 +5,7 @@ set(APRG_COMPILER_COMMON_CPP_FLAGS "-std=c++17")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG "-g --coverage")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_NO_STACK_PROTECTOR "-g --coverage -fno-stack-protector") #let the stack smash (for debugging)
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_FAST_COMPILATION "-g --coverage -O0") #-O0 is actually the default so this is useless
+set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_SPEED "-g --coverage -O3")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_MORE_SPEED "-g --coverage -Ofast")
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED "-O3 -DNDEBUG")
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_MIN_SIZE "-Os -DNDEBUG")
