@@ -169,7 +169,7 @@ TEST(ComboTest, DifferentiationRelatedRatesConeWaterExampleTest)
     Equation equation(term1ForEquation, "=", term2ForEquation);
     Differentiation differentiation("t", {"V", "h"});
     Equation differentiatedEquation(differentiation.differentiate(equation));
-    SubstitutionOfVariablesToValues substitution({{"d[V]/d[t]", 2}, {"h", 5}, {"pi", PI_DOUBLE_VALUE}});
+    SubstitutionOfVariablesToValues substitution({{"d[V]/d[t]", 2}, {"h", 5}, {"pi", AlbaNumber(AlbaNumber::Value::pi)}});
     Equation solutionEquation(substitution.performSubstitutionTo(differentiatedEquation));
     OneEquationOneVariableEqualitySolver solver;
     SolutionSet solutionSet(solver.calculateSolutionAndReturnSolutionSet(solutionEquation));
