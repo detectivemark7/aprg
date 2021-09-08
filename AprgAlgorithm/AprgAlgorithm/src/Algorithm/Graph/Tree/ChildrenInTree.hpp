@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Algorithm/Graph/Utilities/CheckableVertices.hpp>
-#include <Algorithm/Graph/Utilities/GraphUtilitiesHeaders.hpp>
+#include <Algorithm/Graph/Utilities/GraphUtilities.hpp>
 
 namespace alba
 {
@@ -27,7 +27,13 @@ public:
 
     Vertices getChildren(Vertex const& parent) const
     {
-        return m_parentVertexToChildren.at(parent);
+        Vertices result;
+        auto it = m_parentVertexToChildren.find(parent);
+        if(it!=m_parentVertexToChildren.cend())
+        {
+            result = it->second;
+        }
+        return result;
     }
 
 private:
