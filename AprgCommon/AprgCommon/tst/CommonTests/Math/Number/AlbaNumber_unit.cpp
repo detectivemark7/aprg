@@ -5,6 +5,7 @@
 
 #include <ctgmath>
 
+using namespace alba::AlbaMathConstants;
 using namespace std;
 
 namespace alba

@@ -20,12 +20,12 @@ template <typename NumberType> inline bool isAlmostEqual(NumberType const value1
 
 template <> inline bool isAlmostEqual<float>(float const value1, float const value2)
 {
-    return value1 == value2 || getAbsoluteValue(value1-value2) < COMPARISON_TOLERANCE_FOR_FLOAT;
+    return value1 == value2 || getAbsoluteValue(value1-value2) < AlbaMathConstants::COMPARISON_TOLERANCE_FOR_FLOAT;
 }
 
 template <> inline bool isAlmostEqual<double>(double const value1, double const value2)
 {
-    return value1 == value2 || getAbsoluteValue(value1-value2) < COMPARISON_TOLERANCE_FOR_DOUBLE;
+    return value1 == value2 || getAbsoluteValue(value1-value2) < AlbaMathConstants::COMPARISON_TOLERANCE_FOR_DOUBLE;
 }
 
 template <typename FloatingType, typename IntegerType> inline bool isAlmostAnInteger(FloatingType const value)
