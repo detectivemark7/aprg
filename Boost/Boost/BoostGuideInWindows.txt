@@ -25,7 +25,8 @@ Installing boost libraries for GCC (MinGW) on Windows APRG
 1) Open Command Prompt and navigate to "APRG\Boost\Boost\boost\tools\build".
 2) Run "bootstrap.bat gcc".
 3) Run " b2 install --prefix="xxxxx\APRG\Boost\Boost\boost-build" "
-4) Add "xxxxx\APRG\Boost\Boost\boost-build\bin" to Windows PATH.
+4) Add "xxxxx\APRG\Boost\Boost\boost-build\bin" to Windows PATH. So we can use "b2" anywhere.
+NOTE: Remember to replace the xxxxx!!!
 
 -> boost building
 1) Open Command Prompt and navigate to "APRG\Boost\Boost\boost".
@@ -36,6 +37,7 @@ Installing boost libraries for GCC (MinGW) on Windows APRG
 ----> reviewing the list of library names with --show-libraries
 ----> limiting which libraries get built with the --with-library-name or --without-library-name options
 ----> choosing a specific build variant by adding release or debug to the command line.
+NOTE: Remember to replace the xxxxx!!!
 
 
 
@@ -51,6 +53,7 @@ Installing boost libraries for GCC (MinGW) on Windows APRG
 ---> create and install the library using b2 by a flag "-with-NameOfLibrary" during install command. For example:
 -----> b2 install --prefix=xxxxx\APRG\Boost\Boost\boost --with-system --with-locale --with-filesystem --with-iostreams --with-date_time --with-random link=static runtime-link=shared threading=multi toolset=gcc
 ---> The libraries will be generated on "APRG\Boost\Boost\boost\lib" folder
+NOTE: Remember to replace the xxxxx!!!
 5) Add library on boost cmake
 ---> Open "APRG\Boost\Boost\cmake\IncludeBoost.cmake" and add library during searching for boost.
 -----> Edit this line: "find_package(Boost COMPONENTS system locale filesystem iostreams)"
