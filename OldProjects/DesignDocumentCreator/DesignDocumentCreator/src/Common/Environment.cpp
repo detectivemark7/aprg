@@ -11,7 +11,7 @@ namespace DesignDocumentCreator
 
 Environment::Environment()
 {
-    m_resetableMembers.createObjectUsingDefaultConstructor();
+    m_resetableMembers.emplace();
 }
 
 Environment& Environment::getInstance()
@@ -22,23 +22,22 @@ Environment& Environment::getInstance()
 
 void Environment::clear()
 {
-    m_resetableMembers.clear();
-    m_resetableMembers.createObjectUsingDefaultConstructor();
+    m_resetableMembers.emplace();
 }
 
 void Environment::execute()
 {
-    m_resetableMembers.getReference().components.executePendingEvents();
+    m_resetableMembers->components.executePendingEvents();
 }
 
 Components& Environment::getComponentsReference()
 {
-    return m_resetableMembers.getReference().components;
+    return m_resetableMembers->components;
 }
 
 UmlLogger& Environment::getUmlLogger()
 {
-    return m_resetableMembers.getReference().umlLogger;
+    return m_resetableMembers->umlLogger;
 }
 
 Component* Environment::getComponentPointer(ComponentName const componentName)

@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <string>
 
 using namespace std;

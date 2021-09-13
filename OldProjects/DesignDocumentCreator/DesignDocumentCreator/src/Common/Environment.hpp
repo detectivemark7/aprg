@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Common/Components/Components.hpp>
-#include <Common/Container/AlbaOptional.hpp>
 #include <Common/Uml/UmlLogger.hpp>
+
+#include <optional>
 
 namespace DesignDocumentCreator
 {
@@ -29,7 +30,7 @@ public:
     void send(ComponentName const sender, ComponentName const receiver, GenericMessage const& message);
 
 private:
-    alba::AlbaOptional<ResetableMembers> m_resetableMembers;
+    std::optional<ResetableMembers> m_resetableMembers;
     void performSend(GenericMessage const& messageToRoute);
 };
 
