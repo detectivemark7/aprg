@@ -8,7 +8,7 @@
 #include "CPlusPlusScope.hpp"
 #include "CPlusPlusVariable.hpp"
 
-#include <Common/Container/AlbaOptional.hpp>
+#include <optional>
 
 #include <functional>
 #include <map>

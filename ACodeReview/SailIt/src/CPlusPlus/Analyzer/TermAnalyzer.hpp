@@ -5,7 +5,7 @@
 #include "Findings/FindingsToAdd.hpp"
 #include "Loopers/Looper.hpp"
 
-#include <Common/Container/AlbaOptional.hpp>
+#include <optional>
 
 #include <string>
 #include <unordered_map>
@@ -213,7 +213,7 @@ private:
     CPlusPlusDatabase& m_database;
     Findings& m_findings;
     FindingsBuffer m_findingsBuffer;
-    alba::AlbaOptional <SailIt&> m_optionalSailIt;
+    std::optional <SailIt&> m_optionalSailIt;
     bool m_isTermsModified;
     ModifyDetails m_modifyDetails;
     MoveBackType m_moveBackType;
