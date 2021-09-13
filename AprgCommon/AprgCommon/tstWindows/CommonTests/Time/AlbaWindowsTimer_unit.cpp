@@ -1,3 +1,4 @@
+/*
 #include <Common/Time/AlbaWindowsTimer.hpp>
 
 #include <gtest/gtest.h>
@@ -64,3 +65,4 @@ TEST(AlbaWindowsTimerTest, DISABLED_GetElapsedTimeInMicrosecondsWorks) // this i
 
 
 }
+*/

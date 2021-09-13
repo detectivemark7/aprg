@@ -29,7 +29,7 @@ AlbaWindowsPathHandler::AlbaWindowsPathHandler(PathInitialValueSource const init
 AlbaWindowsPathHandler::AlbaWindowsPathHandler(string const& path)
     : AlbaPathHandler(R"(\)")
 {
-    save(path);
+    setPath(path);
 }
 
 void AlbaWindowsPathHandler::clear()
@@ -323,6 +323,11 @@ void AlbaWindowsPathHandler::findFilesAndDirectoriesWithDepth(
 }
 
 void AlbaWindowsPathHandler::save(string const& path)
+{
+    setPath(path);
+}
+
+void AlbaWindowsPathHandler::setPath(string const& path)
 {
     string correctPath(getCorrectPathWithoutDoublePeriod(
                            getCorrectPathWithReplacedSlashCharacters(

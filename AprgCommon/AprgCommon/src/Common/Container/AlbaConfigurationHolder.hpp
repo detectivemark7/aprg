@@ -54,8 +54,9 @@ public:
               AlbaConfigurationHolder<ConfigurationDetails>::getInstance().getConfigurationDetails())
     {}
 
-    ~AlbaConfigurationScopeObject()
+    ~AlbaConfigurationScopeObject() noexcept // destructor/cleanup code should not throw an exception
     {
+        // put a try catch here to ensure that it will not throw? nah, we dont use exceptions anyway
         setInThisScopeTheValuesBack();
     }
 

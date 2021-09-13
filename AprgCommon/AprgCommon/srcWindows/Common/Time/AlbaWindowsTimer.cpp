@@ -1,3 +1,4 @@
+/*
 #include "AlbaWindowsTimer.hpp"
 
 #include <Common/Time/AlbaDateTimeConstants.hpp>
@@ -79,3 +80,4 @@ AlbaDateTime AlbaWindowsTimer::getDifferenceBetweenTimes() const
 }
 
 }//namespace alba
+*/

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
 #include <cassert>
@@ -147,24 +148,6 @@ public:
         return m_matrixData;
     }
 
-    std::string getString() const
-    {
-        DisplayTable table;
-        table.setBorders("-","|");
-        for(unsigned int y=0; y<m_numberOfRows; y++)
-        {
-            table.addRow();
-            for(unsigned int x=0; x<m_numberOfColumns; x++)
-            {
-                std::stringstream ss;
-                ss << getEntry(x, y);
-                table.getLastRow().addCell(ss.str());
-            }
-        }
-        std::string firstLine("Matrix output:\n");
-        return firstLine + table.drawOutput();
-    }
-
     DataType & getEntryReference(unsigned int const x, unsigned int const y)
     {
         assert((x < m_numberOfColumns) && (y < m_numberOfRows));
@@ -282,7 +265,18 @@ private:
 
     friend std::ostream & operator<<(std::ostream & out, AlbaSparseMatrix<DataType> const& matrix)
     {
-        out << matrix.getString();
+        DisplayTable table;
+        table.setBorders("-","|");
+        for(unsigned int y=0; y<matrix.m_numberOfRows; y++)
+        {
+            table.addRow();
+            for(unsigned int x=0; x<matrix.m_numberOfColumns; x++)
+            {
+                table.getLastRow().addCell(alba::stringHelper::convertToString(matrix.getEntry(x, y)));
+            }
+        }
+
+        out << "Matrix output:\n" << table;
         return out;
     }
 

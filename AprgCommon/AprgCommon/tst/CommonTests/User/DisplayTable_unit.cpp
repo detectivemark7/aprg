@@ -1,7 +1,9 @@
+#include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace alba::stringHelper;
 using namespace std;
 
 namespace alba
@@ -14,7 +16,7 @@ TEST(DisplayTableTest, TableCanOutputProvideText)
     table.addRow();
     table.getLastRow().addCell("Test");
 
-    EXPECT_EQ("Test\n", table.drawOutput());
+    EXPECT_EQ("Test\n", convertToString(table));
 }
 
 TEST(DisplayTableTest, TableCanOutputTextWithBorders)
@@ -25,7 +27,7 @@ TEST(DisplayTableTest, TableCanOutputTextWithBorders)
     table.addRow();
     table.getLastRow().addCell("Test");
 
-    EXPECT_EQ("XXXXXX\nXTestX\nXXXXXX\n", table.drawOutput());
+    EXPECT_EQ("XXXXXX\nXTestX\nXXXXXX\n", convertToString(table));
 }
 
 TEST(DisplayTableTest, TableCanOutputTextFor3by3Table)
@@ -47,7 +49,7 @@ TEST(DisplayTableTest, TableCanOutputTextFor3by3Table)
     table.getLastRow().addCell("9000000");
 
     EXPECT_EQ("----------------\n|1000|2|   3   |\n----------------\n|4.1 |5| 6.55  |\n----------------\n| 7  |8|9000000|\n----------------\n",
-              table.drawOutput());
+              convertToString(table));
 }
 
 TEST(DisplayTableTest, CellWithAlignmentCanBeAdded)
@@ -65,7 +67,7 @@ TEST(DisplayTableTest, CellWithAlignmentCanBeAdded)
     table.addRow();
     table.getLastRow().addCell("J", DisplayTableCellMode::justify);
 
-    EXPECT_EQ("12345\n  C  \nL    \n    R\n  J  \n", table.drawOutput());
+    EXPECT_EQ("12345\n  C  \nL    \n    R\n  J  \n", convertToString(table));
 }
 
 TEST(DisplayTableTest, CanBeConstructedWithNumberOfColumnsAndRows)
@@ -81,7 +83,7 @@ TEST(DisplayTableTest, CanBeConstructedWithNumberOfColumnsAndRows)
     table.getCellReferenceAt(1U, 2U).setText("(1,2)");
 
     EXPECT_EQ("-------------\n|(0,0)|(1,0)|\n-------------\n|(0,1)|(1,1)|\n-------------\n|(0,2)|(1,2)|\n-------------\n",
-              table.drawOutput());
+              convertToString(table));
 }
 
 }

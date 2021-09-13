@@ -1,8 +1,10 @@
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 #include <CommonTests/Math/Matrix/AlbaMatrixInternalFunctions.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace alba::stringHelper;
 using namespace std;
 
 namespace alba
@@ -406,16 +408,6 @@ TEST(AlbaMatrixTest, GetMatrixDataWorks)
     EXPECT_EQ(6U, matrixData.at(5));
 }
 
-TEST(AlbaMatrixTest, GetStringWorks)
-{
-    AlbaMatrix<unsigned int> matrix(2, 3,
-    {1, 2,
-     3, 4,
-     5, 6});
-
-    EXPECT_EQ("Matrix output:\n-----\n|1|2|\n-----\n|3|4|\n-----\n|5|6|\n-----\n", matrix.getString());
-}
-
 TEST(AlbaMatrixTest, RetrieveColumnWorks)
 {
     AlbaMatrix<unsigned int> matrix(2, 3,
@@ -732,6 +724,16 @@ TEST(AlbaMatrixTest, IterateThroughXAndThenYWithRangesWorks)
     EXPECT_EQ(PairOfNumbers(0, 2), xyPairsToVerify.at(1));
     EXPECT_EQ(PairOfNumbers(1, 1), xyPairsToVerify.at(2));
     EXPECT_EQ(PairOfNumbers(1, 2), xyPairsToVerify.at(3));
+}
+
+TEST(AlbaMatrixTest, OutputStreamOperatorWorks)
+{
+    AlbaMatrix<unsigned int> matrix(2, 3,
+    {1, 2,
+     3, 4,
+     5, 6});
+
+    EXPECT_EQ("Matrix output:\n-----\n|1|2|\n-----\n|3|4|\n-----\n|5|6|\n-----\n", convertToString(matrix));
 }
 
 }

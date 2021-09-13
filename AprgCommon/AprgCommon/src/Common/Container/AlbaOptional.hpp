@@ -1,3 +1,5 @@
+// NOTE: Use std::optional instead! (needs c++17)
+
 #pragma once
 
 #include <cassert>

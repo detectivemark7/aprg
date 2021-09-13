@@ -19,7 +19,7 @@ AlbaPathHandler::AlbaPathHandler(string const& path, string const& slashCharacte
     : m_pathType(PathType::Empty)
     , m_slashCharacterString(slashCharacterString)
 {
-    save(path);
+    setPath(path);
 }
 
 void AlbaPathHandler::clear()
@@ -109,6 +109,11 @@ bool AlbaPathHandler::isEmpty() const
 }
 
 void AlbaPathHandler::save(string const& path)
+{
+    setPath(path);
+}
+
+void AlbaPathHandler::setPath(string const& path)
 {
     string correctPath(getCorrectPathWithReplacedSlashCharacters(path, m_slashCharacterString));
     setExtensionFromPath(correctPath);

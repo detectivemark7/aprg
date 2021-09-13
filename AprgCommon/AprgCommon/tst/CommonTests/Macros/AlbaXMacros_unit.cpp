@@ -18,7 +18,7 @@ TEST(AlbaXMacroTests, OneParameterSampleTest)
 #undef ALBA_XMACROS_SAMPLE_FUNCTION_WITH_ONE_PARAMETER
 
     //print part
-#define ALBA_XMACROS_SAMPLE_FUNCTION_WITH_ONE_PARAMETER(parameter) ss << #parameter << ": " << parameter << endl;
+#define ALBA_XMACROS_SAMPLE_FUNCTION_WITH_ONE_PARAMETER(parameter) ss << #parameter << ": " << (parameter) << endl;
     ALBA_XMACROS_SAMPLE_LIST_WITH_ONE_PARAMETER
 #undef ALBA_XMACROS_SAMPLE_FUNCTION_WITH_ONE_PARAMETER
 

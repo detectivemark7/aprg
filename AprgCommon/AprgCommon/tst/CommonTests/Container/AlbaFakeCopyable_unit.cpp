@@ -5,9 +5,8 @@
 namespace alba
 {
 
-class FakeCopyableExample
+struct FakeCopyableExample
 {
-public:
     FakeCopyableExample()
         : value(0U)
     {

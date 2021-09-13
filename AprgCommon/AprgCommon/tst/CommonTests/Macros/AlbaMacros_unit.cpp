@@ -21,7 +21,7 @@ TEST(AlbaMacroArgumentCounter, StringTest)
     EXPECT_EQ(3, ALBA_MACROS_COUNT_ARGUMENTS("one", "two", "three"));
 }
 
-TEST(AlbaMacros, StandardPredefinedMacrosValueTest)
+TEST(AlbaMacrosTest, StandardPredefinedMacrosValueTest)
 {
     EXPECT_FALSE(string(ALBA_MACROS_GET_FILE).empty());
     EXPECT_EQ(27, ALBA_MACROS_GET_LINE);
@@ -30,7 +30,7 @@ TEST(AlbaMacros, StandardPredefinedMacrosValueTest)
     EXPECT_LT(201100, ALBA_MACROS_GET_COMPILER_VERSION); // it should be above 2011 compiler
 }
 
-TEST(AlbaMacros, CompilerSpecificPredefinedMacrosValueTest)
+TEST(AlbaMacrosTest, CompilerSpecificPredefinedMacrosValueTest)
 {
     EXPECT_EQ("TestBody", string(ALBA_MACROS_GET_FUNCTION));
     EXPECT_EQ(0, ALBA_MACROS_GET_UNIQUE_COUNTER_VALUE);
@@ -39,14 +39,14 @@ TEST(AlbaMacros, CompilerSpecificPredefinedMacrosValueTest)
     EXPECT_EQ(3, ALBA_MACROS_GET_UNIQUE_COUNTER_VALUE);
 }
 
-TEST(AlbaMacros, DisplayMessageTest)
+TEST(AlbaMacrosTest, DisplayMessageTest)
 {
     #define ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE_SAMPLE_MACRO 10000
     EXPECT_EQ("ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE_SAMPLE_MACRO=10000", ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE(ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE_SAMPLE_MACRO));
     #pragma message(ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE(ALBA_MACROS_DISPLAY_VALUE_PRAGMA_MESSAGE_SAMPLE_MACRO))
 }
 
-TEST(AlbaMacros, GetStringLiteral)
+TEST(AlbaMacrosTest, GetStringLiteral)
 {
     enum class SampleEnumClass
     {
@@ -59,7 +59,7 @@ TEST(AlbaMacros, GetStringLiteral)
     EXPECT_EQ("SampleEnumClass::Type2", ALBA_MACROS_GET_STRING_LITERAL(SampleEnumClass::Type2));
 }
 
-TEST(AlbaMacros, CaseEnumStringLiteral)
+TEST(AlbaMacrosTest, CaseEnumStringLiteral)
 {
     enum class SampleEnumClass
     {
@@ -87,7 +87,7 @@ TEST(AlbaMacros, CaseEnumStringLiteral)
     EXPECT_EQ("SampleEnumClass::Type2", sampleObject.getString(enumValue2));
 }
 
-TEST(AlbaMacros, CaseEnumShortStringLiteral)
+TEST(AlbaMacrosTest, CaseEnumShortStringLiteral)
 {
     enum class SampleEnumClass
     {

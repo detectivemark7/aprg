@@ -3,18 +3,6 @@
 namespace alba
 {
 
-void sleep(unsigned int const milliSeconds)
-{
-    Sleep(milliSeconds);
-}
-
-AlbaDateTime getCurrentDateTime()
-{
-    SYSTEMTIME currentTime;
-    GetSystemTime(&currentTime);
-    return convertSystemTimeToAlbaDateTime(currentTime);
-}
-
 AlbaDateTime convertSystemTimeToAlbaDateTime(SYSTEMTIME const& systemTime)
 {
     return AlbaDateTime(systemTime.wYear,
@@ -27,3 +15,4 @@ AlbaDateTime convertSystemTimeToAlbaDateTime(SYSTEMTIME const& systemTime)
 }
 
 }//namespace alba
+

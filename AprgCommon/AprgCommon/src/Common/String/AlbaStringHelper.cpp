@@ -5,6 +5,7 @@
 #include <Common/Math/Helpers/PowerHelpers.hpp>
 
 #include <algorithm>
+#include <cstring>
 #include <functional>
 #include <numeric>
 #include <set>
@@ -467,7 +468,7 @@ string getStringWithoutCharAtTheStart(string const& mainString, char const char1
 string getStringWithoutCharAtTheEnd(string const& mainString, char const char1)
 {
     unsigned int length = mainString.length();
-    unsigned int end = (length <= 0) ? 0 : (mainString[length-1] == char1) ? length-1 : length;
+    unsigned int end = (length == 0) ? 0 : (mainString[length-1] == char1) ? length-1 : length;
     return mainString.substr(0, end);
 }
 
@@ -475,7 +476,7 @@ string getStringWithoutOpeningClosingOperators(string const& mainString, char co
 {
     unsigned int length = mainString.length();
     unsigned int start = (mainString[0] == openingOperator) ? 1 : 0;
-    unsigned int end = (length <= 0) ? 0 : (mainString[length-1] == closingOperator) ? length-1 : length;
+    unsigned int end = (length == 0) ? 0 : (mainString[length-1] == closingOperator) ? length-1 : length;
     return mainString.substr(start, end-start);
 }
 
@@ -647,8 +648,9 @@ string constructFileLocator(string const& file, int const lineNumber)
 
 string getRandomAlphaNumericString(unsigned int const length)
 {
+    constexpr auto ALPHA_NUMERIC_CHAR_MAP = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     AlbaRandomizer randomizer;
-    int alphaNumericCharMapIndexMax = static_cast<int>(ALPHA_NUMERIC_CHAR_MAP.length())-1;
+    int alphaNumericCharMapIndexMax = static_cast<int>(strlen(ALPHA_NUMERIC_CHAR_MAP))-1;
     string result;
     result.reserve(length);
     generate_n(back_inserter(result), length, [&]()
@@ -797,10 +799,9 @@ void splitToStringsUsingASeriesOfDelimeters(strings & listOfStrings, string cons
     {
         unsigned int startingIndexOfFind(0);
         unsigned int mainStringLength = mainString.length();
-        unsigned int delimiterIndex(0);
         for(string const& delimeter : seriesOfDelimiters)
         {
-            delimiterIndex = mainString.find(delimeter, startingIndexOfFind);
+            unsigned int delimiterIndex = mainString.find(delimeter, startingIndexOfFind);
             if(isNpos(static_cast<int>(delimiterIndex)))
             {
                 break;
@@ -1109,29 +1110,24 @@ string convertBoolToString(bool const value)
     return temporaryStream.str();
 }
 
-string NumberToStringConverter::convert(AlbaNumber const& number)
+void StringConverterWithFormatting::setPrecision(int const precision)
 {
-    return convert(number.getDouble());
+    m_precisionOptional = precision;
 }
 
-void NumberToStringConverter::setPrecision(int const precision)
+void StringConverterWithFormatting::setFieldWidth(int const fieldWidth)
 {
-    m_precisionOptional.setValue(precision);
+    m_fieldWidthOptional = fieldWidth;
 }
 
-void NumberToStringConverter::setFieldWidth(int const fieldWidth)
+void StringConverterWithFormatting::setFillCharacter(char const fillCharacter)
 {
-    m_fieldWidthOptional.setValue(fieldWidth);
+    m_fillCharacterOptional = fillCharacter;
 }
 
-void NumberToStringConverter::setFillCharacter(char const fillCharacter)
+void StringConverterWithFormatting::setMaximumLength(unsigned int const maximumLength)
 {
-    m_fillCharacterOptional.setValue(fillCharacter);
-}
-
-void NumberToStringConverter::setMaximumLength(unsigned int const maximumLength)
-{
-    m_maximumLengthOptional.setValue(maximumLength);
+    m_maximumLengthOptional = maximumLength;
 }
 
 }//namespace stringHelper

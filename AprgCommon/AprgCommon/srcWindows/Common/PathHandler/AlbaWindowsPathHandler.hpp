@@ -49,6 +49,7 @@ public:
             ListOfPaths& listOfDirectories) const;
 private:
     void save(std::string const& path) override;
+    void setPath(std::string const& path);
     void setDriveOrRoot();
     void findFilesAndDirectoriesWithDepth(
             std::string const& currentDirectory,

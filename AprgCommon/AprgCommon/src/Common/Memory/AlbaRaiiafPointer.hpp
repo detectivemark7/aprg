@@ -15,6 +15,7 @@ class AlbaRaiiafPointer
 public:
     AlbaRaiiafPointer()
         : m_hasContent(0)
+        , m_voidPointer(nullptr)
     {}
 
     ~AlbaRaiiafPointer()

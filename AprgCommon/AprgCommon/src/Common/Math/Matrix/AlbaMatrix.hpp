@@ -5,6 +5,7 @@
 #include <Common/Math/Matrix/AlbaMatrixDataTypes.hpp>
 #include <Common/Math/Matrix/Utilities/AlbaMatrixUtilities.hpp>
 #include <Common/Math/Matrix/Utilities/GaussJordanReduction.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
 #include <cassert>
@@ -185,24 +186,6 @@ public:
     MatrixData const& getMatrixData() const
     {
         return m_matrixData;
-    }
-
-    std::string getString() const
-    {
-        DisplayTable table;
-        table.setBorders("-","|");
-        for(unsigned int y=0; y<m_numberOfRows; y++)
-        {
-            table.addRow();
-            for(unsigned int x=0; x<m_numberOfColumns; x++)
-            {
-                std::stringstream ss;
-                ss << getEntry(x, y);
-                table.getLastRow().addCell(ss.str());
-            }
-        }
-        std::string firstLine("Matrix output:\n");
-        return firstLine + table.drawOutput();
     }
 
     void retrieveColumn(MatrixData & column, unsigned int const x) const
@@ -400,7 +383,18 @@ private:
 
     friend std::ostream & operator<<(std::ostream & out, AlbaMatrix<DataType> const& matrix)
     {
-        out << matrix.getString();
+        DisplayTable table;
+        table.setBorders("-","|");
+        for(unsigned int y=0; y<matrix.m_numberOfRows; y++)
+        {
+            table.addRow();
+            for(unsigned int x=0; x<matrix.m_numberOfColumns; x++)
+            {
+                table.getLastRow().addCell(alba::stringHelper::convertToString(matrix.getEntryConstReference(x, y)));
+            }
+        }
+
+        out << "Matrix output:\n" << table;
         return out;
     }
 

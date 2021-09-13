@@ -2,6 +2,8 @@
 
 #include <Common/Math/Number/AlbaNumberTypes.hpp>
 
+#include <cmath>
+
 namespace alba
 {
 

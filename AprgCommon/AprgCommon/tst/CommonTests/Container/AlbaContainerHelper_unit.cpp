@@ -249,7 +249,7 @@ TEST(ContainerTest, GetUnderlyingContainerWorksOnStack)
     using Adapter=std::stack<unsigned int>;
     Adapter adapter({1U, 2U, 3U});
 
-    Adapter::container_type containerToVerify(getUnderlyingContainer(adapter));
+    Adapter::container_type const& containerToVerify(getUnderlyingContainer(adapter));
 
     Adapter::container_type containerToExpect{1U, 2U, 3U};
     EXPECT_EQ(containerToExpect, containerToVerify);

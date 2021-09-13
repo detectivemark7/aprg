@@ -51,8 +51,7 @@ NumberType AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(string
 {
     cout<<question<<endl;
 
-    NumberToStringConverter converter;
-    converter.setFieldWidth(5);
+    StringConverterWithFormatting converter(5, ' ');
 
     DisplayTable table;
     table.addRow();
@@ -62,11 +61,11 @@ NumberType AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(string
     for(auto const& choice: choices)
     {
         table.addRow();
-        table.getLastRow().addCell(string("["+converter.convert<NumberType>(choice.first)+"]"), DisplayTableCellMode::right);
+        table.getLastRow().addCell(string("["+converter.convertToString<NumberType>(choice.first)+"]"), DisplayTableCellMode::right);
         table.getLastRow().addCell("  :  ");
         table.getLastRow().addCell(choice.second, DisplayTableCellMode::left);
     }
-    cout<<table.drawOutput()<<endl;
+    cout<<table<<endl;
 
     cout << "Input your answer: ";
     return convertStringToNumber<NumberType>(getUserInput());
@@ -91,7 +90,7 @@ string AlbaUserInterface::displayQuestionAndChoicesAndGetStringAnswerInAllCapita
         table.getLastRow().addCell("  :  ");
         table.getLastRow().addCell(choice.second, DisplayTableCellMode::left);
     }
-    cout<<table.drawOutput()<<endl;
+    cout<<table<<endl;
 
     cout << "Input your answer: ";
     return getStringWithCapitalLetters(getUserInput());

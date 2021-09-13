@@ -4,28 +4,19 @@
 #include <Common/Math/AlbaMathConstants.hpp>
 #include <Common/Math/Number/AlbaComplexNumber.hpp>
 
-#include <string>
+#include <cmath>
 #include <ostream>
 
 namespace alba
 {
 
-class AlbaNumber
+class AlbaNumber // This is value type.
 {
 public:
 
     using ComplexFloat = AlbaComplexNumber<float>;
     static constexpr double ADJUSTMENT_FLOAT_TOLERANCE = 1E-15;
 
-    enum class Value
-    {
-        Unknown,
-        PositiveInfinity,
-        NegativeInfinity,
-        NotANumber,
-        pi,
-        e
-    };
     enum class Type
     {
         Integer,
@@ -56,7 +47,6 @@ public:
         double comparisonTolerance;
         double floatAdjustmentTolerance;
     };
-
     class Configuration
             : public AlbaConfigurationHolder<ConfigurationDetails>
     {
@@ -68,25 +58,62 @@ public:
         void setComparisonTolerance(double const comparisonTolerance);
         void setFloatAdjustmentTolerance(double const comparisonTolerance);
     };
-
-    class ScopeObject : public AlbaConfigurationScopeObject<ConfigurationDetails>
+    class ScopeConfigurationObject : public AlbaConfigurationScopeObject<ConfigurationDetails>
     {
     public:
         void setInThisScopeTheTolerancesToZero() const;
     };
 
+    static AlbaNumber createInteger(long long int const integer);
+    static AlbaNumber createDouble(double const doubleValue);
+    static AlbaNumber createNumberFromDoubleAndRoundIfNeeded(double const doubleValue);
     static AlbaNumber createFraction(int const numerator, int const denominator);
     static AlbaNumber createFraction(int const numerator, unsigned int const denominator);
     template <typename NumberType> static AlbaNumber createComplexNumber(NumberType const realPart, NumberType const imaginaryPart);
     static AlbaNumber createComplexNumber(ComplexFloat const& complexNumber);
 
-    AlbaNumber();
-    AlbaNumber(int const integerValue);
-    AlbaNumber(unsigned int const integerValue);
-    AlbaNumber(long long int const integerValue);
-    AlbaNumber(double const doubleValue);
-    AlbaNumber(Value const value);
+    constexpr AlbaNumber()
+        : m_type(Type::Integer)
+        , m_data{}
+    {}
 
+    constexpr AlbaNumber(int const integerValue)
+        : m_type(Type::Integer)
+        , m_data{integerValue}
+    {}
+
+    constexpr AlbaNumber(unsigned int const integerValue)
+        : m_type(Type::Integer)
+        , m_data{integerValue}
+    {}
+
+    constexpr AlbaNumber(long long int const integerValue)
+        : m_type(Type::Integer)
+        , m_data{integerValue}
+    {}
+
+    constexpr AlbaNumber(double const doubleValue)
+        : m_type(Type::Double)
+        , m_data{}
+    {
+        m_data.doubleData = doubleValue;
+    }
+
+    constexpr AlbaNumber(FractionData const& fractionData)
+        : m_type(Type::Fraction)
+        , m_data{}
+    {
+        m_data.fractionData = fractionData;
+    }
+
+    constexpr AlbaNumber(ComplexNumberData const& complexNumberData)
+        : m_type(Type::ComplexNumber)
+        , m_data{}
+    {
+        m_data.complexNumberData = complexNumberData;
+    }
+
+    // This should be constexpr as well but a lot of coding is needed
     bool operator==(AlbaNumber const& second) const;
     bool operator!=(AlbaNumber const& second) const;
     bool operator<=(AlbaNumber const& second) const;
@@ -157,7 +184,6 @@ public:
     Type getType() const;
     long long int getInteger() const;
     double getDouble() const;
-    Value getDefinedValue() const;
     FractionData getFractionData() const;
     ComplexNumberData getComplexNumberData() const;
 
@@ -168,18 +194,16 @@ public:
 
 private:
 
-    // private constructors
-    AlbaNumber(FractionData const& fractionData);
-    AlbaNumber(ComplexNumberData const& complexNumberData);
-
     // static functions
+    static double getComparisonTolerance();
+    static double getFloatAdjustmentTolerance();
+
     static double adjustFloatValue(float const value);
     static ComplexFloat createComplexFloat(ComplexNumberData const& data);
     static void correctPowerResult(double & powerResult, double const base, double const exponent);
 
     template <typename NumberType1, typename NumberType2>
     void constructBasedFromComplexNumberDetails(NumberType1 const realPart, NumberType2 const imaginaryPart);
-    void convertFromDoubleToIntegerIfNeeded();
 
     AlbaNumber addBothIntegersAndReturnNumber(
             long long int const integerValue1,
@@ -229,8 +253,8 @@ private:
 
     friend std::ostream & operator<<(std::ostream & out, AlbaNumber const& number);
 
-    Type m_type;
-    NumberUnionData m_data;
+    Type m_type; // Hotness: Type is much hotter.
+    NumberUnionData m_data; // use std variant instead? Nah, I dont wanna deal with getting the "index" to know the "type".
 };
 
 template <> AlbaNumber::ConfigurationDetails getDefaultConfigurationDetails<AlbaNumber::ConfigurationDetails>();

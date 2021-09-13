@@ -1,3 +1,4 @@
+
 #include "AlbaLinuxTimeHelper.hpp"
 
 #include <Common/Time/AlbaDateTimeConstants.hpp>
@@ -6,18 +7,6 @@
 
 namespace alba
 {
-
-void sleep(unsigned int const milliSeconds)
-{
-    usleep(milliSeconds*AlbaDateTimeConstants::NUMBER_OF_MICROSECONDS_IN_A_MILLISECOND);
-}
-
-AlbaDateTime getCurrentDateTime()
-{
-    timespec timeSpec{};
-    clock_gettime(CLOCK_REALTIME, &timeSpec);
-    return convertSystemTimeToAlbaDateTime(timeSpec);
-}
 
 AlbaDateTime convertSystemTimeToAlbaDateTime(struct timespec const& timeSpec)
 {
