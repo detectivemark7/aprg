@@ -39,21 +39,21 @@ double calculateMultiplierForIntersection(
 
 bool isCoordinateValuesInLineEqual(
         double const coordinateValueToCompare,
-        AlbaOptional<double> const& coordinateOptionalToCompare1,
+        optional<double> const& coordinateOptionalToCompare1,
         double const coordinate2Value,
         double const coordinate2InitialValue,
-        AlbaOptional<double> const& coordinateOptionalToCompare2,
+        optional<double> const& coordinateOptionalToCompare2,
         double const coordinate3Value,
         double const coordinate3InitialValue)
 {
     bool result(false);
-    if(coordinateOptionalToCompare1.hasContent())
+    if(coordinateOptionalToCompare1)
     {
-        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare1.getConstReference());
+        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare1.value());
     }
-    else if(coordinateOptionalToCompare2.hasContent())
+    else if(coordinateOptionalToCompare2)
     {
-        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare2.getConstReference());
+        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare2.value());
     }
     else
     {
@@ -65,12 +65,12 @@ bool isCoordinateValuesInLineEqual(
 
 bool isCoordinateValuesInPlaneEqual(
         double const coordinateValueToCompare,
-        AlbaOptional<double> const& coordinateOptionalToCompare)
+        optional<double> const& coordinateOptionalToCompare)
 {
     bool result(false);
-    if(coordinateOptionalToCompare.hasContent())
+    if(coordinateOptionalToCompare)
     {
-        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare.getConstReference());
+        result = isAlmostEqual(coordinateValueToCompare, coordinateOptionalToCompare.value());
     }
     else
     {
@@ -317,7 +317,7 @@ Line getLineOfIntersectionOfTwoPlanes(Plane const& plane1, Plane const& plane2)
     //assuming z=0
     //yCoordinateIntersection calculation is (a1d2-a2d1)/(a2b1-a1b2)
 
-    double xCoordinateIntersection = plane1.calculateXFromYAndZ(yCoordinateIntersection, 0.0).getConstReference();
+    double xCoordinateIntersection = plane1.calculateXFromYAndZ(yCoordinateIntersection, 0.0).value();
     Point point1(xCoordinateIntersection, yCoordinateIntersection, 0.0);
     Point point2(point1 + Point(perpendicularVector.getValueAt(0), perpendicularVector.getValueAt(1), perpendicularVector.getValueAt(2)));
     return Line(point1, point2);

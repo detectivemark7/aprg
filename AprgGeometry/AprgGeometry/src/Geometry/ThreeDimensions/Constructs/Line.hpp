@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Common/Container/AlbaOptional.hpp>
 #include <Geometry/ThreeDimensions/Constructs/Point.hpp>
 
+#include <optional>
 #include <vector>
 
 namespace alba
@@ -35,16 +35,16 @@ public:
     double getACoefficient() const;
     double getBCoefficient() const;
     double getCCoefficient() const;
-    AlbaOptional<double> calculateXFromY(double const y) const;
-    AlbaOptional<double> calculateXFromZ(double const z) const;
-    AlbaOptional<double> calculateYFromX(double const x) const;
-    AlbaOptional<double> calculateYFromZ(double const z) const;
-    AlbaOptional<double> calculateZFromX(double const x) const;
-    AlbaOptional<double> calculateZFromY(double const y) const;
+    std::optional<double> calculateXFromY(double const y) const;
+    std::optional<double> calculateXFromZ(double const z) const;
+    std::optional<double> calculateYFromX(double const x) const;
+    std::optional<double> calculateYFromZ(double const z) const;
+    std::optional<double> calculateZFromX(double const x) const;
+    std::optional<double> calculateZFromY(double const y) const;
 
 private:
     void calculateAndSaveInitialValuesIfPossible(Point const& first);
-    AlbaOptional<double> calculateOtherCoordinate(double const& initialValue1, double const coefficient1, double const& initialValue2, double const coefficient2, double const coordinate2) const;
+    std::optional<double> calculateOtherCoordinate(double const& initialValue1, double const coefficient1, double const& initialValue2, double const coefficient2, double const coordinate2) const;
     bool areAllCoefficientsZero() const;
 
     friend std::ostream & operator<<(std::ostream & out, Line const& line);

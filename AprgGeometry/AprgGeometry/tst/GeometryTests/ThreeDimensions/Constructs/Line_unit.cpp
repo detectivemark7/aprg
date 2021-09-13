@@ -62,10 +62,10 @@ TEST(ThreeDimensionsLineTest, HorizontalLine)
     EXPECT_EQ(3, line.getYInitialValue());
     EXPECT_EQ(-6, line.getZInitialValue());
     EXPECT_FALSE(line.calculateXFromY(1));
-    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-0.5, line.calculateXFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(3, line.calculateYFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(3, line.calculateYFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(-2, line.calculateZFromX(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-0.5, line.calculateXFromZ(1).value());
+    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(3, line.calculateYFromX(1).value());
+    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(3, line.calculateYFromZ(1).value());
+    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(-2, line.calculateZFromX(1).value());
     EXPECT_FALSE(line.calculateZFromY(1));
 }
 
@@ -80,12 +80,12 @@ TEST(ThreeDimensionsLineTest, VerticalLine)
     EXPECT_EQ(2, line.getXInitialValue());
     EXPECT_EQ(2, line.getYInitialValue());
     EXPECT_EQ(-4, line.getZInitialValue());
-    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(2, line.calculateXFromY(1).getConstReference());
-    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(2, line.calculateXFromZ(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(2, line.calculateXFromY(1).value());
+    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(2, line.calculateXFromZ(1).value());
     EXPECT_FALSE(line.calculateYFromX(1));
-    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(-0.5, line.calculateYFromZ(1).getConstReference());
+    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(-0.5, line.calculateYFromZ(1).value());
     EXPECT_FALSE(line.calculateZFromX(1));
-    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(-2, line.calculateZFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(-2, line.calculateZFromY(1).value());
 }
 
 TEST(ThreeDimensionsLineTest, ParallelWithZAxis)
@@ -99,12 +99,12 @@ TEST(ThreeDimensionsLineTest, ParallelWithZAxis)
     EXPECT_EQ(6, line.getXInitialValue());
     EXPECT_EQ(-12, line.getYInitialValue());
     EXPECT_EQ(6, line.getZInitialValue());
-    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-0.5, line.calculateXFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-0.5, line.calculateXFromY(1).value());
     EXPECT_FALSE(line.calculateXFromZ(1));
-    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(-2, line.calculateYFromX(1).getConstReference());
+    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(-2, line.calculateYFromX(1).value());
     EXPECT_FALSE(line.calculateYFromZ(1));
-    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(6, line.calculateZFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(6, line.calculateZFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(6, line.calculateZFromX(1).value());
+    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(6, line.calculateZFromY(1).value());
 }
 
 TEST(ThreeDimensionsLineTest, LineNotParallelWithXYZAxis)
@@ -118,12 +118,12 @@ TEST(ThreeDimensionsLineTest, LineNotParallelWithXYZAxis)
     EXPECT_EQ(7.5, line.getXInitialValue());
     EXPECT_EQ(-1.5, line.getYInitialValue());
     EXPECT_EQ(-6, line.getZInitialValue());
-    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(5, line.calculateXFromY(1).getConstReference());
-    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(4, line.calculateXFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(5, line.calculateYFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(2, line.calculateYFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(7, line.calculateZFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(-1, line.calculateZFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(5, line.calculateXFromY(1).value());
+    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(4, line.calculateXFromZ(1).value());
+    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(5, line.calculateYFromX(1).value());
+    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(2, line.calculateYFromZ(1).value());
+    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(7, line.calculateZFromX(1).value());
+    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(-1, line.calculateZFromY(1).value());
 }
 
 TEST(ThreeDimensionsLineTest, LineWithSlopeSet)
@@ -137,12 +137,12 @@ TEST(ThreeDimensionsLineTest, LineWithSlopeSet)
     EXPECT_EQ(-2, line.getXInitialValue());
     EXPECT_EQ(0, line.getYInitialValue());
     EXPECT_EQ(2, line.getZInitialValue());
-    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-0.5, line.calculateXFromY(1).getConstReference());
-    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-5, line.calculateXFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(2, line.calculateYFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(-2, line.calculateYFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(3, line.calculateZFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(2.5, line.calculateZFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-0.5, line.calculateXFromY(1).value());
+    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-5, line.calculateXFromZ(1).value());
+    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(2, line.calculateYFromX(1).value());
+    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(-2, line.calculateYFromZ(1).value());
+    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(3, line.calculateZFromX(1).value());
+    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(2.5, line.calculateZFromY(1).value());
 }
 
 TEST(ThreeDimensionsLineTest, LineWithSumOfCoefficientsEqualToZero)
@@ -156,12 +156,12 @@ TEST(ThreeDimensionsLineTest, LineWithSumOfCoefficientsEqualToZero)
     EXPECT_EQ(1, line.getXInitialValue());
     EXPECT_EQ(0, line.getYInitialValue());
     EXPECT_EQ(0, line.getZInitialValue());
-    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-1, line.calculateXFromY(1).getConstReference());
-    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-1, line.calculateXFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(0, line.calculateYFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(1, line.calculateYFromZ(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(0, line.calculateZFromX(1).getConstReference());
-    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(1, line.calculateZFromY(1).getConstReference());
+    ASSERT_TRUE(line.calculateXFromY(1)); EXPECT_EQ(-1, line.calculateXFromY(1).value());
+    ASSERT_TRUE(line.calculateXFromZ(1)); EXPECT_EQ(-1, line.calculateXFromZ(1).value());
+    ASSERT_TRUE(line.calculateYFromX(1)); EXPECT_EQ(0, line.calculateYFromX(1).value());
+    ASSERT_TRUE(line.calculateYFromZ(1)); EXPECT_EQ(1, line.calculateYFromZ(1).value());
+    ASSERT_TRUE(line.calculateZFromX(1)); EXPECT_EQ(0, line.calculateZFromX(1).value());
+    ASSERT_TRUE(line.calculateZFromY(1)); EXPECT_EQ(1, line.calculateZFromY(1).value());
 }
 
 TEST(ThreeDimensionsLineTest, LineWithSomeZeroCoefficientWorks)

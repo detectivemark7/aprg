@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Common/Container/AlbaOptional.hpp>
 #include <Geometry/ThreeDimensions/Constructs/Point.hpp>
 
+#include <optional>
 #include <vector>
 
 namespace alba
@@ -32,12 +32,12 @@ public:
     double getBCoefficient() const;
     double getCCoefficient() const;
     double getDCoefficient() const;
-    AlbaOptional<double> getXIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
-    AlbaOptional<double> getYIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
-    AlbaOptional<double> getZIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
-    AlbaOptional<double> calculateXFromYAndZ(double const y, double const z) const;
-    AlbaOptional<double> calculateYFromXAndZ(double const x, double const z) const;
-    AlbaOptional<double> calculateZFromXAndY(double const x, double const y) const;
+    std::optional<double> getXIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
+    std::optional<double> getYIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
+    std::optional<double> getZIntercept() const; //form: a*(x-x0) + b*(y-y0) + c*(z-z0) = 0
+    std::optional<double> calculateXFromYAndZ(double const y, double const z) const;
+    std::optional<double> calculateYFromXAndZ(double const x, double const z) const;
+    std::optional<double> calculateZFromXAndY(double const x, double const y) const;
 
 private:
     friend std::ostream & operator<<(std::ostream & out, Plane const& plane);
