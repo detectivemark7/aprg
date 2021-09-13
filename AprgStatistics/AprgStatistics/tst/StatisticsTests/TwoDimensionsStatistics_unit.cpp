@@ -148,7 +148,7 @@ TEST(TwoDimensionsStatisticsTest, LineModelingWithScatteredValue)
 
     EXPECT_DOUBLE_EQ(1, lineModel.aCoefficient);
     EXPECT_DOUBLE_EQ(-0.016144305895888833025, lineModel.bCoefficient);
-    EXPECT_DOUBLE_EQ(-0.64846044526167945, lineModel.cCoefficient);
+    EXPECT_DOUBLE_EQ(-0.64846044526168001, lineModel.cCoefficient);
 }
 
 TEST(TwoDimensionsStatisticsTest, SquareErrorFromLineModelCanBeCalculatedForInvalidLine)
