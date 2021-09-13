@@ -131,15 +131,15 @@ void ChessEngineControllerWithUci::stop()
 void ChessEngineControllerWithUci::setAdditionalStepsInCalculationMonitoring(
         StepsInCalculationMonitoring const& additionalSteps)
 {
-    m_additionalStepsInCalculationMonitoring.setConstReference(additionalSteps);
+    m_additionalStepsInCalculationMonitoring = additionalSteps;
 }
 
 void ChessEngineControllerWithUci::setLogFile(string const& logFilePath)
 {
-    m_logFileStreamOptional.createObjectUsingDefaultConstructor();
-    m_logFileStreamOptional.getReference().open(logFilePath);
+    m_logFileStreamOptional.emplace();
+    m_logFileStreamOptional->open(logFilePath);
 
-    if(!m_logFileStreamOptional.getReference().is_open())
+    if(!m_logFileStreamOptional->is_open())
     {
         cout << "Cannot open log file" << logFilePath;
     }
@@ -180,7 +180,7 @@ void ChessEngineControllerWithUci::changeState(
 {
     if(m_logFileStreamOptional)
     {
-        m_logFileStreamOptional.getReference()
+        m_logFileStreamOptional.value()
                 << "Changing state from " << getEnumString(m_state)
                 << " to " << getEnumString(state) << endl;
     }
@@ -204,7 +204,7 @@ void ChessEngineControllerWithUci::log(string const& logString)
 {
     if(m_logFileStreamOptional)
     {
-        m_logFileStreamOptional.getReference() << logString << endl;
+        m_logFileStreamOptional.value() << logString << endl;
     }
 }
 
@@ -367,7 +367,7 @@ void ChessEngineControllerWithUci::processInCalculating(
 
     if(m_additionalStepsInCalculationMonitoring)
     {
-        m_additionalStepsInCalculationMonitoring.getConstReference()(m_currentCalculationDetails);
+        m_additionalStepsInCalculationMonitoring.value()(m_currentCalculationDetails);
     }
 }
 
