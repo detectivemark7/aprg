@@ -4,6 +4,8 @@
 #include <Common/Math/Helpers/PrecisionHelpers.hpp>
 #include <Common/Math/Matrix/Utilities/AlbaMatrixUtilities.hpp>
 
+#include <numeric>
+
 using namespace alba::algorithm;
 using namespace alba::mathHelper;
 using namespace alba::matrix;

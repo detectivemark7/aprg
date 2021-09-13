@@ -1,5 +1,7 @@
 #include "NimGame.hpp"
 
+#include <numeric>
+
 using namespace std;
 
 namespace alba

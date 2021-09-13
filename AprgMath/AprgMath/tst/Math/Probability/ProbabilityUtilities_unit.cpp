@@ -1,7 +1,9 @@
+#include <Common/Math/Number/AlbaNumberConstants.hpp>
 #include <Math/Probability/ProbabilityUtilities.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace alba::AlbaNumberConstants;
 using namespace std;
 
 namespace alba
@@ -27,9 +29,9 @@ TEST(ProbabilityUtilitiesTest, GetCorrectProbabilityWorks)
 {
     EXPECT_EQ(AlbaNumber::createFraction(1, 2U), getCorrectProbability(AlbaNumber::createFraction(1, 2U)));
     EXPECT_EQ(AlbaNumber(1), getCorrectProbability(AlbaNumber::createFraction(3, 2U)));
-    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(AlbaNumber(AlbaNumber::Value::PositiveInfinity)));
-    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(AlbaNumber(AlbaNumber::Value::NegativeInfinity)));
-    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(AlbaNumber(AlbaNumber::Value::NotANumber)));
+    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(ALBA_NUMBER_POSITIVE_INFINITY));
+    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(ALBA_NUMBER_NEGATIVE_INFINITY));
+    EXPECT_EQ(AlbaNumber(0), getCorrectProbability(ALBA_NUMBER_NOT_A_NUMBER));
     EXPECT_EQ(AlbaNumber(0), getCorrectProbability(AlbaNumber::createFraction(3, 0U)));
     EXPECT_EQ(AlbaNumber(0), getCorrectProbability(AlbaNumber::createFraction(0, 0U)));
 }

@@ -3,6 +3,7 @@
 #include <Math/NumberTheory/ModularArithmetic.hpp>
 
 #include <algorithm>
+#include <numeric>
 
 using namespace std;
 
