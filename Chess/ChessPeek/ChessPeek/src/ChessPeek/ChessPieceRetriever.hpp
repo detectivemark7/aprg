@@ -6,7 +6,6 @@
 #include <ChessUtilities/Board/Piece.hpp>
 #include <Common/Bit/AlbaBitManipulation.hpp>
 #include <Common/Bit/AlbaBitValueUtilities.hpp>
-#include <Common/Container/AlbaOptional.hpp>
 
 #include <array>
 #include <bitset>
@@ -14,6 +13,7 @@
 #include <fstream>
 #include <functional>
 #include <map>
+#include <optional>
 
 namespace alba
 {
@@ -75,7 +75,7 @@ private:
     AprgBitmap::BitmapXY m_checkMaxPoint;
     CheckDetails m_checkDetails;
     PieceToChessCellBitValueMap m_piecesToChessCellBitValuesMap;
-    AlbaOptional<std::ofstream> m_logFileStreamOptional;
+    std::optional<std::ofstream> m_logFileStreamOptional;
 
 };
 
