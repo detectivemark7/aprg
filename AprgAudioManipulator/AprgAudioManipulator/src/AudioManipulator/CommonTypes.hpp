@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Audio/Audio.hpp>
-#include <Common/Container/AlbaOptional.hpp>
 
 #include <map>
+#include <optional>
 #include <utility>
 #include <vector>
 
@@ -26,7 +26,7 @@ using SearchResultsDetails=std::vector<SearchResultDetails>;
 
 using Indexes=std::vector<unsigned int>;
 
-using DoubleOptional=AlbaOptional<double>;
+using DoubleOptional=std::optional<double>;
 using Samples=std::vector<double>;
 using AudioInDouble=Audio<double>;
 
