@@ -19,7 +19,11 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_LineWithSlope)
     AprgGnuPlot3D::PointsInGraph points;
     for(double x=-10; x<10; x+=0.1)
     {
-        points.emplace_back(AprgGnuPlot3D::getPoint(x, line.calculateYFromX(x), line.calculateZFromX(x)));
+        auto yOptional = line.calculateYFromX(x), zOptional = line.calculateZFromX(x);
+        if(yOptional && zOptional)
+        {
+            points.emplace_back(AprgGnuPlot3D::getPoint(x, yOptional.value(), zOptional.value()));
+        }
     }
 
     AprgGnuPlot3D gnuPlot3D;
@@ -43,9 +47,21 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_MultipleLinesAndPoints)
     AprgGnuPlot3D::PointsInGraph points3;
     for(double x=-10; x<10; x+=0.1)
     {
-        points1.emplace_back(AprgGnuPlot3D::getPoint(x, line1.calculateYFromX(x), line1.calculateZFromX(x)));
-        points2.emplace_back(AprgGnuPlot3D::getPoint(x, line2.calculateYFromX(x), line2.calculateZFromX(x)));
-        points3.emplace_back(AprgGnuPlot3D::getPoint(x, line3.calculateYFromX(x), line3.calculateZFromX(x)));
+        auto y1Optional = line1.calculateYFromX(x),  z1Optional = line1.calculateZFromX(x);
+        if(y1Optional && z1Optional)
+        {
+            points1.emplace_back(AprgGnuPlot3D::getPoint(x, y1Optional.value(), z1Optional.value()));
+        }
+        auto y2Optional = line2.calculateYFromX(x),  z2Optional = line2.calculateZFromX(x);
+        if(y2Optional && z2Optional)
+        {
+            points1.emplace_back(AprgGnuPlot3D::getPoint(x, y2Optional.value(), z2Optional.value()));
+        }
+        auto y3Optional = line3.calculateYFromX(x),  z3Optional = line3.calculateZFromX(x);
+        if(y3Optional && z2Optional)
+        {
+            points1.emplace_back(AprgGnuPlot3D::getPoint(x, y3Optional.value(), z3Optional.value()));
+        }
     }
 
     AprgGnuPlot3D gnuPlot3D;
@@ -75,7 +91,11 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_PlaneConstructedWithThreePoints)
     {
         for(double z=-10; z<10; z+=0.5)
         {
-            planePoints.emplace_back(AprgGnuPlot3D::getPoint(x, plane.calculateYFromXAndZ(x, z), z));
+            auto yOptional = plane.calculateYFromXAndZ(x, z);
+            if(yOptional)
+            {
+                planePoints.emplace_back(AprgGnuPlot3D::getPoint(x, yOptional.value(), z));
+            }
         }
     }
 
@@ -108,11 +128,19 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_LineOfIntersectionOfTwoPlanes)
     {
         for(double z=-5; z<5; z+=0.5)
         {
-            pointsOfPlane1.emplace_back(AprgGnuPlot3D::getPoint(x, plane1.calculateYFromXAndZ(x, z), z));
-            pointsOfPlane2.emplace_back(AprgGnuPlot3D::getPoint(x, plane2.calculateYFromXAndZ(x, z), z));
+            auto y1Optional = plane1.calculateYFromXAndZ(x, z);
+            if(y1Optional)
+            {
+                pointsOfPlane1.emplace_back(AprgGnuPlot3D::getPoint(x, y1Optional.value(), z));
+            }
+            auto y2Optional = plane2.calculateYFromXAndZ(x, z);
+            if(y2Optional)
+            {
+                pointsOfPlane2.emplace_back(AprgGnuPlot3D::getPoint(x, y2Optional.value(), z));
+            }
         }
         pointsOfLineOfIntersection.emplace_back(
-                    AprgGnuPlot3D::getPoint(x,lineOfIntersection.calculateYFromX(x).getConstReference(), lineOfIntersection.calculateZFromX(x).getConstReference()));
+                    AprgGnuPlot3D::getPoint(x,lineOfIntersection.calculateYFromX(x).value(), lineOfIntersection.calculateZFromX(x).value()));
     }
 
     AprgGnuPlot3D gnuPlot3D;
@@ -150,7 +178,11 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_BrewersProblemForSimplexTest)
         {
             if(x+3*y <= 96 && x+y <= 40 && 7*x+4*y <= 238) //A+3B<=96, A+B<=40, 7A+4B<=238
             {
-                profitPoints.emplace_back(AprgGnuPlot3D::getPoint(x, y, profitModel.calculateZFromXAndY(x, y)));
+                auto zOptional = profitModel.calculateYFromXAndZ(x, y);
+                if(zOptional)
+                {
+                    profitPoints.emplace_back(AprgGnuPlot3D::getPoint(x, y, zOptional.value()));
+                }
             }
         }
     }
@@ -158,17 +190,20 @@ TEST(AprgGeometryThreeDimensionsTest, DISABLED_BrewersProblemForSimplexTest)
     {
         for(double z=0; z<1000; z+=20)
         {
-            if(constraints1.calculateYFromXAndZ(x, z).getConstReference() > 0)
+            auto y1Optional = constraints1.calculateYFromXAndZ(x, z);
+            if(y1Optional && y1Optional.value() > 0)
             {
-                c1Points.emplace_back(AprgGnuPlot3D::getPoint(x, constraints1.calculateYFromXAndZ(x, z), z));
+                c1Points.emplace_back(AprgGnuPlot3D::getPoint(x, y1Optional.value(), z));
             }
-            if(constraints2.calculateYFromXAndZ(x, z).getConstReference() > 0)
+            auto y2Optional = constraints2.calculateYFromXAndZ(x, z);
+            if(y2Optional && y2Optional.value() > 0)
             {
-                c2Points.emplace_back(AprgGnuPlot3D::getPoint(x, constraints2.calculateYFromXAndZ(x, z), z));
+                c2Points.emplace_back(AprgGnuPlot3D::getPoint(x, y2Optional.value(), z));
             }
-            if(constraints3.calculateYFromXAndZ(x, z).getConstReference() > 0)
+            auto y3Optional = constraints3.calculateYFromXAndZ(x, z);
+            if(y3Optional && y3Optional.value() > 0)
             {
-                c3Points.emplace_back(AprgGnuPlot3D::getPoint(x, constraints3.calculateYFromXAndZ(x, z), z));
+                c3Points.emplace_back(AprgGnuPlot3D::getPoint(x, y3Optional.value(), z));
             }
         }
     }
