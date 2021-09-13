@@ -9,6 +9,7 @@
 
 using namespace alba::algebra;
 using namespace alba::AprgBitmap;
+using namespace alba::TwoDimensions;
 using namespace std;
 
 #define APRG_GRAPH_24_BIT_DEFAULT_FILE APRG_DIR R"(\AprgGraph\FilesForTests\Bitmaps\Default24Bit.bmp)"

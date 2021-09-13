@@ -184,7 +184,7 @@ void AprgGraph::drawFunctionUsingY(unsigned int const color, FunctionWithDoubles
 
 void AprgGraph::drawNumberLabel(LabelType const labelType, Point const& bitmapPointNumberPosition, double const number)
 {
-    string label(m_numberToStringConverter.convert(number));
+    string label(m_numberToStringConverter.convertToString(number));
     unsigned int labelCharacterLength = label.length();
     unsigned int widthOfCharacter = 12;
     unsigned int heightOfCharacter = 20;
