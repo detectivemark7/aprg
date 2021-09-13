@@ -103,7 +103,7 @@ private:
 
     Vertex dequeue()
     {
-        Vertex result;
+        Vertex result{};
         if(!m_queueOfVertices.empty())
         {
             result = m_queueOfVertices.front();

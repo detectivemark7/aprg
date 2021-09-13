@@ -76,7 +76,6 @@ public:
     {
         return m_vertexToPreviousVertexMap;
     }
-    virtual void reinitializeStartingFrom(Vertices const& startVertices) = 0;
 
 protected:
 

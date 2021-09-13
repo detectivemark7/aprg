@@ -3,7 +3,6 @@
 #include <Algorithm/Graph/FlowNetwork/FlowNetwork.hpp>
 
 #include <algorithm>
-#include <sstream>
 
 namespace alba
 {

@@ -5,7 +5,6 @@
 #include <Algorithm/Graph/Utilities/SortedEdge.hpp>
 
 #include <algorithm>
-#include <sstream>
 
 namespace alba
 {
@@ -182,21 +181,6 @@ public:
         return result;
     }
 
-    std::string getDisplayableString() const override
-    {
-        std::stringstream ss;
-        ss << BaseClass::getDisplayableString() << "Flow edges: {";
-        for(auto const& edgeAndDetailsPair : m_edgeToFlowEdgeDetailsMap)
-        {
-            ss << edgeAndDetailsPair.first.first << "->"
-               << edgeAndDetailsPair.first.second
-               << "(capacity: " << edgeAndDetailsPair.second.capacity
-               << " flow: "<< edgeAndDetailsPair.second.flow << "), ";
-        }
-        ss << "}";
-        return ss.str();
-    }
-
     void connect(Vertex const& vertex1, Vertex const& vertex2, FlowDataType const& capacity, FlowDataType const& flow)
     {
         connect(vertex1, vertex2);
@@ -250,6 +234,20 @@ private:
             return edgeAndDetailsPair.second.flow;
         });
         return result;
+    }
+
+    friend std::ostream & operator<<(std::ostream & out, FlowNetwork const& graph)
+    {
+        out << dynamic_cast<BaseClass const&>(graph) << "Flow edges: {";
+        for(auto const& edgeAndDetailsPair : graph.m_edgeToFlowEdgeDetailsMap)
+        {
+            out << edgeAndDetailsPair.first.first << "->"
+               << edgeAndDetailsPair.first.second
+               << "(capacity: " << edgeAndDetailsPair.second.capacity
+               << " flow: "<< edgeAndDetailsPair.second.flow << "), ";
+        }
+        out << "}";
+        return out;
     }
 
     EdgeToFlowEdgeDetailsMap m_edgeToFlowEdgeDetailsMap;

@@ -1,9 +1,11 @@
 #include <Algorithm/Graph/DirectedGraph/DirectedGraphWithVertexToAdjacencyListsMap.hpp>
 #include <AlgorithmTests/Graph/DirectedGraph/Utilities/CommonTestsWithDirectedGraph.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 
 #include <gtest/gtest.h>
 
 using namespace alba::algorithm::CommonTestsWithDirectedGraph;
+using namespace alba::stringHelper;
 
 namespace alba
 {
@@ -116,14 +118,14 @@ TEST(DirectedGraphWithVertexToAdjacencyListsMapTest, ComplicatedTestWorks)
     testWithComplicatedExampleWithVertexAsUnsignedInt<GraphForTest>();
 }
 
-TEST(DirectedGraphWithVertexToAdjacencyListsMapTest, GetDisplayableStringWorks)
+TEST(DirectedGraphWithVertexToAdjacencyListsMapTest, OutputStreamOperatorWorks)
 {
     GraphForTest graph;
 
     graph.connect(0U, 1U);
     graph.connect(2U, 0U);
 
-    EXPECT_EQ("Adjacency Lists: \nAdjacent with vertex 0: {1, } \nAdjacent with vertex 2: {0, } \n", graph.getDisplayableString());
+    EXPECT_EQ("Adjacency Lists: \nAdjacent with vertex 0: {1, } \nAdjacent with vertex 2: {0, } \n", convertToString(graph));
 }
 
 }

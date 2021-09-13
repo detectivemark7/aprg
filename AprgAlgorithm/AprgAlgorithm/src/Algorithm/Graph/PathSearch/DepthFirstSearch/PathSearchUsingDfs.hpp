@@ -69,10 +69,10 @@ public:
         return this->getPathTo(endVertex);
     }
 
-    void reinitializeStartingFrom(Vertices const& startVertices) override
+    void reinitializeStartingFrom(Vertices const& startVertices)
     {
-        this->clear();
-        this->initializeWithStartVertices(startVertices);
+        clear();
+        initializeWithStartVertices(startVertices);
         m_initializeDataFunction(startVertices);
         for(Vertex const& startVertex : b_startVertices.getVertices())  // to maintain order, get the vertices in start vertices (because its sorted)
         {
@@ -81,6 +81,8 @@ public:
     }
 
 private:
+    using BaseClass::clear;
+    using BaseClass::initializeWithStartVertices;
 
     void traverseUsingDfs(Vertex const& vertex)
     {

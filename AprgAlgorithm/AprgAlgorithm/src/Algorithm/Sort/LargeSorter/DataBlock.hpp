@@ -4,11 +4,11 @@
 #include <Algorithm/Sort/LargeSorter/DataBlockFileHandler.hpp>
 #include <Algorithm/Sort/LargeSorter/DataBlockMemoryHandler.hpp>
 #include <Common/Container/AlbaContainerHelper.hpp>
-#include <Common/Container/AlbaOptional.hpp>
 
 #include <algorithm>
 #include <fstream>
 #include <functional>
+#include <optional>
 #include <string>
 
 namespace alba
@@ -66,7 +66,7 @@ public:
         unsigned int numberOfObjectsInMemory(0);
         if(m_memoryBlockHandler)
         {
-            numberOfObjectsInMemory = m_memoryBlockHandler.getConstReference().getContainerConstReference().size();
+            numberOfObjectsInMemory = m_memoryBlockHandler->getContainerConstReference().size();
         }
         return numberOfObjectsInMemory;
     }
@@ -79,7 +79,7 @@ public:
         bool isOpened = false;
         if(m_blockFileHandler)
         {
-            isOpened = m_blockFileHandler.getReference().isFileStreamOpened();
+            isOpened = m_blockFileHandler->isFileStreamOpened();
         }
         return isOpened;
     }
@@ -89,15 +89,15 @@ public:
         {
         case DataBlockType::Empty:
             createMemoryHandlerIfNeeded();
-            m_memoryBlockHandler.getReference().add(objectToSort);
+            m_memoryBlockHandler->add(objectToSort);
             m_blockType = DataBlockType::Memory;
             break;
         case DataBlockType::File:
-            m_blockFileHandler.getReference().openFileIfNeeded(m_fileDumpPath);
-            m_blockFileHandler.getReference().add(objectToSort);
+            m_blockFileHandler->openFileIfNeeded(m_fileDumpPath);
+            m_blockFileHandler->add(objectToSort);
             break;
         case DataBlockType::Memory:
-            m_memoryBlockHandler.getReference().add(objectToSort);
+            m_memoryBlockHandler->add(objectToSort);
             break;
         }
         setLowestObjectIfNeeded(objectToSort);
@@ -106,14 +106,14 @@ public:
     void addAtTheStart(ObjectToSort const& objectToSort)
     {
         switchToMemoryMode();
-        m_memoryBlockHandler.getReference().addAtTheStart(objectToSort);
+        m_memoryBlockHandler->addAtTheStart(objectToSort);
         setLowestObjectIfNeeded(objectToSort);
         m_numberOfObjects++;
     }
     void sortThenDoFunctionThenRelease(std::function<void(ObjectToSort const&)> doFunctionForAllObjects)
     {
         switchToMemoryMode();
-        MemoryContainer & contents(m_memoryBlockHandler.getReference().getContainerReference());
+        MemoryContainer & contents(m_memoryBlockHandler->getContainerReference());
         std::stable_sort(contents.begin(), contents.end());
         for(ObjectToSort const& objectToSort : contents)
         {
@@ -124,7 +124,7 @@ public:
     void nthElementThenDoFunctionThenRelease(Indexes const& indexes, std::function<void(ObjectToSort const&)> doFunctionForAllObjects)
     {
         switchToMemoryMode();
-        MemoryContainer & contents(m_memoryBlockHandler.getReference().getContainerReference());
+        MemoryContainer & contents(m_memoryBlockHandler->getContainerReference());
         typename MemoryContainer::iterator iteratorForStart = contents.begin();
         for(unsigned int const& index : indexes)
         {
@@ -143,12 +143,12 @@ public:
         createFileHandlerIfNeeded();
         if(m_memoryBlockHandler)
         {
-            MemoryContainer const & contents(m_memoryBlockHandler.getReference().getContainerReference());
-            m_blockFileHandler.getReference().openFileIfNeeded(m_fileDumpPath);
-            std::ofstream & fileDump = m_blockFileHandler.getReference().getFileDumpStreamReference();
+            MemoryContainer const & contents(m_memoryBlockHandler->getContainerReference());
+            m_blockFileHandler->openFileIfNeeded(m_fileDumpPath);
+            std::ofstream & fileDump = m_blockFileHandler->getFileDumpStreamReference();
             containerHelper::saveContentsToStream(fileDump, contents, containerHelper::StreamFormat::File);
         }
-        m_memoryBlockHandler.clear();
+        m_memoryBlockHandler.reset();
         m_blockType = DataBlockType::File;
     }
     void switchToMemoryMode()
@@ -156,18 +156,18 @@ public:
         createMemoryHandlerIfNeeded();
         if(m_blockFileHandler)
         {
-            m_blockFileHandler.getReference().releaseFileStream();
-            MemoryContainer & contents(m_memoryBlockHandler.getReference().getContainerReference());
+            m_blockFileHandler->releaseFileStream();
+            MemoryContainer & contents(m_memoryBlockHandler->getContainerReference());
             std::ifstream inputFileStream(m_fileDumpPath);
             containerHelper::retrieveContentsFromStream(inputFileStream, contents);
             assert(contents.size() == m_numberOfObjects);
         }
-        m_blockFileHandler.clear();
+        m_blockFileHandler.reset();
         m_blockType = DataBlockType::Memory;
     }
     void releaseFileStream()
     {
-        m_blockFileHandler.getReference().releaseFileStream();
+        m_blockFileHandler->releaseFileStream();
     }
 
 private:
@@ -175,20 +175,20 @@ private:
     {
         if(!m_memoryBlockHandler)
         {
-            m_memoryBlockHandler.createObjectUsingDefaultConstructor();
+            m_memoryBlockHandler.emplace();
         }
     }
     void createFileHandlerIfNeeded()
     {
         if(!m_blockFileHandler)
         {
-            m_blockFileHandler.createObjectUsingDefaultConstructor();
+            m_blockFileHandler.emplace();
         }
     }
     void clearAll()
     {
-        m_memoryBlockHandler.clear();
-        m_blockFileHandler.clear();
+        m_memoryBlockHandler.reset();
+        m_blockFileHandler.reset();
         m_blockType = DataBlockType::Empty;
         m_numberOfObjects = 0;
     }
@@ -204,8 +204,8 @@ private:
     std::string  const m_fileDumpPath;
     unsigned int m_numberOfObjects;
     ObjectToSort m_lowestValue;
-    AlbaOptional<DataBlockMemoryHandler<ObjectToSort>> m_memoryBlockHandler;
-    AlbaOptional<DataBlockFileHandler<ObjectToSort>> m_blockFileHandler;
+    std::optional<DataBlockMemoryHandler<ObjectToSort>> m_memoryBlockHandler;
+    std::optional<DataBlockFileHandler<ObjectToSort>> m_blockFileHandler;
 };
 
 }

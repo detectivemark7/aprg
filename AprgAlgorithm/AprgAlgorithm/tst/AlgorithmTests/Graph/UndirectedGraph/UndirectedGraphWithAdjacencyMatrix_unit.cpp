@@ -1,9 +1,11 @@
 #include <Algorithm/Graph/UndirectedGraph/UndirectedGraphWithAdjacencyMatrix.hpp>
 #include <AlgorithmTests/Graph/UndirectedGraph/Utilities/CommonTestsWithUndirectedGraph.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 
 #include <gtest/gtest.h>
 
 using namespace alba::algorithm::CommonTestsWithUndirectedGraph;
+using namespace alba::stringHelper;
 
 namespace alba
 {
@@ -121,7 +123,7 @@ TEST(UndirectedGraphWithAdjacencyMatrixTest, ComplicatedTestWorks)
     testWithComplicatedExampleWithVertexAsUnsignedInt<GraphForTest>();
 }
 
-TEST(UndirectedGraphWithAdjacencyMatrixTest, GetDisplayableStringWorks)
+TEST(UndirectedGraphWithAdjacencyMatrixTest, OutputStreamOperatorWorks)
 {
     UndirectedGraphWithAdjacencyMatrix<unsigned int, 3> graph;
 
@@ -130,7 +132,7 @@ TEST(UndirectedGraphWithAdjacencyMatrixTest, GetDisplayableStringWorks)
 
     EXPECT_EQ("Adjacency Matrix output:\n-----------------\n| X |[0]|[1]|[2]|\n-----------------\n|[0]| 0 | 1 | 1 |\n-----------------\n"
               "|[1]| 1 | 0 | 0 |\n-----------------\n|[2]| 1 | 0 | 0 |\n-----------------\n",
-              graph.getDisplayableString());
+              convertToString(graph));
 }
 
 }

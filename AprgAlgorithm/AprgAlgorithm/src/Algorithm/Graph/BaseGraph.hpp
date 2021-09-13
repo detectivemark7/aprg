@@ -27,7 +27,6 @@ public:
     virtual Vertices getAdjacentVerticesAt(Vertex const& vertex) const = 0;
     virtual Vertices getVertices() const = 0;
     virtual Edges getEdges() const = 0;
-    virtual std::string getDisplayableString() const = 0;
 
     virtual void connect(Vertex const& sourceVertex, Vertex const& destinationVertex) = 0;
     virtual void disconnect(Vertex const& sourceVertex, Vertex const& destinationVertex) = 0;

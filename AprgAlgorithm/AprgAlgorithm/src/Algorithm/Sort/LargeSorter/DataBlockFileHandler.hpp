@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Common/Container/AlbaOptional.hpp>
 #include <Common/PathHandler/AlbaLocalPathHandler.hpp>
 
+#include <cassert>
 #include <fstream>
+#include <optional>
 #include <string>
 
 namespace alba
@@ -24,14 +25,14 @@ public:
 
     std::ofstream & getFileDumpStreamReference()
     {
-        return m_fileOptional.getReference();
+        return m_fileOptional.value();
     }
 
     bool isFileStreamOpened()
     {
         if(m_fileOptional)
         {
-            return m_fileOptional.getReference().is_open();
+            return m_fileOptional->is_open();
         }
         return false;
     }
@@ -43,8 +44,8 @@ public:
             AlbaLocalPathHandler filePathHandler(path);
             //filePathHandler.createDirectoriesForNonExisitingDirectories(); //is this needed?
             m_path = filePathHandler.getFullPath();
-            m_fileOptional.createObjectUsingDefaultConstructor();
-            std::ofstream & fileStream (m_fileOptional.getReference());
+            m_fileOptional.emplace();
+            std::ofstream & fileStream (m_fileOptional.value());
             fileStream.open(m_path, std::ios::ate|std::ios::app);
             assert(!fileStream.fail());
         }
@@ -52,18 +53,18 @@ public:
 
     void add(ObjectToSort const& objectToSort)
     {
-        m_fileOptional.getReference()<<objectToSort<<std::endl;
+        m_fileOptional.value()<<objectToSort<<std::endl;
     }
 
     void releaseFileStream()
     {
-        //m_fileOptional.getReference().close(); // close does not work why?
-        m_fileOptional.clear();
+        //m_fileOptional->close(); // close does not work why?
+        m_fileOptional.reset();
     }
 
 private:
     std::string m_path;
-    AlbaOptional<std::ofstream> m_fileOptional;
+    std::optional<std::ofstream> m_fileOptional;
 };
 
 }

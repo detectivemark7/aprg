@@ -2,10 +2,13 @@
 
 #include <Algorithm/UnionFind/WeightedQuickUnionWithArray.hpp>
 #include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
 #include <string>
 #include <vector>
+
+using namespace alba::stringHelper;
 
 namespace alba
 {
@@ -48,7 +51,7 @@ public:
             }
         }
         displayTable.setBorders("-", "|");
-        return displayTable.drawOutput();
+        return convertToString(displayTable);
     }
 
     void addOpenSitesUntilItPercolates()

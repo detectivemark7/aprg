@@ -5,7 +5,6 @@
 
 #include <algorithm>
 #include <map>
-#include <sstream>
 
 namespace alba
 {
@@ -89,24 +88,6 @@ public:
         return result;
     }
 
-    std::string getDisplayableString() const override
-    {
-        std::stringstream ss;
-        ss << "Adjacency Lists: \n";
-        for(auto const& vertexAndAdjacencyListPair : m_adjacencyLists)
-        {
-            Vertex const& vertex(vertexAndAdjacencyListPair.first);
-            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
-            if(!adjacencyList.empty())
-            {
-                ss << "Adjacent with vertex " << vertex << ": {";
-                containerHelper::saveContentsToStream(ss, adjacencyList, containerHelper::StreamFormat::String);
-                ss << "} \n";
-            }
-        }
-        return ss.str();
-    }
-
     void connect(Vertex const& sourceVertex, Vertex const& destinationVertex) override
     {
         if(!isDirectlyConnected(sourceVertex, destinationVertex))
@@ -132,6 +113,7 @@ public:
     }
 
 protected:
+
     SetOfVertices getUniqueVertices() const
     {
         SetOfVertices uniqueVertices;
@@ -144,6 +126,24 @@ protected:
         }
         return uniqueVertices;
     }
+
+    friend std::ostream & operator<<(std::ostream & out, DirectedGraphWithVertexToAdjacencyListsMap const& graph)
+    {
+        out << "Adjacency Lists: \n";
+        for(auto const& vertexAndAdjacencyListPair : graph.m_adjacencyLists)
+        {
+            Vertex const& vertex(vertexAndAdjacencyListPair.first);
+            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
+            if(!adjacencyList.empty())
+            {
+                out << "Adjacent with vertex " << vertex << ": {";
+                containerHelper::saveContentsToStream(out, adjacencyList, containerHelper::StreamFormat::String);
+                out << "} \n";
+            }
+        }
+        return out;
+    }
+
     unsigned int m_numberOfEdges;
     AdjacencyLists m_adjacencyLists;
 };

@@ -90,23 +90,6 @@ public:
         return result;
     }
 
-    std::string getDisplayableString() const override
-    {
-        std::stringstream ss;
-        ss << "Adjacency Lists: \n";
-        for(Vertex vertex=0; vertex<m_adjacencyLists.size(); vertex++)
-        {
-            AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex));
-            if(!adjacencyList.empty())
-            {
-                ss << "Adjacent with vertex " << vertex << ": {";
-                containerHelper::saveContentsToStream(ss, adjacencyList, containerHelper::StreamFormat::String);
-                ss << "} \n";
-            }
-        }
-        return ss.str();
-    }
-
     void connect(Vertex const& vertex1, Vertex const& vertex2) override
     {
         if(!isDirectlyConnected(vertex1, vertex2))
@@ -154,6 +137,23 @@ public:
     }
 
 protected:
+
+    friend std::ostream & operator<<(std::ostream & out, UndirectedGraphWithArrayOfAdjacencyLists const& graph)
+    {
+        out << "Adjacency Lists: \n";
+        for(Vertex vertex=0; vertex<graph.m_adjacencyLists.size(); vertex++)
+        {
+            AdjacencyList const& adjacencyList(graph.m_adjacencyLists.at(vertex));
+            if(!adjacencyList.empty())
+            {
+                out << "Adjacent with vertex " << vertex << ": {";
+                containerHelper::saveContentsToStream(out, adjacencyList, containerHelper::StreamFormat::String);
+                out << "} \n";
+            }
+        }
+        return out;
+    }
+
     unsigned int m_numberOfVertices;
     unsigned int m_numberOfEdges;
     AdjacencyLists m_adjacencyLists;

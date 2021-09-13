@@ -70,15 +70,17 @@ public:
         return this->getPathTo(endVertex);
     }
 
-    void reinitializeStartingFrom(Vertices const& startVertices) override
+    void reinitializeStartingFrom(Vertices const& startVertices)
     {
-        this->clear();
-        this->initializeWithStartVertices(startVertices);
+        clear();
+        initializeWithStartVertices(startVertices);
         m_initializeDataFunction(startVertices);
         traverseUsingBfs(startVertices);
     }
 
 private:
+    using BaseClass::clear;
+    using BaseClass::initializeWithStartVertices;
 
     void traverseUsingBfs(Vertices const& startVertices)
     {
