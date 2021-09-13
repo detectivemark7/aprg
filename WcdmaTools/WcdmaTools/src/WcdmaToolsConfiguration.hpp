@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/LargeSorter/AlbaLargeSorterConfiguration.hpp>
+#include <Algorithm/Sort/LargeSorter/AlbaLargeSorterConfiguration.hpp>
 #include <WcdmaToolsBackend/BtsLogSorterConfiguration.hpp>
 
 #include <string>
