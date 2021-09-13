@@ -55,11 +55,11 @@ void UserIdentifiers::saveNbccId(std::string const& lineInLogs)
     unsigned int nbccId = stringHelper::convertStringToNumber<unsigned int>(stringHelper::getNumberAfterThisString(lineInLogs, "nbccId: "));
     if(nbccid>0)
     {
-        m_nbccIdOptional.setValue(nbccid);
+        m_nbccIdOptional = nbccid;
     }
     if(nbccId>0)
     {
-        m_nbccIdOptional.setValue(nbccId);
+        m_nbccIdOptional = nbccId;
     }
 }
 
@@ -69,11 +69,11 @@ void UserIdentifiers::saveCrnccId(std::string const& lineInLogs)
     unsigned int crnccId = stringHelper::convertStringToNumber<unsigned int>(stringHelper::getNumberAfterThisString(lineInLogs, "crnccId: "));
     if(crncId>0)
     {
-        m_crnccIdOptional.setValue(crncId);
+        m_crnccIdOptional = crncId;
     }
     if(crnccId>0)
     {
-        m_crnccIdOptional.setValue(crnccId);
+        m_crnccIdOptional = crnccId;
     }
 }
 
@@ -82,7 +82,7 @@ void UserIdentifiers::saveTransactionId(std::string const& lineInLogs)
     unsigned int transactionId = stringHelper::convertStringToNumber<int>(stringHelper::getNumberAfterThisString(lineInLogs, "transactionId: "));
     if(transactionId>0)
     {
-        m_transactionIdOptional.setValue(transactionId);
+        m_transactionIdOptional = transactionId;
     }
 }
 
@@ -91,7 +91,7 @@ unsigned int UserIdentifiers::getNbccId() const
     unsigned int result(0);
     if(m_nbccIdOptional)
     {
-        result = m_nbccIdOptional.get();
+        result = m_nbccIdOptional.value();
     }
     return result;
 }
@@ -101,7 +101,7 @@ unsigned int UserIdentifiers::getCrnccId() const
     unsigned int result(0);
     if(m_crnccIdOptional)
     {
-        result = m_crnccIdOptional.get();
+        result = m_crnccIdOptional.value();
     }
     return result;
 }
@@ -111,7 +111,7 @@ unsigned int UserIdentifiers::getTransactionId() const
     unsigned int result(0);
     if(m_transactionIdOptional)
     {
-        result = m_transactionIdOptional.get();
+        result = m_transactionIdOptional.value();
     }
     return result;
 }

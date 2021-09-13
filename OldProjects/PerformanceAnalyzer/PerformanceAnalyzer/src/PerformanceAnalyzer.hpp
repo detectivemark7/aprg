@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Common/Container/AlbaOptional.hpp>
 #include <WcdmaToolsBackend/BtsLogSorterConfiguration.hpp>
 #include <WcdmaToolsBackend/BtsLogTime.hpp>
 
+#include <optional>
 #include <string>
 
 namespace alba
@@ -29,8 +29,8 @@ private:
     };
     struct BtsLogDelay
     {
-        AlbaOptional<wcdmaToolsBackend::BtsLogTime> startTimeOptional;
-        AlbaOptional<wcdmaToolsBackend::BtsLogTime> endTimeOptional;
+        std::optional<wcdmaToolsBackend::BtsLogTime> startTimeOptional;
+        std::optional<wcdmaToolsBackend::BtsLogTime> endTimeOptional;
     };
 
 public:
@@ -59,7 +59,7 @@ public:
 private:
     std::string m_extractGrepCondition;
     wcdmaToolsBackend::BtsLogSorterConfiguration m_sorterConfiguration;
-    alba::AlbaOptional<std::ofstream> m_RawDataFileOptional;
+    std::optional<std::ofstream> m_RawDataFileOptional;
 };
 
 }

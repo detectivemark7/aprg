@@ -179,13 +179,13 @@ void PerformanceAnalyzer::setFileForRawDataDump(string const& rawDataPath)
 {
     if(m_RawDataFileOptional)
     {
-        m_RawDataFileOptional.clear();
+        m_RawDataFileOptional.reset();
     }
-    m_RawDataFileOptional.createObjectUsingDefaultConstructor();
-    m_RawDataFileOptional.getReference().open(rawDataPath.c_str());
-    if(!m_RawDataFileOptional.getReference().is_open())
+    m_RawDataFileOptional.emplace();
+    m_RawDataFileOptional->open(rawDataPath.c_str());
+    if(!m_RawDataFileOptional->is_open())
     {
-        m_RawDataFileOptional.clear();
+        m_RawDataFileOptional.reset();
     }
 }
 
@@ -193,7 +193,7 @@ void PerformanceAnalyzer::logLineInRawDataFile(string const& line)
 {
     if(m_RawDataFileOptional)
     {
-        m_RawDataFileOptional.getReference()<<line<<endl;
+        m_RawDataFileOptional.value()<<line<<endl;
     }
 }
 
@@ -201,7 +201,7 @@ void PerformanceAnalyzer::logStringInRawDataFile(string const& line)
 {
     if(m_RawDataFileOptional)
     {
-        m_RawDataFileOptional.getReference()<<line;
+        m_RawDataFileOptional.value()<<line;
     }
 }
 
@@ -261,7 +261,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInRlh(string const& filePath
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.startTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.startTimeOptional = logPrint.getBtsTime();
                 if(!logPrint.getPcTime().isEmpty())
                 {
                     endTest = logPrint.getBtsTime();
@@ -279,11 +279,11 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInRlh(string const& filePath
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.endTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.endTimeOptional = logPrint.getBtsTime();
             }
-            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional.getReference().getTotalSeconds() <= btsLogDelay.endTimeOptional.getReference().getTotalSeconds())
+            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional->getTotalSeconds() <= btsLogDelay.endTimeOptional->getTotalSeconds())
             {
-                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.getReference(), btsLogDelay.startTimeOptional.getReference());
+                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.value(), btsLogDelay.startTimeOptional.value());
                 if(maxDelay<delay)
                 {
                     maxDelay = delay;
@@ -304,11 +304,11 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInRlh(string const& filePath
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.endTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.endTimeOptional = logPrint.getBtsTime();
             }
-            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional.getReference().getTotalSeconds() <= btsLogDelay.endTimeOptional.getReference().getTotalSeconds())
+            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional->getTotalSeconds() <= btsLogDelay.endTimeOptional->getTotalSeconds())
             {
-                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.getReference(), btsLogDelay.startTimeOptional.getReference());
+                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.value(), btsLogDelay.startTimeOptional.value());
                 countFail++;
                 stringstream ss;
                 ss<<uniqueUserId.crnccId<<","<<uniqueUserId.nbccId<<","<<uniqueUserId.transactionId<<",fail"<<","<<setw(10)<<delay;
@@ -350,7 +350,7 @@ void PerformanceAnalyzer::processFileForRlDeletionDelayInRlh(string const& fileP
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.startTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH_CTRL_RlDeletionResp3G)"))
@@ -360,11 +360,11 @@ void PerformanceAnalyzer::processFileForRlDeletionDelayInRlh(string const& fileP
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.endTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.endTimeOptional = logPrint.getBtsTime();
             }
-            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional.getReference().getTotalSeconds() <= btsLogDelay.endTimeOptional.getReference().getTotalSeconds())
+            if(btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional->getTotalSeconds() <= btsLogDelay.endTimeOptional->getTotalSeconds())
             {
-                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.getReference(), btsLogDelay.startTimeOptional.getReference());
+                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.value(), btsLogDelay.startTimeOptional.value());
                 maxDelay = std::max(maxDelay, (double)delay);
                 totalDelay += delay;
                 count++;
@@ -469,16 +469,16 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
 
     struct TupcDelaysData
     {
-        AlbaOptional<BtsLogTime> rlhRlSetupRequestOptional;
-        AlbaOptional<BtsLogTime> rlhTbRegisterTimeOptional;
-        AlbaOptional<BtsLogTime> tupcTbRegisterTimeOptional;
-        AlbaOptional<BtsLogTime> tupcFirstErqSentOptional;
-        AlbaOptional<BtsLogTime> tupcLastEcfReceivedOptional;
-        AlbaOptional<BtsLogTime> tupcFirstTransportConnectionSetupOptional;
-        AlbaOptional<BtsLogTime> tupcLastTransportConnectionSetupResponseOptional;
-        AlbaOptional<BtsLogTime> tupcTbRegisterResponseTimeOptional;
-        AlbaOptional<BtsLogTime> rlhTbRegisterResponseTimeOptional;
-        AlbaOptional<BtsLogTime> rlhRlSetupResponseOptional;
+        optional<BtsLogTime> rlhRlSetupRequestOptional;
+        optional<BtsLogTime> rlhTbRegisterTimeOptional;
+        optional<BtsLogTime> tupcTbRegisterTimeOptional;
+        optional<BtsLogTime> tupcFirstErqSentOptional;
+        optional<BtsLogTime> tupcLastEcfReceivedOptional;
+        optional<BtsLogTime> tupcFirstTransportConnectionSetupOptional;
+        optional<BtsLogTime> tupcLastTransportConnectionSetupResponseOptional;
+        optional<BtsLogTime> tupcTbRegisterResponseTimeOptional;
+        optional<BtsLogTime> rlhTbRegisterResponseTimeOptional;
+        optional<BtsLogTime> rlhRlSetupResponseOptional;
         bool isComplete(int nbccId) const
         {
             return rlhRlSetupRequestOptional&&rlhTbRegisterTimeOptional&&tupcTbRegisterTimeOptional&&
@@ -492,16 +492,16 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             {
                 return false;
             }
-            bool isCorrect = (rlhRlSetupRequestOptional.getConstReference()<rlhTbRegisterTimeOptional.getConstReference()) &&
-                    (rlhTbRegisterTimeOptional.getConstReference()<tupcTbRegisterTimeOptional.getConstReference()) &&
-                    //(tupcTbRegisterTimeOptional.getConstReference()<tupcFirstTransportConnectionSetupOptional.getConstReference()) &&
-                    (tupcTbRegisterTimeOptional.getConstReference()<tupcFirstErqSentOptional.getConstReference()) &&
-                    (tupcFirstErqSentOptional.getConstReference()<tupcLastEcfReceivedOptional.getConstReference()) &&
-                    (tupcLastEcfReceivedOptional.getConstReference()<tupcFirstTransportConnectionSetupOptional.getConstReference()) &&
-                    (tupcFirstTransportConnectionSetupOptional.getConstReference()<tupcLastTransportConnectionSetupResponseOptional.getConstReference()) &&
-                    (tupcLastTransportConnectionSetupResponseOptional.getConstReference()<tupcTbRegisterResponseTimeOptional.getConstReference()) &&
-                    (tupcTbRegisterResponseTimeOptional.getConstReference()<rlhTbRegisterResponseTimeOptional.getConstReference()) &&
-                    (rlhTbRegisterResponseTimeOptional.getConstReference()<rlhRlSetupResponseOptional.getConstReference());
+            bool isCorrect = (rlhRlSetupRequestOptional.value()<rlhTbRegisterTimeOptional.value()) &&
+                    (rlhTbRegisterTimeOptional.value()<tupcTbRegisterTimeOptional.value()) &&
+                    //(tupcTbRegisterTimeOptional.value()<tupcFirstTransportConnectionSetupOptional.value()) &&
+                    (tupcTbRegisterTimeOptional.value()<tupcFirstErqSentOptional.value()) &&
+                    (tupcFirstErqSentOptional.value()<tupcLastEcfReceivedOptional.value()) &&
+                    (tupcLastEcfReceivedOptional.value()<tupcFirstTransportConnectionSetupOptional.value()) &&
+                    (tupcFirstTransportConnectionSetupOptional.value()<tupcLastTransportConnectionSetupResponseOptional.value()) &&
+                    (tupcLastTransportConnectionSetupResponseOptional.value()<tupcTbRegisterResponseTimeOptional.value()) &&
+                    (tupcTbRegisterResponseTimeOptional.value()<rlhTbRegisterResponseTimeOptional.value()) &&
+                    (rlhTbRegisterResponseTimeOptional.value()<rlhRlSetupResponseOptional.value());
 
             return isCorrect;
         }
@@ -525,11 +525,11 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.startTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.startTimeOptional = logPrint.getBtsTime();
                 UniqueUserId tupcUserId;
                 tupcUserId.saveNbccId(lineInLogs);
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.rlhRlSetupRequestOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.rlhRlSetupRequestOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH send TC_TRANSPORT_BEARER_REGISTER_MSG)"))
@@ -540,7 +540,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.rlhTbRegisterTimeOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.rlhTbRegisterTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"([Rcvd:TC_TRANSPORT_BEARER_REGISTER_MSG])"))
@@ -551,7 +551,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.tupcTbRegisterTimeOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.tupcTbRegisterTimeOptional = logPrint.getBtsTime();
                 tupcRegisterRequestTupcUserId = tupcUserId;
             }
         }
@@ -563,7 +563,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcRegisterRequestTupcUserId];
                 if(!tupcLogDelay.tupcFirstErqSentOptional)
                 {
-                    tupcLogDelay.tupcFirstErqSentOptional.setValue(logPrint.getBtsTime());
+                    tupcLogDelay.tupcFirstErqSentOptional = logPrint.getBtsTime();
                 }
             }
         }
@@ -582,8 +582,8 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
                 if(!tupcLogDelay.tupcFirstTransportConnectionSetupOptional)
                 {
-                    tupcLogDelay.tupcLastEcfReceivedOptional.setValue(ecfLogPrint.getBtsTime());
-                    tupcLogDelay.tupcFirstTransportConnectionSetupOptional.setValue(logPrint.getBtsTime());
+                    tupcLogDelay.tupcLastEcfReceivedOptional = ecfLogPrint.getBtsTime();
+                    tupcLogDelay.tupcFirstTransportConnectionSetupOptional = logPrint.getBtsTime();
                 }
             }
         }
@@ -595,7 +595,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"([Sent:TC_TRANSPORT_BEARER_REGISTER_RESP_MSG])"))
@@ -606,7 +606,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.tupcTbRegisterResponseTimeOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.tupcTbRegisterResponseTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH receive TC_TRANSPORT_BEARER_REGISTER_RESP_MSG)"))
@@ -617,7 +617,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.rlhTbRegisterResponseTimeOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.rlhTbRegisterResponseTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH_CTRL_RlSetupResp3G)"))
@@ -631,12 +631,12 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.endTimeOptional.setValue(logPrint.getBtsTime());
-                tupcLogDelay.rlhRlSetupResponseOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.endTimeOptional = logPrint.getBtsTime();
+                tupcLogDelay.rlhRlSetupResponseOptional = logPrint.getBtsTime();
             }
-            if(tupcLogDelay.isCorrect(tupcUserId.nbccId) && btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional.getReference().getTotalSeconds() <= btsLogDelay.endTimeOptional.getReference().getTotalSeconds())
+            if(tupcLogDelay.isCorrect(tupcUserId.nbccId) && btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional->getTotalSeconds() <= btsLogDelay.endTimeOptional->getTotalSeconds())
             {
-                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.getReference(), btsLogDelay.startTimeOptional.getReference());
+                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.value(), btsLogDelay.startTimeOptional.value());
                 if(maxDelay<delay)
                 {
                     maxDelay = delay;
@@ -648,27 +648,27 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnife(string 
 
                 ss<<uniqueUserId.crnccId<<","<<uniqueUserId.nbccId<<","<<uniqueUserId.transactionId<<","<<setw(10)<<delay;
 
-                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupRequestOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.rlhTbRegisterTimeOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterTimeOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstErqSentOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcLastEcfReceivedOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstTransportConnectionSetupOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterResponseTimeOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.rlhTbRegisterResponseTimeOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupResponseOptional.getReference().getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupRequestOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhTbRegisterTimeOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterTimeOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstErqSentOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcLastEcfReceivedOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstTransportConnectionSetupOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterResponseTimeOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhTbRegisterResponseTimeOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupResponseOptional->getEquivalentStringBtsTimeFormat();
 
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhTbRegisterTimeOptional.getReference(), tupcLogDelay.rlhRlSetupRequestOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcTbRegisterTimeOptional.getReference(), tupcLogDelay.rlhTbRegisterTimeOptional.getReference());
-                //ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstTransportConnectionSetupOptional.getReference(), tupcLogDelay.tupcTbRegisterTimeOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstErqSentOptional.getReference(), tupcLogDelay.tupcTbRegisterTimeOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastEcfReceivedOptional.getReference(), tupcLogDelay.tupcFirstErqSentOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstTransportConnectionSetupOptional.getReference(), tupcLogDelay.tupcLastEcfReceivedOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.getReference(), tupcLogDelay.tupcFirstTransportConnectionSetupOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcTbRegisterResponseTimeOptional.getReference(), tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhTbRegisterResponseTimeOptional.getReference(), tupcLogDelay.tupcTbRegisterResponseTimeOptional.getReference());
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhRlSetupResponseOptional.getReference(), tupcLogDelay.rlhTbRegisterResponseTimeOptional.getReference());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhTbRegisterTimeOptional.value(), tupcLogDelay.rlhRlSetupRequestOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcTbRegisterTimeOptional.value(), tupcLogDelay.rlhTbRegisterTimeOptional.value());
+                //ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstTransportConnectionSetupOptional.value(), tupcLogDelay.tupcTbRegisterTimeOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstErqSentOptional.value(), tupcLogDelay.tupcTbRegisterTimeOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastEcfReceivedOptional.value(), tupcLogDelay.tupcFirstErqSentOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcFirstTransportConnectionSetupOptional.value(), tupcLogDelay.tupcLastEcfReceivedOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.value(), tupcLogDelay.tupcFirstTransportConnectionSetupOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcTbRegisterResponseTimeOptional.value(), tupcLogDelay.tupcLastTransportConnectionSetupResponseOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhTbRegisterResponseTimeOptional.value(), tupcLogDelay.tupcTbRegisterResponseTimeOptional.value());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.rlhRlSetupResponseOptional.value(), tupcLogDelay.rlhTbRegisterResponseTimeOptional.value());
 
                 logLineInRawDataFile(ss.str());
             }
@@ -705,12 +705,12 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
 
     struct TupcDelaysData
     {
-        AlbaOptional<BtsLogTime> rlhRlSetupRequestOptional;
-        AlbaOptional<BtsLogTime> tupcTbRegisterTimeOptional;
-        AlbaOptional<BtsLogTime> tupcFirstErqSentOptional;
-        AlbaOptional<BtsLogTime> tupcLastEcfReceivedOptional;
-        AlbaOptional<BtsLogTime> tupcFirstTransportConnectionSetupOptional;
-        AlbaOptional<BtsLogTime> rlhRlSetupResponseOptional;
+        optional<BtsLogTime> rlhRlSetupRequestOptional;
+        optional<BtsLogTime> tupcTbRegisterTimeOptional;
+        optional<BtsLogTime> tupcFirstErqSentOptional;
+        optional<BtsLogTime> tupcLastEcfReceivedOptional;
+        optional<BtsLogTime> tupcFirstTransportConnectionSetupOptional;
+        optional<BtsLogTime> rlhRlSetupResponseOptional;
         bool isComplete(int nbccId) const
         {
             return rlhRlSetupRequestOptional&&tupcTbRegisterTimeOptional&&
@@ -724,11 +724,11 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
             {
                 return false;
             }
-            bool isCorrect = (rlhRlSetupRequestOptional.getConstReference()<tupcTbRegisterTimeOptional.getConstReference()) &&
-                    (tupcTbRegisterTimeOptional.getConstReference()<tupcFirstErqSentOptional.getConstReference()) &&
-                    (tupcFirstErqSentOptional.getConstReference()<tupcLastEcfReceivedOptional.getConstReference()) &&
-                    (tupcLastEcfReceivedOptional.getConstReference()<tupcFirstTransportConnectionSetupOptional.getConstReference()) &&
-                    (tupcFirstTransportConnectionSetupOptional.getConstReference()<rlhRlSetupResponseOptional.getConstReference());
+            bool isCorrect = (rlhRlSetupRequestOptional.value()<tupcTbRegisterTimeOptional.value()) &&
+                    (tupcTbRegisterTimeOptional.value()<tupcFirstErqSentOptional.value()) &&
+                    (tupcFirstErqSentOptional.value()<tupcLastEcfReceivedOptional.value()) &&
+                    (tupcLastEcfReceivedOptional.value()<tupcFirstTransportConnectionSetupOptional.value()) &&
+                    (tupcFirstTransportConnectionSetupOptional.value()<rlhRlSetupResponseOptional.value());
 
             return isCorrect;
         }
@@ -752,11 +752,11 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.startTimeOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.startTimeOptional = logPrint.getBtsTime();
                 UniqueUserId tupcUserId;
                 tupcUserId.saveNbccId(lineInLogs);
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.rlhRlSetupRequestOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.rlhRlSetupRequestOptional = logPrint.getBtsTime();
             }
         }
         else if(isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"([Rcvd:TC_TRANSPORT_BEARER_REGISTER_MSG])"))
@@ -767,7 +767,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
             if(tupcLogDelays.count(tupcUserId)>0)
             {
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
-                tupcLogDelay.tupcTbRegisterTimeOptional.setValue(logPrint.getBtsTime());
+                tupcLogDelay.tupcTbRegisterTimeOptional = logPrint.getBtsTime();
                 tupcRegisterRequestTupcUserId = tupcUserId;
             }
         }
@@ -779,7 +779,7 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcRegisterRequestTupcUserId];
                 if(!tupcLogDelay.tupcFirstErqSentOptional)
                 {
-                    tupcLogDelay.tupcFirstErqSentOptional.setValue(logPrint.getBtsTime());
+                    tupcLogDelay.tupcFirstErqSentOptional = logPrint.getBtsTime();
                 }
             }
         }
@@ -798,8 +798,8 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
                 TupcDelaysData & tupcLogDelay = tupcLogDelays[tupcUserId];
                 if(!tupcLogDelay.tupcFirstTransportConnectionSetupOptional)
                 {
-                    tupcLogDelay.tupcLastEcfReceivedOptional.setValue(ecfLogPrint.getBtsTime());
-                    tupcLogDelay.tupcFirstTransportConnectionSetupOptional.setValue(logPrint.getBtsTime());
+                    tupcLogDelay.tupcLastEcfReceivedOptional = ecfLogPrint.getBtsTime();
+                    tupcLogDelay.tupcFirstTransportConnectionSetupOptional = logPrint.getBtsTime();
                 }
             }
         }
@@ -814,12 +814,12 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                btsLogDelay.endTimeOptional.setValue(logPrint.getBtsTime());
-                tupcLogDelay.rlhRlSetupResponseOptional.setValue(logPrint.getBtsTime());
+                btsLogDelay.endTimeOptional = logPrint.getBtsTime();
+                tupcLogDelay.rlhRlSetupResponseOptional = logPrint.getBtsTime();
             }
-            if(tupcLogDelay.isCorrect(tupcUserId.nbccId) && btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional.getReference().getTotalSeconds() <= btsLogDelay.endTimeOptional.getReference().getTotalSeconds())
+            if(tupcLogDelay.isCorrect(tupcUserId.nbccId) && btsLogDelay.startTimeOptional && btsLogDelay.endTimeOptional && btsLogDelay.startTimeOptional->getTotalSeconds() <= btsLogDelay.endTimeOptional->getTotalSeconds())
             {
-                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.getReference(), btsLogDelay.startTimeOptional.getReference());
+                int delay = getDelayTimeInUs(btsLogDelay.endTimeOptional.value(), btsLogDelay.startTimeOptional.value());
                 if(maxDelay<delay)
                 {
                     maxDelay = delay;
@@ -831,14 +831,14 @@ void PerformanceAnalyzer::processFileForRlSetupDelayInTupcWithSymonKnifeForFtm(s
 
                 ss<<uniqueUserId.crnccId<<","<<uniqueUserId.nbccId<<","<<uniqueUserId.transactionId<<","<<setw(10)<<delay;
 
-                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupRequestOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterTimeOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstErqSentOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcLastEcfReceivedOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstTransportConnectionSetupOptional.getReference().getEquivalentStringBtsTimeFormat();
-                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupResponseOptional.getReference().getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupRequestOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcTbRegisterTimeOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstErqSentOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcLastEcfReceivedOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.tupcFirstTransportConnectionSetupOptional->getEquivalentStringBtsTimeFormat();
+                ss<<","<<setw(10)<<tupcLogDelay.rlhRlSetupResponseOptional->getEquivalentStringBtsTimeFormat();
 
-                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastEcfReceivedOptional.getReference(), tupcLogDelay.tupcFirstErqSentOptional.getReference());
+                ss<<","<<setw(10)<<getDelayTimeInUs(tupcLogDelay.tupcLastEcfReceivedOptional.value(), tupcLogDelay.tupcFirstErqSentOptional.value());
 
                 logLineInRawDataFile(ss.str());
             }
@@ -892,8 +892,8 @@ void PerformanceAnalyzer::processFileForFtmFcmWireshark(string const& filePath)
     };
     struct WiresharkLogDelay
     {
-        AlbaOptional<double> startTimeOptional;
-        AlbaOptional<double> endTimeOptional;
+        optional<double> startTimeOptional;
+        optional<double> endTimeOptional;
         unsigned int numberInWiresharkOfStart;
         unsigned int numberInWiresharkOfEnd;
     };
@@ -940,7 +940,7 @@ void PerformanceAnalyzer::processFileForFtmFcmWireshark(string const& filePath)
                             }
                             WiresharkLogDelay&  wiresharkLogDelay = wiresharkLogDelays[key];
 
-                            wiresharkLogDelay.startTimeOptional.setValue(wiresharkTime);
+                            wiresharkLogDelay.startTimeOptional = wiresharkTime;
                             wiresharkLogDelay.numberInWiresharkOfStart = numberInWireshark;
 
                         }
@@ -969,7 +969,7 @@ void PerformanceAnalyzer::processFileForFtmFcmWireshark(string const& filePath)
                                 key.operation=4;
                             }
                             WiresharkLogDelay&  wiresharkLogDelay = wiresharkLogDelays[key];
-                            wiresharkLogDelay.endTimeOptional.setValue(wiresharkTime);
+                            wiresharkLogDelay.endTimeOptional = wiresharkTime;
                             wiresharkLogDelay.numberInWiresharkOfEnd = numberInWireshark;
                         }
                     }
@@ -977,9 +977,9 @@ void PerformanceAnalyzer::processFileForFtmFcmWireshark(string const& filePath)
                 }
             }
             WiresharkLogDelay& checkWiresharkLogDelay = wiresharkLogDelays[key];
-            if(checkWiresharkLogDelay.startTimeOptional && checkWiresharkLogDelay.endTimeOptional && checkWiresharkLogDelay.startTimeOptional.getReference() <= checkWiresharkLogDelay.endTimeOptional.getReference())
+            if(checkWiresharkLogDelay.startTimeOptional && checkWiresharkLogDelay.endTimeOptional && checkWiresharkLogDelay.startTimeOptional.value() <= checkWiresharkLogDelay.endTimeOptional.value())
             {
-                double delay = checkWiresharkLogDelay.endTimeOptional.getReference() - checkWiresharkLogDelay.startTimeOptional.getReference();
+                double delay = checkWiresharkLogDelay.endTimeOptional.value() - checkWiresharkLogDelay.startTimeOptional.value();
                 maxDelay = std::max(maxDelay, delay);
                 totalDelay += delay;
                 count++;
@@ -987,8 +987,8 @@ void PerformanceAnalyzer::processFileForFtmFcmWireshark(string const& filePath)
                 ss<<"0x"<<std::hex<<key.said<<",";
                 ss.precision(17);
                 ss<<std::dec
-                 <<checkWiresharkLogDelay.startTimeOptional.getReference()<<","
-                <<checkWiresharkLogDelay.endTimeOptional.getReference()<<","
+                 <<checkWiresharkLogDelay.startTimeOptional.value()<<","
+                <<checkWiresharkLogDelay.endTimeOptional.value()<<","
                 <<checkWiresharkLogDelay.numberInWiresharkOfStart<<","
                 <<checkWiresharkLogDelay.numberInWiresharkOfEnd<<","
                 <<setw(17)<<delay;
