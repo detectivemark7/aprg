@@ -81,8 +81,8 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath)
 
     ifstream inputLogFileStream(filePath);
     AlbaFileReader fileReader(inputLogFileStream);
-    AlbaOptional<double> startTimeFetchedOptional;
-    AlbaOptional<double> endTimeFetchedOptional;
+    optional<double> startTimeFetchedOptional;
+    optional<double> endTimeFetchedOptional;
 
     if(!inputLogFileStream.is_open())
     {
@@ -93,11 +93,11 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath)
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
         if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(id-radioLinkSetup , RadioLinkSetupRequestFDD)"))
         {
-            startTimeFetchedOptional.setValue(getWireSharkTime(lineInLogs));
+            startTimeFetchedOptional = getWireSharkTime(lineInLogs);
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(id-radioLinkSetup , RadioLinkSetupResponseFDD)"))
         {
-            endTimeFetchedOptional.setValue(getWireSharkTime(lineInLogs));
+            endTimeFetchedOptional = getWireSharkTime(lineInLogs);
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(CRNC-CommunicationContextID: )"))
         {
@@ -105,18 +105,18 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath)
             WireSharkDelay & delayForCrnccId = m_wireSharkDelays[crnccId];
             if(startTimeFetchedOptional)
             {
-                delayForCrnccId.startTimeOptional.setValue(startTimeFetchedOptional.getReference());
+                delayForCrnccId.startTimeOptional = startTimeFetchedOptional;
             }
             if(endTimeFetchedOptional)
             {
-                delayForCrnccId.endTimeOptional.setValue(endTimeFetchedOptional.getReference());
+                delayForCrnccId.endTimeOptional = endTimeFetchedOptional;
             }
-            startTimeFetchedOptional.clear();
-            endTimeFetchedOptional.clear();
+            startTimeFetchedOptional.reset();
+            endTimeFetchedOptional.reset();
 
             if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional)
             {
-                double delay = delayForCrnccId.endTimeOptional.getReference() - delayForCrnccId.startTimeOptional.getReference();
+                double delay = delayForCrnccId.endTimeOptional.value() - delayForCrnccId.startTimeOptional.value();
                 m_totalDelay += delay;
                 m_count++;
                 m_outputStream<<crnccId<<","<<setw(10)<<delay<<endl;
@@ -126,8 +126,8 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath)
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(No.     Time)"))
         {
-            startTimeFetchedOptional.clear();
-            endTimeFetchedOptional.clear();
+            startTimeFetchedOptional.reset();
+            endTimeFetchedOptional.reset();
         }
     }
 }
@@ -182,7 +182,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlh(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.startTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH_CTRL_RlSetupResp3G)"))
@@ -195,11 +195,12 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlh(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.endTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.endTimeOptional = logPrint.getBtsTime();
             }
-            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional && delayForCrnccId.startTimeOptional.getReference().getTotalSeconds() <= delayForCrnccId.endTimeOptional.getReference().getTotalSeconds())
+            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional
+                    && delayForCrnccId.startTimeOptional->getTotalSeconds() <= delayForCrnccId.endTimeOptional->getTotalSeconds())
             {
-                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.getReference() - delayForCrnccId.startTimeOptional.getReference();
+                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.value() - delayForCrnccId.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 //if(uniqueKey.crnccId == 15167){cout<<"crnccId "<<uniqueKey.crnccId<<"nbccId "<<uniqueKey.nbccId<<"delay "<<delay<<"startTimeOptional "<<delayForCrnccId.startTimeOptional.getReference()<<"endTimeOptional "<<delayForCrnccId.endTimeOptional.getReference()<<endl;}
                 m_totalDelay += delay;
@@ -232,7 +233,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlDeletion(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.startTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH_CTRL_RlDeletionResp3G)"))
@@ -245,11 +246,11 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlDeletion(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.endTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.endTimeOptional = logPrint.getBtsTime();
             }
-            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional && delayForCrnccId.startTimeOptional.getReference().getTotalSeconds() <= delayForCrnccId.endTimeOptional.getReference().getTotalSeconds())
+            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional && delayForCrnccId.startTimeOptional->getTotalSeconds() <= delayForCrnccId.endTimeOptional->getTotalSeconds())
             {
-                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.getReference() - delayForCrnccId.startTimeOptional.getReference();
+                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.value() - delayForCrnccId.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 //if(uniqueKey.crnccId == 15167){cout<<"crnccId "<<uniqueKey.crnccId<<"nbccId "<<uniqueKey.nbccId<<"delay "<<delay<<"startTimeOptional "<<delayForCrnccId.startTimeOptional.getReference()<<"endTimeOptional "<<delayForCrnccId.endTimeOptional.getReference()<<endl;}
                 m_totalDelay += delay;
@@ -317,7 +318,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                processMapInstance.startTimeOptional.setValue(logPrint.getBtsTime());
+                processMapInstance.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(INF/TCOM/G, Sending API_TCOM_RNC_MSG)"))
@@ -330,8 +331,8 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                processMapInstance.endTimeOptional.setValue(logPrint.getBtsTime());
-                messageDeliveryInstance.startTimeOptional.setValue(logPrint.getBtsTime());
+                processMapInstance.endTimeOptional = logPrint.getBtsTime();
+                messageDeliveryInstance.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(CTRL_RLH_RlSetupReq3G)"))
@@ -344,8 +345,8 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                messageDeliveryInstance.endTimeOptional.setValue(logPrint.getBtsTime());
-                rlSetupMapInstance.startTimeOptional.setValue(logPrint.getBtsTime());
+                messageDeliveryInstance.endTimeOptional = logPrint.getBtsTime();
+                rlSetupMapInstance.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(RLH_CTRL_RlSetupResp3G)"))
@@ -357,16 +358,16 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                rlSetupMapInstance.endTimeOptional.setValue(logPrint.getBtsTime());
+                rlSetupMapInstance.endTimeOptional = logPrint.getBtsTime();
             }
         }
 
         BtsLogDelay & processMapInstance = grmProcessMap[uniqueKey];
         if(processMapInstance.startTimeOptional && processMapInstance.endTimeOptional)
         {
-            if(processMapInstance.startTimeOptional.getReference() < processMapInstance.endTimeOptional.getReference())
+            if(processMapInstance.startTimeOptional.value() < processMapInstance.endTimeOptional.value())
             {
-                BtsLogTime delayTime = processMapInstance.endTimeOptional.getReference() - processMapInstance.startTimeOptional.getReference();
+                BtsLogTime delayTime = processMapInstance.endTimeOptional.value() - processMapInstance.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 grmProcessTotal += delay;
                 grmProcessCount++;
@@ -378,10 +379,10 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
         BtsLogDelay & messageDeliveryInstance = messageDeliveryMap[uniqueKey];
         if(messageDeliveryInstance.startTimeOptional && messageDeliveryInstance.endTimeOptional)
         {
-            if(messageDeliveryInstance.startTimeOptional.getReference() < messageDeliveryInstance.endTimeOptional.getReference())
+            if(messageDeliveryInstance.startTimeOptional.value() < messageDeliveryInstance.endTimeOptional.value())
             {
 
-                BtsLogTime delayTime = messageDeliveryInstance.endTimeOptional.getReference() - messageDeliveryInstance.startTimeOptional.getReference();
+                BtsLogTime delayTime = messageDeliveryInstance.endTimeOptional.value() - messageDeliveryInstance.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 messageDeliveryTotal += delay;
                 messageDeliveryCount++;
@@ -393,9 +394,9 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
         BtsLogDelay & rlSetupMapInstance = rlSetupMap[uniqueKey];
         if(rlSetupMapInstance.startTimeOptional && rlSetupMapInstance.endTimeOptional)
         {
-            if(rlSetupMapInstance.startTimeOptional.getReference() < rlSetupMapInstance.endTimeOptional.getReference())
+            if(rlSetupMapInstance.startTimeOptional.value() < rlSetupMapInstance.endTimeOptional.value())
             {
-                BtsLogTime delayTime = rlSetupMapInstance.endTimeOptional.getReference() - rlSetupMapInstance.startTimeOptional.getReference();
+                BtsLogTime delayTime = rlSetupMapInstance.endTimeOptional.value() - rlSetupMapInstance.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 rlSetupTotal += delay;
                 rlSetupCount++;
@@ -428,7 +429,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForGrm(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.startTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
         }
         else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(CTRL_RLH_RlSetupReq3G)"))
@@ -440,11 +441,12 @@ void BtsLogAnalyzer::processFileForBtsDelayForGrm(string const& filePath)
             BtsLogPrint logPrint(lineInLogs);
             if(!logPrint.getBtsTime().isStartup())
             {
-                delayForCrnccId.endTimeOptional.setValue(logPrint.getBtsTime());
+                delayForCrnccId.endTimeOptional = logPrint.getBtsTime();
             }
-            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional && delayForCrnccId.startTimeOptional.getReference().getTotalSeconds() <= delayForCrnccId.endTimeOptional.getReference().getTotalSeconds())
+            if(delayForCrnccId.startTimeOptional && delayForCrnccId.endTimeOptional
+                    && delayForCrnccId.startTimeOptional->getTotalSeconds() <= delayForCrnccId.endTimeOptional->getTotalSeconds())
             {
-                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.getReference() - delayForCrnccId.startTimeOptional.getReference();
+                BtsLogTime delayTime = delayForCrnccId.endTimeOptional.value() - delayForCrnccId.startTimeOptional.value();
                 int delay = static_cast<int>(delayTime.getMicroSeconds()+delayTime.getSeconds()*1000000);
                 if(delay<1000000)
                 {

@@ -1,13 +1,12 @@
 #pragma once
 
-#include <Common/Container/AlbaOptional.hpp>
 #include <WcdmaToolsBackend/BtsLogTime.hpp>
 
 #include <fstream>
 #include <map>
+#include <optional>
 #include <string>
 
-using alba::AlbaOptional;
 using wcdmaToolsBackend::BtsLogTime;
 
 namespace alba
@@ -15,8 +14,8 @@ namespace alba
 
 struct BtsLogDelay
 {
-    AlbaOptional<BtsLogTime> startTimeOptional;
-    AlbaOptional<BtsLogTime> endTimeOptional;
+    std::optional<BtsLogTime> startTimeOptional;
+    std::optional<BtsLogTime> endTimeOptional;
 };
 
 struct UniqueId
@@ -45,8 +44,8 @@ struct UniqueId
 
 struct WireSharkDelay
 {
-    AlbaOptional<double> startTimeOptional;
-    AlbaOptional<double> endTimeOptional;
+    std::optional<double> startTimeOptional;
+    std::optional<double> endTimeOptional;
 };
 
 class BtsLogAnalyzer
