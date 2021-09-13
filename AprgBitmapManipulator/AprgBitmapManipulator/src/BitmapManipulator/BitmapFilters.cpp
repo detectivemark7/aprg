@@ -6,7 +6,6 @@
 #include <BitmapManipulator/Utilities.hpp>
 #include <BitmapManipulator/Traversal/OutwardCircleTraversal.hpp>
 #include <BitmapManipulator/Traversal/OutwardSnakeLikeTraversal.hpp>
-#include <Common/Container/AlbaOptional.hpp>
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/PathHandler/AlbaLocalPathHandler.hpp>
 #include <Geometry/TwoDimensions/Utilities/TwoDimensionsUtilities.hpp>
@@ -60,13 +59,13 @@ BitmapSnippet BitmapFilters::getBlankSnippetWithColor(
     return getBlankSnippet(static_cast<uint8_t>(color & 0xFF));
 }
 
-AlbaOptional<Circle> BitmapFilters::getPossiblePenCircle(
+optional<Circle> BitmapFilters::getPossiblePenCircle(
         BitmapSnippet const& inputSnippet,
         BitmapXY const& centerPoint,
         uint32_t const similarityColorLimit,
         double const acceptablePenPercentage)
 {
-    AlbaOptional<Circle> result;
+    optional<Circle> result;
     uint32_t const centerColor(inputSnippet.getColorAt(centerPoint));
     unsigned int similarPixelsCount(0);
     unsigned int totalPixelCount(0);
@@ -97,17 +96,15 @@ AlbaOptional<Circle> BitmapFilters::getPossiblePenCircle(
             double calculatedPenPercentage = (double)similarPixelsCount/totalPixelCount;
             if(calculatedPenPercentage < acceptablePenPercentage)
             {
-                Circle penCircle(convertBitmapXYToPoint(centerPoint), previousRadius);
-                result.setConstReference(penCircle);
+                result.emplace(convertBitmapXYToPoint(centerPoint), previousRadius);
                 break;
             }
             previousRadius = currentRadius;
         }
     }
-    if(!result.hasContent())
+    if(!result)
     {
-        Circle penCircle(convertBitmapXYToPoint(centerPoint), currentRadius);
-        result.setConstReference(penCircle);
+        result.emplace(convertBitmapXYToPoint(centerPoint), currentRadius);
     }
     return result;
 }
@@ -597,10 +594,10 @@ void BitmapFilters::determinePenPointsToPenCircles(
     PenPoints::PenPointsSet const& penPointsSet(penPoints.getPenPoints());
     for(BitmapXY const& penPoint : penPointsSet)
     {
-        AlbaOptional<Circle> penCircleOptional(getPossiblePenCircle(inputSnippet, penPoint, similarityColorLimit, acceptablePenPercentage));
-        if(penCircleOptional.hasContent())
+        optional<Circle> penCircleOptional(getPossiblePenCircle(inputSnippet, penPoint, similarityColorLimit, acceptablePenPercentage));
+        if(penCircleOptional)
         {
-            Circle const& possiblePenCircle(penCircleOptional.getConstReference());
+            Circle const& possiblePenCircle(penCircleOptional.value());
             BitmapSnippetTraversal snippetTraversal(inputSnippet);
             snippetTraversal.traverseCircleArea(possiblePenCircle, [&](BitmapXY const& pointInPossibleCircle)
             {

@@ -65,7 +65,7 @@ void OutwardSnakeLikeTraversal::gotoNextPoint()
 {
     if(!m_isFinished)
     {
-        if(m_scheduledTeleportDirection.hasContent())
+        if(m_scheduledTeleportDirection)
         {
             performScheduledTeleport();
         }
@@ -103,7 +103,7 @@ void OutwardSnakeLikeTraversal::moveLeft()
     {
         x=x-1;
         m_currentPoint.setX(x);
-        m_previousMovementDirection.setValue(Direction::Left);
+        m_previousMovementDirection = Direction::Left;
     }
     if(x < m_lastMostLeft)
     {
@@ -112,10 +112,10 @@ void OutwardSnakeLikeTraversal::moveLeft()
     }
     else if(m_lowestLeft == x)
     {
-        if(m_previousMovementDirection.hasContent()
-                && m_previousMovementDirection.get() == Direction::Left)
+        if(m_previousMovementDirection
+                && m_previousMovementDirection.value() == Direction::Left)
         {
-            m_scheduledTeleportDirection.setValue(Direction::Down);
+            m_scheduledTeleportDirection = Direction::Down;
         }
         else
         {
@@ -131,7 +131,7 @@ void OutwardSnakeLikeTraversal::moveRight()
     {
         x=x+1;
         m_currentPoint.setX(x);
-        m_previousMovementDirection.setValue(Direction::Right);
+        m_previousMovementDirection = Direction::Right;
     }
     if(m_lastMostRight < x)
     {
@@ -140,10 +140,10 @@ void OutwardSnakeLikeTraversal::moveRight()
     }
     else if(m_highestRight == x)
     {
-        if(m_previousMovementDirection.hasContent()
-                && m_previousMovementDirection.get() == Direction::Right)
+        if(m_previousMovementDirection
+                && m_previousMovementDirection.value() == Direction::Right)
         {
-            m_scheduledTeleportDirection.setValue(Direction::Up);
+            m_scheduledTeleportDirection = Direction::Up;
         }
         else
         {
@@ -159,7 +159,7 @@ void OutwardSnakeLikeTraversal::moveUp()
     {
         y=y-1;
         m_currentPoint.setY(y);
-        m_previousMovementDirection.setValue(Direction::Up);
+        m_previousMovementDirection = Direction::Up;
     }
     if(y < m_lastMostTop)
     {
@@ -168,10 +168,10 @@ void OutwardSnakeLikeTraversal::moveUp()
     }
     else if(m_lowestTop == y)
     {
-        if(m_previousMovementDirection.hasContent()
-                && m_previousMovementDirection.get() == Direction::Up)
+        if(m_previousMovementDirection
+                && m_previousMovementDirection.value() == Direction::Up)
         {
-            m_scheduledTeleportDirection.setValue(Direction::Left);
+            m_scheduledTeleportDirection = Direction::Left;
         }
         else
         {
@@ -187,7 +187,7 @@ void OutwardSnakeLikeTraversal::moveDown()
     {
         y=y+1;
         m_currentPoint.setY(y);
-        m_previousMovementDirection.setValue(Direction::Down);
+        m_previousMovementDirection = Direction::Down;
     }
     if(m_lastMostBottom < y)
     {
@@ -196,10 +196,10 @@ void OutwardSnakeLikeTraversal::moveDown()
     }
     else if(m_highestBottom == y)
     {
-        if(m_previousMovementDirection.hasContent()
-                && m_previousMovementDirection.get() == Direction::Down)
+        if(m_previousMovementDirection
+                && m_previousMovementDirection.value() == Direction::Down)
         {
-            m_scheduledTeleportDirection.setValue(Direction::Right);
+            m_scheduledTeleportDirection = Direction::Right;
         }
         else
         {
@@ -229,7 +229,7 @@ void OutwardSnakeLikeTraversal::switchDirection()
 
 void OutwardSnakeLikeTraversal::performScheduledTeleport()
 {
-    switch(m_scheduledTeleportDirection.getConstReference())
+    switch(m_scheduledTeleportDirection.value())
     {
     case Direction::Left:
         teleportToNextOfMostLeftAndSwitchDirection();
@@ -244,7 +244,7 @@ void OutwardSnakeLikeTraversal::performScheduledTeleport()
         teleportToNextOfMostBottomAndSwitchDirection();
         break;
     }
-    m_scheduledTeleportDirection.clear();
+    m_scheduledTeleportDirection.reset();
 }
 
 void OutwardSnakeLikeTraversal::teleportToNextOfMostLeftAndSwitchDirection()
@@ -266,7 +266,7 @@ void OutwardSnakeLikeTraversal::teleportToNextOfMostLeftAndSwitchDirection()
             m_currentPoint.setX(m_lastMostLeft);
             teleportToNextOfMostBottomAndSwitchDirection();
         }
-        m_previousMovementDirection.clear();
+        m_previousMovementDirection.reset();
     }
 }
 
@@ -289,7 +289,7 @@ void OutwardSnakeLikeTraversal::teleportToNextOfMostRightAndSwitchDirection()
             m_currentPoint.setX(m_lastMostRight);
             teleportToNextOfMostTopAndSwitchDirection();
         }
-        m_previousMovementDirection.clear();
+        m_previousMovementDirection.reset();
     }
 }
 
@@ -312,7 +312,7 @@ void OutwardSnakeLikeTraversal::teleportToNextOfMostTopAndSwitchDirection()
             m_currentPoint.setY(m_lastMostTop);
             teleportToNextOfMostLeftAndSwitchDirection();
         }
-        m_previousMovementDirection.clear();
+        m_previousMovementDirection.reset();
     }
 }
 
@@ -335,7 +335,7 @@ void OutwardSnakeLikeTraversal::teleportToNextOfMostBottomAndSwitchDirection()
             m_currentPoint.setY(m_lastMostBottom);
             teleportToNextOfMostRightAndSwitchDirection();
         }
-        m_previousMovementDirection.clear();
+        m_previousMovementDirection.reset();
     }
 }
 

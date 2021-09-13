@@ -13,6 +13,7 @@
 
 #include <deque>
 #include <functional>
+#include <optional>
 
 namespace alba
 {
@@ -41,7 +42,7 @@ public:
     BitmapSnippet getBlankSnippetWithColor(
             uint32_t const color) const;
 
-    AlbaOptional<TwoDimensions::Circle> getPossiblePenCircle(
+    std::optional<TwoDimensions::Circle> getPossiblePenCircle(
             BitmapSnippet const& inputSnippet,
             BitmapXY const& centerPoint,
             uint32_t const similarityColorLimit,
