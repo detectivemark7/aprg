@@ -40,6 +40,48 @@ private:
 
 }
 
+// APPROACH:
+// 1) Naive Recursion /  Dynamic Programming by Memoization:
+// -> Each "partialSum" and "value index" has a boolean "isPartialSum" possible
+// -> Start recursion at the "targetSum" and value index as 0.
+// -> Each "isPartialSum" (with inputs "partialSum" and "value index") can be computed by:
+// ---> If "partialSum" == value at "value index":
+// -----> Return true
+// ---> Else if "partialSum" > value at "value index":
+// -----> Get "isPossible" if value is USED:
+// -------> Recursively call "partialSum" - value at "value index" and increment to next "value index"
+// -----> Get "isPossible" if value is SKIPPED:
+// -------> Recursively call "partialSum" and increment to next "value index"
+// -----> Return the OR logic of the two (if one of them is possible then its possible)
+// ---> Else ("partialSum" < value at "value index"):
+// -----> Get "isPossible" if value is SKIPPED:
+// -------> Recursively call "partialSum" and increment to next "value index"
+
+// 2) Dynamic Programming by Tabular method:
+// -> Create an matrix ("isPartialSumPossible") of booleans with size of columns as "targetSum" and size of rows as number of input values
+// -> Thus each "partial sum" and "value index" has a boolean if its possible.
+// -> Partial sums that are equal to input values are possible and set to true.
+// -> Forward traversal (from top-left to bottom-right)
+// -> Traversal uses previous values to compute for a new value
+// -> The computation of each cell in "isPartialSumPossible" is:
+// ---> Get the previous input value (decrement value index)
+// ---> Get initial value of isPossible: Get entry on the matrix if the partial sum and previous input value is possible
+// ---> If isPossible is false and "partialSum" >= previous input value:
+// -----> Replace "isPossible" if previous input value is USED: Get entry on the matrix if the (partial sum - previous input value) and previous input value is possible
+
+// 3) Dynamic Programming by Tabular method and space efficient:
+// -> Create an array of booleans ("isPartialSumPossible") with size as "targetSum"
+// -> Thus each "partial sum" has a boolean if its possible.
+// -> Set "partial sum" = 0 as true (0 is possible partial sum)
+// -> Reverse traversal (from right to left)
+// ---> Reverse traversal so that the changed values wont be changed again in one iteration
+// -> Traversal uses previous values to compute for a new value
+// -> Traverse all input values (this ensures that input values are only used once):
+// ---> Traverse all the partial sums (from target sum to zero):
+// -----> This "partial sum" is possible if "partial sum" >= "input value" and if "partial sum"-"input value" is possible
+
+
+
 // Subset Sum Problem
 // Given a set of non-negative integers, and a value sum, determine if there is a subset of the given set with sum equal to given sum.
 
@@ -86,7 +128,7 @@ private:
 // Method 3 (Memoization method):
 // -> In this method, we also follow the recursive approach but In this method,
 // we use another 2-D matrix in  we first initialize with -1 or any negative value.
-// -> In this method, we avoid the few of the recursive call which is repeated itself that’s why we use 2-D matrix.
+// -> In this method, we avoid the few of the recursively call which is repeated itself that’s why we use 2-D matrix.
 // In this matrix we store the value of the previous call value.
 
 

@@ -44,6 +44,23 @@ private:
 
 }
 
+// APPROACH:
+// 1) Naive Recursion /  Dynamic Programming by Memoization:
+// -> Each "cell" has a "partial sum".
+// -> Start recursion at the bottom-right corner.
+// -> Each cell can be computed by:
+// ---> Recursively call the partial sums of the left neighbor and the top neighbor
+// ---> Return the min/max of partial sums of the neighbors plus the value of this cell
+
+// 2) Dynamic Programming by Tabular method:
+// -> Each "cell" has a "partial sum".
+// -> Forward traversal (from top-left to bottom-right)
+// -> Traversal uses previous values to compute for a new value
+// -> The computation of the "partial sum" of each cell is:
+// ---> Get the partial sums of the left neighbor and the top neighbor
+// ---> Return the min/max of partial sums of the neighbors plus the value of this cell
+
+
 
 // Our next problem is to find a path from the upper-left corner to the lower-right corner of an n X n grid, such that we only move down and right.
 // Each square contains a positive integer, and the path should be constructed so that the sum of the values along the path is as large as possible.

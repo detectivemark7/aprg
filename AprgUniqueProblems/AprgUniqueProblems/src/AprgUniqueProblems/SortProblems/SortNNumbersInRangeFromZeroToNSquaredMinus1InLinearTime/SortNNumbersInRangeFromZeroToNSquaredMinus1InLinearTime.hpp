@@ -2,8 +2,7 @@
 
 #include <Algorithm/Sort/RadixSorter/RadixSorterUsingQuickSortWith3WayPartitioning.hpp>
 #include <Common/Bit/AlbaBitValueUtilities.hpp>
-
-#include <type_traits>
+#include <Common/Types/AlbaTypeHelper.hpp>
 
 namespace alba
 {
@@ -24,7 +23,7 @@ public:
 
     void sort(Integers & valuesToSort) const
     {
-        static_assert(std::is_integral<Integer>::value, "Data type must be an integer");
+        static_assert(typeHelper::isIntegralType<Integer>(), "Data type must be an integer");
 
         unsigned int size = valuesToSort.size();
         if(size > 1U)

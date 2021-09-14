@@ -1,5 +1,7 @@
 #include "TotalNumberOfNonDecreasingNumbersWithNDigits.hpp"
 
+#include <numeric>
+
 using namespace alba::mathHelper;
 using namespace std;
 

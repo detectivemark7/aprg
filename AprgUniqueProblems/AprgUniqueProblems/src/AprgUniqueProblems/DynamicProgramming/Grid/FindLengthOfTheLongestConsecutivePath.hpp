@@ -29,6 +29,16 @@ private:
 
 }
 
+
+// APPROACH:
+// 1) Naive Recursion /  Dynamic Programming by Memoization:
+// -> Each "cell" has a count for "longest length" and this can be computed by:
+// ---> Search for the neighbors with the next value
+// ---> Recursively call the count of these neighbors
+// ---> Return the maximum of the neighbors counts and add one for this cell
+
+
+
 // Find length of the longest consecutive path from a given starting character.
 
 // Given a matrix of characters.

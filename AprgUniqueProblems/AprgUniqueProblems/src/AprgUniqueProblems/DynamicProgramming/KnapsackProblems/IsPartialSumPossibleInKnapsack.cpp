@@ -65,12 +65,12 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingTabularDP() const
             for(Index valueIndex=1; valueIndex<=m_inputValues.size(); valueIndex++)
             {
                 Value previousValue(m_inputValues.at(valueIndex-1));
-                bool entryResult(isPossibleMatrix.getEntry(partialSum, valueIndex-1)); // get previous entry result
-                if(partialSum >= previousValue)
+                bool isPossible(isPossibleMatrix.getEntry(partialSum, valueIndex-1)); // get previous entry result
+                if(!isPossible && partialSum >= previousValue)
                 {
-                    entryResult = entryResult || isPossibleMatrix.getEntry(partialSum-previousValue, valueIndex-1);
+                    isPossible = isPossibleMatrix.getEntry(partialSum-previousValue, valueIndex-1); // use previous value
                 }
-                isPossibleMatrix.setEntry(partialSum, valueIndex, entryResult);
+                isPossibleMatrix.setEntry(partialSum, valueIndex, isPossible);
             }
         }
         result = isPossibleMatrix.getEntry(isPossibleMatrix.getNumberOfColumns()-1, isPossibleMatrix.getNumberOfRows()-1);
@@ -88,11 +88,11 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingTabularDPAndSpaceE
     {
         Booleans isPartialSumPossible(m_targetSum+1, false);
         isPartialSumPossible[0] = true;
-        for(Value const& currentValue : m_inputValues)
+        for(Value const& inputValue : m_inputValues) // input values are only used values
         {
             for(Value partialSum(m_targetSum); partialSum>0; partialSum--) // reverse traversal so that the changed values wont be changed again in one iteration
             {
-                if(partialSum >= currentValue && isPartialSumPossible.at(partialSum-currentValue))
+                if(partialSum >= inputValue && isPartialSumPossible.at(partialSum-inputValue))
                 {
                     isPartialSumPossible[partialSum] = true;
                 }

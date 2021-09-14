@@ -29,10 +29,61 @@ private:
     Count getCountUsingMemoizationDP(CountMatrix & countMatrix, Value const partialSum, Count const digitIndex) const;
 
     Count const m_numberOfDigits;
-    Value const m_sumOfDigits;
+    Value const m_targetSumOfDigits;
 };
 
 }
+
+// APPROACH:
+// 1) Naive Recursion /  Dynamic Programming by Memoization:
+// -> Each "partialSum" and "digit index" has a "count"
+// -> Start recursion at the "targetSumOfDigits" and digit index as 0.
+// -> Each "count" (with inputs "partialSum" and "digit index") can be computed by:
+// ---> If "digit index" > 0 (not last digit):
+// -----> Get count if item is USED:
+// -------> Recursively call "partialSum" - partialSum at "digit index" and increment to next "digit index"
+// -----> Get count if item is SKIPPED:
+// -------> Recursively call "partialSum" and increment to next "digit index"
+// -----> Return max of the two counts
+// ---> Else ("partialSum" < partialSum at "digit index"):
+// -----> Return zero count
+
+// 2) Dynamic Programming by Tabular method:
+// -> Create an matrix or counts with size of columns as "maximum partialSum" and size of rows as number of input values
+// -> Thus each "partialSum" and "digit index" has a count.
+// -> Forward traversal for partialSum and reverse traversal for digit index
+// -> Traversal uses previous values to compute for a new value
+// -> The computation of each count (each cell in the matrix) is:
+// ---> Get the current itemWeight and itemProfit.
+// ---> If partialSum >= itemWeight
+// -----> Get count if item is USED:
+// -------> Get entry at "partialSum" - itemWeight and "incremented digit index"
+// -------> Add current itemProfit
+// -----> Get count if item is SKIPPED:
+// -------> Get entry at "partialSum" and "incremented digit index"
+// -----> Return the maximum count of the two counts
+// ---> Else ("partialSum" < itemWeight):
+// -----> Return zero count
+
+// 3) Dynamic Programming by Tabular method and space efficient:
+// -> Create an array of counts with size as "maximum partialSum"
+// -> Thus each "partialSum" has a count.
+// -> Reverse traversal (from right to left)
+// ---> Reverse traversal so that the changed values wont be changed again in one iteration
+// -> Traversal uses previous values to compute for a new value
+// -> Traverse all input values (this ensures that input values are only used once):
+// ---> Get the current itemWeight and itemProfit.
+// ---> Traverse all the partialSums (from "maximum partialSum" to zero):
+// ---> If partialSum >= itemWeight
+// -----> Get current count:
+// -------> Get entry at "partialSum"
+// -----> Get count if item is USED:
+// -------> Get entry at "partialSum" - itemWeight
+// -------> Add current itemProfit
+// -----> Return the maximum count of the two counts
+
+
+
 
 // Count of n digit numbers whose sum of digits equals to given sum
 
