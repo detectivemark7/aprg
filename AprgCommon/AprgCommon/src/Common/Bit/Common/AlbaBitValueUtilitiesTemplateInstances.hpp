@@ -54,8 +54,8 @@ constexpr unsigned int getNumberOfConsecutiveZerosFromLsbForOneByte(uint8_t cons
 template <typename BitType, typename BitHalfType>
 constexpr inline unsigned int getNumberOfConsecutiveZerosFromMsbFromHalfSize(BitType const value)
 {
-    static_assert(std::is_integral<BitType>::value, "BitType must be an integer");
-    static_assert(std::is_integral<BitHalfType>::value, "BitHalfType must be an integer");
+    static_assert(typeHelper::isIntegralType<BitType>(), "BitType must be an integer");
+    static_assert(typeHelper::isIntegralType<BitHalfType>(), "BitHalfType must be an integer");
 
     using BitHalfTypeUtilities = AlbaBitValueUtilities<BitHalfType>;
 
@@ -71,8 +71,8 @@ constexpr inline unsigned int getNumberOfConsecutiveZerosFromMsbFromHalfSize(Bit
 template <typename BitType, typename BitHalfType>
 constexpr inline unsigned int getNumberOfConsecutiveZerosFromLsbFromHalfSize(BitType const value)
 {
-    static_assert(std::is_integral<BitType>::value, "BitType must be an integer");
-    static_assert(std::is_integral<BitHalfType>::value, "BitHalfType must be an integer");
+    static_assert(typeHelper::isIntegralType<BitType>(), "BitType must be an integer");
+    static_assert(typeHelper::isIntegralType<BitHalfType>(), "BitHalfType must be an integer");
 
     using BitHalfTypeUtilities = AlbaBitValueUtilities<BitHalfType>;
 
@@ -188,13 +188,13 @@ constexpr inline uint16_t AlbaBitValueUtilities<uint16_t>::getAllOnes()
 template <>
 constexpr inline uint32_t AlbaBitValueUtilities<uint32_t>::getAllOnes()
 {
-    return 0xFFFFFFFFU;
+    return 0xFFFF'FFFFU;
 }
 
 template <>
 constexpr inline uint64_t AlbaBitValueUtilities<uint64_t>::getAllOnes()
 {
-    return 0xFFFFFFFFFFFFFFFFU;
+    return 0xFFFF'FFFF'FFFF'FFFFU;
 }
 
 }

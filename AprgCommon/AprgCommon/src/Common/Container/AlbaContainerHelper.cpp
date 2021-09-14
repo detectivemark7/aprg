@@ -12,11 +12,11 @@ string getDelimeterBasedOnFormat(StreamFormat const streamFormat)
 {
     if(StreamFormat::File == streamFormat)
     {
-        return string("\n");
+        return "\n"s;
     }
     else
     {
-        return string(", ");
+        return ", "s;
     }
 }
 

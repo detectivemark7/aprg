@@ -5,8 +5,6 @@
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/Math/Number/AlbaNumber.hpp>
 
-#include <type_traits>
-
 namespace alba
 {
 
@@ -15,7 +13,7 @@ namespace mathHelper
 
 template <typename NumberType> bool isPrime(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     // Non prime would have: a * b = nonPrimeNumber, where a and b are integers
     // To have less iterations:
@@ -38,21 +36,21 @@ template <typename NumberType> bool isPrime(NumberType const number)
 
 template <typename NumberType> NumberType isPowerOfTwo(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return AlbaBitValueUtilities<NumberType>::isPowerOfTwo(number);
 }
 
 template <typename NumberType> NumberType getGreatestPowerOf2Factor(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return AlbaBitValueUtilities<NumberType>::getGreatestPowerOf2Factor(number);
 }
 
 template <typename NumberType> NumberType getGreatestCommonFactor(NumberType const firstNumber, NumberType const secondNumber)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     // Using Euclid’s algorithm
 
@@ -84,7 +82,7 @@ template <typename NumberType> NumberType getGreatestCommonFactor(NumberType con
 
 template <typename NumberType> NumberType getLeastCommonMultiple(NumberType const firstNumber, NumberType const secondNumber)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     // Using Euclid’s algorithm
     // lcm(a,b) = ab/gcd(a,b)
@@ -99,7 +97,7 @@ template <typename NumberType> NumberType getLeastCommonMultiple(NumberType cons
 
 template <typename NumberType> double getLeastCommonMultipleInDouble(NumberType const firstNumber, NumberType const secondNumber)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     double result(0);
     if(firstNumber!=0 && secondNumber!=0)
@@ -111,7 +109,7 @@ template <typename NumberType> double getLeastCommonMultipleInDouble(NumberType 
 
 template <typename NumberType> NumberType getNumberOfMultiplesInclusive(NumberType const multiple, NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     NumberType result(0);
     if(multiple>0 && number>=multiple)
@@ -123,7 +121,7 @@ template <typename NumberType> NumberType getNumberOfMultiplesInclusive(NumberTy
 
 template <typename NumberType> inline NumberType getMultipleThatIsLesserOrEqual(NumberType const multiple, NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     NumberType result(0);
     if(multiple>0)
@@ -135,7 +133,7 @@ template <typename NumberType> inline NumberType getMultipleThatIsLesserOrEqual(
 
 template <typename NumberType> inline NumberType getMultipleThatIsGreaterOrEqual(NumberType const multiple, NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     NumberType result(0);
     if(multiple>0 && number>0)
@@ -147,7 +145,7 @@ template <typename NumberType> inline NumberType getMultipleThatIsGreaterOrEqual
 
 template <typename NumberType> inline NumberType getDifferenceFromGreaterMultiple(NumberType const multiple, NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     NumberType result(0);
     NumberType greaterMultiple(getMultipleThatIsGreaterOrEqual(multiple, number));

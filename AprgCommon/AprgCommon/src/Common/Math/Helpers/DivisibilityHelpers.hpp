@@ -1,6 +1,6 @@
 #pragma once
 
-#include <type_traits>
+#include <Common/Types/AlbaTypeHelper.hpp>
 
 namespace alba
 {
@@ -10,21 +10,21 @@ namespace mathHelper
 
 template <typename NumberType> inline bool isDivisible(NumberType const dividend, NumberType const divisor)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return (divisor==0) ? false : (dividend % divisor)==0;
 }
 
 template <typename NumberType> inline bool isEven(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return !(static_cast<bool>(number % 2));
 }
 
 template <typename NumberType> inline bool isOdd(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return static_cast<bool>(number % 2);
 }

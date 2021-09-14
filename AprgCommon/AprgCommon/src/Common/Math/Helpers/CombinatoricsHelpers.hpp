@@ -4,8 +4,7 @@
 #include <Common/Math/Helpers/FactorAndMulitplesHelpers.hpp>
 #include <Common/Math/Helpers/PowerHelpers.hpp>
 #include <Common/Math/Helpers/PrecisionHelpers.hpp>
-
-#include <type_traits>
+#include <Common/Types/AlbaTypeHelper.hpp>
 
 namespace alba
 {
@@ -17,16 +16,16 @@ template <typename NumberType> NumberType getNumberOfPossibilities(
         NumberType const numberOfPossibilitiesPerTime,
         NumberType const numberOfTimes)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     return getRaiseToPowerForIntegers(numberOfPossibilitiesPerTime, numberOfTimes);
 }
 
 template <typename NumberType> NumberType getFactorial(NumberType const number)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     NumberType result(1);
     for(NumberType currentNumber=number; currentNumber>1; currentNumber--)
@@ -40,8 +39,8 @@ template <typename NumberType> NumberType getNumberOfPermutations(
         NumberType const n,
         NumberType const r)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     NumberType result(0);
     if(n >= r)
@@ -59,8 +58,8 @@ template <typename NumberType> NumberType getNumberOfCombinations(
         NumberType const n,
         NumberType const r)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // Formula 1(recursive formula): (n, k) = (n-1, k-1) + (n-1, k)
     // Base cases: (n, 0) = 1, (n, n) = 1
@@ -114,8 +113,8 @@ template <typename NumberType> NumberType getValueAtPascalTriangle(
         NumberType const rowIndex,
         NumberType const columnIndex)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // This is also called the binomial coefficient.
     // The binomial coefficient equals the number of ways we can choose a subset of k elements from a set of n elements.
@@ -130,8 +129,8 @@ getStirlingNumberOfTheSecondKind(
         NumberType const n,
         NumberType const k)
 {
-    static_assert(std::is_integral<NumberType>::value, "Number type must be an integer");
-    static_assert(std::is_unsigned<NumberType>::value, "Number type must be an unsigned");
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // In mathematics, particularly in combinatorics, a Stirling number of the second kind (or Stirling partition number)
     // is the number of ways to partition a set of n objects into k non-empty subsets

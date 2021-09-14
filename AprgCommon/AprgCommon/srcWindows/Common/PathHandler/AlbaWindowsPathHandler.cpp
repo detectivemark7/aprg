@@ -51,7 +51,7 @@ double AlbaWindowsPathHandler::getFileSizeEstimate()
     WIN32_FILE_ATTRIBUTE_DATA attributeData;
     if (GetFileAttributesExW(convertStringToWideString(getFullPath()).c_str(), GetFileExInfoStandard, &attributeData))
     {
-        fileSizeEstimate = (double)attributeData.nFileSizeHigh * 0x100000000 + attributeData.nFileSizeLow;
+        fileSizeEstimate = (double)attributeData.nFileSizeHigh * 0x100'000'000 + attributeData.nFileSizeLow;
     }
     else
     {

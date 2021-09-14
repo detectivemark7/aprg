@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
+#include <memory>
 
 namespace alba
 {
@@ -17,7 +18,7 @@ class TypeIdGenerator
 public:
     static TypeId GetTypeId()
     {
-        return reinterpret_cast<TypeId>(&GetTypeId);
+        return reinterpret_cast<TypeId>(std::addressof(GetTypeId));
     }
 };
 

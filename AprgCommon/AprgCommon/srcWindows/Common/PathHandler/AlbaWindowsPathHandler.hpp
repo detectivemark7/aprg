@@ -13,7 +13,6 @@ namespace alba
 class AlbaWindowsPathHandler: public AlbaPathHandler
 {
 public:
-    typedef std::set<std::string> ListOfPaths;
     AlbaWindowsPathHandler(PathInitialValueSource const initialValueSource);
     AlbaWindowsPathHandler(std::string const& path);
     virtual ~AlbaWindowsPathHandler() = default;
