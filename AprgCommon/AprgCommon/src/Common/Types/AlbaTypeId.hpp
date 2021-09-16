@@ -6,7 +6,8 @@
 namespace alba
 {
 
-typedef uintptr_t TypeId;
+using TypeId = uintptr_t;
+static constexpr TypeId EMPTY_TYPE_ID = 0;
 
 namespace detail
 {

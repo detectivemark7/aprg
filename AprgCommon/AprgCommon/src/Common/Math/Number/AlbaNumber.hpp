@@ -122,6 +122,8 @@ public:
         , m_data(complexNumberData)
     {}
 
+    AlbaNumber(char const character) = delete; // restrict character to integer conversion (C++11 feature)
+
     // This should be constexpr as well but a lot of coding is needed
     bool operator==(AlbaNumber const& second) const;
     bool operator!=(AlbaNumber const& second) const;
@@ -265,6 +267,17 @@ private:
     Type m_type; // Hotness: Type is much hotter.
     NumberUnionData m_data; // use std variant instead? Nah, I dont wanna deal with getting the "index" to know the "type".
 };
+
+// Source: https://en.cppreference.com/w/cpp/language/user_literal
+// NOTE: The string needs to have a underscore prefix because all letters as prefix are reserved according to the standard.
+constexpr AlbaNumber operator "" _AS_ALBA_NUMBER(unsigned long long int const value)
+{
+    return AlbaNumber(static_cast<long long int>(value));
+}
+constexpr AlbaNumber operator "" _AS_ALBA_NUMBER(long double const value)
+{
+    return AlbaNumber(static_cast<double>(value));
+}
 
 template <> AlbaNumber::ConfigurationDetails getDefaultConfigurationDetails<AlbaNumber::ConfigurationDetails>();
 

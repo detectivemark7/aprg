@@ -8,8 +8,8 @@
 namespace alba
 {
 
-#pragma warning("The class AlbaDebug is used. Please remove after your done debugging.")
-//#warning("The class AlbaDebug is used. Please remove after your done debugging.")
+//#pragma warning("The class AlbaDebug is used. Please remove after your done debugging.") // Unknown pragma
+#warning("The class AlbaDebug is used. Please remove after your done debugging.") // GCC extension
 
 #ifdef ALBA_PRINT_OUTPUT_STREAM_FILE_PATH
 static ofstream debugStream(ALBA_PRINT_OUTPUT_STREAM_FILE_PATH);
@@ -43,5 +43,7 @@ static ofstream debugStream(ALBA_PRINT_OUTPUT_STREAM_FILE_PATH);
 #define ALBA_PRINT_PRECISION(parameter)                                      ALBA_PRINT_OUTPUT_STREAM.precision(parameter)
 #define ALBA_PRINT_MANIPULATE_OUTPUT(ioParameter)                            ALBA_PRINT_OUTPUT_STREAM << ioParameter
 
+#define ALBA_DEBUG_SCOPE_START {
+#define ALBA_DEBUG_SCOPE_END }
 
 }//namespace alba

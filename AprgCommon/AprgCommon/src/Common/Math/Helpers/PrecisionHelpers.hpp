@@ -50,8 +50,8 @@ template <typename NumberType> inline bool isValueBeyondLimits(double const valu
 {
     static_assert(typeHelper::isIntegralType<NumberType>(), "IntegerType must be an integer");
 
-    return value < std::numeric_limits<NumberType>::min()
-            || value > std::numeric_limits<NumberType>::max();
+    return value < static_cast<double>(std::numeric_limits<NumberType>::min())
+            || value > static_cast<double>(std::numeric_limits<NumberType>::max());
 }
 
 template <typename NumberType> inline NumberType getIntegerAfterRoundingADoubleValue(double const doubleValue)
