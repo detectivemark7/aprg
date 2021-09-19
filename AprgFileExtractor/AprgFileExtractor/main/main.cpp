@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     if(argc!=3)
     {
-        cout<<"There are must be only 2 arguments."<<endl;
+        cout<<"There are must be only 2 arguments.\n";
         return 1;
     }
     string condition(argv[1]);
