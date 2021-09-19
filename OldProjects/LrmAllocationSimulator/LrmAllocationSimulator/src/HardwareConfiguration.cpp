@@ -280,7 +280,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
 {
     if(m_sharedLcgId!=0)
     {
-        cout<<"SharedLcg: "<<m_sharedLcgId<<endl;
+        cout<<"SharedLcg: "<<m_sharedLcgId<<"\n";
     }
     DisplayTable table;
     table.setBorders("-"," | ");
@@ -330,7 +330,7 @@ void HardwareConfiguration::printDspAllocations(unsigned int const printFlags)
             }
         }
     }
-    cout<<table.drawOutput();
+    cout<<table;
 }
 
 void HardwareConfiguration::addFsp(unsigned int const fspAddress)
