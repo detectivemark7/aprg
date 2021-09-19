@@ -35,7 +35,7 @@ public:
   
   void specificRequest()
   {
-    std::cout << "specific request" << std::endl;
+    std::cout << "specific request\n";
   }
   // ...
 };

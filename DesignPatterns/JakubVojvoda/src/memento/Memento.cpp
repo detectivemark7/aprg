@@ -51,7 +51,7 @@ public:
   // implemented only for printing purpose
   void setState( const int s )
   {
-    std::cout << "Set state to " << s << "." << std::endl;
+    std::cout << "Set state to " << s << ".\n";
     state = s;
   }
   
@@ -96,7 +96,7 @@ public:
   
   void save()
   {
-    std::cout << "Save state." << std::endl;
+    std::cout << "Save state.\n";
     history.push_back( originator->createMemento() );
   }
   
@@ -104,13 +104,13 @@ public:
   {
     if ( history.empty() )
     {
-      std::cout << "Unable to undo state." << std::endl;
+      std::cout << "Unable to undo state.\n";
       return;
     }
     
     Memento *m = history.back();
     originator->setMemento( m );
-    std::cout << "Undo state." << std::endl;
+    std::cout << "Undo state.\n";
     
     history.pop_back();
     delete m;
@@ -138,7 +138,7 @@ int main()
   originator->setState( 3 );
   caretaker->undo();
   
-  std::cout << "Actual state is " << originator->getState() << "." << std::endl;
+  std::cout << "Actual state is " << originator->getState() << ".\n";
   
   delete originator;
   delete caretaker;

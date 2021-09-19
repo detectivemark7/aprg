@@ -33,7 +33,7 @@ class RealSubject : public Subject
 public:
   void request()
   {
-    std::cout << "Real Subject request" << std::endl;
+    std::cout << "Real Subject request\n";
   }
   // ...
 };

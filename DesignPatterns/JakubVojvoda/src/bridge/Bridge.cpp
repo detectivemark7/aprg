@@ -34,7 +34,7 @@ public:
   
   void action()
   {
-    std::cout << "Concrete Implementor A" << std::endl;
+    std::cout << "Concrete Implementor A\n";
   }
   // ...
 };
@@ -46,7 +46,7 @@ public:
   
   void action()
   {
-    std::cout << "Concrete Implementor B" << std::endl;
+    std::cout << "Concrete Implementor B\n";
   }
   // ...
 };

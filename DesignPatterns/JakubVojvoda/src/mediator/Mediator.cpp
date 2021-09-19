@@ -51,7 +51,7 @@ public:
   
   void receive( std::string msg )
   {
-    std::cout << "Message '" << msg << "' received by Colleague " << id << std::endl;
+    std::cout << "Message '" << msg << "' received by Colleague " << id << "\n";
   }
 };
 
@@ -110,7 +110,7 @@ private:
 
 void ConcreteColleague::send( std::string msg )
 {
-  std::cout << "Message '"<< msg << "' sent by Colleague " << id << std::endl;
+  std::cout << "Message '"<< msg << "' sent by Colleague " << id << "\n";
   mediator->distribute( this, msg );
 }
 

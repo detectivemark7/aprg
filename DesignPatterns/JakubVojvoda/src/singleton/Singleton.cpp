@@ -37,7 +37,7 @@ public:
   
   void tell()
   {
-    std::cout << "This is Singleton." << std::endl;
+    std::cout << "This is Singleton.\n";
     // ...
   }
   // ...

@@ -42,12 +42,12 @@ public:
   
   void visitElementA( ConcreteElementA* const )
   {
-    std::cout << "Concrete Visitor 1: Element A visited." << std::endl;
+    std::cout << "Concrete Visitor 1: Element A visited.\n";
   }
   
   void visitElementB( ConcreteElementB* const )
   {
-    std::cout << "Concrete Visitor 1: Element B visited." << std::endl;
+    std::cout << "Concrete Visitor 1: Element B visited.\n";
   }
   // ...
 };
@@ -59,12 +59,12 @@ public:
   
   void visitElementA( ConcreteElementA* const )
   {
-    std::cout << "Concrete Visitor 2: Element A visited." << std::endl;
+    std::cout << "Concrete Visitor 2: Element A visited.\n";
   }
   
   void visitElementB( ConcreteElementB* const )
   {
-    std::cout << "Concrete Visitor 2: Element B visited." << std::endl;
+    std::cout << "Concrete Visitor 2: Element B visited.\n";
   }
   // ...
 };

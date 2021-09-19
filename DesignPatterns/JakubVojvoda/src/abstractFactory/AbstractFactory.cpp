@@ -151,10 +151,10 @@ int main()
   ConcreteFactoryY *factoryY = new ConcreteFactoryY();
 
   ProductA *p1 = factoryX->createProductA();
-  std::cout << "Product: " << p1->getName() << std::endl;
+  std::cout << "Product: " << p1->getName() << "\n";
   
   ProductA *p2 = factoryY->createProductA();
-  std::cout << "Product: " << p2->getName() << std::endl;
+  std::cout << "Product: " << p2->getName() << "\n";
   
   delete p1;
   delete p2;

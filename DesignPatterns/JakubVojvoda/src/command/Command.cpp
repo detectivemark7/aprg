@@ -20,7 +20,7 @@ class Receiver
 public:
   void action()
   {
-    std::cout << "Receiver: execute action" << std::endl;
+    std::cout << "Receiver: execute action\n";
   }
   // ...
 };

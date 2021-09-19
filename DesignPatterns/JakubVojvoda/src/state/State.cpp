@@ -35,7 +35,7 @@ public:
   
   void handle()
   {
-    std::cout << "State A handled." << std::endl;
+    std::cout << "State A handled.\n";
   }
   // ...
 };
@@ -47,7 +47,7 @@ public:
   
   void handle()
   {
-    std::cout << "State B handled." << std::endl;
+    std::cout << "State B handled.\n";
   }
   // ...
 };

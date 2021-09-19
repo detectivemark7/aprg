@@ -36,7 +36,7 @@ public:
   
   void operation()
   {
-    std::cout << "Concrete Component operation" << std::endl;
+    std::cout << "Concrete Component operation\n";
   }
   // ...
 };
@@ -76,7 +76,7 @@ public:
   void operation()
   {
     Decorator::operation();
-    std::cout << "Decorator A" << std::endl;
+    std::cout << "Decorator A\n";
   }
   // ...
 };
@@ -89,7 +89,7 @@ public:
   void operation()
   {
     Decorator::operation();
-    std::cout << "Decorator B" << std::endl;
+    std::cout << "Decorator B\n";
   }
   // ...
 };

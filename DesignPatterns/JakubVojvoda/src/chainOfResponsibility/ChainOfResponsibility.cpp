@@ -56,11 +56,11 @@ public:
   {
     if ( canHandle() )
     {
-      std::cout << "Handled by Concrete Handler 1" << std::endl;
+      std::cout << "Handled by Concrete Handler 1\n";
     }
     else
     {
-      std::cout << "Cannot be handled by Handler 1" << std::endl;
+      std::cout << "Cannot be handled by Handler 1\n";
       Handler::handleRequest();
     }
     // ...
@@ -83,11 +83,11 @@ public:
   {
     if ( canHandle() )
     {
-      std::cout << "Handled by Handler 2" << std::endl;
+      std::cout << "Handled by Handler 2\n";
     }
     else
     {
-      std::cout << "Cannot be handled by Handler 2" << std::endl;
+      std::cout << "Cannot be handled by Handler 2\n";
       Handler::handleRequest();
     }
     // ...
