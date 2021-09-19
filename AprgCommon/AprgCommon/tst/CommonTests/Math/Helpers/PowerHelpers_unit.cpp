@@ -162,8 +162,8 @@ TEST(PowerHelpersPerformanceTest, DISABLED_GetRaiseToPowerForIntegersPerformance
     int minValue(1), maxValue(2000);
     for(unsigned long long iterations=1; iterations<10000000ULL; iterations++)
     {
-        unsigned long long base = static_cast<unsigned long long>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
-        unsigned long long exponent = static_cast<unsigned long long>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
+        unsigned long long base = static_cast<unsigned long long>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
+        unsigned long long exponent = static_cast<unsigned long long>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
         result = max(result, getRaiseToPowerForIntegers(base, exponent));
     }
     EXPECT_LT(0ULL, result);
@@ -178,8 +178,8 @@ TEST(PowerHelpersPerformanceTest, DISABLED_GetRaiseToPowerForIntegersUsingPowPer
     int minValue(1), maxValue(2000);
     for(unsigned long long iterations=1; iterations<10000000ULL; iterations++)
     {
-        unsigned long long base = static_cast<unsigned long long>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
-        unsigned long long exponent = static_cast<unsigned long long>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
+        unsigned long long base = static_cast<unsigned long long>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
+        unsigned long long exponent = static_cast<unsigned long long>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
         result = max(result, getRaiseToPowerForIntegers(base, exponent));
     }
     EXPECT_LT(0ULL, result);

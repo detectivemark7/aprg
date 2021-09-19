@@ -108,8 +108,8 @@ TEST(LogarithmHelpersPerformanceTest, DISABLED_GetLogarithmPerformanceTest_WithR
     int minValue(2), maxValue(2000);
     for(unsigned int iterations=1; iterations<10000000ULL; iterations++)
     {
-        unsigned int base = static_cast<unsigned int>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
-        unsigned int exponent = static_cast<unsigned int>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
+        unsigned int base = static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
+        unsigned int exponent = static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
         result = max(result, getLogarithmForIntegers(base, exponent));
     }
     EXPECT_LT(0ULL, result);
@@ -124,8 +124,8 @@ TEST(LogarithmHelpersPerformanceTest, DISABLED_GetLogarithmForIntegersPerformanc
     int minValue(2), maxValue(2000);
     for(unsigned int iterations=1; iterations<10000000ULL; iterations++)
     {
-        unsigned int base = static_cast<unsigned int>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
-        unsigned int exponent = static_cast<unsigned int>(randomizer.getRandomValueInUniformDistribution(minValue, maxValue));
+        unsigned int base = static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
+        unsigned int exponent = static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(minValue, maxValue));
         result = max(result, getLogarithmForIntegers(base, exponent));
     }
     EXPECT_LT(0ULL, result);

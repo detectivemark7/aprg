@@ -4,7 +4,7 @@
 
 #include <cstdint>
 #include <cstring>
-#include <string>
+#include <ostream>
 #include <vector>
 
 namespace alba
@@ -29,7 +29,6 @@ public:
     void resize(unsigned int const size, unsigned char const initialValue);
     void* resizeWithAdditionalSizeAndReturnBeginOfAdditionalData(unsigned int const size);
     void addData(void const* sourcePointer, unsigned int const size);
-    std::string getDisplayableString() const;
 
     template <typename ObjectType> void saveObject(ObjectType const& object)
     {

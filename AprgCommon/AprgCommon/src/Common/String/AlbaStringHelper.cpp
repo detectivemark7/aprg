@@ -655,7 +655,7 @@ string getRandomAlphaNumericString(unsigned int const length)
     result.reserve(length);
     generate_n(back_inserter(result), length, [&]()
     {
-        return ALPHA_NUMERIC_CHAR_MAP[static_cast<unsigned int>(randomizer.getRandomValueInUniformDistribution(0, alphaNumericCharMapIndexMax))];
+        return ALPHA_NUMERIC_CHAR_MAP[static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(0, alphaNumericCharMapIndexMax))];
     });
     return result;
 }
