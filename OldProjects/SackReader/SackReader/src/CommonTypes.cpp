@@ -17,6 +17,7 @@ ostream& operator<<(ostream & out, ConstantDetails const& constantDetails)
     writer.writeData<string>(constantDetails.descriptionFromUser);
     writer.writeData<string>(constantDetails.path);
     writer.writeData<bool>(constantDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 
@@ -39,6 +40,7 @@ ostream& operator<<(ostream & out, MessageDetails const& messageDetails)
     writer.writeData<string>(messageDetails.structureName);
     writer.writeData<string>(messageDetails.path);
     writer.writeData<bool>(messageDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 
@@ -59,6 +61,7 @@ ostream& operator<<(ostream & out, EnumParameterDetails const& enumParameterDeta
     writer.writeData<string>(enumParameterDetails.value);
     writer.writeData<string>(enumParameterDetails.description);
     writer.writeData<string>(enumParameterDetails.descriptionFromUser);
+    writer.flush();
     return out;
 }
 
@@ -79,6 +82,7 @@ ostream& operator<<(ostream & out, EnumDetails const& enumDetails)
     writer.writeMapData(enumDetails.parameters);
     writer.writeData<string>(enumDetails.path);
     writer.writeData<bool>(enumDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 
@@ -101,6 +105,7 @@ ostream& operator<<(ostream & out, ParameterDetails const& parameterDetails)
     writer.writeData<string>(parameterDetails.descriptionFromUser);
     writer.writeData<bool>(parameterDetails.isAnArray);
     writer.writeData<string>(parameterDetails.arraySize);
+    writer.flush();
     return out;
 }
 
@@ -125,6 +130,7 @@ ostream& operator<<(ostream & out, StructureDetails const& structureDetails)
     writer.writeData(structureDetails.path);
     writer.writeData<bool>(structureDetails.isMessage);
     writer.writeData<bool>(structureDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 
@@ -148,6 +154,7 @@ ostream& operator<<(ostream & out, UnionDetails const& unionDetails)
     writer.writeVectorData(unionDetails.parametersWithCorrectOrder);
     writer.writeData(unionDetails.path);
     writer.writeData<bool>(unionDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 
@@ -171,6 +178,7 @@ ostream& operator<<(ostream & out, TypedefDetails const& typedefDetails)
     writer.writeData<string>(typedefDetails.descriptionFromUser);
     writer.writeData<string>(typedefDetails.path);
     writer.writeData<bool>(typedefDetails.isUsedInIfs);
+    writer.flush();
     return out;
 }
 

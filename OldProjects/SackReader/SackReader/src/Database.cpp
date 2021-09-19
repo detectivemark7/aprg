@@ -23,6 +23,7 @@ void Database::saveDatabaseToFile(string const& path)
     writer.writeMapData(enumNameToEnumDetailsMap);
     writer.writeMapData(typedefNameToTypedefDetailsMap);
     writer.writeSetData(messagesToGenerate);
+    writer.flush();
 }
 
 void Database::loadDatabaseFromFile(string const& path)
