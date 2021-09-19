@@ -108,9 +108,9 @@ private:
 
     void clearAudioBuffer();
 
-    int32_t fourBytesToInt (std::vector<unsigned char>& source, int startIndex, Endianness endianness = Endianness::LittleEndian);
-    int16_t twoBytesToInt (std::vector<unsigned char>& source, int startIndex, Endianness endianness = Endianness::LittleEndian);
-    int getIndexOfString (std::vector<unsigned char>& source, std::string const& s);
+    int32_t fourBytesToInt (std::vector<unsigned char> const& source, int startIndex, Endianness endianness = Endianness::LittleEndian);
+    int16_t twoBytesToInt (std::vector<unsigned char> const& source, int startIndex, Endianness endianness = Endianness::LittleEndian);
+    int getIndexOfString (std::vector<unsigned char> const& source, std::string const& s);
 
     T sixteenBitIntToSample (int16_t sample);
     int16_t sampleToSixteenBitInt (T sample);
