@@ -39,7 +39,7 @@ Term getAnApproximateOfDefiniteIntegralUsingTrapezoidalRule(
             sum = sum + (currentY * 2);
         }
     }
-    return lengthOfInterval / 2 / numberOfSamples * sum;
+    return sum * lengthOfInterval / 2 / numberOfSamples;
 }
 
 Term getAnApproximateOfDefiniteIntegralUsingSimpsonRule(
@@ -70,7 +70,7 @@ Term getAnApproximateOfDefiniteIntegralUsingSimpsonRule(
             sum = sum + (currentY * 2);
         }
     }
-    return lengthOfInterval / 3 / numberOfSamples * sum;
+    return sum * lengthOfInterval / 3 / numberOfSamples;
 }
 
 Term getActualTruncationErrorInTrapezoidalRule(
@@ -104,7 +104,7 @@ Term getAnApproximateOfTruncationErrorInTrapezoidalRuleAt(
     SubstitutionOfVariablesToValues substitution{{integralDetails.variableName, valueToCheckAt}};
     Term termDoublePrimeValue(substitution.performSubstitutionTo(termDoublePrime));
     AlbaNumber lengthOfInterval(integralDetails.higherEnd-integralDetails.lowerEnd);
-    return lengthOfInterval / -12 * (deltaX ^ 2) * termDoublePrimeValue;
+    return termDoublePrimeValue * lengthOfInterval / -12 * (deltaX ^ 2);
 }
 
 Term getAnApproximateOfTruncationErrorInSimpsonRuleAt(
@@ -118,7 +118,7 @@ Term getAnApproximateOfTruncationErrorInSimpsonRuleAt(
     SubstitutionOfVariablesToValues substitution{{integralDetails.variableName, valueToCheckAt}};
     Term termDoublePrimeValue(substitution.performSubstitutionTo(termDoublePrime));
     AlbaNumber lengthOfInterval(integralDetails.higherEnd-integralDetails.lowerEnd);
-    return lengthOfInterval / -180 * (deltaX ^ 2) * termDoublePrimeValue;
+    return termDoublePrimeValue * lengthOfInterval / -180 * (deltaX ^ 2);
 }
 
 AlbaNumber getAnApproximateOfNaturalLogarithmUsingTrapezoidRule(

@@ -132,7 +132,7 @@ IntegerCoefficient getBinomialCoefficient(
 
 IntegerCoefficient getMultinomialCoefficient(
         IntegerCoefficient const power,
-        IntegerCoefficients const variableExponents)
+        IntegerCoefficients const& variableExponents)
 {
     // The multinomial coefficient is n! / (k1! * k2! * k3! *... * km!)
     //  This is equals the number of ways we can divide n elements into subsets of sizes k1,k2,...,km, where k1+k2+...+km = n.

@@ -51,7 +51,7 @@ TEST(VariableNamesRetrieverTest, RetrieveFromTermWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({"a", "^", 2})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -141,7 +141,7 @@ TEST(VariableNamesRetrieverTest, RetrieveFromFunctionWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({4516, "+", Monomial(7895, {{"x", 10}})})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

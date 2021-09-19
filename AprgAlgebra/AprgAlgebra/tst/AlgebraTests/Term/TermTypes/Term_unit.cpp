@@ -172,7 +172,7 @@ TEST(TermTest, TermsAsExpressionsWorks)
 TEST(TermTest, TermsAsFunctionsWorks)
 {
     Function function1;
-    Function function2("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -235,11 +235,8 @@ TEST(TermTest, TermThatIsCopyConstructedHasIsSimplifiedFlagCopied)
     Term termWithSimplifiedSet;
     termWithSimplifiedSet.setAsSimplified();
 
-    Term term1(termWithSimplifiedNotSet);
-    Term term2(termWithSimplifiedSet);
-
-    EXPECT_FALSE(term1.isSimplified());
-    EXPECT_TRUE(term2.isSimplified());
+    EXPECT_FALSE(termWithSimplifiedNotSet.isSimplified());
+    EXPECT_TRUE(termWithSimplifiedSet.isSimplified());
 }
 
 TEST(TermTest, TermThatIsConstructedWithTermTypeHasIsSimplifiedFlagNotSet)
@@ -646,7 +643,7 @@ TEST(TermTest, GetDebugStringWorks)
     Term term5(Monomial(-1.5, {{"distance", -3.75}, {"power", 4.5}}));
     Term term6(Polynomial{Monomial(3, {}), Monomial(-1.5, {{"distance", -3.75}, {"power", 4.5}})});
     Term term7(createExpressionIfPossible({5, "+", "interest"}));
-    Function function1("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function1("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -669,7 +666,7 @@ TEST(TermTest, ClearWorks)
     Term monomialTerm(Monomial(1475,{}));
     Term polynomialTerm(Polynomial{Monomial(1475,{})});
     Term expressionTerm(Expression{createExpressionIfPossible({1475})});
-    Function functionObject("functionName", Term(1475), [](AlbaNumber const&  number) -> AlbaNumber
+    Function functionObject("functionName", Term(1475), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -697,7 +694,7 @@ TEST(TermTest, SimplifyWorks)
     Term monomialTerm(Monomial(1475,{}));
     Term polynomialTerm(Polynomial{Monomial(1475,{})});
     Term expressionTerm(Expression{createExpressionIfPossible({1475})});
-    Function functionObject("functionName", Term(1475), [](AlbaNumber const&  number) -> AlbaNumber
+    Function functionObject("functionName", Term(1475), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -807,7 +804,7 @@ TEST(TermTest, OutputStreamOperatorWorks)
     Term term5(Monomial(-1.5, {{"distance", -3.75}, {"power", 4.5}}));
     Term term6(Polynomial{Monomial(3, {}), Monomial(-1.5, {{"distance", -3.75}, {"power", 4.5}})});
     Term term7(createExpressionIfPossible({5, "+", "interest"}));
-    Function function1("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function1("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

@@ -97,7 +97,7 @@ TEST(RetrieveHelpersTest, RetrieveSubExpressionsAndSubFunctionsWorks)
     Function functionObject(
                 "functionName",
                 expesssionTerm,
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -115,7 +115,7 @@ TEST(RetrieveHelpersTest, RetrieveSubTermsWorks)
     Function functionObject(
                 "functionName",
                 expesssionTerm,
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

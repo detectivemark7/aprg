@@ -10,6 +10,7 @@
 #include <Algebra/Term/TermTypes/TermType.hpp>
 #include <Algebra/Term/TermTypes/Variable.hpp>
 #include <Common/Math/Number/AlbaNumber.hpp>
+#include <Common/Types/AlbaTypeHelper.hpp>
 
 #include <memory>
 #include <string>
@@ -26,9 +27,6 @@ class Term : public BaseTerm
 public:
     Term();
     Term(Term const& term);
-    Term(int const signedValue);
-    Term(unsigned int const unsignedValue);
-    Term(double const doubleValue);
     Term(AlbaNumber const& number);
     Term(char const* const characterString);
     Term(std::string const& stringAsParameter);
@@ -39,6 +37,11 @@ public:
     Term(Polynomial const& polynomial);
     Term(Expression const& expression);
     Term(Function const& function);
+
+    template< typename ArithmeticType, typename = std::enable_if_t<typeHelper::isArithmeticType<ArithmeticType>()>> // enabled via a type template parameter
+    Term(ArithmeticType const value)
+        : Term(AlbaNumber(value))
+    {}
 
     Term & operator=(Term const& term);
 

@@ -15,7 +15,7 @@ class BaseOneEquationOneVariableSolver : public BaseSolver
 {
 public:
     BaseOneEquationOneVariableSolver() = default;
-    virtual ~BaseOneEquationOneVariableSolver() = default;
+    virtual ~BaseOneEquationOneVariableSolver() = default; // virtual destructor because of virtual functions (vtable exists)
 
     SolutionSet calculateSolutionAndReturnSolutionSet(Equation const& equation);
 

@@ -25,7 +25,7 @@ Equation getCircleEquation()
     Term ySquared(createExpressionIfPossible({yMinusY0, "^", 2}));
     Term rSquared(createExpressionIfPossible({r, "^", 2}));
     Term leftHandSide(createExpressionIfPossible({xSquared, "+", ySquared}));
-    Term rightHandSide(rSquared);
+    Term const& rightHandSide(rSquared);
     return Equation(leftHandSide, "=", rightHandSide);
 }
 

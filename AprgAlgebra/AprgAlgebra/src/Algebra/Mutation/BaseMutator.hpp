@@ -12,7 +12,7 @@ namespace algebra
 class BaseMutator
 {
 public:
-    virtual ~BaseMutator() = default;
+    virtual ~BaseMutator() = default; // virtual destructor because of virtual functions (vtable exists)
 
     virtual void mutateEquation(Equation & equation);
     virtual void mutateTerm(Term & term);

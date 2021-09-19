@@ -29,7 +29,7 @@ bool isVariableExponentInMonomialFound(Polynomial const& polynomial, Monomial co
 bool isPolynomialLinear(Polynomial const& polynomial);
 
 IntegerCoefficient getBinomialCoefficient(IntegerCoefficient const power, IntegerCoefficient const monomialIndex);
-IntegerCoefficient getMultinomialCoefficient(IntegerCoefficient const power, IntegerCoefficients const variableExponents);
+IntegerCoefficient getMultinomialCoefficient(IntegerCoefficient const power, IntegerCoefficients const& variableExponents);
 Monomial getFirstMonomial(Polynomial const& polynomial);
 AlbaNumber getMaxDegree(Polynomial const& polynomial);
 std::pair<AlbaNumber, AlbaNumber> getMinmaxDegree(Polynomial const& polynomial);

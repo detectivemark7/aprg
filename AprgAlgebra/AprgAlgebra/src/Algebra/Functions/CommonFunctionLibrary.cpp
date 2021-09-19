@@ -19,7 +19,7 @@ namespace Functions
 
 Function abs(Term const& term)
 {
-    return Function("abs", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("abs", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return getAbsoluteValue(number);
     });
@@ -27,7 +27,7 @@ Function abs(Term const& term)
 
 Function greatestIntegerFunction(Term const& term)
 {
-    return Function("greatestIntegerFunction", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("greatestIntegerFunction", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return AlbaNumber(ceil(number.getDouble()));
     });
@@ -35,7 +35,7 @@ Function greatestIntegerFunction(Term const& term)
 
 Function sgn(Term const& term)
 {
-    return Function("sgn", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("sgn", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         AlbaNumber result;
         if(number > 0)
@@ -52,7 +52,7 @@ Function sgn(Term const& term)
 
 Function factorial(Term const& term)
 {
-    return Function("factorial", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("factorial", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         AlbaNumber result;
         if(number.isIntegerType() && number >= 0)
@@ -65,7 +65,7 @@ Function factorial(Term const& term)
 
 Function ln(Term const& term)
 {
-    return Function("ln", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("ln", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::log(number.getDouble());
     });
@@ -73,7 +73,7 @@ Function ln(Term const& term)
 
 Function log(Term const& term)
 {
-    return Function("log", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("log", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::log10(number.getDouble());
     });
@@ -81,7 +81,7 @@ Function log(Term const& term)
 
 Function harmonicNumber(Term const& term)
 {
-    return Function("harmonicNumber", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("harmonicNumber", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         AlbaNumber result;
         if(number.getInteger() && number > 0)
@@ -98,7 +98,7 @@ Function harmonicNumber(Term const& term)
 
 Function sin(Term const& term)
 {
-    return Function("sin", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("sin", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::sin(number.getDouble());
     });
@@ -106,7 +106,7 @@ Function sin(Term const& term)
 
 Function cos(Term const& term)
 {
-    return Function("cos", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("cos", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::cos(number.getDouble());
     });
@@ -114,7 +114,7 @@ Function cos(Term const& term)
 
 Function tan(Term const& term)
 {
-    return Function("tan", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("tan", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::tan(number.getDouble());
     });
@@ -122,7 +122,7 @@ Function tan(Term const& term)
 
 Function csc(Term const& term)
 {
-    return Function("csc", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("csc", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return 1/::sin(number.getDouble());
     });
@@ -130,7 +130,7 @@ Function csc(Term const& term)
 
 Function sec(Term const& term)
 {
-    return Function("sec", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("sec", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return 1/::cos(number.getDouble());
     });
@@ -138,7 +138,7 @@ Function sec(Term const& term)
 
 Function cot(Term const& term)
 {
-    return Function("cot", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("cot", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return 1/::tan(number.getDouble());
     });
@@ -146,7 +146,7 @@ Function cot(Term const& term)
 
 Function arcsin(Term const& term)
 {
-    return Function("arcsin", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arcsin", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::asin(number.getDouble());
     });
@@ -154,7 +154,7 @@ Function arcsin(Term const& term)
 
 Function arccos(Term const& term)
 {
-    return Function("arccos", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccos", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::acos(number.getDouble());
     });
@@ -162,7 +162,7 @@ Function arccos(Term const& term)
 
 Function arctan(Term const& term)
 {
-    return Function("arctan", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arctan", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::atan(number.getDouble());
     });
@@ -170,7 +170,7 @@ Function arctan(Term const& term)
 
 Function arccsc(Term const& term)
 {
-    return Function("arccsc", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccsc", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::asin(1/number.getDouble());
     });
@@ -178,7 +178,7 @@ Function arccsc(Term const& term)
 
 Function arcsec(Term const& term)
 {
-    return Function("arcsec", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arcsec", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::acos(1/number.getDouble());
     });
@@ -186,7 +186,7 @@ Function arcsec(Term const& term)
 
 Function arccot(Term const& term)
 {
-    return Function("arccot", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccot", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::atan(1/number.getDouble());
     });
@@ -194,7 +194,7 @@ Function arccot(Term const& term)
 
 Function sinh(Term const& term)
 {
-    return Function("sinh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("sinh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::sinh(number.getDouble());
     });
@@ -202,7 +202,7 @@ Function sinh(Term const& term)
 
 Function cosh(Term const& term)
 {
-    return Function("cosh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("cosh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::cosh(number.getDouble());
     });
@@ -210,7 +210,7 @@ Function cosh(Term const& term)
 
 Function tanh(Term const& term)
 {
-    return Function("tanh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("tanh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::tanh(number.getDouble());
     });
@@ -218,7 +218,7 @@ Function tanh(Term const& term)
 
 Function csch(Term const& term)
 {
-    return Function("csch", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("csch", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return 1 / ::sinh(number.getDouble());
     });
@@ -226,7 +226,7 @@ Function csch(Term const& term)
 
 Function sech(Term const& term)
 {
-    return Function("sech", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("sech", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return 1 / ::cosh(number.getDouble());
     });
@@ -234,7 +234,7 @@ Function sech(Term const& term)
 
 Function coth(Term const& term)
 {
-    return Function("coth", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("coth", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::cosh(number.getDouble()) / ::sinh(number.getDouble());
     });
@@ -242,7 +242,7 @@ Function coth(Term const& term)
 
 Function arcsinh(Term const& term)
 {
-    return Function("arcsinh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arcsinh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::asinh(number.getDouble());
     });
@@ -250,7 +250,7 @@ Function arcsinh(Term const& term)
 
 Function arccosh(Term const& term)
 {
-    return Function("arccosh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccosh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::acosh(number.getDouble());
     });
@@ -258,7 +258,7 @@ Function arccosh(Term const& term)
 
 Function arctanh(Term const& term)
 {
-    return Function("arctanh", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arctanh", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::atanh(number.getDouble());
     });
@@ -266,7 +266,7 @@ Function arctanh(Term const& term)
 
 Function arccsch(Term const& term)
 {
-    return Function("arccsch", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccsch", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::asinh(1/number.getDouble());
     });
@@ -274,7 +274,7 @@ Function arccsch(Term const& term)
 
 Function arcsech(Term const& term)
 {
-    return Function("arcsech", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arcsech", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::acos(1/number.getDouble());
     });
@@ -282,7 +282,7 @@ Function arcsech(Term const& term)
 
 Function arccoth(Term const& term)
 {
-    return Function("arccoth", term, [](AlbaNumber const&  number) -> AlbaNumber
+    return Function("arccoth", term, [](AlbaNumber const& number) -> AlbaNumber
     {
         return ::atanh(1/number.getDouble());
     });
@@ -294,9 +294,12 @@ Function sinHarmonic(
         AlbaNumber const& period,
         AlbaNumber const& phaseDifference)
 {
-    return Function("sinHarmonic", term, [&](AlbaNumber const&  number) -> AlbaNumber
+    AlbaNumber amplitudeCopy(amplitude);
+    AlbaNumber periodCopy(period);
+    AlbaNumber phaseDifferenceCopy(phaseDifference);
+    return Function("sinHarmonic", term, [=](AlbaNumber const& number) -> AlbaNumber
     {
-        return amplitude * ::sin((period*number + phaseDifference).getDouble());
+        return amplitudeCopy * ::sin((periodCopy*number + phaseDifferenceCopy).getDouble());
     });
 }
 

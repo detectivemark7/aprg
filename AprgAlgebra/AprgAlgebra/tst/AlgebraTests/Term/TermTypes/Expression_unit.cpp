@@ -59,7 +59,7 @@ TEST(ExpressionTest, ExpressionThatIsCopyConstructedHasIsSimplifiedFlagCopied)
     Expression expressionWithSimplifiedSet;
     expressionWithSimplifiedSet.setAsSimplified();
 
-    Expression expression1(expressionWithSimplifiedNotSet);
+    Expression const& expression1(expressionWithSimplifiedNotSet);
     Expression expression2(expressionWithSimplifiedSet);
 
     EXPECT_FALSE(expression1.isSimplified());
@@ -1181,7 +1181,7 @@ TEST(ExpressionTest, PutExpressionWithMultiplicationWorksOnMultiplicationAndDivi
     Expression expression4(createExpressionIfPossible({subExpression1, "^", subExpression2}));
     Expression expression5(createExpressionIfPossible({subExpression1, "-", subExpression2}));
     Expression expressionToApply1(createExpressionIfPossible({subExpression3, "-", subExpression4}));
-    Expression expressionToApply2(subExpression3);
+    Expression const& expressionToApply2(subExpression3);
 
     expression1.putExpressionWithMultiplication(expressionToApply1);
     expression2.putExpressionWithMultiplication(expressionToApply1);
@@ -1213,7 +1213,7 @@ TEST(ExpressionTest, PutExpressionWithMultiplicationWorksOnRaiseToPowerExpressio
     Expression expression4(createExpressionIfPossible({subExpression1, "^", subExpression2}));
     Expression expression5(createExpressionIfPossible({subExpression1, "-", subExpression2}));
     Expression expressionToApply1(createExpressionIfPossible({subExpression3, "-", subExpression4}));
-    Expression expressionToApply2(subExpression3);
+    Expression const& expressionToApply2(subExpression3);
 
     expression1.putExpressionWithMultiplication(expressionToApply1);
     expression2.putExpressionWithMultiplication(expressionToApply1);

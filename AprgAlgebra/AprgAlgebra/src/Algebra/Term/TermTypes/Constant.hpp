@@ -15,10 +15,12 @@ class Constant : public BaseTermData
 {
 public:
     Constant();
-    explicit Constant(int const signedValue);
-    explicit Constant(unsigned int const unsignedValue);
-    explicit Constant(double const doubleValue);
     explicit Constant(AlbaNumber const& constantValue);
+
+    template< typename ArithmeticType, typename = std::enable_if_t<typeHelper::isArithmeticType<ArithmeticType>()>> // enabled via a type template parameter
+    explicit Constant(ArithmeticType const value)
+        : Constant(AlbaNumber(value))
+    {}
 
     bool operator==(Constant const& second) const;
     bool operator!=(Constant const& second) const;

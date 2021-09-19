@@ -37,7 +37,7 @@ TEST(RemoveMonomialsWithNegativeExponentMutatorTest, MutateTermWorks)
     Term functionTerm(Function(
                 "functionName",
                 Term(createExpressionIfPossible({4516, "+", Monomial(7895, {{"x", -10}})})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     }));
@@ -120,7 +120,7 @@ TEST(RemoveMonomialsWithNegativeExponentMutatorTest, MutateFunctionWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({4516, "+", Monomial(7895, {{"x", -10}})})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -130,7 +130,7 @@ TEST(RemoveMonomialsWithNegativeExponentMutatorTest, MutateFunctionWorks)
     Function expectedFunction(
                 "functionName",
                 Term(4516),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

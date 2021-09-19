@@ -37,7 +37,7 @@ TEST(DegreeOnlyMutatorTest, MutateTermWorks)
     Term functionTerm(Function(
                 "functionName",
                 Term(createExpressionIfPossible({4516, "+", Monomial(7895, {{"x", 10}})})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     }));
@@ -57,7 +57,7 @@ TEST(DegreeOnlyMutatorTest, MutateTermWorks)
     Term expectedFunctionTerm(Function(
                 "functionName",
                 Term(Monomial(1, {{"x", 10}})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     }));
@@ -135,7 +135,7 @@ TEST(DegreeOnlyMutatorTest, MutateFunctionWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({4516, "+", Monomial(7895, {{"x", 10}})})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -145,7 +145,7 @@ TEST(DegreeOnlyMutatorTest, MutateFunctionWorks)
     Function expectedFunction(
                 "functionName",
                 Term(Monomial(1, {{"x", 10}})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

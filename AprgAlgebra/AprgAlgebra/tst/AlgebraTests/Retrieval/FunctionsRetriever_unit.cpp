@@ -39,7 +39,7 @@ TEST(FunctionsRetrieverTest, RetrieveFromEquationWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({"x", "^", "y"})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -76,7 +76,7 @@ TEST(FunctionsRetrieverTest, RetrieveFromTermWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({"x", "^", "y"})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -175,7 +175,7 @@ TEST(FunctionsRetrieverTest, RetrieveFromExpressionWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({"x", "^", "y"})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -206,7 +206,7 @@ TEST(FunctionsRetrieverTest, RetrieveFromFunctionWorks)
     Function functionObject(
                 "functionName",
                 Term(createExpressionIfPossible({"x", "^", "y"})),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

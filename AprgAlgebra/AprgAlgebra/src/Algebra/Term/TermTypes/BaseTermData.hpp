@@ -10,10 +10,7 @@ class BaseTermData
 {
 public:
     BaseTermData() = default;
-    virtual ~BaseTermData() = default;
-
-private:
-
+    virtual ~BaseTermData() = default; // virtual destructor because it needs to be polymorphically deleted
 };
 
 }

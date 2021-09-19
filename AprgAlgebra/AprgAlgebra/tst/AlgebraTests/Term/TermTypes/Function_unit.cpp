@@ -15,7 +15,7 @@ namespace algebra
 TEST(FunctionTest, ConstructionWorks)
 {
     Function function1;
-    Function function2("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -41,11 +41,8 @@ TEST(FunctionTest, FunctionThatIsCopyConstructedHasIsSimplifiedFlagCopied)
     Function functionWithSimplifiedSet;
     functionWithSimplifiedSet.setAsSimplified();
 
-    Function function1(functionWithSimplifiedNotSet);
-    Function function2(functionWithSimplifiedSet);
-
-    EXPECT_FALSE(function1.isSimplified());
-    EXPECT_TRUE(function2.isSimplified());
+    EXPECT_FALSE(functionWithSimplifiedNotSet.isSimplified());
+    EXPECT_TRUE(functionWithSimplifiedSet.isSimplified());
 }
 
 TEST(FunctionTest, FunctionThatIsConstructedWithTermHasIsSimplifiedFlagCopied)
@@ -53,7 +50,7 @@ TEST(FunctionTest, FunctionThatIsConstructedWithTermHasIsSimplifiedFlagCopied)
     Term termWithSimplifiedNotSet;
     Term termWithSimplifiedSet;
     termWithSimplifiedSet.setAsSimplified();
-    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const&  number) -> AlbaNumber
+    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     };
@@ -78,15 +75,15 @@ TEST(FunctionTest, IsSimplifiedWorks)
 TEST(FunctionTest, EqualityWorks)
 {
     Function function1;
-    Function function2("functionName1", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName1", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function3("functionName2", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function3("functionName2", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function4("functionName2", Term(10), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function4("functionName2", Term(10), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -101,15 +98,15 @@ TEST(FunctionTest, EqualityWorks)
 TEST(FunctionTest, InequalityOperatorWorks)
 {
     Function function1;
-    Function function2("functionName1", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName1", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function3("functionName2", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function3("functionName2", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function4("functionName2", Term(10), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function4("functionName2", Term(10), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -124,15 +121,15 @@ TEST(FunctionTest, InequalityOperatorWorks)
 TEST(FunctionTest, LessThanOperatorWorks)
 {
     Function function1;
-    Function function2("functionName1", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName1", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function3("functionName2", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function3("functionName2", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function4("functionName2", Term(10), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function4("functionName2", Term(10), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -146,7 +143,7 @@ TEST(FunctionTest, LessThanOperatorWorks)
 TEST(FunctionTest, GetFunctionNameWorks)
 {
     Function function1;
-    Function function2("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -157,7 +154,7 @@ TEST(FunctionTest, GetFunctionNameWorks)
 
 TEST(FunctionTest, GetDebugStringWorks)
 {
-    Function functionObject("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function functionObject("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -168,11 +165,11 @@ TEST(FunctionTest, GetDebugStringWorks)
 TEST(FunctionTest, PerformFunctionAndReturnResultIfPossibleWorks)
 {
     Function function1;
-    Function function2("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
-    Function function3("functionName", Term("x"), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function3("functionName", Term("x"), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -185,7 +182,7 @@ TEST(FunctionTest, PerformFunctionAndReturnResultIfPossibleWorks)
 TEST(FunctionTest, GetInputTermConstReferenceWorks)
 {
     Function function1;
-    Function function2("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function function2("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -196,7 +193,7 @@ TEST(FunctionTest, GetInputTermConstReferenceWorks)
 
 TEST(FunctionTest, GetEvaluationFunctionWorks)
 {
-    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const&  number) -> AlbaNumber
+    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     };
@@ -218,7 +215,7 @@ TEST(FunctionTest, GetInputTermReferenceWorks)
 
 TEST(FunctionTest, SimplifyWorks)
 {
-    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const&  number) -> AlbaNumber
+    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     };
@@ -234,7 +231,7 @@ TEST(FunctionTest, SimplifyWorks)
 
 TEST(FunctionTest, SimplifyWorksWhenIsSimplifiedIsNotSet)
 {
-    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const&  number) -> AlbaNumber
+    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     };
@@ -250,7 +247,7 @@ TEST(FunctionTest, SimplifyWorksWhenIsSimplifiedIsNotSet)
 
 TEST(FunctionTest, SimplifyWorksAsSkippedWhenIsSimplifiedIsSet)
 {
-    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const&  number) -> AlbaNumber
+    Function::EvaluationFunction evaluationFunction =  [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     };
@@ -289,7 +286,7 @@ TEST(FunctionTest, ClearAllInnerSimplifiedFlagsWorks)
 {
     Term inputTerm;
     inputTerm.setAsSimplified();
-    Function functionObject("functionName1", inputTerm, [](AlbaNumber const&  number) -> AlbaNumber
+    Function functionObject("functionName1", inputTerm, [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -306,7 +303,7 @@ TEST(FunctionTest, ClearAllInnerSimplifiedFlagsWorks)
 TEST(FunctionTest, OutputStreamOperatorWorks)
 {
     stringstream ss;
-    Function functionObject("functionName", Term(5), [](AlbaNumber const&  number) -> AlbaNumber
+    Function functionObject("functionName", Term(5), [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

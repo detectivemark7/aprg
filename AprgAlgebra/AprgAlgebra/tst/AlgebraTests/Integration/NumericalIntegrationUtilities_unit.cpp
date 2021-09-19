@@ -33,7 +33,7 @@ TEST(NumericalIntegrationUtilitiesTest, GetAnApproximateOfDefiniteIntegralUsingS
     EXPECT_EQ(Term(AlbaNumber::createFraction(75, 2)), getAnApproximateOfDefiniteIntegralUsingSimpsonRule(termToTest1, integralDetails, 200));
     EXPECT_EQ(Term(AlbaNumber::createFraction(875, 3)), getAnApproximateOfDefiniteIntegralUsingSimpsonRule(termToTest2, integralDetails, 200));
     EXPECT_EQ(Term(2343.75), getAnApproximateOfDefiniteIntegralUsingSimpsonRule(termToTest3, integralDetails, 200));
-    EXPECT_EQ(Term(19375.00000026042), getAnApproximateOfDefiniteIntegralUsingSimpsonRule(termToTest4, integralDetails, 200));
+    EXPECT_EQ(Term(19375.000000260424713), getAnApproximateOfDefiniteIntegralUsingSimpsonRule(termToTest4, integralDetails, 200));
 }
 
 TEST(NumericalIntegrationUtilitiesTest, GetActualTruncationErrorInTrapezoidalRuleWorks)
@@ -59,7 +59,7 @@ TEST(NumericalIntegrationUtilitiesTest, GetActualTruncationErrorInSimpsonRuleWor
     EXPECT_EQ(Term(0), getActualTruncationErrorInSimpsonRule(termToTest1, integralDetails, 200));
     EXPECT_EQ(Term(0), getActualTruncationErrorInSimpsonRule(termToTest2, integralDetails, 200));
     EXPECT_EQ(Term(0), getActualTruncationErrorInSimpsonRule(termToTest3, integralDetails, 200));
-    EXPECT_EQ(Term(-2.604210749268532e-007), getActualTruncationErrorInSimpsonRule(termToTest4, integralDetails, 200));
+    EXPECT_EQ(Term(-2.6042471290566027164e-07), getActualTruncationErrorInSimpsonRule(termToTest4, integralDetails, 200));
 }
 
 TEST(NumericalIntegrationUtilitiesTest, GetAnApproximateOfTruncationErrorInTrapezoidalRuleAtWorks)

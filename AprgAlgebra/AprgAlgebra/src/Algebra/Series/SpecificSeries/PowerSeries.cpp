@@ -31,7 +31,7 @@ PowerSeries::PowerSeries(
 
 AlbaNumberIntervals PowerSeries::getIntervalsOfConvergence() const
 {
-    Term limitForRatioTest(getLimitForRatioTest(dynamic_cast<SeriesBasedOnSummation const&>(*this), getNameForVariableInFormula()));
+    Term limitForRatioTest(getLimitForRatioTest(static_cast<SeriesBasedOnSummation const&>(*this), getNameForVariableInFormula()));
     Term limitWithAbsoluteValue(abs(limitForRatioTest));
     OneEquationOneVariableNonEqualitySolver solver;
     SolutionSet solutionSet(solver.calculateSolutionAndReturnSolutionSet(Equation(limitWithAbsoluteValue, "<", 1)));

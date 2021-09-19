@@ -42,7 +42,7 @@ TEST(ExpressionAndFunctionsRetrieverTest, RetrieveFromTermWorks)
     Function functionObject(
                 "functionName",
                 expesssionTerm1,
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });
@@ -123,7 +123,7 @@ TEST(ExpressionAndFunctionsRetrieverTest, RetrieveFromFunctionWorks)
     Function functionObject(
                 "functionName",
                 Term(expression),
-                [](AlbaNumber const&  number) -> AlbaNumber
+                [](AlbaNumber const& number) -> AlbaNumber
     {
         return number;
     });

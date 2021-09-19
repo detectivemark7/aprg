@@ -13,18 +13,6 @@ namespace algebra
 Constant::Constant()
 {}
 
-Constant::Constant(int const signedValue)
-    : m_constantValue(signedValue)
-{}
-
-Constant::Constant(unsigned int const unsignedValue)
-    : m_constantValue(unsignedValue)
-{}
-
-Constant::Constant(double const doubleValue)
-    : m_constantValue(doubleValue)
-{}
-
 Constant::Constant(AlbaNumber const& constantValue)
     : m_constantValue(constantValue)
 {}

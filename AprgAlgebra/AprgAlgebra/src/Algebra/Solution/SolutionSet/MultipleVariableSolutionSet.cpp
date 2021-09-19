@@ -66,7 +66,7 @@ ostream & operator<<(ostream & out, MultipleVariableSolutionSet const& solutionS
 {
     for(auto const& pair : solutionSet.m_variableNameToSolutionSetMap)
     {
-        out << "Variable:{" << pair.first << "} SolutionSet:{" << pair.second << "}" << endl;
+        out << "Variable:{" << pair.first << "} SolutionSet:{" << pair.second << "}\n";
     }
     return out;
 }

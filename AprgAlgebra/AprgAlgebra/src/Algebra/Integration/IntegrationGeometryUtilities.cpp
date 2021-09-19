@@ -183,7 +183,7 @@ TermPair getMomentOfMassOfALamina(
         DetailsForDefiniteIntegralWithTerms const& integralDetails)
 {
     Integration integration(integralDetails.variableName);
-    Term termToIntegrateInX = AlbaNumber::createFraction(1, 2) * (term^2);
+    Term termToIntegrateInX = (term^2) * AlbaNumber::createFraction(1, 2);
     Term termToIntegrateInY = integralDetails.variableName * term;
     TermPair xyPair;
     xyPair.first = integration.integrateAtDefiniteTerms(termToIntegrateInX, integralDetails.lowerEnd, integralDetails.higherEnd);
