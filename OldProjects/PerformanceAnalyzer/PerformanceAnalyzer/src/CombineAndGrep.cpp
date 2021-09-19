@@ -19,9 +19,9 @@ CombineAndGrep::CombineAndGrep(string const& outputFilePath, string const& grepS
 void CombineAndGrep::processDirectory(string const& inputDirectoryPath)
 {
     AlbaLocalPathHandler inputDirectoryPathHandler(inputDirectoryPath);
-    cout << "processDirectory() inputDirectoryPath:" << inputDirectoryPath << endl;
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    cout << "processDirectory() inputDirectoryPath:" << inputDirectoryPath << "\n";
+    ListOfPaths files;
+    ListOfPaths directories;
     inputDirectoryPathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
     for(string const& file: files)
     {
@@ -32,7 +32,7 @@ void CombineAndGrep::processDirectory(string const& inputDirectoryPath)
 void CombineAndGrep::processFile(string const& inputFilePath)
 {
     AlbaLocalPathHandler inputFilePathHandler(inputFilePath);
-    cout << "processFile() inputFilePath:" << inputFilePath << endl;
+    cout << "processFile() inputFilePath:" << inputFilePath << "\n";
     ifstream inputFileStream(inputFilePathHandler.getFullPath());
     AlbaFileReader fileToRead(inputFileStream);
     while(fileToRead.isNotFinished())
@@ -40,7 +40,7 @@ void CombineAndGrep::processFile(string const& inputFilePath)
         string lineFromFile(fileToRead.getLineAndIgnoreWhiteSpaces());
         if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineFromFile, m_grepString))
         {
-            m_outputFileStream << lineFromFile << endl;
+            m_outputFileStream << lineFromFile << "\n";
         }
     }
 }
