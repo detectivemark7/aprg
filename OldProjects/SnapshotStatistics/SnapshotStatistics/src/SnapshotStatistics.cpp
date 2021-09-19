@@ -39,7 +39,7 @@ string SnapshotStatistics::getSnapshotDirectory(string const& snapshotPath) cons
 
 void SnapshotStatistics::extractFilesInSnapshot(string const& snapshotPath)
 {
-    cout<<"processFileOrDirectory snapshotPath: "<<snapshotPath<<endl;
+    cout<<"processFileOrDirectory snapshotPath: "<<snapshotPath<<"\n";
     AlbaLocalPathHandler snapshotPathHandler(snapshotPath);
     m_fileExtractor.extractOnceForAllFiles(snapshotPathHandler.getFullPath());
     snapshotPathHandler.input(getSnapshotDirectory(snapshotPathHandler.getFullPath()) + R"(\BTSLogFiles.zip)");
@@ -48,7 +48,7 @@ void SnapshotStatistics::extractFilesInSnapshot(string const& snapshotPath)
 
 void SnapshotStatistics::fetchFileSizesForSnapshot(string const& snapshotPath)
 {
-    //cout<<"fetchStatistics snapshotPath: "<<snapshotPath<<endl;
+    //cout<<"fetchStatistics snapshotPath: "<<snapshotPath<<"\n";
     AlbaLocalPathHandler snapshotDirectoryPathHandler(getSnapshotDirectory(snapshotPath));
     ListOfPaths listOfFiles;
     ListOfPaths listOfDirectories;
@@ -64,12 +64,12 @@ void SnapshotStatistics::saveFileListForSnapshot(string const& outputPath)
 {
     ofstream outputStream(outputPath);
     outputStream.precision(20);
-    outputStream<<",Sizes (in bytes)"<<endl;
+    outputStream<<",Sizes (in bytes)\n";
     for(string const& snapshotName : m_snapshotNames)
     {
         outputStream<<","<<snapshotName;
     }
-    outputStream<<endl;
+    outputStream<<"\n";
     for(FileNameToSnapshotNameToFileSizePair const& firstPair : m_fileNameToSnapshotNameToFileSize)
     {
         outputStream<<firstPair.first;
@@ -85,7 +85,7 @@ void SnapshotStatistics::saveFileListForSnapshot(string const& outputPath)
                 outputStream<<",";
             }
         }
-        outputStream<<endl;
+        outputStream<<"\n";
     }
 }
 
@@ -125,7 +125,7 @@ void SnapshotStatistics::saveStatisticsToFile(string const& outputPath)
 {
     ofstream outputStream(outputPath);
     outputStream.precision(20);
-    outputStream<<",Samples of sizes (in bytes)"<<endl;
+    outputStream<<",Samples of sizes (in bytes)\n";
     for(WildcardNameToSampleSizesPair const& firstPair : m_wildcardNameToSampleSizesMap)
     {
         outputStream<<firstPair.first;
@@ -133,7 +133,7 @@ void SnapshotStatistics::saveStatisticsToFile(string const& outputPath)
         {
             outputStream<<","<<size;
         }
-        outputStream<<endl;
+        outputStream<<"\n";
     }
 }
 
@@ -210,12 +210,12 @@ void SnapshotStatistics::saveSizesForMemory(string const& outputPath)
 {
     ofstream outputStream(outputPath);
     outputStream.precision(20);
-    outputStream<<",Sizes (in bytes)"<<endl;
+    outputStream<<",Sizes (in bytes)\n";
     for(string const& snapshotName : m_snapshotNames)
     {
         outputStream<<","<<snapshotName;
     }
-    outputStream<<endl;
+    outputStream<<"\n";
     for(FileNameToSnapshotNameToFileSizePair const& firstPair : m_fileNameToSnapshotNameToMemorySize)
     {
         outputStream<<firstPair.first;
@@ -231,7 +231,7 @@ void SnapshotStatistics::saveSizesForMemory(string const& outputPath)
                 outputStream<<",";
             }
         }
-        outputStream<<endl;
+        outputStream<<"\n";
     }
 }
 
