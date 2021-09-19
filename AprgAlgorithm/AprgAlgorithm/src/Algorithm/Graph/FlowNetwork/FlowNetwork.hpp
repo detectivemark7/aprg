@@ -238,7 +238,7 @@ private:
 
     friend std::ostream & operator<<(std::ostream & out, FlowNetwork const& graph)
     {
-        out << dynamic_cast<BaseClass const&>(graph) << "Flow edges: {";
+        out << static_cast<BaseClass const&>(graph) << "Flow edges: {";
         for(auto const& edgeAndDetailsPair : graph.m_edgeToFlowEdgeDetailsMap)
         {
             out << edgeAndDetailsPair.first.first << "->"
