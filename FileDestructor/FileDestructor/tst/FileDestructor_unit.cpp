@@ -16,7 +16,7 @@ namespace
 void createAFileInDirectory(string const& directory)
 {
     ofstream outputStream(directory + "SomeFile.txt");
-    outputStream << "some string" << endl;
+    outputStream << "some string\n";
 }
 
 void retrieveNumberOfFilesAndDirectoriesFromPath(
