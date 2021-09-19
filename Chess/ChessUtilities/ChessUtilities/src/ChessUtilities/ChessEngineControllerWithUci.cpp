@@ -2,8 +2,8 @@
 
 #include <ChessUtilities/Uci/UciUtilities.hpp>
 #include <Common/Macros/AlbaMacros.hpp>
-#include <Common/Time/AlbaLocalTimer.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
+#include <Common/Time/AlbaLocalTimeHelper.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -101,7 +101,6 @@ bool ChessEngineControllerWithUci::waitTillReadyAndReturnIfResetWasPerformed()
     m_waitingForReadyOkay = true;
 
     bool shouldReset(false);
-    AlbaLocalTimer timer;
     unsigned int count(0U);
     while(m_waitingForReadyOkay)
     {
@@ -111,7 +110,7 @@ bool ChessEngineControllerWithUci::waitTillReadyAndReturnIfResetWasPerformed()
             break;
         }
         count++;
-        timer.sleep(100);
+        sleepFor(100);
     }
 
     if(shouldReset)
@@ -182,7 +181,7 @@ void ChessEngineControllerWithUci::changeState(
     {
         m_logFileStreamOptional.value()
                 << "Changing state from " << getEnumString(m_state)
-                << " to " << getEnumString(state) << endl;
+                << " to " << getEnumString(state) << "\n";
     }
     m_state = state;
 }
@@ -204,7 +203,7 @@ void ChessEngineControllerWithUci::log(string const& logString)
 {
     if(m_logFileStreamOptional)
     {
-        m_logFileStreamOptional.value() << logString << endl;
+        m_logFileStreamOptional.value() << logString << "\n";
     }
 }
 

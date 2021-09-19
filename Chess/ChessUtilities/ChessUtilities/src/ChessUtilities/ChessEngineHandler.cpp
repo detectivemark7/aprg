@@ -80,7 +80,7 @@ void ChessEngineHandler::sendStringToEngine(string const& stringToEngine)
         }
         else
         {
-            cout << "Error on sendStringToEngine: " << AlbaWindowsHelper::getLastFormattedErrorMessage() << endl;
+            cout << "Error on sendStringToEngine: " << AlbaWindowsHelper::getLastFormattedErrorMessage() << "\n";
         }
     }
     while(isSuccessful && remainingLength>0);
@@ -221,14 +221,14 @@ void ChessEngineHandler::log(LogType const logtype, string const& logString)
 {
     if(m_logFileStreamOptional)
     {
-        m_logFileStreamOptional.value() << getLogHeader(logtype) << logString << endl;
+        m_logFileStreamOptional.value() << getLogHeader(logtype) << logString << "\n";
     }
 #ifdef APRG_TEST_MODE_ON
-    //cout << getLogHeader(logtype) << logString << endl;
+    //cout << getLogHeader(logtype) << logString << "\n";
 #else
     if(LogType::FromEngine == logtype)
     {
-        cout << logString << endl;
+        cout << logString << "\n";
     }
 #endif
 }
