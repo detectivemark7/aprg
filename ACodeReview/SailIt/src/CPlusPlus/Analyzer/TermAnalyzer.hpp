@@ -17,15 +17,15 @@ using std::string;
 
 //#define DBGFLAG 2
 #if DBGFLAG == 3
-    #define DBGPRINT1(...) cout<<__VA_ARGS__<<endl;
-    #define DBGPRINT2(...) cout<<__VA_ARGS__<<endl;
-    #define DBGPRINT3(...) cout<<__VA_ARGS__<<endl;
+    #define DBGPRINT1(...) cout<<__VA_ARGS__<<"\n";
+    #define DBGPRINT2(...) cout<<__VA_ARGS__<<"\n";
+    #define DBGPRINT3(...) cout<<__VA_ARGS__<<"\n";
 #elif DBGFLAG == 2
-    #define DBGPRINT1(...) cout<<__VA_ARGS__<<endl;
-    #define DBGPRINT2(...) cout<<__VA_ARGS__<<endl;
+    #define DBGPRINT1(...) cout<<__VA_ARGS__<<"\n";
+    #define DBGPRINT2(...) cout<<__VA_ARGS__<<"\n";
     #define DBGPRINT3(...)
 #elif DBGFLAG == 1
-    #define DBGPRINT1(...) cout<<__VA_ARGS__<<endl;
+    #define DBGPRINT1(...) cout<<__VA_ARGS__<<"\n";
     #define DBGPRINT2(...)
     #define DBGPRINT3(...)
 #else

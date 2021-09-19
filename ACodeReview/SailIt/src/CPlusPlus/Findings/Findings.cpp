@@ -18,7 +18,7 @@ void Findings::printFindings(ostream& outputStream)
     //output iterator?
     for (auto& finding : m_findings)
     {
-        outputStream<<"Finding "<<m_fileName<<"["<<finding.first<<"]"<<" -> "<<finding.second<<endl;
+        outputStream<<"Finding "<<m_fileName<<"["<<finding.first<<"] -> "<<finding.second<<"\n";
     }
 }
 
@@ -28,7 +28,7 @@ void Findings::printFindings(ostream& outputStream, string const& details)
     {
         if(details == finding.second.getDetails())
         {
-            outputStream<<"Finding "<<m_fileName<<"["<<finding.first<<"]"<<" -> "<<finding.second<<endl;
+            outputStream<<"Finding "<<m_fileName<<"["<<finding.first<<"] -> "<<finding.second<<"\n";
         }
     }
 }

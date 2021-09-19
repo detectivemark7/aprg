@@ -11,7 +11,7 @@ TEST_F(ModuleTest, ReturnTypeTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "const char *__mingw_get_crt_info(void);" << endl;
+    testFile << "const char *__mingw_get_crt_info(void);\n";
     testFile.close();
 
     processFile();
@@ -34,11 +34,11 @@ TEST_F(ModuleTest, TypeDefTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACROINT int" << endl;
-    testFile << "typedef unsigned int MyInteger;" << endl;
-    testFile << "MyInteger myInteger1 = 5;" << endl;
-    testFile << "typedef MACROINT MyInteger2;" << endl;
-    testFile << "MyInteger2 myInteger2 = 5;" << endl;
+    testFile << "#define MACROINT int\n";
+    testFile << "typedef unsigned int MyInteger;\n";
+    testFile << "MyInteger myInteger1 = 5;\n";
+    testFile << "typedef MACROINT MyInteger2;\n";
+    testFile << "MyInteger2 myInteger2 = 5;\n";
     testFile.close();
 
     processFile();
@@ -59,7 +59,7 @@ TEST_F(ModuleTest, TypeDefWithParenthesisTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typedef int __int128 __attribute__ ((__mode__ (TI)));" << endl;
+    testFile << "typedef int __int128 __attribute__ ((__mode__ (TI)));\n";
     testFile.close();
 
     processFile();
@@ -77,17 +77,17 @@ TEST_F(ModuleTest, TypeDefWithMultipleTypedefNamesTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typedef unsigned __int64 size_t;" << endl;
-    testFile << "typedef __int64 ssize_t;" << endl;
-    testFile << "typedef __int64 intptr_t;" << endl;
-    testFile << "typedef unsigned __int64 uintptr_t;" << endl;
-    testFile << "typedef __int64 ptrdiff_t;" << endl;
-    testFile << "typedef unsigned short wint_t;" << endl;
-    testFile << "typedef unsigned short wctype_t;" << endl;
-    testFile << "typedef int errno_t;" << endl;
-    testFile << "typedef long __time32_t;" << endl;
-    testFile << "typedef __int64 __time64_t;" << endl;
-    testFile << "typedef __time32_t time_t;" << endl;
+    testFile << "typedef unsigned __int64 size_t;\n";
+    testFile << "typedef __int64 ssize_t;\n";
+    testFile << "typedef __int64 intptr_t;\n";
+    testFile << "typedef unsigned __int64 uintptr_t;\n";
+    testFile << "typedef __int64 ptrdiff_t;\n";
+    testFile << "typedef unsigned short wint_t;\n";
+    testFile << "typedef unsigned short wctype_t;\n";
+    testFile << "typedef int errno_t;\n";
+    testFile << "typedef long __time32_t;\n";
+    testFile << "typedef __int64 __time64_t;\n";
+    testFile << "typedef __time32_t time_t;\n";
     testFile.close();
 
     processFile();
@@ -124,13 +124,13 @@ TEST_F(ModuleTest, TypeDefWithMultipleTypesTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "class size_t;" << endl;
-    testFile << "typedef long _off_t;" << endl;
-    testFile << "typedef long off32_t;" << endl;
-    testFile << "typedef long long _off64_t;" << endl;
-    testFile << "typedef long long off64_t;" << endl;
-    testFile << "typedef off64_t off_t;" << endl;
-    testFile << "typedef unsigned long long size_t;" << endl;
+    testFile << "class size_t;\n";
+    testFile << "typedef long _off_t;\n";
+    testFile << "typedef long off32_t;\n";
+    testFile << "typedef long long _off64_t;\n";
+    testFile << "typedef long long off64_t;\n";
+    testFile << "typedef off64_t off_t;\n";
+    testFile << "typedef unsigned long long size_t;\n";
     testFile.close();
 
     processFile();
@@ -157,8 +157,8 @@ TEST_F(ModuleTest, TypeDefTypePointersAreUsed)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typedef int MyIntType;" << endl;
-    testFile << "MyIntType* myInt;" << endl;
+    testFile << "typedef int MyIntType;\n";
+    testFile << "MyIntType* myInt;\n";
     testFile.close();
 
     processFile();
@@ -176,8 +176,8 @@ TEST_F(ModuleTest, ClassTypePointerIsUsed)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "class myType;" << endl;
-    testFile << "myType* classPointer;" << endl;
+    testFile << "class myType;\n";
+    testFile << "myType* classPointer;\n";
     testFile.close();
 
     processFile();
@@ -195,9 +195,9 @@ TEST_F(ModuleTest, ConstPointerIsUsedForNewType)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "const int* intPointer1;" << endl;
-    testFile << "int const* intPointer2;" << endl;
-    testFile << "int* const intPointer3;" << endl;
+    testFile << "const int* intPointer1;\n";
+    testFile << "int const* intPointer2;\n";
+    testFile << "int* const intPointer3;\n";
     testFile.close();
 
     processFile();
@@ -214,9 +214,9 @@ TEST_F(ModuleTest, ConstReferenceIsUsedForNewType)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "const int& intReference1;" << endl;
-    testFile << "int const& intReference2;" << endl;
-    testFile << "int& const intReference3;" << endl;
+    testFile << "const int& intReference1;\n";
+    testFile << "int const& intReference2;\n";
+    testFile << "int& const intReference3;\n";
     testFile.close();
 
     processFile();
@@ -233,14 +233,14 @@ TEST_F(ModuleTest, CStyleStructTypedefs)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "struct threadlocaleinfostruct;" << endl;
-    testFile << "struct threadmbcinfostruct;" << endl;
-    testFile << "typedef struct threadlocaleinfostruct *pthreadlocinfo;" << endl;
-    testFile << "typedef struct threadmbcinfostruct *pthreadmbcinfo;" << endl;
-    testFile << "typedef struct threadlocaleinfostruct" << endl;
-    testFile << "{" << endl;
-    testFile << "}" << endl;
-    testFile << "threadlocinfo;" << endl;
+    testFile << "struct threadlocaleinfostruct;\n";
+    testFile << "struct threadmbcinfostruct;\n";
+    testFile << "typedef struct threadlocaleinfostruct *pthreadlocinfo;\n";
+    testFile << "typedef struct threadmbcinfostruct *pthreadmbcinfo;\n";
+    testFile << "typedef struct threadlocaleinfostruct\n";
+    testFile << "{\n";
+    testFile << "}\n";
+    testFile << "threadlocinfo;\n";
     testFile.close();
 
     processFile();
@@ -269,13 +269,13 @@ TEST_F(ModuleTest, CStyleStructWithBracesTypedefs)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typedef struct tagLC_ID" << endl;
-    testFile << "{" << endl;
-    testFile << "unsigned short wLanguage;" << endl;
-    testFile << "unsigned short wCountry;" << endl;
-    testFile << "unsigned short wCodePage;" << endl;
-    testFile << "}" << endl;
-    testFile << "LC_ID,*LPLC_ID;" << endl;
+    testFile << "typedef struct tagLC_ID\n";
+    testFile << "{\n";
+    testFile << "unsigned short wLanguage;\n";
+    testFile << "unsigned short wCountry;\n";
+    testFile << "unsigned short wCodePage;\n";
+    testFile << "}\n";
+    testFile << "LC_ID,*LPLC_ID;\n";
     testFile.close();
 
     processFile();
@@ -299,10 +299,10 @@ TEST_F(ModuleTest, TypesAreRecognizedAfterMacro)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typedef unsigned int size_t;" << endl;
-    testFile << "#endif" << endl;
-    testFile << "#endif" << endl;
-    testFile << "size_t _fread_nolock_s(void* _DstBuf, size_t _DstSize, size_t _ElementSize, size_t _Count);" << endl;
+    testFile << "typedef unsigned int size_t;\n";
+    testFile << "#endif\n";
+    testFile << "#endif\n";
+    testFile << "size_t _fread_nolock_s(void* _DstBuf, size_t _DstSize, size_t _ElementSize, size_t _Count);\n";
     testFile.close();
 
     processFile();

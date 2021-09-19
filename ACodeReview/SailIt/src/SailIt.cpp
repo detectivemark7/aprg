@@ -15,14 +15,14 @@ namespace codeReview
 
 void SailIt::printAll(ostream& outputStream)
 {
-   outputStream<<"FileDirectoryDatabase:"<<endl;
+   outputStream<<"FileDirectoryDatabase:\n";
    m_fileDirectoryDatabase.printFilesAndDirectories(outputStream);
-   outputStream<<endl;
+   outputStream<<"\n";
    for(FileCPlusPlusDatabasesPair fileCPlusPlusDatabasesPair :m_fileCPlusPlusDatabasesMap)
    {
-       outputStream<<"CPlusPlusDatabase of "<<fileCPlusPlusDatabasesPair.first<<endl;
+       outputStream<<"CPlusPlusDatabase of "<<fileCPlusPlusDatabasesPair.first<<"\n";
        fileCPlusPlusDatabasesPair.second.print(outputStream);
-       outputStream<<"Findings for "<<fileCPlusPlusDatabasesPair.first<<endl;
+       outputStream<<"Findings for "<<fileCPlusPlusDatabasesPair.first<<"\n";
        m_fileFindingsMap[fileCPlusPlusDatabasesPair.first].printFindings(outputStream);
    }
 }
@@ -31,7 +31,7 @@ void SailIt::printFindings(ostream& outputStream, string const& finding)
 {
    for(FileCPlusPlusDatabasesPair fileCPlusPlusDatabasesPair :m_fileCPlusPlusDatabasesMap)
    {
-       outputStream<<"Findings for "<<fileCPlusPlusDatabasesPair.first<<endl;
+       outputStream<<"Findings for "<<fileCPlusPlusDatabasesPair.first<<"\n";
        m_fileFindingsMap[fileCPlusPlusDatabasesPair.first].printFindings(outputStream, finding);
    }
 }

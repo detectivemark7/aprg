@@ -15,7 +15,7 @@ void CPlusPlusFunctionSignature::printSignature() const
     {
         cout<<"[Name: "<<parameter.getName()<<" Type: "<<parameter.getType()<<"]";
     }
-    cout<<endl;
+    cout<<"\n";
 }
 
 CPlusPlusType& CPlusPlusFunctionSignature::getReturnTypeReference()

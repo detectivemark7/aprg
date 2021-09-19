@@ -11,11 +11,11 @@ TEST_F(ModuleTest, MultiLineIfStatementTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "if(1 == 1)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "if(2 == 2);" << endl;
+    testFile << "if(1 == 1)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "if(2 == 2);\n";
     testFile.close();
 
     processFile();
@@ -30,11 +30,11 @@ TEST_F(ModuleTest, MultiLineIfStatementWithConstantBoolTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "if(true)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "if(false);" << endl;
+    testFile << "if(true)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "if(false);\n";
     testFile.close();
 
     processFile();
@@ -49,10 +49,10 @@ TEST_F(ModuleTest, MultiLineIfStatementIncorrectFormatTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int x;" << endl;
-    testFile << "if(hello){int y=5;}" << endl;
-    testFile << "if(x | 5){int z=5;}" << endl;
-    testFile << "if(2 ==2) \n; " << endl;
+    testFile << "int x;\n";
+    testFile << "if(hello){int y=5;}\n";
+    testFile << "if(x | 5){int z=5;}\n";
+    testFile << "if(2 ==2) \n; \n";
     testFile.close();
 
     processFile();
@@ -69,11 +69,11 @@ TEST_F(ModuleTest, MultiLineElseIfStatementTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "else   if(2 == 2)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "else if(3 == 3);" << endl;
+    testFile << "else   if(2 == 2)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "else if(3 == 3);\n";
     testFile.close();
 
     processFile();
@@ -88,10 +88,10 @@ TEST_F(ModuleTest, MultiLineElseStatementTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "else" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
+    testFile << "else\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
     testFile.close();
 
     processFile();
@@ -105,20 +105,20 @@ TEST_F(ModuleTest, MultiLineIfElseIfElseStatementTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int a = 5;" << endl;
-    testFile << "if(1 == 1)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "else if(2 == 2);" << endl;
-    testFile << "else if(3 == 3)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "else" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
+    testFile << "int a = 5;\n";
+    testFile << "if(1 == 1)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "else if(2 == 2);\n";
+    testFile << "else if(3 == 3)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "else\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
     testFile.close();
 
     processFile();
@@ -133,19 +133,19 @@ TEST_F(ModuleTest, MultiLineCascadingIfClauses)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int a = 1;" << endl;
-    testFile << "if(1 == 1)" << endl;
-    testFile << "{" << endl;
-    testFile << "int a = 2;" << endl;
-    testFile << "if(2 == 2)" << endl;
-    testFile << "{" << endl;
-    testFile << "int a = 3;" << endl;
-    testFile << "if(3 == 3)" << endl;
-    testFile << "{" << endl;
-    testFile << "int a = 4;" << endl;
-    testFile << "}" << endl;
-    testFile << "}" << endl;
-    testFile << "}" << endl;
+    testFile << "int a = 1;\n";
+    testFile << "if(1 == 1)\n";
+    testFile << "{\n";
+    testFile << "int a = 2;\n";
+    testFile << "if(2 == 2)\n";
+    testFile << "{\n";
+    testFile << "int a = 3;\n";
+    testFile << "if(3 == 3)\n";
+    testFile << "{\n";
+    testFile << "int a = 4;\n";
+    testFile << "}\n";
+    testFile << "}\n";
+    testFile << "}\n";
     testFile.close();
 
     processFile();
@@ -160,18 +160,18 @@ TEST_F(ModuleTest, MultiLineIncorrectIfElseIfElseStatementTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "if(1 == 1)" << endl; testFile << "   " << endl;
-    testFile << "{" << endl; testFile << "   " << endl;
-    testFile << "int x = 5;" << endl; testFile << "   " << endl;
-    testFile << "}" << endl; testFile << "   " << endl;
-    testFile << "else if(2 == 2)" << endl; testFile << "   " << endl;
-    testFile << "{" << endl; testFile << "   " << endl;
-    testFile << "int x = 5;" << endl; testFile << "   " << endl;
-    testFile << "}" << endl; testFile << "   " << endl;
-    testFile << "else" << endl; testFile << "   " << endl;
-    testFile << "{" << endl; testFile << "   " << endl;
-    testFile << "int x = 5;" << endl; testFile << "   " << endl;
-    testFile << "}" << endl;
+    testFile << "if(1 == 1)\n"; testFile << "   \n";
+    testFile << "{\n"; testFile << "   \n";
+    testFile << "int x = 5;\n"; testFile << "   \n";
+    testFile << "}\n"; testFile << "   \n";
+    testFile << "else if(2 == 2)\n"; testFile << "   \n";
+    testFile << "{\n"; testFile << "   \n";
+    testFile << "int x = 5;\n"; testFile << "   \n";
+    testFile << "}\n"; testFile << "   \n";
+    testFile << "else\n"; testFile << "   \n";
+    testFile << "{\n"; testFile << "   \n";
+    testFile << "int x = 5;\n"; testFile << "   \n";
+    testFile << "}\n";
     testFile.close();
 
     processFile();
@@ -185,11 +185,11 @@ TEST_F(ModuleTest, MultiLineWhileLoopTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "while(1 == 1)" << endl;
-    testFile << "{" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "}" << endl;
-    testFile << "while(2 == 2);" << endl;
+    testFile << "while(1 == 1)\n";
+    testFile << "{\n";
+    testFile << "int x = 5;\n";
+    testFile << "}\n";
+    testFile << "while(2 == 2);\n";
     testFile.close();
 
     processFile();

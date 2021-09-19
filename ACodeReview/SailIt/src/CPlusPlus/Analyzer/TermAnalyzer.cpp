@@ -54,7 +54,7 @@ void TermAnalyzer::analyze()
 {
     if(m_optionalSailIt)
     {
-        cout << "analyze file=["<<m_baseDirectory+m_fileName<<"]"<<endl;
+        cout << "analyze file=["<<m_baseDirectory+m_fileName<<"]\n";
     }
     if(!m_terms.empty())
     {

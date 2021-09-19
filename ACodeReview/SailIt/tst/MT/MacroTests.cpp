@@ -11,12 +11,12 @@ TEST_F(ModuleTest, MacroDefinitionsDefineTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO0" << endl;
-    testFile << "#define MACRO1 variable1" << endl;
-    testFile << "#define MACRO2(a, b) a = a + b" << endl;
-    testFile << "int MACRO1 = 5;" << endl;
-    testFile << "int variable2 = 5;" << endl;
-    testFile << "MACRO2(variable1, variable2);" << endl;
+    testFile << "#define MACRO0\n";
+    testFile << "#define MACRO1 variable1\n";
+    testFile << "#define MACRO2(a, b) a = a + b\n";
+    testFile << "int MACRO1 = 5;\n";
+    testFile << "int variable2 = 5;\n";
+    testFile << "MACRO2(variable1, variable2);\n";
     testFile.close();
 
     processFile();
@@ -38,11 +38,11 @@ TEST_F(ModuleTest, MacroDefinitionsDefineWithParameterMismatchTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO0(a, b) a = a + b" << endl;
-    testFile << "int variable1 = 5;" << endl;
-    testFile << "int variable2 = 5;" << endl;
-    testFile << "int variable3 = 5;" << endl;
-    testFile << "MACRO0(variable1, variable2, variable3);" << endl;
+    testFile << "#define MACRO0(a, b) a = a + b\n";
+    testFile << "int variable1 = 5;\n";
+    testFile << "int variable2 = 5;\n";
+    testFile << "int variable3 = 5;\n";
+    testFile << "MACRO0(variable1, variable2, variable3);\n";
     testFile.close();
 
     processFile();
@@ -61,14 +61,14 @@ TEST_F(ModuleTest, MacroDefinitionsDefineWithVariadicParametersTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO0(...) __VA_ARGS__" << endl;
-    testFile << "#define MACRO1(a, ...) a = __VA_ARGS__" << endl;
-    testFile << "#define MACRO2(a, b, ...) a = a + b + __VA_ARGS__" << endl;
-    testFile << "int MACRO0(variable1) = 5;" << endl;
-    testFile << "int MACRO0(variable2) = 5;" << endl;
-    testFile << "int MACRO0(variable3) = 5;" << endl;
-    testFile << "MACRO1(variable1, variable1 + variable2);" << endl;
-    testFile << "MACRO2(variable1, variable2, variable3);" << endl;
+    testFile << "#define MACRO0(...) __VA_ARGS__\n";
+    testFile << "#define MACRO1(a, ...) a = __VA_ARGS__\n";
+    testFile << "#define MACRO2(a, b, ...) a = a + b + __VA_ARGS__\n";
+    testFile << "int MACRO0(variable1) = 5;\n";
+    testFile << "int MACRO0(variable2) = 5;\n";
+    testFile << "int MACRO0(variable3) = 5;\n";
+    testFile << "MACRO1(variable1, variable1 + variable2);\n";
+    testFile << "MACRO2(variable1, variable2, variable3);\n";
     testFile.close();
 
     processFile();
@@ -92,8 +92,8 @@ TEST_F(ModuleTest, MacroDefinitionsDefineWithVariadicWithContentsParametersTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO0(a, b, ...) int a = b + __VA_ARGS__" << endl;
-    testFile << "MACRO0(variable1, 100, 200 * 300);" << endl;
+    testFile << "#define MACRO0(a, b, ...) int a = b + __VA_ARGS__\n";
+    testFile << "MACRO0(variable1, 100, 200 * 300);\n";
     testFile.close();
 
     processFile();
@@ -109,12 +109,12 @@ TEST_F(ModuleTest, MacroDefinitionsDefineMultiLineTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACROSTART if(1 == 1)\\" << endl;
-    testFile << "{" << endl;
-    testFile << "#define MACROEND }" << endl;
-    testFile << "MACROSTART" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "MACROEND" << endl;
+    testFile << "#define MACROSTART if(1 == 1)\\\n";
+    testFile << "{\n";
+    testFile << "#define MACROEND }\n";
+    testFile << "MACROSTART\n";
+    testFile << "int x = 5;\n";
+    testFile << "MACROEND\n";
     testFile.close();
 
     processFile();
@@ -132,10 +132,10 @@ TEST_F(ModuleTest, MacroDefinitionsUndefTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO1 variable1" << endl;
-    testFile << "int MACRO1 = 5;" << endl;
-    testFile << "#undef MACRO1" << endl;
-    testFile << "int MACRO1 = 5;" << endl;
+    testFile << "#define MACRO1 variable1\n";
+    testFile << "int MACRO1 = 5;\n";
+    testFile << "#undef MACRO1\n";
+    testFile << "int MACRO1 = 5;\n";
     testFile.close();
 
     processFile();
@@ -153,12 +153,12 @@ TEST_F(ModuleTest, MacroDefinitionsDefineWithCyclicEquivalentCannotBeAddedTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO1 MACRO1 MACRO2 MACRO3" << endl;
-    testFile << "#define MACRO2 MACRO1 MACRO2 MACRO3" << endl;
-    testFile << "#define MACRO3 MACRO1 MACRO2 MACRO3" << endl;
-    testFile << "int MACRO1 = 1;" << endl;
-    testFile << "int MACRO2 = 2;" << endl;
-    testFile << "int MACRO3 = 3;" << endl;
+    testFile << "#define MACRO1 MACRO1 MACRO2 MACRO3\n";
+    testFile << "#define MACRO2 MACRO1 MACRO2 MACRO3\n";
+    testFile << "#define MACRO3 MACRO1 MACRO2 MACRO3\n";
+    testFile << "int MACRO1 = 1;\n";
+    testFile << "int MACRO2 = 2;\n";
+    testFile << "int MACRO3 = 3;\n";
     testFile.close();
 
     processFile();
@@ -180,10 +180,10 @@ TEST_F(ModuleTest, MacroDefinitionsDefineWithCyclicEquivalentCannotBeAddedTest2)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define MACRO1 MACRO2" << endl;
-    testFile << "#define MACRO2 MACRO3" << endl;
-    testFile << "#define MACRO3 MACRO1" << endl;
-    testFile << "int MACRO1 = 1;" << endl;
+    testFile << "#define MACRO1 MACRO2\n";
+    testFile << "#define MACRO2 MACRO3\n";
+    testFile << "#define MACRO3 MACRO1\n";
+    testFile << "int MACRO1 = 1;\n";
     testFile.close();
 
     processFile();
@@ -203,10 +203,10 @@ TEST_F(ModuleTest, MacroExtraMacroTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#ifdef I dont care what is the next part" << endl;
-    testFile << "#line I don2t cAre 234567" << endl;
-    testFile << "#error Why?" << endl;
-    testFile << "#pragma because the WHOLE line is combined" << endl;
+    testFile << "#ifdef I dont care what is the next part\n";
+    testFile << "#line I don2t cAre 234567\n";
+    testFile << "#error Why?\n";
+    testFile << "#pragma because the WHOLE line is combined\n";
     testFile.close();
 
     processFile();
@@ -223,9 +223,9 @@ TEST_F(ModuleTest, MacroWithParenthesisTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define _TRUNCATE ((size_t) - 1)" << endl;
-    testFile << "int size_t;" << endl;
-    testFile << "int x = _TRUNCATE;" << endl;
+    testFile << "#define _TRUNCATE ((size_t) - 1)\n";
+    testFile << "int size_t;\n";
+    testFile << "int x = _TRUNCATE;\n";
     testFile.close();
 
     processFile();
@@ -241,13 +241,13 @@ TEST_F(ModuleTest, MacroWithStringsTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#ifdef _POSIX_" << endl;
-    testFile << "#define _P_tmpdir \"/\"" << endl;
-    testFile << "#define _wP_tmpdir L\"/\"" << endl;
-    testFile << "#else" << endl;
-    testFile << "#define _P_tmpdir \"\\\\\"" << endl;
-    testFile << "#define _wP_tmpdir L\"\\\\\"" << endl;
-    testFile << "#endif" << endl;
+    testFile << "#ifdef _POSIX_\n";
+    testFile << "#define _P_tmpdir \"/\"\n";
+    testFile << "#define _wP_tmpdir L\"/\"\n";
+    testFile << "#else\n";
+    testFile << "#define _P_tmpdir \"\\\\\"\n";
+    testFile << "#define _wP_tmpdir L\"\\\\\"\n";
+    testFile << "#endif\n";
     testFile.close();
 
     processFile();

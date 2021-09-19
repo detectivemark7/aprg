@@ -11,14 +11,14 @@ TEST_F(ModuleTest, CheckScopeOperatorForCPlusPlus)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "namespace myNamespace" << endl;
-    testFile << "{" << endl;
-    testFile << "}" << endl;
-    testFile << "class myClass;" << endl;
-    testFile << "struct myStruct;" << endl;
-    testFile << "int myNamespace::variable1;" << endl;
-    testFile << "int myClass::variable1;" << endl;
-    testFile << "int myStruct::variable1;" << endl;
+    testFile << "namespace myNamespace\n";
+    testFile << "{\n";
+    testFile << "}\n";
+    testFile << "class myClass;\n";
+    testFile << "struct myStruct;\n";
+    testFile << "int myNamespace::variable1;\n";
+    testFile << "int myClass::variable1;\n";
+    testFile << "int myStruct::variable1;\n";
     testFile.close();
 
     processFile();

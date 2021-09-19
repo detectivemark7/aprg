@@ -12,8 +12,8 @@ TEST_F(ModuleTest, ExternTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "extern int x = 5;" << endl;
-    testFile << "extern  \tint y = 5;" << endl;
+    testFile << "extern int x = 5;\n";
+    testFile << "extern  \tint y = 5;\n";
     testFile.close();
 
     processFile();
@@ -30,13 +30,13 @@ TEST_F(ModuleTest, CommentAreIgnored)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define /*My comment1*/MACRO/*My comment2*/ int//My comment3" << endl;
-    testFile << "#include /*My comment1*/<iostream>//My comment2" << endl;
-    testFile << "MACRO /*My comment1*/variable /*My comment2*/= 5;//My comment3" << endl;
-    testFile << "if/*My comment1*/(/*My comment2*/1/*My comment3*/ == /*My comment4*/1/*My comment5*/)//My comment5" << endl;
-    testFile << "/*My comment1*/{//My comment2" << endl;
-    testFile << "int x = 5;" << endl;
-    testFile << "/*My comment1*/}//My comment2" << endl;
+    testFile << "#define /*My comment1*/MACRO/*My comment2*/ int//My comment3\n";
+    testFile << "#include /*My comment1*/<iostream>//My comment2\n";
+    testFile << "MACRO /*My comment1*/variable /*My comment2*/= 5;//My comment3\n";
+    testFile << "if/*My comment1*/(/*My comment2*/1/*My comment3*/ == /*My comment4*/1/*My comment5*/)//My comment5\n";
+    testFile << "/*My comment1*/{//My comment2\n";
+    testFile << "int x = 5;\n";
+    testFile << "/*My comment1*/}//My comment2\n";
     testFile.close();
 
     processFile();
@@ -53,8 +53,8 @@ TEST_F(ModuleTest, SingleLineCommentWithExtraNewLineTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "//Single line comment" << endl;
-    testFile << "//Single line comment with spaces in the end" << endl;
+    testFile << "//Single line comment\n";
+    testFile << "//Single line comment with spaces in the end\n";
     testFile.close();
 
     processFile();
@@ -69,14 +69,14 @@ TEST_F(ModuleTest, MultiLineCommentWithExtraNewLineTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "/*" << endl;
-    testFile << "Multi line comments" << endl;
-    testFile << "*/" << endl;
-    testFile << endl;
-    testFile << "/*" << endl;
-    testFile << "Multi line comment with spaces in the end" << endl;
-    testFile << "*/   " << endl;
-    testFile << endl;
+    testFile << "/*\n";
+    testFile << "Multi line comments\n";
+    testFile << "*/\n";
+    testFile << "\n";
+    testFile << "/*\n";
+    testFile << "Multi line comment with spaces in the end\n";
+    testFile << "*/   \n";
+    testFile << "\n";
     testFile.close();
 
     processFile();
@@ -93,9 +93,9 @@ TEST_F(ModuleTest, CheckUnnecessaryLinesIndentionAreNotChecked)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "    " << endl;
-    testFile << "           " << endl;
-    testFile << "             " << endl;
+    testFile << "    \n";
+    testFile << "           \n";
+    testFile << "             \n";
     testFile.close();
 
     processFile();
@@ -110,7 +110,7 @@ TEST_F(ModuleTest, ExtraParenthesisTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int x = (100 + 200) + 5;" << endl;
+    testFile << "int x = (100 + 200) + 5;\n";
     testFile.close();
 
     processFile();
@@ -124,12 +124,12 @@ TEST_F(ModuleTest, ContinuousSimplificationTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int a = (100 + 200) + 5;" << endl << endl;
-    testFile << "int b = (100 + 200) + 5;" << endl << endl;
-    testFile << "int c = (100 + 200) + 5;" << endl << endl;
-    testFile << "int d = (100 + 200) + 5;" << endl << endl;
-    testFile << "int e = (100 + 200) + 5;" << endl << endl;
-    testFile << "int f = (100 + 200) + 5;" << endl << endl;
+    testFile << "int a = (100 + 200) + 5;\n\n";
+    testFile << "int b = (100 + 200) + 5;\n\n";
+    testFile << "int c = (100 + 200) + 5;\n\n";
+    testFile << "int d = (100 + 200) + 5;\n\n";
+    testFile << "int e = (100 + 200) + 5;\n\n";
+    testFile << "int f = (100 + 200) + 5;\n\n";
     testFile.close();
 
     processFile();
@@ -154,7 +154,7 @@ TEST_F(ModuleTest, MultipleVariableDeclarationTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int a, b = 1, c, d = 5;" << endl;
+    testFile << "int a, b = 1, c, d = 5;\n";
     testFile.close();
 
     processFile();
@@ -173,8 +173,8 @@ TEST_F(ModuleTest, CStyleArrayTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "int integerArray[5];" << endl;
-    testFile << "int x = integerArray[4];" << endl;
+    testFile << "int integerArray[5];\n";
+    testFile << "int x = integerArray[4];\n";
     testFile.close();
 
     processFile();
@@ -190,14 +190,14 @@ TEST_F(ModuleTest, CStyleStructTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "struct" << endl;
-    testFile << "{" << endl;
-    testFile << "char* locale;" << endl;
-    testFile << "wchar_t* wlocale;" << endl;
-    testFile << "int* refcount;" << endl;
-    testFile << "int* wrefcount;" << endl;
-    testFile << "}" << endl;
-    testFile << "lc_category;" << endl;
+    testFile << "struct\n";
+    testFile << "{\n";
+    testFile << "char* locale;\n";
+    testFile << "wchar_t* wlocale;\n";
+    testFile << "int* refcount;\n";
+    testFile << "int* wrefcount;\n";
+    testFile << "}\n";
+    testFile << "lc_category;\n";
     testFile.close();
 
     processFile();
@@ -212,14 +212,14 @@ TEST_F(ModuleTest, CStyleStructArrayTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "struct" << endl;
-    testFile << "{" << endl;
-    testFile << "char* locale;" << endl;
-    testFile << "wchar_t* wlocale;" << endl;
-    testFile << "int* refcount;" << endl;
-    testFile << "int* wrefcount;" << endl;
-    testFile << "}" << endl;
-    testFile << "lc_category[6];" << endl;
+    testFile << "struct\n";
+    testFile << "{\n";
+    testFile << "char* locale;\n";
+    testFile << "wchar_t* wlocale;\n";
+    testFile << "int* refcount;\n";
+    testFile << "int* wrefcount;\n";
+    testFile << "}\n";
+    testFile << "lc_category[6];\n";
     testFile.close();
 
     processFile();
@@ -234,7 +234,7 @@ TEST_F(ModuleTest, CStyleStructPointerTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "struct lconv* lconv;" << endl;
+    testFile << "struct lconv* lconv;\n";
     testFile.close();
 
     processFile();

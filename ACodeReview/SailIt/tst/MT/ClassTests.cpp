@@ -11,11 +11,11 @@ TEST_F(ModuleTest, MultiLineClassTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "class myClass" << endl;
-    testFile << "{" << endl;
-    testFile << "int classFunction();" << endl;
-    testFile << "int classVariable;" << endl;
-    testFile << "};" << endl;
+    testFile << "class myClass\n";
+    testFile << "{\n";
+    testFile << "int classFunction();\n";
+    testFile << "int classVariable;\n";
+    testFile << "};\n";
     testFile.close();
 
     processFile();
@@ -42,11 +42,11 @@ TEST_F(ModuleTest, MultiLineStructTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "struct myStruct" << endl;
-    testFile << "{" << endl;
-    testFile << "int structFunction();" << endl;
-    testFile << "int structVariable;" << endl;
-    testFile << "};" << endl;
+    testFile << "struct myStruct\n";
+    testFile << "{\n";
+    testFile << "int structFunction();\n";
+    testFile << "int structVariable;\n";
+    testFile << "};\n";
     testFile.close();
 
     processFile();
@@ -73,8 +73,8 @@ TEST_F(ModuleTest, ForwardDeclarationTest)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "class myClass;" << endl;
-    testFile << "struct myStruct;" << endl;
+    testFile << "class myClass;\n";
+    testFile << "struct myStruct;\n";
     testFile.close();
 
     processFile();

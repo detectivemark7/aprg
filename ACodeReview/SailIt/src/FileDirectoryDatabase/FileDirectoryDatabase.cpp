@@ -14,11 +14,11 @@ void FileDirectoryDatabase::printFilesAndDirectories(ostream& outputStream) cons
 {
     for (auto& directory :  m_directories)
     {
-        outputStream << "FileDirectoryDatabase | Directory: [" << directory << "]" << endl;
+        outputStream << "FileDirectoryDatabase | Directory: [" << directory << "]\n";
     }
     for (auto& file :  m_files)
     {
-        outputStream << "FileDirectoryDatabase | File: [" << file << "]" << endl;
+        outputStream << "FileDirectoryDatabase | File: [" << file << "]\n";
     }
 }
 
@@ -90,9 +90,9 @@ string FileDirectoryDatabase::getFullPathOfFile(string const& baseDirectory, str
     }
     if(count > 1)
     {
-        cout<<"FileDirectoryDatabase::getFullPathOfFile| Warning: multiple files found for file: "<<fileName<<endl;
-        cout<<"WhereItShouldBe:"<<whereItShouldBePath<<endl;
-        cout<<"WhereItIs: "<<fullPathOfFirstFileFound<<endl;
+        cout<<"FileDirectoryDatabase::getFullPathOfFile| Warning: multiple files found for file: "<<fileName<<"\n";
+        cout<<"WhereItShouldBe:"<<whereItShouldBePath<<"\n";
+        cout<<"WhereItIs: "<<fullPathOfFirstFileFound<<"\n";
     }
     return fullPathOfFirstFileFound;
 }
@@ -130,6 +130,6 @@ void FileDirectoryDatabase::addFileOrDirectory(string const& fileOrDirectory)
     }
     else
     {
-        cout << "FileDirectoryDatabase::addFileOrDirectory| InvalidFileAndDirectory: [" << fileOrDirectory << "]" << endl;
+        cout << "FileDirectoryDatabase::addFileOrDirectory| InvalidFileAndDirectory: [" << fileOrDirectory << "]\n";
     }
 }

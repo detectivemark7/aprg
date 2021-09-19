@@ -40,9 +40,9 @@ TEST_F(TermTranslatorTest, CheckWhiteSpace)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "   ABC   DE  GH  I JK  L MN  OPQ   " << endl;
-    testFile << "\t\t ABC\t\t\tDE\t GH \tI\tJK\t L\tMN \tOPQ \t " << endl;
-    testFile << "1   2\t\t\t3 \t \t  \t\t4" << endl;
+    testFile << "   ABC   DE  GH  I JK  L MN  OPQ   \n";
+    testFile << "\t\t ABC\t\t\tDE\t GH \tI\tJK\t L\tMN \tOPQ \t \n";
+    testFile << "1   2\t\t\t3 \t \t  \t\t4\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -82,9 +82,9 @@ TEST_F(TermTranslatorTest, CheckIncludeFiles)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#include<iostream>" << endl;
-    testFile << "#INCLUDE<main1.cpp>" << endl;
-    testFile << " #include < main11.cpp > " << endl;
+    testFile << "#include<iostream>\n";
+    testFile << "#INCLUDE<main1.cpp>\n";
+    testFile << " #include < main11.cpp > \n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -121,7 +121,7 @@ TEST_F(TermTranslatorTest, CheckIdentifiersAndConstants)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "aBcdwXyZ def1 2ghi jkl_3 4_mnop true false" << endl;
+    testFile << "aBcdwXyZ def1 2ghi jkl_3 4_mnop true false\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -144,7 +144,7 @@ TEST_F(TermTranslatorTest, CheckMacros)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "#define # undef #  ifdef #   ifndef #\tif #\tendif #   else #  elif # line # \t error #\t \tinclude #\t\t\tpragma" << endl;
+    testFile << "#define # undef #  ifdef #   ifndef #\tif #\tendif #   else #  elif # line # \t error #\t \tinclude #\t\t\tpragma\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -172,7 +172,7 @@ TEST_F(TermTranslatorTest, CheckOperatorWords)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "typeid const_cast dynamic_cast reinterpret_cast static_cast sizeof new delete throw" << endl;
+    testFile << "typeid const_cast static_cast reinterpret_cast static_cast sizeof new delete throw\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -181,7 +181,7 @@ TEST_F(TermTranslatorTest, CheckOperatorWords)
     auto it = m_terms.begin();
     CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "typeid", lineNumber);
     CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "const_cast", lineNumber);
-    CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "dynamic_cast", lineNumber);
+    CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "static_cast", lineNumber);
     CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "reinterpret_cast", lineNumber);
     CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "static_cast", lineNumber);
     CHECK_TERM_THEN_WHITE_SPACE(it, TermType::Operator, "sizeof", lineNumber);
@@ -197,7 +197,7 @@ TEST_F(TermTranslatorTest, CheckTypeWords)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "bool char char16_t char32_t double float int long short signed unsigned void wchar_t" << endl;
+    testFile << "bool char char16_t char32_t double float int long short signed unsigned void wchar_t\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -226,7 +226,7 @@ TEST_F(TermTranslatorTest, CheckMultipleCharacterOperators)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "->* <<= >>=" << endl;
+    testFile << "->* <<= >>=\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -245,7 +245,7 @@ TEST_F(TermTranslatorTest, CheckPeriod)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << ". .. ..." << endl;
+    testFile << ". .. ...\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -267,7 +267,7 @@ TEST_F(TermTranslatorTest, CheckSingleLineComment)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "aBcdwXyZ //This is @ 1 line comment" << endl;
+    testFile << "aBcdwXyZ //This is @ 1 line comment\n";
     testFile << "         \t\t    //This is @ 1 line comment with spaces and tabs before";
     testFile.close();
 
@@ -287,9 +287,9 @@ TEST_F(TermTranslatorTest, CheckMultiLineComment)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "aBcdwXyZ /*This is @" << endl;
-    testFile << "  Multiline" << endl;
-    testFile << "  Comment*/ deFsTUv" << endl;
+    testFile << "aBcdwXyZ /*This is @\n";
+    testFile << "  Multiline\n";
+    testFile << "  Comment*/ deFsTUv\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -310,9 +310,9 @@ TEST_F(TermTranslatorTest, CheckString)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "aBcdwXyZ \"This is @ simple string\" deFsTUv" << endl;
-    testFile << "aBcdwXyZ \"This is @ string with \\\"quotation\\\"\" deFsTUv" << endl;
-    testFile << "\'Q\' \'\"\' \'\\\'\' \'This is @character\'" << endl;
+    testFile << "aBcdwXyZ \"This is @ simple string\" deFsTUv\n";
+    testFile << "aBcdwXyZ \"This is @ string with \\\"quotation\\\"\" deFsTUv\n";
+    testFile << "\'Q\' \'\"\' \'\\\'\' \'This is @character\'\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -341,9 +341,9 @@ TEST_F(TermTranslatorTest, CheckStringWithSlashes)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "aBcdwXyZ1 \"\\\\\" deFsTUv2" << endl;
-    testFile << "aBcdwXyZ3 \"\\\\\\\\\" deFsTUv4" << endl;
-    testFile << "aBcdwXyZ5 \"\\\\\\\"\\\"\\\\\" deFsTUv6" << endl;
+    testFile << "aBcdwXyZ1 \"\\\\\" deFsTUv2\n";
+    testFile << "aBcdwXyZ3 \"\\\\\\\\\" deFsTUv4\n";
+    testFile << "aBcdwXyZ5 \"\\\\\\\"\\\"\\\\\" deFsTUv6\n";
     testFile.close();
 
     unsigned lineNumber(1);
@@ -372,7 +372,7 @@ TEST_F(TermTranslatorTest, CheckKeyword)
 {
     ofstream testFile(MT_FILE_READER_TEST_FILE);
     ASSERT_TRUE(testFile.is_open());
-    testFile << "for while if" << endl;
+    testFile << "for while if\n";
     testFile.close();
 
     unsigned lineNumber(1);
