@@ -903,6 +903,7 @@ void RagnarokOnline::saveItemIdToItemMapToFile(
     ofstream outputStream(outputFilePath);
     AlbaStreamParameterWriter writer(outputStream);
     writer.writeMapData<unsigned int, Item>(m_itemIdToItemMap);
+    writer.flush();
 }
 
 void RagnarokOnline::saveMonsterIdToMonsterMapToFile(
@@ -911,6 +912,7 @@ void RagnarokOnline::saveMonsterIdToMonsterMapToFile(
     ofstream outputStream(outputFilePath);
     AlbaStreamParameterWriter writer(outputStream);
     writer.writeMapData<unsigned int, Monster>(m_monsterIdToMonsterMap);
+    writer.flush();
 }
 
 void RagnarokOnline::saveMapNameToRoMapToFile(
@@ -919,6 +921,7 @@ void RagnarokOnline::saveMapNameToRoMapToFile(
     ofstream outputStream(outputFilePath);
     AlbaStreamParameterWriter writer(outputStream);
     writer.writeMapData<string, RoMap>(m_mapNameToRoMap);
+    writer.flush();
 }
 
 void RagnarokOnline::saveBuyingShopItems(
@@ -927,6 +930,7 @@ void RagnarokOnline::saveBuyingShopItems(
     ofstream outputStream(outputFilePath);
     AlbaStreamParameterWriter writer(outputStream);
     writer.writeMapData<string, ShopItemDetail>(m_buyingShopItems);
+    writer.flush();
 }
 
 void RagnarokOnline::saveSellingShopItems(
@@ -935,6 +939,7 @@ void RagnarokOnline::saveSellingShopItems(
     ofstream outputStream(outputFilePath);
     AlbaStreamParameterWriter writer(outputStream);
     writer.writeMapData<string, ShopItemDetail>(m_sellingShopItems);
+    writer.flush();
 }
 
 void RagnarokOnline::printItemIdToItemMap() const
@@ -1112,6 +1117,7 @@ ostream & operator<<(ostream & out, NameAndRate const& nameAndRate)
     AlbaStreamParameterWriter writer(out);
     writer.writeData<string>(nameAndRate.name);
     writer.writeData<double>(nameAndRate.rate);
+    writer.flush();
     return out;
 }
 
@@ -1121,6 +1127,7 @@ ostream & operator<<(ostream & out, MonsterDetailsOnRoMap const& monsterDetailsO
     writer.writeData<string>(monsterDetailsOnRoMap.monsterName);
     writer.writeData<unsigned int>(monsterDetailsOnRoMap.spawnCount);
     writer.writeData<string>(monsterDetailsOnRoMap.spawnRate);
+    writer.flush();
     return out;
 }
 
@@ -1146,6 +1153,7 @@ ostream & operator<<(ostream & out, Item const& item)
     writer.writeData<string>(item.description);
     writer.writeData<string>(item.itemScript);
     writer.writeVectorData<NameAndRate>(item.droppedByMonstersWithRates);
+    writer.flush();
     return out;
 }
 
@@ -1195,6 +1203,7 @@ ostream & operator<<(ostream & out, Monster const& monster)
     writer.writeVectorData<string>(monster.modes);
     writer.writeVectorData<string>(monster.monsterSkills);
     writer.writeVectorData<NameAndRate>(monster.dropsWithRates);
+    writer.flush();
     return out;
 }
 
@@ -1205,6 +1214,7 @@ ostream & operator<<(ostream & out, ShopItemDetail const& shopItemDetail)
     writer.writeData<string>(shopItemDetail.itemName);
     writer.writeData<double>(shopItemDetail.averagePrice);
     writer.writeData<unsigned int>(shopItemDetail.totalNumber);
+    writer.flush();
     return out;
 }
 
@@ -1214,6 +1224,7 @@ ostream & operator<<(ostream & out, RoMap const& roMap)
     writer.writeData<string>(roMap.name);
     writer.writeData<string>(roMap.fullName);
     writer.writeVectorData<MonsterDetailsOnRoMap>(roMap.monstersDetailsOnMap);
+    writer.flush();
     return out;
 }
 
@@ -1221,6 +1232,7 @@ ostream & operator<<(ostream & out, ItemIdToItemMap const& itemIdToItemMap)
 {
     AlbaStreamParameterWriter writer(out);
     writer.writeMapData<unsigned int, Item>(itemIdToItemMap);
+    writer.flush();
     return out;
 }
 
@@ -1228,6 +1240,7 @@ ostream & operator<<(ostream & out, MonsterIdToMonsterMap const& monsterIdToMons
 {
     AlbaStreamParameterWriter writer(out);
     writer.writeMapData<unsigned int, Monster>(monsterIdToMonsterMap);
+    writer.flush();
     return out;
 }
 
@@ -1235,6 +1248,7 @@ ostream & operator<<(ostream & out, MapNameToRoMap const& mapNameToRoMap)
 {
     AlbaStreamParameterWriter writer(out);
     writer.writeMapData<string, RoMap>(mapNameToRoMap);
+    writer.flush();
     return out;
 }
 
@@ -1242,6 +1256,7 @@ ostream & operator<<(ostream & out, ItemNameToShopItemDetailMap const& itemNameT
 {
     AlbaStreamParameterWriter writer(out);
     writer.writeMapData<string, ShopItemDetail>(itemNameToShopItemDetailMap);
+    writer.flush();
     return out;
 }
 
