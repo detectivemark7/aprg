@@ -236,13 +236,6 @@ bool Term::getBooleanValue() const
     return getConstantConstReference().getBooleanValue();
 }
 
-string Term::getDisplayableString() const
-{
-    stringstream ss;
-    ss << *this;
-    return ss.str();
-}
-
 string Term::getDebugString() const
 {
     stringstream ss;

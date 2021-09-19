@@ -1,9 +1,11 @@
 #include <BooleanAlgebra/Term/TermTypes/Expression.hpp>
 #include <BooleanAlgebra/Term/Utilities/BaseTermHelpers.hpp>
 #include <BooleanAlgebra/Term/Utilities/CreateHelpers.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace alba::stringHelper;
 using namespace std;
 
 namespace alba
@@ -210,20 +212,6 @@ TEST(ExpressionTest, GetWrappedTermsWorks)
     EXPECT_EQ(Term("y"), getTermConstReferenceFromSharedPointer(wrappedTermsToVerify.at(1).baseTermSharedPointer));
 }
 
-TEST(ExpressionTest, GetDisplayableStringWorks)
-{
-    Expression expression1;
-    Expression expression2(createExpressionIfPossible({true, "&", "x", "|", "y"}));
-    Expression expression3;
-    expression3.putTermWithAndOperationIfNeeded(Term(true));
-    Expression expression4(createExpressionIfPossible({expression2, "&", "z"}));
-
-    EXPECT_EQ("()", expression1.getDisplayableString());
-    EXPECT_EQ("(x|y)", expression2.getDisplayableString());
-    EXPECT_EQ("([true])", expression3.getDisplayableString());
-    EXPECT_EQ("((x|y)&z)", expression4.getDisplayableString());
-}
-
 TEST(ExpressionTest, GetDebugStringWorks)
 {
     Expression expression1;
@@ -300,7 +288,7 @@ TEST(ExpressionTest, PutTermWithOperationLevelWorks)
     expressionToTest.putTerm(Term("c"), OperatorLevel::And);
     expressionToTest.putTerm(Term("d"), OperatorLevel::Or);
 
-    EXPECT_EQ("(((a|b)&c)|d)", expressionToTest.getDisplayableString());
+    EXPECT_EQ("(((a|b)&c)|d)", convertToString(expressionToTest));
 }
 
 TEST(ExpressionTest, PutTermWithAndOperationIfNeededUsingNullExpressionWorks)
@@ -615,7 +603,7 @@ TEST(ExpressionTest, SetWorks)
 
     expression.set(OperatorLevel::And, wrappedTerms);
 
-    EXPECT_EQ("([true]&[false])", expression.getDisplayableString());
+    EXPECT_EQ("([true]&[false])", convertToString(expression));
 }
 
 TEST(ExpressionTest, SetTermWorks)

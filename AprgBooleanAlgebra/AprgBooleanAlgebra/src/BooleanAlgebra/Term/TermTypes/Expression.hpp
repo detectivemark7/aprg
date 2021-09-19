@@ -36,7 +36,6 @@ public:
     OperatorLevel getCommonOperatorLevel() const;
     BaseTerm const& getFirstTermConstReference() const;
     WrappedTerms const& getWrappedTerms() const;
-    std::string getDisplayableString() const;
     std::string getDebugString() const;
 
     WrappedTerms & getWrappedTermsReference();

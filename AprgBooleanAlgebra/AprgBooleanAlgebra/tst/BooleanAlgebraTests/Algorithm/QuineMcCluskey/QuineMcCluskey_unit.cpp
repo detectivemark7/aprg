@@ -99,11 +99,11 @@ TEST(QuineMcCluskeyTest, GetImplicantsWithZeroCommonalityCount)
     ImplicantsForTest mintermsWithTwo(quineMcCluskey.getImplicants(2,0));
     ImplicantsForTest mintermsWithThree(quineMcCluskey.getImplicants(3,0));
     ImplicantsForTest mintermsWithFour(quineMcCluskey.getImplicants(4,0));
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithZero.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 2 | '100 (4)', '1000 (8)', }]", mintermsWithOne.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 3 | '1001 (9)', '1010 (10)', '1100 (12)', }]", mintermsWithTwo.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 2 | '1011 (11)', '1110 (14)', }]", mintermsWithThree.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 1 | '1111 (15)', }]", mintermsWithFour.getDisplayableString());
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithZero));
+    EXPECT_EQ("Implicants : [{size: 2 | '100 (4)', '1000 (8)', }]", convertToString(mintermsWithOne));
+    EXPECT_EQ("Implicants : [{size: 3 | '1001 (9)', '1010 (10)', '1100 (12)', }]", convertToString(mintermsWithTwo));
+    EXPECT_EQ("Implicants : [{size: 2 | '1011 (11)', '1110 (14)', }]", convertToString(mintermsWithThree));
+    EXPECT_EQ("Implicants : [{size: 1 | '1111 (15)', }]", convertToString(mintermsWithFour));
 }
 
 TEST(QuineMcCluskeyTest, GetImplicantsWithOneCommonalityCount)
@@ -130,11 +130,11 @@ TEST(QuineMcCluskeyTest, GetImplicantsWithOneCommonalityCount)
     ImplicantsForTest mintermsWithTwo(quineMcCluskey.getImplicants(2,1));
     ImplicantsForTest mintermsWithThree(quineMcCluskey.getImplicants(3,1));
     ImplicantsForTest mintermsWithFour(quineMcCluskey.getImplicants(4,1));
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithZero.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 4 | '-100 (4, 12, )', '100- (8, 9, )', '10-0 (8, 10, )', '1-00 (8, 12, )', }]", mintermsWithOne.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 4 | '10-1 (9, 11, )', '101- (10, 11, )', '1-10 (10, 14, )', '11-0 (12, 14, )', }]", mintermsWithTwo.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 2 | '1-11 (11, 15, )', '111- (14, 15, )', }]", mintermsWithThree.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithFour.getDisplayableString());
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithZero));
+    EXPECT_EQ("Implicants : [{size: 4 | '-100 (4, 12, )', '100- (8, 9, )', '10-0 (8, 10, )', '1-00 (8, 12, )', }]", convertToString(mintermsWithOne));
+    EXPECT_EQ("Implicants : [{size: 4 | '10-1 (9, 11, )', '101- (10, 11, )', '1-10 (10, 14, )', '11-0 (12, 14, )', }]", convertToString(mintermsWithTwo));
+    EXPECT_EQ("Implicants : [{size: 2 | '1-11 (11, 15, )', '111- (14, 15, )', }]", convertToString(mintermsWithThree));
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithFour));
 }
 
 TEST(QuineMcCluskeyTest, GetImplicantsWithTwoCommonalityCounts)
@@ -157,11 +157,11 @@ TEST(QuineMcCluskeyTest, GetImplicantsWithTwoCommonalityCounts)
     ImplicantsForTest mintermsWithTwo(quineMcCluskey.getImplicants(2,2));
     ImplicantsForTest mintermsWithThree(quineMcCluskey.getImplicants(3,2));
     ImplicantsForTest mintermsWithFour(quineMcCluskey.getImplicants(4,2));
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithZero.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 2 | '10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', }]", mintermsWithOne.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 1 | '1-1- (10, 11, 14, 15, )', }]", mintermsWithTwo.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithThree.getDisplayableString());
-    EXPECT_EQ("Implicants : [{size: 0 | }]", mintermsWithFour.getDisplayableString());
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithZero));
+    EXPECT_EQ("Implicants : [{size: 2 | '10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', }]", convertToString(mintermsWithOne));
+    EXPECT_EQ("Implicants : [{size: 1 | '1-1- (10, 11, 14, 15, )', }]", convertToString(mintermsWithTwo));
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithThree));
+    EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithFour));
 }
 
 TEST(QuineMcCluskeyTest, GetAllFinalImplicantsAndGetBestFinalImplicantsWorks)
@@ -181,12 +181,12 @@ TEST(QuineMcCluskeyTest, GetAllFinalImplicantsAndGetBestFinalImplicantsWorks)
 
     ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
     EXPECT_EQ("Implicants : [{size: 4 | '-100 (4, 12, )', '10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', '1-1- (10, 11, 14, 15, )', }]",
-              finalImplicants.getDisplayableString());
+              convertToString(finalImplicants));
     cout<<quineMcCluskey.getOutputTable(finalImplicants);
 
     ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
     EXPECT_EQ("Implicants : [{size: 3 | '-100 (4, 12, )', '10-- (8, 9, 10, 11, )', '1-1- (10, 11, 14, 15, )', }]",
-              bestFinalImplicants.getDisplayableString());
+              convertToString(bestFinalImplicants));
     cout<<quineMcCluskey.getOutputTable(bestFinalImplicants);
 }
 
@@ -212,12 +212,12 @@ TEST(QuineMcCluskeyTest, DISABLED_ExperimentalTest) //
     ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
     EXPECT_EQ("Implicants : [{size: 7 | '-01- (2, 3, 10, 11, )', '--10 (2, 6, 10, 14, )', '10- (4, 5, )', '-1-0 (4, 6, 12, 14, )', "
               "'10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', '1-1- (10, 11, 14, 15, )', }]",
-              finalImplicants.getDisplayableString());
+              convertToString(finalImplicants));
     cout<<quineMcCluskey.getOutputTable(finalImplicants);
 
     ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
     EXPECT_EQ("Implicants : [{size: 3 | '-01- (2, 3, 10, 11, )', '-1-0 (4, 6, 12, 14, )', '10-- (8, 9, 10, 11, )', }]",
-              bestFinalImplicants.getDisplayableString());
+              convertToString(bestFinalImplicants));
     cout<<quineMcCluskey.getOutputTable(bestFinalImplicants);
 }
 
@@ -271,7 +271,7 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
               " '10000010 (130)', '1-001100 (140, 204, )', '10010110 (150)', '10100000 (160)', '10101010 (170)', '10110100 (180)', '10111110 (190)',"
               " '11001--- (200, 201, 202, 203, 204, 205, 206, 207, )', '110-1100 (204, 220, )', '1101000- (208, 209, )', '110100-0 (208, 210, )',"
               " '11-10000 (208, 240, )', '11111010 (250)', }]",
-              finalImplicants.getDisplayableString());
+              convertToString(finalImplicants));
     cout << quineMcCluskey.getOutputTable(finalImplicants);
 
     ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
@@ -280,7 +280,7 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
               "'-1100110 (102, 230, )', '11010-- (104, 105, 106, 107, )', '11-1000 (104, 120, )', '10000010 (130)', '1-001100 (140, 204, )', '10010110 (150)', "
               "'10100000 (160)', '10101010 (170)', '10110100 (180)', '10111110 (190)', '11001--- (200, 201, 202, 203, 204, 205, 206, 207, )', "
               "'110-1100 (204, 220, )', '1101000- (208, 209, )', '110100-0 (208, 210, )', '11-10000 (208, 240, )', '11111010 (250)', }]",
-              bestFinalImplicants.getDisplayableString());
+              convertToString(bestFinalImplicants));
     cout<<quineMcCluskey.getOutputTable(bestFinalImplicants);
 }
 

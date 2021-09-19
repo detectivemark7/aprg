@@ -120,13 +120,6 @@ WrappedTerms const& Expression::getWrappedTerms() const
     return m_wrappedTerms;
 }
 
-string Expression::getDisplayableString() const
-{
-    stringstream ss;
-    ss << *this;
-    return ss.str();
-}
-
 string Expression::getDebugString() const
 {
     stringstream result;
