@@ -26,19 +26,19 @@ FesterRobot::FesterRobot(string const& outputPath)
 
 void FesterRobot::run()
 {
-    cout<<"Press the key 'ctrl' to start."<<endl;
+    cout<<"Press the key 'ctrl' to start.\n";
     while(1)
     {
         exitIfSpecialKeyIsPressed();
         if(m_userAutomation.isLetterPressed(VK_CONTROL))
         {
-            cout<<"Starting robot duties."<<endl;
+            cout<<"Starting robot duties.\n";
             setupFesterEnvironmentInMatlab();
 
             for(int filterBitInteger=63; filterBitInteger>0; )
             {
                 updateExcelFile(static_cast<unsigned int>(filterBitInteger));
-                m_outputStream<<"FREQUENCIES BIT: ["<<std::hex<<filterBitInteger<<std::dec<<"]"<<endl;
+                m_outputStream<<"FREQUENCIES BIT: ["<<std::hex<<filterBitInteger<<std::dec<<"]\n";
                 runFesterFunctionInMatlab();
                 if(!m_retryCurrentFrequencies)
                 {
@@ -136,8 +136,8 @@ bool FesterRobot::isRunningFinishedInClipboardData(string const& clipboardData) 
                         stringHelper::getStringAfterThisString(
                             stringHelper::getStringInBetweenTwoStrings(clipboardData, "freqBand", "filCoef"), "="))));
     string frequenciesStringForExcel(getFrequenciesStringForExcel());
-    cout<<"freqBandStringInLog: ["<<freqBandStringInLog<<"]"<<endl;
-    cout<<"frequenciesStringForExcel: ["<<frequenciesStringForExcel<<"]"<<endl;
+    cout<<"freqBandStringInLog: ["<<freqBandStringInLog<<"]\n";
+    cout<<"frequenciesStringForExcel: ["<<frequenciesStringForExcel<<"]\n";
     return freqBandStringInLog == frequenciesStringForExcel;
 }
 
@@ -150,8 +150,8 @@ string FesterRobot::getClipboardFormattedData() const
 
 void FesterRobot::saveDataToOutputFile(string const& clipboardData)
 {
-    m_outputStream<<"FREQUENCIES: ["<<getFrequenciesStringForExcel()<<"]"<<endl;
-    m_outputStream<<clipboardData<<endl;
+    m_outputStream<<"FREQUENCIES: ["<<getFrequenciesStringForExcel()<<"]\n";
+    m_outputStream<<clipboardData<<"\n";
 }
 
 string FesterRobot::getFrequenciesStringForExcel() const
