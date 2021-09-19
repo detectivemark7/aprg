@@ -28,7 +28,7 @@ TEST(AnimeFilterTest, DISABLED_AnimizeMultipleFilesTest)
         AlbaLocalPathHandler inputFilePathHandler(inputFile);
         AlbaLocalPathHandler outputFilePathHandler(bitmapDirectory.getDirectory()+R"(AnimizeMultipleFilesTest\output2\Out_)"+inputFilePathHandler.getFile());
         animize(inputFilePathHandler.getFullPath(), outputFilePathHandler.getFullPath());
-        cout << "Finished: " << outputFilePathHandler.getFullPath() << endl;
+        cout << "Finished: " << outputFilePathHandler.getFullPath() << "\n";
     }
 }
 

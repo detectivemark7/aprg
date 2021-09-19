@@ -72,17 +72,17 @@ void AnimizeColor::saveColorData(string const& path)
 {
     ofstream colorDataFileStream(path);
 
-    colorDataFileStream << "lightness, newLightness"<< endl;
+    colorDataFileStream << "lightness, newLightness\n";
     for(ValueAndColorDataPair const lightnessCountPair : m_lightnessData)
     {
         colorDataFileStream << lightnessCountPair.first
                             << ", " << lightnessCountPair.second.newValue
-                            << endl;
+                            << "\n";
         /*for(unsigned int i=0; i<lightnessCountPair.second.count; i++)
         {
             colorDataFileStream << lightnessCountPair.first
                                 << ", " << lightnessCountPair.second.newLightness
-                                << endl;
+                                << "\n";
         }*/
     }
 }
