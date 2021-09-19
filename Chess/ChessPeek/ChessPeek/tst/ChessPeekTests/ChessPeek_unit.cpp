@@ -42,7 +42,7 @@ TEST(ChessPeekTest, DISABLED_RunOneIterationWorks)
     Sleep(10000);
 }
 
-TEST(ChessPeekTest, RunForeverWorks)
+TEST(ChessPeekTest, DISABLED_RunForeverWorks)
 {
     ChessPeek chessPeek;
 

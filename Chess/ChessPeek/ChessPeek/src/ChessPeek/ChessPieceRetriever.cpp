@@ -233,13 +233,13 @@ PieceColorAndType ChessPieceRetriever::getBestPieceFromChessCellBitValue(
     {
         auto & logStream(m_logFileStreamOptional.getReference());
         bitset<64> bitsetValue(bitValue);
-        logStream << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << endl;
+        logStream << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << "\n";
         logStream << "BestFitTypes with size " << bestFitPieces.size() << " :{";
         for(PieceColorAndType const bestFitPiece : bestFitPieces)
         {
             logStream << getEnumString(bestFitPiece) << ", ";
         }
-        logStream << "}" << endl;
+        logStream << "}\n";
     }*/
     return result;
 }
