@@ -11,7 +11,7 @@ TEST(SymbolMapTest, DISABLED_InputTraceFileIsProcessedByTraceDecoder)
 {
     BtsTraceDecoder traceDecoder;
     traceDecoder.saveSymbolTableFromObjdump(R"(C:\APRG\symbols.txt)");
-    cout<<traceDecoder.getNearestLowerSymbol(0x08a0c623)<<endl;
+    cout<<traceDecoder.getNearestLowerSymbol(0x08a0c623)<<"\n";
 }
 
 TEST(FileTest, DISABLED_InputTraceFileIsProcessedByTraceDecoderWithSymbolTableFromObjdump)
