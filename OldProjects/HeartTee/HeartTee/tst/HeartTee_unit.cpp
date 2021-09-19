@@ -25,7 +25,7 @@ TEST(SampleTest, DISABLED_SampleTest1)
         {
             cout<<"["<<std::hex<<(int)buffer[i]<<"]";
         }
-        cout<<endl;
+        cout<<"\n";
         usleep(1000);
     }
 }
