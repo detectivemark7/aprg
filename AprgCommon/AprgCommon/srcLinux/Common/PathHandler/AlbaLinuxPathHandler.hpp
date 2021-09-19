@@ -17,7 +17,7 @@ class AlbaLinuxPathHandler: public AlbaPathHandler
 public:
     AlbaLinuxPathHandler(PathInitialValueSource const initialValueSource);
     AlbaLinuxPathHandler(std::string const& path);
-    virtual ~AlbaLinuxPathHandler() = default;
+    // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     void clear() override;
     double getFileSizeEstimate();

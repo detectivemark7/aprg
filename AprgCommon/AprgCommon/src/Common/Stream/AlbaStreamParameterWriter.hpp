@@ -25,7 +25,7 @@ private:
 template <typename TypeToWrite>
 void AlbaStreamParameterWriter::writeData(TypeToWrite const& data) const
 {
-    m_stream << data << std::endl;
+    m_stream << data << "\n";
 }
 
 template <>
@@ -34,7 +34,7 @@ void AlbaStreamParameterWriter::writeData(std::string const& data) const;
 template <typename TypeToWrite>
 void AlbaStreamParameterWriter::writeVectorData(std::vector<TypeToWrite> const& vectorOfData) const
 {
-    m_stream << vectorOfData.size() << std::endl;
+    m_stream << vectorOfData.size() << "\n";
     for(TypeToWrite const& data : vectorOfData)
     {
         writeData(data);
@@ -44,7 +44,7 @@ void AlbaStreamParameterWriter::writeVectorData(std::vector<TypeToWrite> const& 
 template <typename TypeToWrite>
 void AlbaStreamParameterWriter::writeSetData(std::set<TypeToWrite> const& setOfData) const //test
 {
-    m_stream << setOfData.size() << std::endl;
+    m_stream << setOfData.size() << "\n";
     for(TypeToWrite const& data : setOfData)
     {
         writeData(data);
@@ -54,7 +54,7 @@ void AlbaStreamParameterWriter::writeSetData(std::set<TypeToWrite> const& setOfD
 template <typename TypeToWrite1, typename TypeToWrite2>
 void AlbaStreamParameterWriter::writeMapData(std::map<TypeToWrite1, TypeToWrite2> const& mapOfData) const
 {
-    m_stream << mapOfData.size() << std::endl;
+    m_stream << mapOfData.size() << "\n";
     for(std::pair<TypeToWrite1, TypeToWrite2> const& dataPair : mapOfData)
     {
         writeData<TypeToWrite1>(dataPair.first);

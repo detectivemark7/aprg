@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/Types/AlbaTypeHelper.hpp>
+
 #include <cstdint>
 #include <cstring>
 #include <string>
@@ -31,6 +33,7 @@ public:
 
     template <typename ObjectType> void saveObject(ObjectType const& object)
     {
+        // lets not check if its POD because it works on other cases
         unsigned int objectSize = sizeof(object);
         resize(objectSize);
         void const* sourcePointer = static_cast<void const*>(&object);
@@ -40,11 +43,13 @@ public:
 
     template <typename ObjectType> ObjectType retrieveObjectAsConstReference() const
     {
+        // lets not check if its POD because it works on other cases
         return *reinterpret_cast<ObjectType const*>(getConstantBufferPointer());
     }
 
     template <typename ObjectType> ObjectType& retrieveObjectAsReference()
     {
+        // lets not check if its POD because it works on other cases
         return *reinterpret_cast<ObjectType *>(getBufferPointer());
     }
 

@@ -74,7 +74,7 @@ void changeFractionToSimplestForm(NumberType1 & numerator, NumberType2 & denomin
 }
 
 // instantiation should fit on long long int
-template void changeFractionToSimplestForm<int, unsigned int, long long int>(int & numerator, unsigned int & denominator);
+template void changeFractionToSimplestForm<int32_t, uint32_t, int64_t>(int32_t & numerator, uint32_t & denominator);
 
 FractionDetails getBestFractionDetailsForDoubleValue(
         double const doubleValue)

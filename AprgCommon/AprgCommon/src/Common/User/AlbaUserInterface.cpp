@@ -30,7 +30,7 @@ string AlbaUserInterface::getFilePathInput()
         }
         else
         {
-            cout<<"File not found"<<endl;
+            cout<<"File not found\n";
         }
     }
 }
@@ -49,7 +49,7 @@ template double AlbaUserInterface::getNumberFromInput<double>();
 template <typename NumberType>
 NumberType AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(string const& question, Choices<NumberType> const& choices)
 {
-    cout<<question<<endl;
+    cout<<question<<"\n";
 
     StringConverterWithFormatting converter(5, ' ');
 
@@ -65,7 +65,7 @@ NumberType AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(string
         table.getLastRow().addCell("  :  ");
         table.getLastRow().addCell(choice.second, DisplayTableCellMode::left);
     }
-    cout<<table<<endl;
+    cout<<table<<"\n";
 
     cout << "Input your answer: ";
     return convertStringToNumber<NumberType>(getUserInput());
@@ -76,7 +76,7 @@ template unsigned int AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAn
 
 string AlbaUserInterface::displayQuestionAndChoicesAndGetStringAnswerInAllCapitals(string const& question, Choices<string> const& choices)
 {
-    cout<<question<<endl;
+    cout<<question<<"\n";
 
     DisplayTable table;
     table.addRow();
@@ -90,7 +90,7 @@ string AlbaUserInterface::displayQuestionAndChoicesAndGetStringAnswerInAllCapita
         table.getLastRow().addCell("  :  ");
         table.getLastRow().addCell(choice.second, DisplayTableCellMode::left);
     }
-    cout<<table<<endl;
+    cout<<table<<"\n";
 
     cout << "Input your answer: ";
     return getStringWithCapitalLetters(getUserInput());

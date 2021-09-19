@@ -55,8 +55,8 @@ double AlbaWindowsPathHandler::getFileSizeEstimate()
     }
     else
     {
-        cout<<"Error in AlbaWindowsPathHandler::getFileSizeEstimate() path:"<<getFullPath()<<endl;
-        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+        cout<<"Error in AlbaWindowsPathHandler::getFileSizeEstimate() path:"<<getFullPath()<<"\n";
+        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
     }
     return fileSizeEstimate;
 }
@@ -73,8 +73,8 @@ AlbaDateTime AlbaWindowsPathHandler::getFileCreationTime()
     }
     else
     {
-        cout<<"Error in AlbaWindowsPathHandler::getFileCreationTime() path:"<<getFullPath()<<endl;
-        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+        cout<<"Error in AlbaWindowsPathHandler::getFileCreationTime() path:"<<getFullPath()<<"\n";
+        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
     }
     return fileCreationTime;
 }
@@ -100,8 +100,8 @@ void AlbaWindowsPathHandler::setPathToDetectedLocalPath()
     }
     else
     {
-        cout<<"Error in AlbaWindowsPathHandler::setPathToDetectedLocalPath() path:"<<getFullPath()<<endl;
-        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+        cout<<"Error in AlbaWindowsPathHandler::setPathToDetectedLocalPath() path:"<<getFullPath()<<"\n";
+        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
     }
 }
 
@@ -119,8 +119,8 @@ void AlbaWindowsPathHandler::createDirectoriesForNonExisitingDirectories() const
         {
             if (!CreateDirectoryW(convertStringToWideString(partialDirectoryPathHandler.getFullPath()).c_str(), NULL))
             {
-                cout<<"Error in AlbaWindowsPathHandler::createDirectoriesForNonExisitingDirectories() path:"<<partialDirectoryPathHandler.getFullPath()<<endl;
-                cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+                cout<<"Error in AlbaWindowsPathHandler::createDirectoriesForNonExisitingDirectories() path:"<<partialDirectoryPathHandler.getFullPath()<<"\n";
+                cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
             }
         }
         index = indexWithSlashCharacter+1;
@@ -135,8 +135,8 @@ bool AlbaWindowsPathHandler::deleteFile()
         isSuccessful = (bool)DeleteFileW(convertStringToWideString(getFullPath()).c_str());
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaWindowsPathHandler::deleteFile() path:"<<getFullPath()<<endl;
-            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+            cout<<"Error in AlbaWindowsPathHandler::deleteFile() path:"<<getFullPath()<<"\n";
+            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
         }
         else
         {
@@ -154,8 +154,8 @@ bool AlbaWindowsPathHandler::deleteDirectoryWithoutFilesAndDirectories()
         isSuccessful = (bool)RemoveDirectoryW(convertStringToWideString(getFullPath()).c_str());
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaWindowsPathHandler::RemoveDirectory() path:"<<getFullPath()<<endl;
-            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+            cout<<"Error in AlbaWindowsPathHandler::RemoveDirectory() path:"<<getFullPath()<<"\n";
+            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
         }
         else
         {
@@ -209,8 +209,8 @@ bool AlbaWindowsPathHandler::copyToNewFile(string const& newFilePath)
         isSuccessful = (bool)CopyFileW(convertStringToWideString(getFullPath()).c_str(), convertStringToWideString(newFilePath).c_str(), 0);
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaWindowsPathHandler::copyToNewFile() path:["<<getFullPath()<<"] newFilePath:["<<newFilePath<<"]"<<endl;
-            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+            cout<<"Error in AlbaWindowsPathHandler::copyToNewFile() path:["<<getFullPath()<<"] newFilePath:["<<newFilePath<<"]\n";
+            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
         }
         else
         {
@@ -229,8 +229,8 @@ bool AlbaWindowsPathHandler::renameFile(string const& newFileName)
         isSuccessful = (bool)MoveFileW(convertStringToWideString(getFullPath()).c_str(), convertStringToWideString(newPath).c_str());
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaWindowsPathHandler::renameFile() path:"<<getFullPath()<<" newFileName:"<<newFileName<<endl;
-            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+            cout<<"Error in AlbaWindowsPathHandler::renameFile() path:"<<getFullPath()<<" newFileName:"<<newFileName<<"\n";
+            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
         }
         else
         {
@@ -251,8 +251,8 @@ bool AlbaWindowsPathHandler::renameImmediateDirectory(string const& newDirectory
         isSuccessful = (bool)MoveFileW(convertStringToWideString(getFullPath()).c_str(), convertStringToWideString(newPathHandler.getFullPath()).c_str());
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaWindowsPathHandler::renameImmediateDirectory() path:"<<getFullPath()<<" newDirectoryName:"<<newDirectoryName<<endl;
-            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<endl;
+            cout<<"Error in AlbaWindowsPathHandler::renameImmediateDirectory() path:"<<getFullPath()<<" newDirectoryName:"<<newDirectoryName<<"\n";
+            cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
         }
         else
         {

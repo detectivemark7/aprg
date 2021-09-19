@@ -36,7 +36,7 @@ string AlbaWindowsHelper::getLastFormattedErrorMessage()
             string errorMessageFromWindows(getStringWithoutRedundantWhiteSpace(string(lpMessageString, lpMessageString+bufferLength)));
             LocalFree(lpMessageBuffer);
             lastErrorStream.str(string());
-            lastErrorStream<<"Error from windows: ["<<errorMessageFromWindows<<"] ErrorCode:["<<errorCode<<"]"<<endl;
+            lastErrorStream<<"Error from windows: ["<<errorMessageFromWindows<<"] ErrorCode:["<<errorCode<<"]\n";
         }
     }
     return lastErrorStream.str();

@@ -80,9 +80,9 @@ TEST(PrecisionHelpersTest, IsValueWithinShortIntegerLimitsWorks)
 TEST(PrecisionHelpersTest, IsValueWithinLongIntegerLimitsWorks)
 {
     EXPECT_FALSE(isValueWithinLimits<long int>(static_cast<double>(LONG_MIN)-100000));
-    EXPECT_TRUE(isValueWithinLimits<long int>(LONG_MIN));
+    EXPECT_TRUE(isValueWithinLimits<long int>(static_cast<double>(LONG_MIN)));
     EXPECT_TRUE(isValueWithinLimits<long int>(1000));
-    EXPECT_TRUE(isValueWithinLimits<long int>(LONG_MAX));
+    EXPECT_TRUE(isValueWithinLimits<long int>(static_cast<double>(LONG_MAX)));
     EXPECT_FALSE(isValueWithinLimits<long int>(static_cast<double>(LONG_MAX)+100000));
 }
 
@@ -91,7 +91,7 @@ TEST(PrecisionHelpersTest, IsValueWithinUnsignedLongIntegerLimitsWorks)
     EXPECT_FALSE(isValueWithinLimits<unsigned long int>(static_cast<double>(0)-100000));
     EXPECT_TRUE(isValueWithinLimits<unsigned long int>(0));
     EXPECT_TRUE(isValueWithinLimits<unsigned long int>(1000));
-    EXPECT_TRUE(isValueWithinLimits<unsigned long int>(ULONG_MAX));
+    EXPECT_TRUE(isValueWithinLimits<unsigned long int>(static_cast<double>(ULONG_MAX)));
     EXPECT_FALSE(isValueWithinLimits<unsigned long int>(static_cast<double>(ULONG_MAX)+100000));
 }
 
@@ -143,9 +143,9 @@ TEST(PrecisionHelpersTest, IsValueBeyondShortIntegerLimitsWorks)
 TEST(PrecisionHelpersTest, IsValueBeyondLongIntegerLimitsWorks)
 {
     EXPECT_TRUE(isValueBeyondLimits<long int>(static_cast<double>(LONG_MIN)-100000));
-    EXPECT_FALSE(isValueBeyondLimits<long int>(LONG_MIN));
+    EXPECT_FALSE(isValueBeyondLimits<long int>(static_cast<double>(LONG_MIN)));
     EXPECT_FALSE(isValueBeyondLimits<long int>(1000));
-    EXPECT_FALSE(isValueBeyondLimits<long int>(LONG_MAX));
+    EXPECT_FALSE(isValueBeyondLimits<long int>(static_cast<double>(LONG_MAX)));
     EXPECT_TRUE(isValueBeyondLimits<long int>(static_cast<double>(LONG_MAX)+100000));
 }
 
@@ -154,7 +154,7 @@ TEST(PrecisionHelpersTest, IsValueBeyondUnsignedLongIntegerLimitsWorks)
     EXPECT_TRUE(isValueBeyondLimits<unsigned long int>(static_cast<double>(0)-100000));
     EXPECT_FALSE(isValueBeyondLimits<unsigned long int>(0));
     EXPECT_FALSE(isValueBeyondLimits<unsigned long int>(1000));
-    EXPECT_FALSE(isValueBeyondLimits<unsigned long int>(ULONG_MAX));
+    EXPECT_FALSE(isValueBeyondLimits<unsigned long int>(static_cast<double>(ULONG_MAX)));
     EXPECT_TRUE(isValueBeyondLimits<unsigned long int>(static_cast<double>(ULONG_MAX)+100000));
 }
 

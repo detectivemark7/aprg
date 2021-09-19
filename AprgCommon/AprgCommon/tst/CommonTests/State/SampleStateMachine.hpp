@@ -31,7 +31,7 @@ class SampleStateMachine : public BaseSampleStateMachine
 {
 public:
     SampleStateMachine(State const stateIdentifier);
-    virtual ~SampleStateMachine() = default;
+    // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     void processInput(Action const& action) override;
 private:

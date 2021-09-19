@@ -325,11 +325,11 @@ void saveContentsInDecimalAndHexadecimalFormat(std::ostream & outputStream, Cont
 
     outputStream << "Decimal values: {" << std::dec;
     std::copy(container.cbegin(), container.cend(), outputIterator);
-    outputStream << "}" << std::endl;
+    outputStream << "}\n";
 
     outputStream << "Hexadecimal values: {" << std::hex;
     std::copy(container.cbegin(), container.cend(), outputIterator);
-    outputStream << "}" << std::endl;
+    outputStream << "}\n";
 }
 
 

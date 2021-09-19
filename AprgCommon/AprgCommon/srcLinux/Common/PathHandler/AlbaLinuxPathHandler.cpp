@@ -59,7 +59,7 @@ double AlbaLinuxPathHandler::getFileSizeEstimate()
     else
     {
         cout<<"Error in AlbaLinuxPathHandler::getFileSizeEstimate() path:["<<getFullPath()
-           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
     }
     return fileSize;
 }
@@ -77,7 +77,7 @@ AlbaDateTime AlbaLinuxPathHandler::getFileCreationTime()
     else
     {
         cout<<"Error in AlbaLinuxPathHandler::getFileCreationTime() path:["<<getFullPath()
-           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
     }
     return fileCreationTime;
 }
@@ -136,7 +136,7 @@ bool AlbaLinuxPathHandler::deleteFile()
         isSuccessful = errorReturnValue==0;
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaLinuxPathHandler::deleteFile() path:["<<getFullPath()<<"] 'unlink' error value:["<<errorReturnValue<<"]"<<endl;
+            cout<<"Error in AlbaLinuxPathHandler::deleteFile() path:["<<getFullPath()<<"] 'unlink' error value:["<<errorReturnValue<<"]\n";
         }
         else
         {
@@ -155,7 +155,7 @@ bool AlbaLinuxPathHandler::deleteDirectoryWithoutFilesAndDirectories()
         isSuccessful = errorReturnValue==0;
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaLinuxPathHandler::deleteDirectoryWithoutFilesAndDirectories() path:["<<getFullPath()<<"] 'rmdir' error value:["<<errorReturnValue<<"]"<<endl;
+            cout<<"Error in AlbaLinuxPathHandler::deleteDirectoryWithoutFilesAndDirectories() path:["<<getFullPath()<<"] 'rmdir' error value:["<<errorReturnValue<<"]\n";
         }
         else
         {
@@ -219,7 +219,7 @@ bool AlbaLinuxPathHandler::copyToNewFile(string const& newFilePath)
             isSuccessful = errorReturnValue!=-1;
             if(!isSuccessful)
             {
-                cout<<"Error in AlbaLinuxPathHandler::copyToNewFile() path:["<<getFullPath()<<"] newFilePath:["<<newFilePath<<"] 'sendfile' error value:["<<errorReturnValue<<"]"<<endl;
+                cout<<"Error in AlbaLinuxPathHandler::copyToNewFile() path:["<<getFullPath()<<"] newFilePath:["<<newFilePath<<"] 'sendfile' error value:["<<errorReturnValue<<"]\n";
             }
             else
             {
@@ -231,7 +231,7 @@ bool AlbaLinuxPathHandler::copyToNewFile(string const& newFilePath)
     else
     {
         cout<<"Error in AlbaLinuxPathHandler::copyToNewFile() path:["<<getFullPath()
-           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+           <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
     }
     close (readFileDescriptor);
     return isSuccessful;
@@ -247,7 +247,7 @@ bool AlbaLinuxPathHandler::renameFile(string const& newFileName)
         isSuccessful = errorReturnValue==0;
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaLinuxPathHandler::renameFile() path:["<<getFullPath()<<"] newFileName:["<<newFileName<<"] 'rename' error value:["<<errorReturnValue<<"]"<<endl;
+            cout<<"Error in AlbaLinuxPathHandler::renameFile() path:["<<getFullPath()<<"] newFileName:["<<newFileName<<"] 'rename' error value:["<<errorReturnValue<<"]\n";
         }
         else
         {
@@ -269,7 +269,7 @@ bool AlbaLinuxPathHandler::renameImmediateDirectory(string const& newDirectoryNa
         isSuccessful = errorReturnValue==0;
         if(!isSuccessful)
         {
-            cout<<"Error in AlbaLinuxPathHandler::renameImmediateDirectory() path:["<<getFullPath()<<"] newDirectoryName:["<<newDirectoryName<<"] 'rename' error value:["<<errorReturnValue<<"]"<<endl;
+            cout<<"Error in AlbaLinuxPathHandler::renameImmediateDirectory() path:["<<getFullPath()<<"] newDirectoryName:["<<newDirectoryName<<"] 'rename' error value:["<<errorReturnValue<<"]\n";
         }
         else
         {
@@ -324,7 +324,7 @@ void AlbaLinuxPathHandler::findFilesAndDirectoriesWithDepth(
     else
     {
         cout<<"Error in AlbaLinuxPathHandler::findFilesAndDirectoriesWithDepth() currentDirectory:["<<currentDirectory
-           <<"] 'opendir' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+           <<"] 'opendir' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
     }
     closedir(directoryStream);
 }
@@ -364,7 +364,7 @@ void AlbaLinuxPathHandler::loopAllFilesAndDirectoriesInDirectoryStream(
         else
         {
             cout<<"Error in AlbaLinuxPathHandler::findFilesAndDirectoriesWithDepth() currentDirectory:["<<currentDirectory
-               <<"] 'readdir' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+               <<"] 'readdir' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
         }
     }
     while(directoryPointer != nullptr);
@@ -401,7 +401,7 @@ bool AlbaLinuxPathHandler::isPathADirectory(string const& fileOrDirectoryName) c
         else
         {
             cout<<"Error in AlbaLinuxPathHandler::isPathADirectory() path:["<<getFullPath()
-               <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]"<<endl;
+               <<"] 'stat' errno value:["<<errno<<"] error message:["<<getErrorMessage(errno)<<"]\n";
         }
     }
     return result;

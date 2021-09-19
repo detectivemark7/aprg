@@ -41,6 +41,23 @@ TEST(AlbaMatrixTest, MatrixConstructor_AlbaMatrixCanBeCreatedWithSize)
     EXPECT_EQ(0U, matrixData.at(5));
 }
 
+TEST(AlbaMatrixTest, MatrixConstructor_AlbaMatrixCanBeCreatedWithUniquePointers)
+{
+    AlbaMatrix<unique_ptr<unsigned int>> matrix(2, 3);
+
+    EXPECT_EQ(2U, matrix.getNumberOfColumns());
+    EXPECT_EQ(3U, matrix.getNumberOfRows());
+    AlbaMatrix<unique_ptr<unsigned int>>::MatrixData const& matrixData(
+                matrix.getMatrixData());
+    ASSERT_EQ(6U, matrixData.size());
+    EXPECT_FALSE(matrixData.at(0));
+    EXPECT_FALSE(matrixData.at(1));
+    EXPECT_FALSE(matrixData.at(2));
+    EXPECT_FALSE(matrixData.at(3));
+    EXPECT_FALSE(matrixData.at(4));
+    EXPECT_FALSE(matrixData.at(5));
+}
+
 TEST(AlbaMatrixTest, MatrixConstructor_AlbaMatrixCanBeCreatedWithSizeAndInitialValue)
 {
     AlbaMatrix<unsigned int> matrix(2, 3, 55);

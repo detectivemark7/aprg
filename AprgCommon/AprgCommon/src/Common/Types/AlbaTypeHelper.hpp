@@ -34,6 +34,27 @@ constexpr bool isBaseOf()
 }
 
 
+// Type operations:
+
+template <typename Type>
+constexpr bool negateValueInType()
+{
+    return std::negation<Type>::value;
+}
+
+template <typename... Types>
+constexpr bool andOperateValuesInTypes()
+{
+    return std::conjunction<Types...>::value;
+}
+
+template <typename... Types>
+constexpr bool orOperateValuesInTypes()
+{
+    return std::disjunction<Types...>::value;
+}
+
+
 
 // Type checks:
 
@@ -205,6 +226,26 @@ constexpr bool isAnAggregate()
     // 2.3) etc
     return std::is_aggregate<Type>::value;
 }
+
+template <typename Type>
+constexpr bool isDefaultConstructible()
+{
+    return std::is_default_constructible<Type>::value;
+}
+
+template <typename Type>
+constexpr bool isTriviallyDefaultConstructible()
+{
+    return std::is_trivially_default_constructible<Type>::value;
+}
+
+template <typename Type>
+constexpr bool isNoThrowDefaultConstructible()
+{
+    return std::is_nothrow_default_constructible<Type>::value;
+}
+
+
 
 
 // Get Types

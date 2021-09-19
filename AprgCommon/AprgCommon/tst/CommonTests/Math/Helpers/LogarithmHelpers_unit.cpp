@@ -1,5 +1,5 @@
 #include <Common/Math/Helpers/LogarithmHelpers.hpp>
-#include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -104,7 +104,7 @@ TEST(LogarithmHelpersPerformanceTest, DISABLED_GetLogarithmPerformanceTest_WithR
     // Results: ~850ms
 
     unsigned int result(0);
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     int minValue(2), maxValue(2000);
     for(unsigned int iterations=1; iterations<10000000ULL; iterations++)
     {
@@ -120,7 +120,7 @@ TEST(LogarithmHelpersPerformanceTest, DISABLED_GetLogarithmForIntegersPerformanc
     // Results: ~790ms
 
     unsigned int result(0);
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     int minValue(2), maxValue(2000);
     for(unsigned int iterations=1; iterations<10000000ULL; iterations++)
     {

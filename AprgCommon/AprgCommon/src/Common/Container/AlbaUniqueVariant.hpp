@@ -81,7 +81,7 @@ public:
 
     // rule of five or six
     VariantDataType() = default;
-    virtual ~VariantDataType() = default;
+    virtual ~VariantDataType() = default; // virtual destructor because derived classes need this
     VariantDataType(VariantDataType const&) = delete;
     VariantDataType & operator= (VariantDataType const&) = delete;
     VariantDataType(VariantDataType &&) = delete;

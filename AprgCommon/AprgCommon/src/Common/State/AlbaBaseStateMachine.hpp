@@ -11,8 +11,7 @@ public:
     AlbaBaseStateMachine(State const initialState)
         : m_state(initialState)
     {}
-
-    virtual ~AlbaBaseStateMachine() = default;
+    virtual ~AlbaBaseStateMachine() = default;  // virtual destructor because of virtual functions (vtable exists)
 
     virtual void processInput(Input const&)
     {

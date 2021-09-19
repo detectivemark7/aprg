@@ -71,7 +71,7 @@ private:
 
     friend std::ostream & operator<<(std::ostream & out, AlbaAny const& any)
     {
-        out << "hasContent: " << any.hasContent() << std::endl;
+        out << "hasContent: " << any.hasContent() << "\n";
         if(any.hasContent())
         {
             out << " savedMemory: " << any.m_savedMemory;

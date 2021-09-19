@@ -7,6 +7,7 @@
 #include <Common/Math/Matrix/Utilities/GaussJordanReduction.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
+#include <Common/Types/AlbaTypeHelper.hpp>
 
 #include <cassert>
 #include <functional>
@@ -17,6 +18,22 @@ namespace alba
 
 namespace matrix
 {
+
+// constexpr functions:
+
+template <typename DataType>
+constexpr std::enable_if_t<typeHelper::isArithmeticType<DataType>(), AlbaMatrixData<DataType>>
+getDefaultMatrix(unsigned int const numberOfColumns, unsigned int const numberOfRows)
+{
+    return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows, DataType{}); // if arithmetic type, initialize it to zero
+}
+
+template <typename DataType>
+constexpr std::enable_if_t<!typeHelper::isArithmeticType<DataType>(), AlbaMatrixData<DataType>>
+getDefaultMatrix(unsigned int const numberOfColumns, unsigned int const numberOfRows)
+{
+    return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows); // if non arithmetic type, default construct it
+}
 
 template <typename DataType>
 class AlbaMatrix
@@ -30,6 +47,7 @@ public:
 
     // Do we have to make rows and columns as template parameter?
     // No, its better to have this on runtime because matrix can have different dimensions on applications.
+
     AlbaMatrix()
         : m_numberOfColumns(0)
         , m_numberOfRows(0)
@@ -37,8 +55,16 @@ public:
 
     AlbaMatrix(
             unsigned int const numberOfColumns,
+            unsigned int const numberOfRows)
+        : m_numberOfColumns(numberOfColumns)
+        , m_numberOfRows(numberOfRows)
+        , m_matrixData(getDefaultMatrix<DataType>(numberOfColumns, numberOfRows))
+    {}
+
+    AlbaMatrix(
+            unsigned int const numberOfColumns,
             unsigned int const numberOfRows,
-            DataType const initialValue={})
+            DataType const& initialValue)
         : m_numberOfColumns(numberOfColumns)
         , m_numberOfRows(numberOfRows)
         , m_matrixData(numberOfColumns*numberOfRows, initialValue)
@@ -394,7 +420,7 @@ private:
             }
         }
 
-        out << "Matrix output:" << std::endl << table;
+        out << "Matrix output:\n" << table;
         return out;
     }
 

@@ -483,6 +483,7 @@ TEST(BasicStringVariantTest, IsBasicStringVariantWorks)
 
 TEST(BasicStringVariantTest, ConvertToAnotherBasicStringVariantWorks)
 {
+    EXPECT_EQ("ThisABasicStringVariant", (convertToAnotherBasicStringVariant<string, string>(R"delimeter(ThisABasicStringVariant)delimeter")));
     EXPECT_EQ(L"ThisABasicStringVariant"s, (convertToAnotherBasicStringVariant<string, wstring>("ThisABasicStringVariant"s)));
     EXPECT_EQ(u"ThisABasicStringVariant"s, (convertToAnotherBasicStringVariant<string, u16string>("ThisABasicStringVariant"s)));
     EXPECT_EQ(U"ThisABasicStringVariant"s, (convertToAnotherBasicStringVariant<string, u32string>("ThisABasicStringVariant"s)));

@@ -142,7 +142,7 @@ private:
 };
 
 template <typename ContentType>
-// class [[deprecated("Use std::optional instead! (needs c++17)")]] AlbaOptional // lets remove [[deprecated]] to avoid unnecessary warnings
+// class [[deprecated("Check if std::reference_wrapper can be used instead.")]] AlbaOptional // lets remove [[deprecated]] to avoid unnecessary warnings
 class AlbaOptional<ContentType &>
 {
 public:

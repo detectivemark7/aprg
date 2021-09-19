@@ -1,4 +1,4 @@
-#include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -9,9 +9,9 @@ using namespace std;
 namespace alba
 {
 
-TEST(AlbaRandomizerTest, RandomUniformValuesAreWithinLimits)
+TEST(AlbaSimpleRandomizerTest, RandomUniformValuesAreWithinLimits)
 {
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     int const minimumRandomValue(0);
     int const maximumRandomValue(9);
     for(int i=0; i<1000; i++)
@@ -22,9 +22,9 @@ TEST(AlbaRandomizerTest, RandomUniformValuesAreWithinLimits)
     }
 }
 
-TEST(AlbaRandomizerTest, RandomValuesAreUniformlyDistributed)
+TEST(AlbaSimpleRandomizerTest, RandomValuesAreUniformlyDistributed)
 {
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     int const minimumRandomValue(0);
     int const maximumRandomValue(9);
     int numberOfRandomValues(maximumRandomValue-minimumRandomValue+1);
