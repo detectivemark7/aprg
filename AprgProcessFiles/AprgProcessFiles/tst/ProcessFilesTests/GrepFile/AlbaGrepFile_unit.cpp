@@ -30,7 +30,7 @@ TEST(AlbaGrepFileTest, GrepUpdatesWorks)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<100; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 
@@ -51,10 +51,10 @@ TEST(AlbaGrepFileTest, GrepWorks)
     AlbaLocalPathHandler file2ToReadPathHandler(APRG_PROCESS_FILES_TEST_FILE2_TO_READ);
     ofstream testFile(file1ToReadPathHandler.getFullPath());
     ASSERT_TRUE(testFile.is_open());
-    testFile << R"(As a person, I think that Mark is so cool)" << endl;
-    testFile << R"(As a designer, I know that Mark Earvin is so cool)" << endl;
-    testFile << R"(As a programmer, I know that Earvin is so cool)" << endl;
-    testFile << R"(As a coder, I know that MARKalba is so cool)" << endl;
+    testFile << R"(As a person, I think that Mark is so cool)" << "\n";
+    testFile << R"(As a designer, I know that Mark Earvin is so cool)" << "\n";
+    testFile << R"(As a programmer, I know that Earvin is so cool)" << "\n";
+    testFile << R"(As a coder, I know that MARKalba is so cool)" << "\n";
     testFile.close();
 
     AlbaGrepFile grepFile("[mark]");

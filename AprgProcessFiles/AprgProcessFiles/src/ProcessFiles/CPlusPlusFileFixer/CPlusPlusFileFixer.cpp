@@ -84,7 +84,7 @@ void CPlusPlusFileFixer::processDirectory(string const& path)
 
 void CPlusPlusFileFixer::processFile(string const& path)
 {
-    //cout<<"ProcessFile: "<<path<<endl;
+    //cout<<"ProcessFile: "<<path<<"\n";
     clear();
     checkFile(path);
     fix(path);
@@ -170,7 +170,7 @@ void CPlusPlusFileFixer::notifyIfThereAreCommentsInHeader(string const& path, st
 {
     if(isStringFoundInsideTheOtherStringCaseSensitive(line, "//"))
     {
-        cout<<"CHECK THIS: Header comments on:["<<path<<"] in line:["<<line<<"]"<<endl;
+        cout<<"CHECK THIS: Header comments on:["<<path<<"] in line:["<<line<<"]\n";
     }
 }
 
@@ -179,7 +179,7 @@ void CPlusPlusFileFixer::notifyIfAlbaDebugHeaderExistInProductionCode(string con
     bool isAlbaDebugHeaderFound = (find(m_headerListFromAngleBrackets.cbegin(), m_headerListFromAngleBrackets.cend(), string("Debug/AlbaDebug.hpp")) != m_headerListFromAngleBrackets.end());
     if(isAlbaDebugHeaderFound) // !isUnitTest)
     {
-        cout<<"CHECK THIS: AlbaDebug found in:["<<path<<"]."<<endl;
+        cout<<"CHECK THIS: AlbaDebug found in:["<<path<<"].\n";
     }
 }
 
@@ -191,7 +191,7 @@ void CPlusPlusFileFixer::notifyIfIostreamHeaderExistInProductionCode(string cons
     bool isUnitTest = isStringFoundInsideTheOtherStringCaseSensitive(filePathHandler.getFile(), "_unit.cpp");
     if(isIostreamFound && !isUnitTest)// && !isCpp) // !isUnitTest)
     {
-        cout<<"CHECK THIS: iostream found in:["<<path<<"]."<<endl;
+        cout<<"CHECK THIS: iostream found in:["<<path<<"].\n";
     }
 }
 
@@ -200,7 +200,7 @@ void CPlusPlusFileFixer::notifyIfCAssertHeaderExistInProductionCode(string const
     bool isCAssertFound = (find(m_headerListFromAngleBrackets.cbegin(), m_headerListFromAngleBrackets.cend(), string("cassert")) != m_headerListFromAngleBrackets.end());
     if(isCAssertFound)
     {
-        cout<<"CHECK THIS: cassert found in:["<<path<<"]."<<endl;
+        cout<<"CHECK THIS: cassert found in:["<<path<<"].\n";
     }
 }
 
@@ -214,7 +214,7 @@ void CPlusPlusFileFixer::notifyIfMoreThanLoopsAreCascaded(string const& path) co
             indentionsOfLoops.emplace(getStringThatContainsWhiteSpaceIndention(line).size());
             if(indentionsOfLoops.size()>=2)
             {
-                cout<<"CHECK THIS: More than 2 loops found in:["<<path<<"] in line:["<<line<<"]."<<endl;
+                cout<<"CHECK THIS: More than 2 loops found in:["<<path<<"] in line:["<<line<<"].\n";
             }
         }
         else if(isLineWithALoopEnd(line))
@@ -356,8 +356,8 @@ void CPlusPlusFileFixer::writeFile(string const& path)
     ofstream outputLogFileStream(filePathHandler.getFullPath());
     if(m_isPragmaOnceFound)
     {
-        outputLogFileStream<<"#pragma once"<<endl;
-        outputLogFileStream<<endl;
+        outputLogFileStream<<"#pragma once\n";
+        outputLogFileStream<<"\n";
     }
     if(!m_headerListFromQuotations.empty())
     {
@@ -369,7 +369,7 @@ void CPlusPlusFileFixer::writeFile(string const& path)
     }
     for(string const& line: m_linesAfterTheHeader)
     {
-        outputLogFileStream<<line<<endl;
+        outputLogFileStream<<line<<"\n";
     }
 }
 
@@ -379,14 +379,14 @@ void CPlusPlusFileFixer::writeHeadersWithQuotations(ofstream & outputLogFileStre
     {
         if(!header.empty())
         {
-            outputLogFileStream<<R"(#include ")"<<header<<R"(")"<<endl;
+            outputLogFileStream<<R"(#include ")"<<header<<R"(")"<<"\n";
         }
         else
         {
-            outputLogFileStream<<endl;
+            outputLogFileStream<<"\n";
         }
     }
-    outputLogFileStream<<endl;
+    outputLogFileStream<<"\n";
 }
 
 void CPlusPlusFileFixer::writeHeadersWithAngleBrackets(ofstream & outputLogFileStream) const
@@ -395,11 +395,11 @@ void CPlusPlusFileFixer::writeHeadersWithAngleBrackets(ofstream & outputLogFileS
     {
         if(!header.empty())
         {
-            outputLogFileStream<<R"(#include <)"<<header<<R"(>)"<<endl;
+            outputLogFileStream<<R"(#include <)"<<header<<R"(>)"<<"\n";
         }
         else
         {
-            outputLogFileStream<<endl;
+            outputLogFileStream<<"\n";
         }
     }
 }

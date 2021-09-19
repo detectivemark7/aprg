@@ -31,7 +31,7 @@ TEST(AlbaCropFileTest, CropUpdatesWorks)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<100; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 
@@ -54,7 +54,7 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsHalfOfTheWholeDocument)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<10; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 
@@ -99,7 +99,7 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsTwiceOfTheWholeDocument)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<10; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 
@@ -140,7 +140,7 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsHalfOfTheWholeDocumentAtTheStart)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<10; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 
@@ -184,7 +184,7 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsHalfOfTheWholeDocumentAtTheEnd)
     ASSERT_TRUE(testFile.is_open());
     for(unsigned int i = 0; i<10; i++)
     {
-        testFile << i << endl;
+        testFile << i << "\n";
     }
     testFile.close();
 

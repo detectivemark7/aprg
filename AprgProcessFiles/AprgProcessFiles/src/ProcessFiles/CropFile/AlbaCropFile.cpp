@@ -43,7 +43,7 @@ void AlbaCropFile::processFile(string const& inputFilePath, string const& output
     }
     else
     {
-        cout<<"CropFile: Crop process did not proceed. Prioritized line not found."<<endl;
+        cout<<"CropFile: Crop process did not proceed. Prioritized line not found."<<"\n";
     }
     updateAfterOneIteration(100);
 }
@@ -51,17 +51,16 @@ void AlbaCropFile::processFile(string const& inputFilePath, string const& output
 double AlbaCropFile::getLocationOfPrioritizedPrint(string const& inputFilePath)
 {
     double foundLocation(-1);
-    double currentLocation(-1);
     ifstream inputFileStream(inputFilePath);
     AlbaFileReader fileReader(inputFileStream);
     double sizeOfFile = fileReader.getFileSize();
     while(fileReader.isNotFinished())
     {
-        currentLocation = fileReader.getCurrentLocation();
+        double currentLocation = fileReader.getCurrentLocation();
         string lineInFile(fileReader.getLineAndIgnoreWhiteSpaces());
         if(m_prioritizedLineEvaluator.evaluate(lineInFile))
         {
-            cout<<"CropFile: Found the prioritized line in input file. Line: "<<lineInFile<<endl;
+            cout<<"CropFile: Found the prioritized line in input file. Line: "<<lineInFile<<"\n";
             foundLocation = currentLocation;
             break;
         }
@@ -91,7 +90,7 @@ void AlbaCropFile::performCropForFile(string const& inputFilePath, string const&
         if(currentLocation < locations.endLocation)
         {
             m_isOutputFileWritten = true;
-            outputFileStream << lineInFile << endl;
+            outputFileStream << lineInFile << "\n";
         }
         else
         {
