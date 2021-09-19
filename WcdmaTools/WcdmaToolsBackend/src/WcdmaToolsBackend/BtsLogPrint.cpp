@@ -400,6 +400,7 @@ ostream& operator<<(ostream & out, BtsLogPrint const& btsLogPrint)
     writer.writeData<string>(btsLogPrint.m_hardwareAddress);
     writer.writeData<string>(btsLogPrint.m_print);
     writer.writeData<string>(btsLogPrint.m_fileName);
+    writer.flush();
     return out;
 }
 
