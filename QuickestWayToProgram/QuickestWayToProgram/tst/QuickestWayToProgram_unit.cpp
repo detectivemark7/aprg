@@ -47,7 +47,7 @@ TEST(SampleTest, CountFromMsbValue)
         cout << countFromMsb << "U, ";
         if(value % 32 == 31)
         {
-            cout << endl;
+            cout << "\n";
         }
     }
     cout << "}";
@@ -82,23 +82,23 @@ TEST(SampleTest, KBitAndNegativeK)
 
 TEST(SampleTest, RenameFiles)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(N:\MUSIC\111_DoAutomationHere)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     for(string const& file: files)
     {
         AlbaLocalPathHandler filePathHandler(file);
-        cout<<file<<endl;
+        cout<<file<<"\n";
         filePathHandler.renameFile(stringHelper::getStringAndReplaceNonAlphanumericCharactersToUnderScore(filePathHandler.getFilenameOnly())+"."+filePathHandler.getExtension());
     }
 }
 
 TEST(SampleTest, FindSourceFilesToAdjust_FileList)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -142,8 +142,8 @@ TEST(SampleTest, FindSourceFilesToAdjust_FileList)
 
 TEST(SampleTest, FindSourceFilesToAdjust_FileList)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -210,8 +210,8 @@ TEST(SampleTest, FindSourceFilesToAdjust_FileList)
 
 TEST(SampleTest, FindHeaderFilesToAdjust_FileList)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -262,8 +262,8 @@ TEST(SampleTest, FindHeaderFilesToAdjust_FileList)
 
 TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -293,7 +293,7 @@ TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
                     {
                         ALBA_PRINT1(filePathHandler.getFullPath());
                         ALBA_PRINT1(lineInFile);
-                        cout<<endl;
+                        cout<<"\n";
                         break;
                     }
                 }
@@ -304,8 +304,8 @@ TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
 
 TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -342,7 +342,7 @@ TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
                     {
                         ALBA_PRINT1(filePathHandler.getFullPath());
                         ALBA_PRINT1(lineInFile);
-                        cout<<endl;
+                        cout<<"\n";
                         break;
                     }
                 }
@@ -353,8 +353,8 @@ TEST(SampleTest, FindSourceFilesToAdjust_FromDirectory)
 
 TEST(SampleTest, FindNearEmptyFiles)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\trunk\SBTS\tcom\C_Application\SC_TCOM)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -381,8 +381,8 @@ TEST(SampleTest, FindNearEmptyFiles)
 
 TEST(SampleTest, FindLongAndShortLogStrings)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Users\malba\Desktop\Delete\FrameworkLogLengthAnalysis\DMGR_MT_LOGS)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
@@ -398,11 +398,11 @@ TEST(SampleTest, FindLongAndShortLogStrings)
                 unsigned int length(lineInFile.length());
                 if(length >= 200)
                 {
-                    cout << "Line might be long. Length:[" << length << "] [" << lineInFile << "]" << endl;
+                    cout << "Line might be long. Length:[" << length << "] [" << lineInFile << "]\n";
                 }
                 if(length <= 40 && length > 0)
                 {
-                    cout << "Line might be short. Length: " << length << " [" << lineInFile << "]" << endl;
+                    cout << "Line might be short. Length: " << length << " [" << lineInFile << "]\n";
                 }
             }
         }
@@ -411,22 +411,22 @@ TEST(SampleTest, FindLongAndShortLogStrings)
 
 TEST(SampleTest, TuesdayChecklistVideos)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(N:\Downloads\TuesdayChecklist)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     for(string const& file: files)
     {
-        cout<<file<<endl;
+        cout<<file<<"\n";
     }
 }
 
 TEST(SampleTest, ExtractFilesAndCopyLogsForSctTests)
 {
     AprgFileExtractor fileExtractor("[.]");
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler inputDirectoryPathHandler(R"(C:\ZZZ_SCT_Logs\trunk_fsmr3@120334)");
     AlbaLocalPathHandler outputDirectoryPathHandler(R"(C:\ZZZ_SCT_Logs\trunk_fsmr3@120334_fixed)");
     inputDirectoryPathHandler.findFilesAndDirectoriesOneDepth("*.*", files, directories);
@@ -484,14 +484,14 @@ TEST(SampleTest, CBeginTest)
 
 TEST(SampleTest, LrmDirectoriesToFind)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(C:\Branches\CP\SystemFrameworkImprovement3\tcom-SystemFrameworkImprovement3-lrm\C_Application\SC_TCOM\CP_LRM\tst)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     for(string const& directory: directories)
     {
-        cout<<directory<<endl;
+        cout<<directory<<"\n";
     }
 }
 
@@ -514,7 +514,7 @@ TEST(SampleTest, FormatPrints)
     }
     for(string const& stringInStrings : uniqueAndSortedStrings)
     {
-        formattedLogStream << stringInStrings << endl;
+        formattedLogStream << stringInStrings << "\n";
     }
 }
 
@@ -554,7 +554,7 @@ TEST(SampleTest, FormatPrints)
             saveMaxLengthString(finalPrint, maxLength, vipPrint);
             if(!stringHelper::isWhiteSpace(finalPrint))
             {
-                formattedLogStream << finalPrint << endl;
+                formattedLogStream << finalPrint << "\n";
             }
         }
     }
@@ -625,24 +625,24 @@ TEST(SampleTest, LogComparePrints)
     unsigned int totalLines = linesInOriginal.size();
     for(string const& lineInOriginal : linesInOriginal)
     {
-        cout<<"Percentage: "<<(lineCount*100/totalLines)<<" lineCount: "<<lineCount<<" totalLines: "<<totalLines<<endl;
-        cout << "Original:  [" << lineInOriginal << "]" << endl;
+        cout<<"Percentage: "<<(lineCount*100/totalLines)<<" lineCount: "<<lineCount<<" totalLines: "<<totalLines<<"\n";
+        cout << "Original:  [" << lineInOriginal << "]\n";
 
         string nearestLineInLog2 = getNearestLine(linesInLog2, lineInOriginal);
-        cout << "Log2:      [" << nearestLineInLog2 << "]" << endl;
+        cout << "Log2:      [" << nearestLineInLog2 << "]\n";
         if(!nearestLineInLog2.empty())
         {
             int diffInOriginalAndNearestLog2 = static_cast<int>(stringHelper::getLevenshteinDistance(lineInOriginal, nearestLineInLog2));
             if(diffInOriginalAndNearestLog2 <= 30)
             {
-                cout << "diffInOriginalAndLog2:    [" << diffInOriginalAndNearestLog2 << "]" << endl;
+                cout << "diffInOriginalAndLog2:    [" << diffInOriginalAndNearestLog2 << "]\n";
                 string nearestLineInLog1 = getNearestLine(linesInLog1, lineInOriginal);
-                cout << "Log1:      [" << nearestLineInLog1 << "]" << endl;
+                cout << "Log1:      [" << nearestLineInLog1 << "]\n";
                 if(!nearestLineInLog1.empty())
                 {
                     int diffInOriginalAndNearestLog1 = static_cast<int>(stringHelper::getLevenshteinDistance(lineInOriginal, nearestLineInLog1));
                     int finalScore = diffInOriginalAndNearestLog2+diffInOriginalAndNearestLog1;
-                    cout << "Score:     [" << finalScore << "]" << endl;
+                    cout << "Score:     [" << finalScore << "]\n";
                     scoreToLogsMap.emplace(finalScore, ThreeLogs{lineInOriginal, nearestLineInLog1, nearestLineInLog2});
                 }
             }
@@ -656,14 +656,14 @@ TEST(SampleTest, LogComparePrints)
     for(ThreeLogMapType::reverse_iterator iterator = scoreToLogsMap.rbegin(); iterator!= scoreToLogsMap.rend(); iterator++)
     {
         ThreeLogPairType const& scoreToLogPair = *iterator;
-        cout << "Score:     [" << scoreToLogPair.first << "]" << endl;
-        cout << "Original:  [" << scoreToLogPair.second.originalLog << "]" << endl;
-        cout << "Log1:      [" << scoreToLogPair.second.log1Log << "]" << endl;
-        cout << "Log2:      [" << scoreToLogPair.second.log2Log << "]" << endl;
-        resultsLogStream << "Score:     [" << scoreToLogPair.first << "]" << endl;
-        resultsLogStream << "Original:  [" << scoreToLogPair.second.originalLog << "]" << endl;
-        resultsLogStream << "Log1: [" << scoreToLogPair.second.log1Log << "]" << endl;
-        resultsLogStream << "Log2:    [" << scoreToLogPair.second.log2Log << "]" << endl;
+        cout << "Score:     [" << scoreToLogPair.first << "]\n";
+        cout << "Original:  [" << scoreToLogPair.second.originalLog << "]\n";
+        cout << "Log1:      [" << scoreToLogPair.second.log1Log << "]\n";
+        cout << "Log2:      [" << scoreToLogPair.second.log2Log << "]\n";
+        resultsLogStream << "Score:     [" << scoreToLogPair.first << "]\n";
+        resultsLogStream << "Original:  [" << scoreToLogPair.second.originalLog << "]\n";
+        resultsLogStream << "Log1: [" << scoreToLogPair.second.log1Log << "]\n";
+        resultsLogStream << "Log2:    [" << scoreToLogPair.second.log2Log << "]\n";
     }
 }
 
@@ -702,21 +702,21 @@ TEST(SampleTest, FormatPrints)
             saveMaxLengthString(finalPrint, maxLength, warningPrint);
             saveMaxLengthString(finalPrint, maxLength, errorPrint);
             saveMaxLengthString(finalPrint, maxLength, vipPrint);
-            formattedLogStream << finalPrint << endl;
+            formattedLogStream << finalPrint << "\n";
         }
     }
 }
 
 TEST(SampleTest, LrmDirectoriesToFind)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(D:\SFI3NotCorrupted\tcom-SystemFrameworkImprovement3-grm\C_Application\SC_TCOM\CP_GRM\tst)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     for(string const& directory: directories)
     {
-        cout<<directory<<endl;
+        cout<<directory<<"\n";
     }
 }
 
@@ -734,7 +734,7 @@ TEST(SampleTest, NSAPCloudPrinting)
 
     for(int i=0; i<4; i++)
     {
-        cout<<"mark["<<i<<"]: "<<std::dec<<(int)mark[i]<<endl;
+        cout<<"mark["<<i<<"]: "<<std::dec<<(int)mark[i]<<"\n";
     }
 }
 
@@ -742,26 +742,26 @@ TEST(SampleTest, Shit)
 {
     u32 m_bitContainerForAllocations=1;
     u32 hellomellow = m_bitContainerForAllocations & 0x2;
-    cout<<"shouldCellBeAllocatedBasedOnDssKepler start:"<<endl;
-    cout<<"shouldCellBeAllocatedBasedOnDssKepler hellomellow: "<<hellomellow<<endl;
+    cout<<"shouldCellBeAllocatedBasedOnDssKepler start:\n";
+    cout<<"shouldCellBeAllocatedBasedOnDssKepler hellomellow: "<<hellomellow<<"\n";
     if(m_bitContainerForAllocations & 0x2 != 0)
     {
-        cout<<"shouldCellBeAllocatedBasedOnDssKepler true:"<<endl;
+        cout<<"shouldCellBeAllocatedBasedOnDssKepler true:\n";
     }
     else
     {
-        cout<<"shouldCellBeAllocatedBasedOnDssKepler false:"<<endl;
+        cout<<"shouldCellBeAllocatedBasedOnDssKepler false:\n";
     }
 
     u32 resultInU32 = m_bitContainerForAllocations & 0x2;
     bool result = resultInU32;
     if(result)
     {
-        cout<<"shouldCellBeAllocatedBasedOnDssKepler corrected true:"<<endl;
+        cout<<"shouldCellBeAllocatedBasedOnDssKepler corrected true:\n";
     }
     else
     {
-        cout<<"shouldCellBeAllocatedBasedOnDssKepler corrected false:"<<endl;
+        cout<<"shouldCellBeAllocatedBasedOnDssKepler corrected false:\n";
     }
 }
 
@@ -815,20 +815,20 @@ TEST(SampleTest, CounterOfCounts)
 
         }
     }
-    cout<<"highestQueueLengths"<<endl;
+    cout<<"highestQueueLengths\n";
     for(pair<int, string> const& printPair: highestJumpsQueueLengths)
     {
-        cout<<"queueLengthJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]"<<endl;
+        cout<<"queueLengthJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]\n";
     }
-    cout<<"highestMsgQueueingTimes"<<endl;
+    cout<<"highestMsgQueueingTimes\n";
     for(pair<int, string> const& printPair: highestJumpsMsgQueueingTimes)
     {
-        cout<<"msgQueueingTimeJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]"<<endl;
+        cout<<"msgQueueingTimeJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]\n";
     }
-    cout<<"highestMsgPoolUsages"<<endl;
+    cout<<"highestMsgPoolUsages\n";
     for(pair<int, string> const& printPair: highestJumpsMsgPoolUsages)
     {
-        cout<<"msgPoolUsageJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]"<<endl;
+        cout<<"msgPoolUsageJump: "<<printPair.first<<" Print: ["<<printPair.second<<"]\n";
     }
 }
 
@@ -879,20 +879,20 @@ TEST(SampleTest, MessageIdCounter)
             }
         }
     }
-    cout<<"lastMsgRcvdToCount"<<endl;
+    cout<<"lastMsgRcvdToCount\n";
     for(pair<unsigned int, unsigned int> const& printPair: lastMsgRcvdToCount)
     {
-        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<endl;
+        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<"\n";
     }
-    cout<<"lastMsgSentToCount"<<endl;
+    cout<<"lastMsgSentToCount\n";
     for(pair<unsigned int, unsigned int> const& printPair: lastMsgSentToCount)
     {
-        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<endl;
+        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<"\n";
     }
-    cout<<"lastInternalMsgToCount"<<endl;
+    cout<<"lastInternalMsgToCount\n";
     for(pair<unsigned int, unsigned int> const& printPair: lastInternalMsgToCount)
     {
-        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<endl;
+        cout<<"MessageId: "<<hex<<printPair.first<<" Count: "<<dec<<printPair.second<<"\n";
     }
 }
 
@@ -903,11 +903,11 @@ TEST(SampleTest, ConstTest)
     void * pointer= (void*)GLO_NULL;
     if(pointer==(void*)GLO_NULL)
     {
-        cout<<"GLO NULL works! "<<endl;
+        cout<<"GLO NULL works! \n";
     }
     if(pointer==nullptr)
     {
-        cout<<"nullptr works! "<<endl;
+        cout<<"nullptr works! \n";
     }
 }
 
@@ -1029,7 +1029,7 @@ TEST(SampleTest, CompareProfileToLogsInStreamRoutingPoC)
              }
              else if(streamState==2)
              {
-                 //cout<<currentRp3NodeAddress<<"   "<<currentRatType<<endl;
+                 //cout<<currentRp3NodeAddress<<"   "<<currentRatType<<"\n";
                  ratTypeToAddressMap[currentRp3NodeAddress] = currentRatType;
                  currentRatType="unknown";
                  currentRp3NodeAddress = 0;
@@ -1093,7 +1093,7 @@ TEST(SampleTest, CompareProfileToLogsInStreamRoutingPoC)
              }
              else if(streamState==2)
              {
-                 //cout<<currentRp3NodeAddress<<"   "<<currentRatType<<endl;
+                 //cout<<currentRp3NodeAddress<<"   "<<currentRatType<<"\n";
                  ratTypeToAddressMap[currentRp3NodeAddress] = currentRatType;
                  currentRatType="unknown";
                  currentRp3NodeAddress = 0;
@@ -1112,8 +1112,8 @@ TEST(SampleTest, CompareProfileToLogsInStreamRoutingPoC)
             if(stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(lineInFile, R"(bbBusAddr: )"))
             {
                  unsigned int rp3NodeAddress(stringHelper::convertStringToNumber<unsigned int>(stringHelper::getStringInBetweenTwoStrings(lineInFile, R"(bbBusAddr: )", R"( )")));
-                 //cout<<rp3NodeAddress<<endl;
-                 cout<<lineInFile<<"   ["<<ratTypeToAddressMap[rp3NodeAddress]<<"]"<<endl;
+                 //cout<<rp3NodeAddress<<"\n";
+                 cout<<lineInFile<<"   ["<<ratTypeToAddressMap[rp3NodeAddress]<<"]\n";
             }
         }
     }
@@ -1125,7 +1125,7 @@ TEST(SampleTest, SaveGetDifferenceFromGreaterMultipleToCsv)
     AlbaLocalPathHandler pathHandler(R"(C:\APRG\GetDifferenceFromGreaterMultipleGraph.txt)");
     ofstream csvFile(pathHandler.getFullPath());
 
-    csvFile<<"size = ["<<endl;
+    csvFile<<"size = [\n";
     for(unsigned int multiple = 0; multiple<20; multiple++)
     {
         for(unsigned int number = 0; number<20; number++)
@@ -1133,9 +1133,9 @@ TEST(SampleTest, SaveGetDifferenceFromGreaterMultipleToCsv)
             unsigned int size(mathHelper::getDifferenceFromGreaterMultiple(multiple, number)+mathHelper::getNumberOfMultiplesInclusive(multiple, number));
             csvFile<<size<<" ";
         }
-        csvFile<<";"<<endl;
+        csvFile<<";\n";
     }
-    csvFile<<"]"<<endl;
+    csvFile<<"]\n";
 }
 
 TEST(SampleTest, MessageIds_test)
@@ -1169,7 +1169,7 @@ TEST(SampleTest, MessageIds_test)
                     {
                         messageId = 0x6800+messageId;
                     }
-                    //cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<hex<<messageId<<" messageName: "<<dec<<messageName<<endl;
+                    //cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<hex<<messageId<<" messageName: "<<dec<<messageName<<"\n";
                     messageIds.emplace(messageId, messageName);
                 }
             }
@@ -1194,7 +1194,7 @@ TEST(SampleTest, MessageIds_test)
                     {
                         messageId = 0x5000+messageId;
                     }
-                    //cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<hex<<messageId<<" messageName: "<<dec<<messageName<<endl;
+                    //cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<hex<<messageId<<" messageName: "<<dec<<messageName<<"\n";
                     messageIds.emplace(messageId, messageName);
                 }
             }
@@ -1214,11 +1214,11 @@ TEST(SampleTest, MessageIds_test)
             int distance = (int)offset+(int)messageSize-(int)messagePoolCorruptionAddress;
             if(messageIds.find(messageId)!= messageIds.end())
             {
-                cout<<"distance of the end of the message to corruption: "<<setw(5)<<distance<<", messageId: "<<hex<<messageId<<", messageName: "<<messageIds[messageId] << ", offset+messageSize:0x"<<offset+messageSize<<dec<<endl;
+                cout<<"distance of the end of the message to corruption: "<<setw(5)<<distance<<", messageId: "<<hex<<messageId<<", messageName: "<<messageIds[messageId] << ", offset+messageSize:0x"<<offset+messageSize<<dec<<"\n";
             }
             else
             {
-                //cout<<lineInFile<<endl;
+                //cout<<lineInFile<<"\n";
             }
         }
     }
@@ -1259,7 +1259,7 @@ unsigned int getMaximumDaysInAMonth(unsigned int const monthIndex, unsigned int 
 int getNumberOfLeapYears(unsigned int const year)
 {
     int beforeThisYear = year-1;
-    //cout<<"beforeThisYear"<<(beforeThisYear/4)<<","<<(beforeThisYear/100)<<","<<(beforeThisYear/400)<<","<<(beforeThisYear/4)+(beforeThisYear/100)<<","<<(beforeThisYear/4)+(beforeThisYear/100)+(beforeThisYear/400)<<(beforeThisYear/4)+(beforeThisYear/100)+(beforeThisYear/400)+1<<endl;
+    //cout<<"beforeThisYear"<<(beforeThisYear/4)<<","<<(beforeThisYear/100)<<","<<(beforeThisYear/400)<<","<<(beforeThisYear/4)+(beforeThisYear/100)<<","<<(beforeThisYear/4)+(beforeThisYear/100)+(beforeThisYear/400)<<(beforeThisYear/4)+(beforeThisYear/100)+(beforeThisYear/400)+1<<"\n";
     return (beforeThisYear/4)-(beforeThisYear/100)+(beforeThisYear/400)+1;
 }
 
@@ -1268,12 +1268,12 @@ TEST(SampleTest, DateTimeAlgorithm)
     AlbaLocalPathHandler pathHandler(R"(C:\APRG\DateMonthStudy2.csv)");
     ofstream fileOutput(pathHandler.getFullPath());
 
-    fileOutput<<"month,days"<<endl;
+    fileOutput<<"month,days\n";
 
     unsigned int numberOfDays=0;
     for(unsigned int month = 0; month<12; month++)
     {
-        fileOutput<<month<<","<<(bool)(numberOfDays&2)<<endl;
+        fileOutput<<month<<","<<(bool)(numberOfDays&2)<<"\n";
         numberOfDays+=getMaximumDaysInAMonth(month,1);
     }
 }
@@ -1288,27 +1288,27 @@ u32 calculateShiftDelayedSfn(u32 const currentSfn, u32 const calculatedSfn)
 
     const u32 limit = (currentSfn + SFN_LOW_LIMIT) % RADIO_FRAME_CYCLE;
     u32 tempSfn = calculatedSfn;
-    cout<<"tempSfn"<<tempSfn<<endl;
-    cout<<"limit"<<limit<<endl;
+    cout<<"tempSfn"<<tempSfn<<"\n";
+    cout<<"limit"<<limit<<"\n";
     while (tempSfn > limit){
         if (tempSfn < MAX_NUM_OF_TTI){
             break;
         }
         tempSfn = (tempSfn + MAX_NUM_OF_TTI) % RADIO_FRAME_CYCLE;
     }
-    cout<<"tempSfn"<<tempSfn<<endl;
-    cout<<"limit"<<limit<<endl;
+    cout<<"tempSfn"<<tempSfn<<"\n";
+    cout<<"limit"<<limit<<"\n";
     while (tempSfn < limit){
         if (limit > (MAX_FRAME_NUMBER - MAX_NUM_OF_TTI) && tempSfn < MAX_NUM_OF_TTI){
-            cout<<"condition"<<MAX_FRAME_NUMBER-MAX_NUM_OF_TTI<<endl;
-            cout<<"tempSfnInside2"<<tempSfn<<endl;
+            cout<<"condition"<<MAX_FRAME_NUMBER-MAX_NUM_OF_TTI<<"\n";
+            cout<<"tempSfnInside2"<<tempSfn<<"\n";
             break;
         }
-        cout<<"tempSfnInside"<<tempSfn<<endl;
+        cout<<"tempSfnInside"<<tempSfn<<"\n";
         tempSfn = (tempSfn + MAX_NUM_OF_TTI) % (RADIO_FRAME_CYCLE);
     }
-    cout<<"tempSfn"<<tempSfn<<endl;
-    cout<<"limit"<<limit<<endl;
+    cout<<"tempSfn"<<tempSfn<<"\n";
+    cout<<"limit"<<limit<<"\n";
     return tempSfn;
 }
 
@@ -1362,8 +1362,8 @@ TEST(SampleTest, DISABLED_ComparisonOfResultsOfTwoAlgorithms)
         string lineInFileInOldAlgo(oldAlgoReader.getLineAndIgnoreWhiteSpaces());
         if(lineInFileInNewAlgo!=lineInFileInOldAlgo)
         {
-            cout<<"lineInFileInNewAlgo:["<<lineInFileInNewAlgo<<"]"<<endl;
-            cout<<"lineInFileInOldAlgo:["<<lineInFileInOldAlgo<<"]"<<endl;
+            cout<<"lineInFileInNewAlgo:["<<lineInFileInNewAlgo<<"]\n";
+            cout<<"lineInFileInOldAlgo:["<<lineInFileInOldAlgo<<"]\n";
             //break;
         }
     }
@@ -1374,12 +1374,12 @@ TEST(SampleTest, DISABLED_RlhNewLogic)
     AlbaLocalPathHandler pathHandler(R"(D:\userdata\malba\Desktop\Prontos\PR235148\NewResults.csv)");
     ofstream fileOutput(pathHandler.getFullPath());
 
-    fileOutput<<"CurrentSfn,CalculatedSfn,ShiftedSfn"<<endl;
+    fileOutput<<"CurrentSfn,CalculatedSfn,ShiftedSfn\n";
     for(u32 currentSfn=0; currentSfn<=4096; currentSfn++)
     {
         for(u32 calculatedSfn=0; calculatedSfn<=4096; calculatedSfn++)
         {
-            fileOutput<<currentSfn<<","<<calculatedSfn<<","<<calculateShiftDelayedSfnNew(currentSfn, calculatedSfn)<<endl;
+            fileOutput<<currentSfn<<","<<calculatedSfn<<","<<calculateShiftDelayedSfnNew(currentSfn, calculatedSfn)<<"\n";
         }
     }
 }
@@ -1389,12 +1389,12 @@ TEST(SampleTest, DISABLED_RlhOldLogic)
     AlbaLocalPathHandler pathHandler(R"(D:\userdata\malba\Desktop\Prontos\PR235148\OldResults.csv)");
     ofstream fileOutput(pathHandler.getFullPath());
 
-    fileOutput<<"CurrentSfn,CalculatedSfn,ShiftedSfn"<<endl;
+    fileOutput<<"CurrentSfn,CalculatedSfn,ShiftedSfn\n";
     for(u32 currentSfn=0; currentSfn<=4096; currentSfn++)
     {
         for(u32 calculatedSfn=0; calculatedSfn<=4096; calculatedSfn++)
         {
-            fileOutput<<currentSfn<<","<<calculatedSfn<<","<<calculateShiftDelayedSfn(currentSfn, calculatedSfn)<<endl;
+            fileOutput<<currentSfn<<","<<calculatedSfn<<","<<calculateShiftDelayedSfn(currentSfn, calculatedSfn)<<"\n";
         }
     }
 }
@@ -1402,17 +1402,17 @@ TEST(SampleTest, DISABLED_RlhOldLogic)
 
 TEST(SampleTest, FilesToFind)
 {
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     AlbaLocalPathHandler pathHandler(R"(D:\ZZZ_Logs\PR224369_NEWEST\WBTS17vsWBTS18\WBTS18Second\trace_TUPCexe_Conman_EU_1448_1494233464)");
     pathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     for(string const& file: files)
     {
         AlbaLocalPathHandler filePathHandler(file);
-        cout<<R"(./decodeTrace )"<<filePathHandler.getFilenameOnly()<<R"(.log SS_TUPC addr2line)"<<endl;
-        cout<<R"(./flameGraph )"<<filePathHandler.getFilenameOnly()<<R"(.log_decode > )"<<filePathHandler.getFilenameOnly()<<R"(.log_flame)"<<endl;
-        cout<<R"(cat )"<<filePathHandler.getFilenameOnly()<<R"(.log_flame ~/flamegraphs/FlameGraph-master/stackcollapse-perf.pl | ~/flamegraphs/FlameGraph-master/flamegraph.pl > generatedflamegraphs2/)"<<filePathHandler.getFilenameOnly()<<R"(.svg)"<<endl;
+        cout<<R"(./decodeTrace )"<<filePathHandler.getFilenameOnly()<<R"(.log SS_TUPC addr2line)\n";
+        cout<<R"(./flameGraph )"<<filePathHandler.getFilenameOnly()<<R"(.log_decode > )"<<filePathHandler.getFilenameOnly()<<R"(.log_flame)\n";
+        cout<<R"(cat )"<<filePathHandler.getFilenameOnly()<<R"(.log_flame ~/flamegraphs/FlameGraph-master/stackcollapse-perf.pl | ~/flamegraphs/FlameGraph-master/flamegraph.pl > generatedflamegraphs2/)"<<filePathHandler.getFilenameOnly()<<R"(.svg)\n";
     }
 }
 
@@ -1429,7 +1429,7 @@ TEST(SampleTest, MessageId_TcomTcom_test)
     ofstream xmlFormattedFile(pathHandler2.getFullPath());
     ofstream messageIdComparisonFile(pathHandler4.getFullPath());
 
-    xmlFormattedFile<<"<messages>"<<endl;
+    xmlFormattedFile<<"<messages>\n";
 
     map<unsigned int, string> tcomTcomMessageIds;
     set<unsigned int> routeListMessageIds;
@@ -1451,18 +1451,18 @@ TEST(SampleTest, MessageId_TcomTcom_test)
                     {
                         messageId = 0x6800+messageId;
                     }
-                    cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<messageId<<" messageName: "<<messageName<<endl;
+                    cout<<"isTcomBasePrintVisible"<<isTcomBasePrintVisible<<" messageId: "<<messageId<<" messageName: "<<messageName<<"\n";
                     tcomTcomMessageIds.emplace(messageId, messageName);
-                    xmlFormattedFile<<"\t<message>"<<endl;
-                    xmlFormattedFile<<"\t\t<type>"<<messageId<<"</type>"<<endl;
-                    xmlFormattedFile<<"\t</message>"<<endl;
+                    xmlFormattedFile<<"\t<message>\n";
+                    xmlFormattedFile<<"\t\t<type>"<<messageId<<"</type>\n";
+                    xmlFormattedFile<<"\t</message>\n";
                 }
             }
         }
     }
-    xmlFormattedFile<<"</messages>"<<endl;
+    xmlFormattedFile<<"</messages>\n";
 
-    messageIdComparisonFile<<"messageId,isExistInRouteList,isExistInTcomTcom,messageName"<<endl;
+    messageIdComparisonFile<<"messageId,isExistInRouteList,isExistInTcomTcom,messageName\n";
 
     bool isMessageSpace;
     if(routeListFile.is_open())
@@ -1485,7 +1485,7 @@ TEST(SampleTest, MessageId_TcomTcom_test)
                     routeListMessageIds.emplace(messageId);
 
                 }
-                //cout<<"messageId:"<<messageId<<endl;
+                //cout<<"messageId:"<<messageId<<"\n";
             }
 
             if(stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(lineInFile, "</message>"))
@@ -1506,7 +1506,7 @@ TEST(SampleTest, MessageId_TcomTcom_test)
             {
                 messageIdComparisonFile<<",MessageName:["<<tcomTcomMessageIdIterator->second<<"]";
             }
-            messageIdComparisonFile<<endl;
+            messageIdComparisonFile<<"\n";
         }
     }
 }
@@ -1555,7 +1555,7 @@ TEST(SampleTest, DISABLED_SampleTest2)
                 {
                     byteString += currentCharacter;
                     unsigned char byteValue = stringHelper::convertHexStringToNumber<unsigned char>(byteString);
-                    //cout<<(unsigned int)byteValue<<endl;
+                    //cout<<(unsigned int)byteValue<<"\n";
                     wiresharkDumpFileFixed<<byteValue;
                     byteString.clear();
                     state=0;
@@ -1569,8 +1569,8 @@ TEST(SampleTest, DISABLED_WrcTest)
 {
     int power=0xFFFFF205;
     cout.precision(10);
-    cout<<"integer:"<<power<<endl;
-    cout<<"double:"<<(double)power<<endl;
+    cout<<"integer:"<<power<<"\n";
+    cout<<"double:"<<(double)power<<"\n";
 }
 
 void checkTrace();
@@ -1583,15 +1583,15 @@ void checkTrace()
     {
         char fourBytes[4];
         megaplexerStream.read (fourBytes, 4);
-        //cout<<"fourbytes"<<(int)fourBytes[0]<<(int)fourBytes[1]<<(int)fourBytes[2]<<(int)fourBytes[3]<<endl;
+        //cout<<"fourbytes"<<(int)fourBytes[0]<<(int)fourBytes[1]<<(int)fourBytes[2]<<(int)fourBytes[3]<<"\n";
         if(!(fourBytes[0]==0x0A && fourBytes[1]==0x0B && fourBytes[2]==0x0C && fourBytes[3]==0x0D))
         {
-            cout<<"What the hell is this?"<<megaplexerStream.tellg()<<endl;
+            cout<<"What the hell is this?"<<megaplexerStream.tellg()<<"\n";
         }
         megaplexerStream.read (fourBytes, 4);
         int size = ((unsigned int)fourBytes[0]<<24) | ((unsigned int)fourBytes[1]<<16) | ((unsigned int)fourBytes[2]<<8) | ((unsigned int)fourBytes[3]);
         megaplexerStream.seekg(size-4, ios_base::cur);
-        cout<<"size"<<size<<endl;
+        cout<<"size"<<size<<"\n";
     }
 }
 
@@ -1619,15 +1619,15 @@ TEST(SampleTest, DISABLED_GenerateSupplementarySacksHpp)
     AlbaLocalPathHandler currentDirectory(PathInitialValueSource::DetectedLocalPath);
     AlbaLocalPathHandler supplementaryDirectory(currentDirectory.getDirectory()+R"(\SupplementarySacks\)");
     AlbaLocalPathHandler supplementaryHeaderFilePath(currentDirectory.getDirectory()+R"(\SupplementarySacks.hpp)");
-    AlbaLocalPathHandler::ListOfPaths files;
-    AlbaLocalPathHandler::ListOfPaths directories;
+    ListOfPaths files;
+    ListOfPaths directories;
     supplementaryDirectory.findFilesAndDirectoriesUnlimitedDepth("*.*", files, directories);
 
     ofstream supplementaryHeaderFile(supplementaryHeaderFilePath.getFullPath());
     for(string const& file: files)
     {
         AlbaLocalPathHandler filePath(file);
-        supplementaryHeaderFile<<"#include <"<<filePath.getFile()<<">"<<endl;
+        supplementaryHeaderFile<<"#include <"<<filePath.getFile()<<">\n";
     }
 }
 
@@ -1648,9 +1648,9 @@ TEST(SampleTest, DISABLED_GenerateFeatureSpecificComponentFiles)
         stringHelper::transformReplaceStringIfFound(componentName, ",", "");
         if(!componentName.empty())
         {
-            addComponentFile<<R"(ADD_COMPONENT(ComponentName::)"<<componentName<<", "<<componentName<<")"<<endl;
-            componentsIncludesFile<<R"(#include <RAN3374/Components/)"<<componentName<<".hpp"<<endl;
-            convertToStringComponentNameFile<<R"(GET_ENUM_STRING(ComponentName::)"<<componentName<<")"<<endl;
+            addComponentFile<<R"(ADD_COMPONENT(ComponentName::)"<<componentName<<", "<<componentName<<")\n";
+            componentsIncludesFile<<R"(#include <RAN3374/Components/)"<<componentName<<".hpp\n";
+            convertToStringComponentNameFile<<R"(GET_ENUM_STRING(ComponentName::)"<<componentName<<")\n";
         }
     }
 }
@@ -1669,13 +1669,13 @@ TEST(SampleTest, DISABLED_CloudPrinting)
                 if(i%32==31)
                 {
 
-                    cout<< line.str()<<endl;
+                    cout<< line.str()<<"\n";
                     line.str("HEX DUMP: ");
                 }
             }
             if(!line.str().empty())
             {
-                cout<< line.str()<<endl;
+                cout<< line.str()<<"\n";
                 line.str("");
             }
 }
@@ -1688,7 +1688,7 @@ TEST(SampleTest, DISABLED_NSAPCloudPrinting)
 
     for(int i=0; i<20; i++)
     {
-        cout<<"nsap["<<i<<"]: "<<std::hex<<(int)nsap[i]<<endl;
+        cout<<"nsap["<<i<<"]: "<<std::hex<<(int)nsap[i]<<"\n";
     }
 }
 
@@ -1705,7 +1705,7 @@ TEST(SampleTest, DISABLED_u32toi32)
     test = powerLevel1;
     powerLevel2 = test;
 
-    cout<<"PowerLevel1"<<powerLevel1<<"  PowerLevel2"<<powerLevel2<<"  test"<<test<<endl;
+    cout<<"PowerLevel1"<<powerLevel1<<"  PowerLevel2"<<powerLevel2<<"  test"<<test<<"\n";
 }
 
 TEST(SampleTest, DISABLED_RhapsodyShit)
@@ -1715,7 +1715,7 @@ TEST(SampleTest, DISABLED_RhapsodyShit)
     public:
         int m_param2;
         virtual int getSize(){return sizeof(*this);}
-        virtual int execute(){cout<<"OMThread: execute"<<endl;}
+        virtual int execute(){cout<<"OMThread: execute\n";}
 
     };
     class CMessageReceiver : public OMThread
@@ -1724,20 +1724,20 @@ TEST(SampleTest, DISABLED_RhapsodyShit)
         int m_param1;
         int m_param3;
         //virtual int getSize(){return sizeof(*this);}
-        virtual int execute(){cout<<"CMessageReceiver: execute"<<endl;}
+        virtual int execute(){cout<<"CMessageReceiver: execute\n";}
     };
 
     const char* name="TCOM_TOAM_EWRP_TASK";
     printf("hello %s\n", name);
 
-    cout<<"CMessageReceiver: "<<sizeof(CMessageReceiver)<<endl;
-    cout<<"OMThread: "<<sizeof(OMThread)<<endl;
+    cout<<"CMessageReceiver: "<<sizeof(CMessageReceiver)<<"\n";
+    cout<<"OMThread: "<<sizeof(OMThread)<<"\n";
     OMThread* polyPointer = new CMessageReceiver();
-    cout<<"OMThread: "<<sizeof(*polyPointer)<<endl;
-    cout<<"OMThread getSize(): "<<polyPointer->getSize()<<endl;
+    cout<<"OMThread: "<<sizeof(*polyPointer)<<"\n";
+    cout<<"OMThread getSize(): "<<polyPointer->getSize()<<"\n";
 
     int size = polyPointer->getSize();
-    cout<<"size: "<<size<<endl;
+    cout<<"size: "<<size<<"\n";
     void* polyPointerVoid = polyPointer;
     void* ccsPointer = malloc(size);
     memcpy(ccsPointer, polyPointer, size);
@@ -1763,7 +1763,7 @@ TEST(SampleTest, FindThoseIpAddresses)
         bool isIpAddress(false);
         for (int i = 0; i < lineFromFileLength; ++i)
         {
-            //cout <<"printed:["<<lineFromFile[i]<<","<<ipState<<"]"<<endl;
+            //cout <<"printed:["<<lineFromFile[i]<<","<<ipState<<"]\n";
             if(ipState == 0)
             {
                 if(stringHelper::isNumber(lineFromFile[i]))
@@ -1854,8 +1854,8 @@ TEST(SampleTest, FindThoseIpAddresses)
         }
         if(isIpAddress)
         {
-            ipAddressesFile << lineFromFile << endl;
-            ipAddressesFile25 << lineFromFile.substr(0,25) << endl;
+            ipAddressesFile << lineFromFile << "\n";
+            ipAddressesFile25 << lineFromFile.substr(0,25) << "\n";
         }
     }
 }
