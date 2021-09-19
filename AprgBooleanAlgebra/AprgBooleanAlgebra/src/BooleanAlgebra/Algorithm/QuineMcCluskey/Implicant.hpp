@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <bitset>
+#include <numeric>
 #include <set>
 #include <sstream>
 #include <string>

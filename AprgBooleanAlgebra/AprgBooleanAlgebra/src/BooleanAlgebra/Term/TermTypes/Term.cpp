@@ -210,25 +210,25 @@ TermType Term::getTermType() const
 Constant const& Term::getConstantConstReference() const
 {
     assert(m_type==TermType::Constant);
-    return *dynamic_cast<Constant const * const>(m_baseTermDataPointer.get());
+    return *static_cast<Constant const * const>(m_baseTermDataPointer.get());
 }
 
 VariableTerm const& Term::getVariableTermConstReference() const
 {
     assert(m_type==TermType::VariableTerm);
-    return *dynamic_cast<VariableTerm const * const>(m_baseTermDataPointer.get());
+    return *static_cast<VariableTerm const * const>(m_baseTermDataPointer.get());
 }
 
 Operator const& Term::getOperatorConstReference() const
 {
     assert(m_type==TermType::Operator);
-    return *dynamic_cast<Operator const * const>(m_baseTermDataPointer.get());
+    return *static_cast<Operator const * const>(m_baseTermDataPointer.get());
 }
 
 Expression const& Term::getExpressionConstReference() const
 {
     assert((m_type==TermType::Expression));
-    return *dynamic_cast<Expression const * const>(m_baseTermDataPointer.get());
+    return *static_cast<Expression const * const>(m_baseTermDataPointer.get());
 }
 
 bool Term::getBooleanValue() const
@@ -274,28 +274,28 @@ Constant & Term::getConstantReference()
 {
     clearSimplifiedFlag();
     assert(m_type==TermType::Constant);
-    return *dynamic_cast<Constant*>(m_baseTermDataPointer.get());
+    return *static_cast<Constant*>(m_baseTermDataPointer.get());
 }
 
 VariableTerm & Term::getVariableTermReference()
 {
     clearSimplifiedFlag();
     assert(m_type==TermType::VariableTerm);
-    return *dynamic_cast<VariableTerm*>(m_baseTermDataPointer.get());
+    return *static_cast<VariableTerm*>(m_baseTermDataPointer.get());
 }
 
 Operator & Term::getOperatorReference()
 {
     clearSimplifiedFlag();
     assert(m_type==TermType::Operator);
-    return *dynamic_cast<Operator*>(m_baseTermDataPointer.get());
+    return *static_cast<Operator*>(m_baseTermDataPointer.get());
 }
 
 Expression & Term::getExpressionReference()
 {
     clearSimplifiedFlag();
     assert((m_type==TermType::Expression));
-    return *dynamic_cast<Expression*>(m_baseTermDataPointer.get());
+    return *static_cast<Expression*>(m_baseTermDataPointer.get());
 }
 
 void Term::clear()

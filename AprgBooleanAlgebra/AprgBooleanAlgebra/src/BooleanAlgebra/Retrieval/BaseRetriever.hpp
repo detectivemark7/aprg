@@ -13,7 +13,7 @@ template <typename DataType>
 class BaseRetriever
 {
 public:
-    virtual ~BaseRetriever() = default;
+    virtual ~BaseRetriever() = default; // virtual destructor because of virtual functions (vtable exists)
 
     DataType const& getSavedData() const
     {

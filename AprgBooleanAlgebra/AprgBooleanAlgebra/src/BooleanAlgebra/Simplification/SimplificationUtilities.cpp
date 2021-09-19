@@ -23,7 +23,7 @@ namespace booleanAlgebra
 namespace Simplification
 {
 
-using Minterm = unsigned long long;
+using Minterm = uint64_t;
 using Implicant = Implicant<Minterm>;
 using Implicants = Implicants<Minterm>;
 using QuineMcCluskey = QuineMcCluskey<Minterm>;

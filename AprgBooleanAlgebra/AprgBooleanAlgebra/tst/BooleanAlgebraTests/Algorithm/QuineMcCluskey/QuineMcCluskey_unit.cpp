@@ -261,7 +261,7 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
     }
 
     quineMcCluskey.fillComputationalTableWithMintermsWithZeroCommonalityCount();
-    cout << "Initial computation table: " << endl << quineMcCluskey.getComputationTableString() << endl;
+    cout << "Initial computation table: \n" << quineMcCluskey.getComputationTableString() << "\n";
     quineMcCluskey.findAllCombinations();
 
     ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
@@ -309,9 +309,9 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_LogarithmBase2ForByte)
     qm0.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     qm1.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     qm2.fillComputationalTableWithMintermsWithZeroCommonalityCount();
-    cout << "Initial computation table: " << endl << qm0.getComputationTableString() << endl;
-    cout << "Initial computation table: " << endl << qm1.getComputationTableString() << endl;
-    cout << "Initial computation table: " << endl << qm2.getComputationTableString() << endl;
+    cout << "Initial computation table: \n" << qm0.getComputationTableString() << "\n";
+    cout << "Initial computation table: \n" << qm1.getComputationTableString() << "\n";
+    cout << "Initial computation table: \n" << qm2.getComputationTableString() << "\n";
     qm0.findAllCombinations();
     qm1.findAllCombinations();
     qm2.findAllCombinations();
@@ -352,10 +352,10 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_ZeroesStartingFromMsb)
     qm1.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     qm2.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     qm3.fillComputationalTableWithMintermsWithZeroCommonalityCount();
-    cout << "Initial computation table: " << endl << qm0.getComputationTableString() << endl;
-    cout << "Initial computation table: " << endl << qm1.getComputationTableString() << endl;
-    cout << "Initial computation table: " << endl << qm2.getComputationTableString() << endl;
-    cout << "Initial computation table: " << endl << qm3.getComputationTableString() << endl;
+    cout << "Initial computation table: \n" << qm0.getComputationTableString() << "\n";
+    cout << "Initial computation table: \n" << qm1.getComputationTableString() << "\n";
+    cout << "Initial computation table: \n" << qm2.getComputationTableString() << "\n";
+    cout << "Initial computation table: \n" << qm3.getComputationTableString() << "\n";
     qm0.findAllCombinations();
     qm1.findAllCombinations();
     qm2.findAllCombinations();

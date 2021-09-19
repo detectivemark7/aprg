@@ -19,7 +19,7 @@ unsigned int getSatisfiabilityLevel(
     unsigned int result(0);
     for(SatisfiabilityTerm const& satTerm : satTerms)
     {
-        result = max(result, satTerm.size());
+        result = max(result, static_cast<unsigned int>(satTerm.size()));
     }
     return result;
 }
