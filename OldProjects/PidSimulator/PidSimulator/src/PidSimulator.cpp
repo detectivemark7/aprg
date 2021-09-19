@@ -209,22 +209,22 @@ void PidSimulator::calculateAndGenerateOutputImage()
     }
 
     updateAllMaxWithBuffer(xLeftMax, xRightMax, yBottomMax, yTopMax);
-    cout << "max list:[" << xLeftMax << ", " << xRightMax << ", " << yBottomMax << ", " << yTopMax << "]" << endl;
+    cout << "max list:[" << xLeftMax << ", " << xRightMax << ", " << yBottomMax << ", " << yTopMax << "]\n";
 
     AlbaLocalPathHandler detectedPath(PathInitialValueSource::DetectedLocalPath);
     AlbaLocalPathHandler defaultFile(detectedPath.getDirectory() + R"(Default24Bit.bmp)");
-    cout << "defaultFile:[" << defaultFile.getFullPath() << "]" << endl;
+    cout << "defaultFile:[" << defaultFile.getFullPath() << "]\n";
     if(defaultFile.isFoundInLocalSystem())
     {
         AlbaLocalPathHandler graphOutputFile(defaultFile.getDirectory() + R"(\graph.bmp)");
-        cout << "graphOutputFile:[" << graphOutputFile.getFullPath() << "]" << endl;
+        cout << "graphOutputFile:[" << graphOutputFile.getFullPath() << "]\n";
         graphOutputFile.deleteFile();
         defaultFile.copyToNewFile(graphOutputFile.getFullPath());
 
         Bitmap bitmap(graphOutputFile.getFullPath());
         BitmapConfiguration configuration(bitmap.getConfiguration());
         calculateMagnificationAndOffset(xLeftMax, xRightMax, yBottomMax, yTopMax, configuration.getBitmapWidth(), configuration.getBitmapHeight());
-        cout << "offset:[" << m_xOffsetToGraph << ", " << m_yOffsetToGraph << "] magnification:[" << m_xMagnificationToGraph << ", " << m_yMagnificationToGraph << "]" << endl;
+        cout << "offset:[" << m_xOffsetToGraph << ", " << m_yOffsetToGraph << "] magnification:[" << m_xMagnificationToGraph << ", " << m_yMagnificationToGraph << "]\n";
 
         AprgGraph graph(graphOutputFile.getFullPath(), BitmapXY(m_xOffsetToGraph, m_yOffsetToGraph), BitmapDoubleXY(m_xMagnificationToGraph, m_yMagnificationToGraph));
         graph.drawGrid(BitmapDoubleXY(m_xGridInterval, m_yGridInterval));
@@ -238,7 +238,7 @@ void PidSimulator::calculateAndGenerateOutputImage()
     }
     else
     {
-        cout << "The default bitmap file was not found. The default file location:  [" << defaultFile.getFullPath() << "]" << endl;
+        cout << "The default bitmap file was not found. The default file location:  [" << defaultFile.getFullPath() << "]\n";
     }
 }
 
