@@ -306,11 +306,11 @@ void printPoolingResult(BasebandPoolingResult const& poolingResult)
 {
     if(poolingResult.isSuccessful)
     {
-        cout << "Baseband pooling successful" << endl;
+        cout << "Baseband pooling successful\n";
     }
     else
     {
-        cout << "Baseband pooling NOT successful" << endl;
+        cout << "Baseband pooling NOT successful\n";
     }
 
     DisplayTable table;
@@ -327,7 +327,7 @@ void printPoolingResult(BasebandPoolingResult const& poolingResult)
         table.getLastRow().addCell(ss.str());
         previousNid = nidToLcgPair.first;
     }
-    cout<<table.drawOutput();
+    cout<<table;
 }
 
 TEST(AsilBasebandPoolingTest, PerformBasebandPoolingForAsilIsCorrect)
