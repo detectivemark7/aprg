@@ -11,8 +11,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    cout<<"WcdmaTools created by APRG"<<endl;
-    cout<<"APRG_CODE_VERSION: "<<APRG_CODE_VERSION<<endl;
+    cout<<"WcdmaTools created by APRG\n";
+    cout<<"APRG_CODE_VERSION: "<<APRG_CODE_VERSION<<"\n";
     QApplication a(argc, argv);
     WcdmaTools w;
     if(argc==2)
