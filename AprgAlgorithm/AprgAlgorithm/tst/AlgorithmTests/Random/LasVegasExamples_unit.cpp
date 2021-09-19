@@ -1,6 +1,6 @@
 #include <Algorithm/Graph/UndirectedGraph/UndirectedGraphWithListOfEdges.hpp>
 #include <Algorithm/Random/LasVegas.hpp>
-#include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -23,7 +23,7 @@ TEST(LasVegasTest, GraphColoringExample)
     using Edge = GraphTypes<Vertex>::Edge;
     using Graph = UndirectedGraphWithListOfEdges<Vertex>;
 
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     Graph graph;
     graph.connect(1U, 2U);
     graph.connect(1U, 3U);

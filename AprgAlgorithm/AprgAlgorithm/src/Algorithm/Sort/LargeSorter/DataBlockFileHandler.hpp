@@ -53,7 +53,7 @@ public:
 
     void add(ObjectToSort const& objectToSort)
     {
-        m_fileOptional.value()<<objectToSort<<std::endl;
+        m_fileOptional.value()<<objectToSort<<"\n";
     }
 
     void releaseFileStream()

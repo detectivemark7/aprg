@@ -17,7 +17,7 @@ public:
     using Key = std::string;
     using Keys = stringHelper::strings;
 
-    virtual ~BaseStringSymbolTable() = default;
+    virtual ~BaseStringSymbolTable() = default; // virtual destructor because of virtual functions (vtable exists)
 
     virtual bool isEmpty() const = 0; // is the symbol table empty
     virtual bool doesContain(Key const& key) const = 0; // is key exists on symbol table

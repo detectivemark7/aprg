@@ -25,6 +25,8 @@ public:
     using InitializeDataFunction = std::function<void(Vertices const&)>;
     using UpdateDataFunction = std::function<void(Vertex const&, Vertex const&)>;
 
+    ~PathSearchUsingBfs() = default; // No need for virtual destructor because this class is not destroyed polymorphically.
+
     PathSearchUsingBfs(BaseGraphWithVertex const& graph, Vertex const& startVertex)
         : BaseClass(graph)
         , b_graph(BaseClass::m_graph)
@@ -62,9 +64,6 @@ public:
         reinitializeStartingFrom(startVertices);
     }
 
-    virtual ~PathSearchUsingBfs() = default;
-
-
     Path getShortestPathTo(Vertex const& endVertex) const
     {
         return this->getPathTo(endVertex);
@@ -77,6 +76,7 @@ public:
         m_initializeDataFunction(startVertices);
         traverseUsingBfs(startVertices);
     }
+
 
 private:
     using BaseClass::clear;

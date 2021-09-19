@@ -19,7 +19,7 @@ public:
         , b_smallerSymbolTables(BaseSeparateChainingHash::m_smallerSymbolTables)
     {}
 
-    virtual ~BaseSymbolTableWithBaseSeparateChainingHash() = default;
+    ~BaseSymbolTableWithBaseSeparateChainingHash() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     Value get(Key const& key) const override
     {

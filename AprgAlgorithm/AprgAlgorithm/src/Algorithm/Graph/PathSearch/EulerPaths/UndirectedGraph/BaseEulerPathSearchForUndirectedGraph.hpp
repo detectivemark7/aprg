@@ -25,7 +25,7 @@ public:
         : m_graph(graph)
     {}
 
-    virtual ~BaseEulerPathSearchForUndirectedGraph() = default;
+    virtual ~BaseEulerPathSearchForUndirectedGraph() = default; // virtual destructor because of virtual functions (vtable exists)
 
     bool hasEulerCycle() const
     {

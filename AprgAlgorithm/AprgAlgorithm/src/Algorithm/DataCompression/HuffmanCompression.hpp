@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Common/Container/AlbaFakeCopyable.hpp>
 #include <Common/Stream/AlbaStreamBitReader.hpp>
 #include <Common/Stream/AlbaStreamBitWriter.hpp>
 
@@ -76,7 +75,6 @@ public :
         TrieNodeUniquePointer left;
         TrieNodeUniquePointer right;
     };
-    using TrieNodeArrayEntry=AlbaFakeCopyable<TrieNodeUniquePointer>;
 
     HuffmanCompression() = default;
 
@@ -226,13 +224,13 @@ private:
         // This is quite different from the original huffman algorithm
         // Here, frequency is not placed on the trie because its not really needed after building the trie.
         std::priority_queue<CharacterFrequency, std::deque<CharacterFrequency>, std::greater<CharacterFrequency>> frequenciesInMinimumOrder; // min priority queue
-        std::array<TrieNodeArrayEntry, RADIX> characterNode{};
+        std::array<TrieNodeUniquePointer, RADIX> characterNode{};
         for(Count c=0; c < RADIX; c++)
         {
             if(frequency.at(c) > 0)
             {
                 frequenciesInMinimumOrder.emplace(static_cast<char>(c), frequency.at(c), false); // This PQ is used to prioritize low frequency characters first
-                characterNode[c].getObjectReference() = std::make_unique<TrieNode>(static_cast<char>(c), nullptr, nullptr); // These character nodes are used to build trie later on
+                characterNode[c] = std::make_unique<TrieNode>(static_cast<char>(c), nullptr, nullptr); // These character nodes are used to build trie later on
             }
         }
 
@@ -244,12 +242,12 @@ private:
             CharacterFrequency second(frequenciesInMinimumOrder.top());
             frequenciesInMinimumOrder.pop();
             frequenciesInMinimumOrder.emplace(first.character, first.frequency+second.frequency, true); // use first character to keep track
-            TrieNodeUniquePointer firstNode(std::move(characterNode[first.character].getObjectReference()));
-            TrieNodeUniquePointer secondNode(std::move(characterNode[second.character].getObjectReference()));
-            characterNode[first.character].getObjectReference() = std::make_unique<TrieNode>('\0', std::move(firstNode), std::move(secondNode)); // only leafs have characters
+            TrieNodeUniquePointer firstNode(std::move(characterNode[first.character]));
+            TrieNodeUniquePointer secondNode(std::move(characterNode[second.character]));
+            characterNode[first.character] = std::make_unique<TrieNode>('\0', std::move(firstNode), std::move(secondNode)); // only leafs have characters
         }
         CharacterFrequency last(frequenciesInMinimumOrder.top());
-        return std::move(characterNode[last.character].getObjectReference());
+        return std::move(characterNode[last.character]);
     }
 
     HuffmanCodeTable buildHuffmanCodeTableFromTrie(TrieNodeUniquePointer const& root)

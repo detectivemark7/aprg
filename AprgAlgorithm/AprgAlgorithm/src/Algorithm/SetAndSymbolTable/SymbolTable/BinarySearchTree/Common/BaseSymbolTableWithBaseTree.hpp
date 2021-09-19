@@ -20,7 +20,7 @@ public:
         : b_root(BaseTree::m_root)
     {}
 
-    virtual ~BaseSymbolTableWithBaseTree() = default;
+    virtual ~BaseSymbolTableWithBaseTree() = default; // virtual destructor because of virtual functions (vtable exists)
 
     Value get(Key const& key) const override // overrides in BaseSymbolTable
     {

@@ -19,7 +19,7 @@ public:
         : b_root(BaseTree::m_root)
     {}
 
-    virtual ~BaseSetWithBaseTree() = default;
+    virtual ~BaseSetWithBaseTree() = default; // virtual destructor because of virtual functions (vtable exists)
 
     void put(Key const& key) override // overrides in BaseSet
     {

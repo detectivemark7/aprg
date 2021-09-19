@@ -20,7 +20,7 @@ public:
         , m_numberOfComponentIds(0U)
     {}
 
-    virtual ~BaseConnectedComponentsWithVertexToComponentIdMap() = default;
+    ~BaseConnectedComponentsWithVertexToComponentIdMap() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     bool isConnected(Vertex const& vertex1, Vertex const& vertex2) const override
     {

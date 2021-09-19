@@ -10,7 +10,7 @@ template <typename Object>
 class BaseUnionFind
 {
 public:
-    virtual ~BaseUnionFind() = default;
+    virtual ~BaseUnionFind() = default; // virtual destructor because of virtual functions (vtable exists)
 
     virtual bool isConnected(Object const& object1, Object const& object2) const = 0;
     virtual Object getRoot(Object const& object) const = 0; // this is basically an identifier for the connected components
@@ -22,7 +22,8 @@ public:
 }
 
 // This can be called as a disjoint-set data structure.
-// A disjoint-set data structure is a data structure that keeps track of a set of elements partitioned into a number of disjoint (non-overlapping) subsets.
+// A disjoint-set data structure is a data structure that keeps track of a set of elements partitioned
+// into a number of disjoint (non-overlapping) subsets.
 // A union-find algorithm is an algorithm that performs two useful operations on such a data structure:
 // -> Find: Determine which subset a particular element is in. This can be used for determining if two elements are in the same subset.
 // -> Union: Join two subsets into a single subset.

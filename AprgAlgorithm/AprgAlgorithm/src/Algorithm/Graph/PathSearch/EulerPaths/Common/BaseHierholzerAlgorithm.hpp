@@ -22,7 +22,7 @@ public:
         , b_graph(BaseClass::m_graph)
     {}
 
-    virtual ~BaseHierholzerAlgorithm() = default;
+    virtual ~BaseHierholzerAlgorithm() = default; // virtual destructor because of virtual functions (vtable exists)
 
     Path getEulerCycle() const override
     {

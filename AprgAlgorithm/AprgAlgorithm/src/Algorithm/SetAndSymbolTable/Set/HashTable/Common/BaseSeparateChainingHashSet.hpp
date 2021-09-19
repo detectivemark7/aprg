@@ -20,7 +20,7 @@ class BaseSeparateChainingHashSet
         OrderedArraySet<Key>, UnorderedLinkedListSet<Key>, BaseSet<Key>>>
 {
 public:
-    virtual ~BaseSeparateChainingHashSet() = default;
+    ~BaseSeparateChainingHashSet() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 };
 
 }

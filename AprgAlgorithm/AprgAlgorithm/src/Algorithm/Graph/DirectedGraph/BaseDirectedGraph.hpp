@@ -14,7 +14,7 @@ class BaseDirectedGraph : public BaseGraph<Vertex>
 public:
     using Edges = typename GraphTypes<Vertex>::Edges;
 
-    virtual ~BaseDirectedGraph() = default;
+    ~BaseDirectedGraph() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     GraphDirectionType getGraphDirectionType() const
     {

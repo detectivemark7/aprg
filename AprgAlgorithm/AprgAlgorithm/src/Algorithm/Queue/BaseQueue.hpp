@@ -10,7 +10,7 @@ template <typename Object>
 class BaseQueue
 {
 public:
-    virtual ~BaseQueue() = default;
+    virtual ~BaseQueue() = default; // virtual destructor because of virtual functions (vtable exists)
 
     virtual bool isEmpty() const = 0;
     virtual unsigned int getSize() const = 0;

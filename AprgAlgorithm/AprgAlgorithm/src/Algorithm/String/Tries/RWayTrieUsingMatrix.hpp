@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Algorithm/String/Tries/BaseStringSymbolTable.hpp>
-#include <Common/Container/AlbaFakeCopyable.hpp>
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
 
 #include <set>
@@ -29,8 +28,7 @@ public:
         ValueUniquePointer valueUniquePointer;
     };
     using NodePointer = std::unique_ptr<Node>;
-    using MatrixEntry = AlbaFakeCopyable<NodePointer>;
-    using NodePointerMatrix = matrix::AlbaMatrix<MatrixEntry>;
+    using NodePointerMatrix = matrix::AlbaMatrix<NodePointer>;
     using Coordinate = std::pair<unsigned int, NodeId>;
     using Coordinates = std::vector<Coordinate>;
 
@@ -95,7 +93,7 @@ public:
         Keys result;
         Coordinate coordinateOfPrefix(getCoordinate(0U, prefix, 0U));
         NodePointer const& nodePointerOfPrefix(
-                    m_nodePointerMatrix.getEntryConstReference(coordinateOfPrefix.first, coordinateOfPrefix.second).getObject());
+                    m_nodePointerMatrix.getEntryConstReference(coordinateOfPrefix.first, coordinateOfPrefix.second));
         if(nodePointerOfPrefix)
         {
             ValueUniquePointer const& valueUniquePointer(nodePointerOfPrefix->valueUniquePointer);
@@ -171,7 +169,7 @@ private:
         bool result(true);
         for(unsigned int c=0; result && c<RADIX; c++)
         {
-            NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId).getObject());
+            NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId));
             result = result && !nodePointer;
         }
         return result;
@@ -207,7 +205,7 @@ private:
             bool isNextNodeFound(false);
             if(isValidNodeId(currentNodeId))
             {
-                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId).getObject());
+                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId));
                 if(nodePointer)
                 {
                     isNextNodeFound = true;
@@ -239,7 +237,7 @@ private:
             bool isNextNodeFound(false);
             if(isValidNodeId(currentNodeId))
             {
-                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId).getObject());
+                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId));
                 if(nodePointer)
                 {
                     isNextNodeFound = true;
@@ -272,7 +270,7 @@ private:
             bool isNextNodeFound(false);
             if(isValidNodeId(currentNodeId))
             {
-                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId).getObject());
+                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, currentNodeId));
                 if(nodePointer)
                 {
                     isNextNodeFound = true;
@@ -301,7 +299,7 @@ private:
         {
             for(unsigned int c=0; c<RADIX; c++)
             {
-                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId).getObject());
+                NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId));
                 if(nodePointer)
                 {
                     Key newPrefix = previousPrefix + static_cast<char>(c);
@@ -332,7 +330,7 @@ private:
                 {
                     if('.' == charToMatch || charToMatch == static_cast<char>(c))
                     {
-                        NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId).getObject());
+                        NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId));
                         if(nodePointer)
                         {
                             Key newPrefix = previousPrefix + static_cast<char>(c);
@@ -365,7 +363,7 @@ private:
         for(unsigned int keyIndex=startingIndex; keyIndex<key.length(); keyIndex++)
         {
             char c(key.at(keyIndex));
-            NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(c, currentNodeId).getObjectReference());
+            NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(c, currentNodeId));
             if(!nodePointer)
             {
                 nodePointer = std::make_unique<Node>();
@@ -407,7 +405,7 @@ private:
             bool isNextNodeFound(false);
             if(isValidNodeId(currentNodeId))
             {
-                NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(c, currentNodeId).getObjectReference());
+                NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(c, currentNodeId));
                 traversedCoordinates.emplace_back(Coordinate{c, currentNodeId});
                 if(nodePointer)
                 {
@@ -442,7 +440,7 @@ private:
                 Coordinate const& coordinate(*it);
                 if(isPreviousNodeEmpty)
                 {
-                    NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(coordinate.first, coordinate.second).getObjectReference());
+                    NodePointer & nodePointer(m_nodePointerMatrix.getEntryReference(coordinate.first, coordinate.second));
                     if(nodePointer)
                     {
                         nodePointer->nextNodeId = INVALID_NODE_ID;

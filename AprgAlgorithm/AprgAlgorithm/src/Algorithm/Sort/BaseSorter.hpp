@@ -10,7 +10,7 @@ template <typename Values>
 class BaseSorter
 {
 public:
-    virtual ~BaseSorter() = default;
+    virtual ~BaseSorter() = default; // virtual destructor because of virtual functions (vtable exists)
 
     virtual void sort(Values & valuesToSort) const = 0;
 };

@@ -19,7 +19,7 @@ public:
         , b_smallerSymbolTables(BaseSeparateChainingHash::m_smallerSymbolTables)
     {}
 
-    virtual ~BaseSetWithBaseSeparateChainingHash() = default;
+    ~BaseSetWithBaseSeparateChainingHash() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     void put(Key const& key) override
     {

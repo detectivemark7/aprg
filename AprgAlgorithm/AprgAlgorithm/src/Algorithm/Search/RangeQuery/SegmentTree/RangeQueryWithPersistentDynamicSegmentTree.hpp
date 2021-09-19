@@ -3,7 +3,6 @@
 #include <Algorithm/Search/Common/DynamicSegmentTreeNode.hpp>
 #include <Algorithm/Search/Common/SegmentTreeUtilities.hpp>
 #include <Algorithm/Utilities/MidpointOfIndexes.hpp>
-#include <Common/Container/AlbaFakeCopyable.hpp>
 
 #include <functional>
 #include <list>
@@ -37,7 +36,7 @@ public:
     using Utilities = SegmentTreeUtilities<Index>;
     using Node = PersistentDynamicSegmentTreeNode<Value>;
     using NodePointer = std::shared_ptr<Node>;
-    using NodeRoot = AlbaFakeCopyable<NodePointer>;
+    using NodeRoot = NodePointer;
     using NodeRoots = std::list<NodeRoot>;
     using StepCount = unsigned int;
 
@@ -57,7 +56,7 @@ public:
         Value result{};
         if(start<=end && start<m_numberOfValues && end<m_numberOfValues)
         {
-            result = getValueOnIntervalFromTopToBottom(start, end, m_roots.back().getObject(), 0, m_maxChildrenIndex);
+            result = getValueOnIntervalFromTopToBottom(start, end, m_roots.back(), 0, m_maxChildrenIndex);
         }
         return result;
     }
@@ -68,11 +67,9 @@ public:
         Value result{};
         if(start<=end && start<m_numberOfValues && end<m_numberOfValues && numberOfPreviousSteps<m_roots.size())
         {
-            StepCount stepCount(0U);
             auto it=m_roots.crbegin();
-            for(; it!=m_roots.crend() && stepCount<numberOfPreviousSteps; it++, stepCount++)
-            {}
-            result = getValueOnIntervalFromTopToBottom(start, end, it->getObject(), 0, m_maxChildrenIndex);
+            std::advance(it, numberOfPreviousSteps);
+            result = getValueOnIntervalFromTopToBottom(start, end, *it, 0, m_maxChildrenIndex);
         }
         return result;
     }
@@ -85,7 +82,7 @@ public:
             NodeRoot & previousTreeRoot(m_roots.back());
             m_roots.emplace_back();
             changeValueOnIndexFromTopToBottom(
-                        index, newValue, previousTreeRoot.getObjectReference(), m_roots.back().getObjectReference(), 0, m_maxChildrenIndex);
+                        index, newValue, previousTreeRoot, m_roots.back(), 0, m_maxChildrenIndex);
         }
     }
 
@@ -152,7 +149,7 @@ protected:
         {
             m_maxChildrenIndex = Utilities::getMinimumNumberOfParents(valuesToCheck.size());
             m_roots.emplace_back();
-            setValuesFromTopToBottom(valuesToCheck, m_roots.back().getObjectReference(), 0, m_maxChildrenIndex);
+            setValuesFromTopToBottom(valuesToCheck, m_roots.back(), 0, m_maxChildrenIndex);
         }
     }
 

@@ -19,8 +19,8 @@ TEST(MonteCarloSimulationOfPerculationTest, DISABLED_DimensionsByEightExample)
     simulation.addOpenSitesUntilItPercolates();
 
     EXPECT_LT(0.0, simulation.getPercolationProbability());
-    cout << simulation.getSitesToDisplay() << endl;
-    cout << "Percolation probability: " << simulation.getPercolationProbability() << endl;
+    cout << simulation.getSitesToDisplay() << "\n";
+    cout << "Percolation probability: " << simulation.getPercolationProbability() << "\n";
 }
 
 TEST(MonteCarloSimulationOfPerculationTest, DISABLED_DimensionsByTwentyExample)
@@ -30,8 +30,8 @@ TEST(MonteCarloSimulationOfPerculationTest, DISABLED_DimensionsByTwentyExample)
     simulation.addOpenSitesUntilItPercolates();
 
     EXPECT_LT(0.0, simulation.getPercolationProbability());
-    cout << simulation.getSitesToDisplay() << endl;
-    cout << "Percolation probability: " << simulation.getPercolationProbability() << endl;
+    cout << simulation.getSitesToDisplay() << "\n";
+    cout << "Percolation probability: " << simulation.getPercolationProbability() << "\n";
 }
 
 TEST(MonteCarloSimulationOfPerculationTest, DISABLED_DimensionsByFiftyExample)
@@ -41,8 +41,8 @@ TEST(MonteCarloSimulationOfPerculationTest, DISABLED_DimensionsByFiftyExample)
     simulation.addOpenSitesUntilItPercolates();
 
     EXPECT_LT(0.0, simulation.getPercolationProbability());
-    cout << simulation.getSitesToDisplay() << endl;
-    cout << "Percolation probability: " << simulation.getPercolationProbability() << endl;
+    cout << simulation.getSitesToDisplay() << "\n";
+    cout << "Percolation probability: " << simulation.getPercolationProbability() << "\n";
 }
 
 }

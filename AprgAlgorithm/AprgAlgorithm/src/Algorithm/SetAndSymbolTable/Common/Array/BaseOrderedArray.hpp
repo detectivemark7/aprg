@@ -17,11 +17,11 @@ class BaseOrderedArray : public BaseDataStructure
 public:
     using Keys = std::vector<Key>;
 
-    virtual ~BaseOrderedArray() = default;
-
     BaseOrderedArray()
         : m_size(0U)
     {}
+
+    ~BaseOrderedArray() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     bool isEmpty() const override
     {

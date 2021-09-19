@@ -17,7 +17,7 @@ class BaseLinearProbingHashSet
         : public BaseSetWithBaseLinearProbingHash<BaseLinearProbingHash<Key, HashTableEntry<Key>, HashFunction, OrderedArraySet<Key>, BaseSet<Key>>>
 {
 public:
-    virtual ~BaseLinearProbingHashSet() = default;
+    ~BaseLinearProbingHashSet() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 };
 
 }

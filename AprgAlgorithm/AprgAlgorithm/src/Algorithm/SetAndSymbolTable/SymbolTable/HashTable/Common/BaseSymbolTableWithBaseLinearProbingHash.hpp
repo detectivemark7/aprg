@@ -20,7 +20,7 @@ public:
         , b_entryPointers(BaseLinearProbingHash::m_entryPointers)
     {}
 
-    virtual ~BaseSymbolTableWithBaseLinearProbingHash() = default;
+    ~BaseSymbolTableWithBaseLinearProbingHash() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     Value get(Key const& key) const override
     {

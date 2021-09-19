@@ -1,6 +1,6 @@
 #include <Algorithm/Random/MonteCarlo.hpp>
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
-#include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -20,7 +20,7 @@ TEST(MonteCarloTest, VerifyingMatrixExample)
 
     using MatrixForTest = matrix::AlbaMatrix<unsigned int>;
 
-    AlbaRandomizer randomizer;
+    AlbaSimpleRandomizer randomizer;
     MatrixForTest a(3, 2,
     {1, 2, 3,
      4, 5, 6});

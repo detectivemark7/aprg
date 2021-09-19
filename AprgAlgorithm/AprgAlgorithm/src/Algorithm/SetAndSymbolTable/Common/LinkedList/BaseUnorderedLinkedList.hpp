@@ -27,7 +27,7 @@ public:
         , m_first(nullptr)
     {}
 
-    virtual ~BaseUnorderedLinkedList() = default;
+    ~BaseUnorderedLinkedList() override = default; // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     bool isEmpty() const override
     {

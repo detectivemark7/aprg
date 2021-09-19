@@ -32,7 +32,7 @@ public:
         , m_augmentingPaths{}
     {}
 
-    virtual ~BaseFordFulkerson() = default;
+    virtual ~BaseFordFulkerson() = default; // virtual destructor because of virtual functions (vtable exists)
 
     FlowDataType getMaxFlowValue() const
     {

@@ -31,7 +31,7 @@ public:
         initialize(INITIAL_HASH_TABLE_SIZE);
     }
 
-    virtual ~BaseLinearProbingHash()
+    virtual ~BaseLinearProbingHash() // virtual destructor because of virtual functions (vtable exists)
     {
         deleteAllEntries();
     }

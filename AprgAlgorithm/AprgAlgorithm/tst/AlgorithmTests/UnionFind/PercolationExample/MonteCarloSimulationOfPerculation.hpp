@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Algorithm/UnionFind/WeightedQuickUnionWithArray.hpp>
-#include <Common/Randomizer/AlbaRandomizer.hpp>
+#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
@@ -169,7 +169,7 @@ private:
     std::array<bool, getDimensionsSquared()> m_sites;
     WeightedQuickUnionWithArray<unsigned int, getDimensionsSquared()+2> m_unionFindOfIndexes; //+2 because of virtual top site and bottom site
     unsigned int m_numberOfOpenSites;
-    AlbaRandomizer m_randomizer;
+    AlbaSimpleRandomizer m_randomizer;
 };
 
 }
