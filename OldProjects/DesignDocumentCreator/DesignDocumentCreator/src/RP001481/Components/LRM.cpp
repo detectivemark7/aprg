@@ -691,7 +691,7 @@ void LRM::handleMessageEvent(GenericMessage const& genericMessage)
         handleLrmConfigurationData(genericMessage);
         break;
     default:
-        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<endl;
+        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<"\n";
         break;
     }
 }
@@ -701,10 +701,10 @@ void LRM::handleTimerEvent(Timer const& timer)
     switch(timer.getType())
     {
     //case TimerType::Empty:
-    //    cout<<"Handle Timer, Empty: "<<endl;
+    //    cout<<"Handle Timer, Empty: \n";
     //    break;
     default:
-        cout<<"No handler for timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<". Please create one!"<<endl;
+        cout<<"No handler for timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<". Please create one!\n";
         break;
     }
 }
@@ -714,10 +714,10 @@ void LRM::handleOtherEvent(OtherEvent const& otherEvent)
     switch(otherEvent.getType())
     {
     //case TimerType::Empty:
-    //    cout<<"Handle OtherEvent, Empty: "<<endl;
+    //    cout<<"Handle OtherEvent, Empty: \n";
     //    break;
     default:
-        cout<<"No handler for otherEventType: "<<(int)otherEvent.getType()<<". Please create one!"<<endl;
+        cout<<"No handler for otherEventType: "<<(int)otherEvent.getType()<<". Please create one!\n";
         break;
     }
 }

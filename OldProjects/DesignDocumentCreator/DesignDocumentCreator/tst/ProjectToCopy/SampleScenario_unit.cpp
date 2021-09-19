@@ -16,7 +16,7 @@ using namespace StringHelpers;
 TEST_F(ModuleTest, SampleScenario)
 {
     UmlLogger& umlLogger(getUmlLogger());
-    Component1& component1(*dynamic_cast<Component1*>(getComponentAndActivateAsParticipant(ComponentName::Component1, "COMPONENT1")));
+    Component1& component1(*static_cast<Component1*>(getComponentAndActivateAsParticipant(ComponentName::Component1, "COMPONENT1")));
 
     umlLogger.logNoteOnComponent(ComponentName::Component1, "Component1 note starts");
     umlLogger.logNoteOnComponents(ComponentNames{ComponentName::Component1, ComponentName::Component1}, "Component1 note starts");

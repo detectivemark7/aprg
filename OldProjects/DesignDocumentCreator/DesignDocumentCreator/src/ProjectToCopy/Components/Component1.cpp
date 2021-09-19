@@ -17,7 +17,7 @@ Component1::Component1(ComponentName const componentName)
 
 void Component1::handleMessage1(GenericMessage const& genericMessage)
 {
-    cout<<"handleMessage1()"<<endl;
+    cout<<"handleMessage1()\n";
     Environment & environment(Environment::getInstance());
 
     SpecificStaticMessage<MessageName::MESSAGE_1> message(convertGenericToSpecificStatic<MessageName::MESSAGE_1>(genericMessage));
@@ -35,7 +35,7 @@ void Component1::handleMessageEvent(GenericMessage const& genericMessage)
         handleMessage1(genericMessage);
         break;
     default:
-        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<endl;
+        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<"\n";
         break;
     }
 }
@@ -45,10 +45,10 @@ void Component1::handleTimerEvent(Timer const& timer)
     switch(timer.getType())
     {
     //case TimerType::Empty:
-    //    cout<<"Handle Timer, Empty: "<<endl;
+    //    cout<<"Handle Timer, Empty: \n";
     //    break;
     default:
-        cout<<"No handler for timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<". Please create one!"<<endl;
+        cout<<"No handler for timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<". Please create one!\n";
         break;
     }
 }
@@ -58,10 +58,10 @@ void Component1::handleOtherEvent(OtherEvent const& otherEvent)
     switch(otherEvent.getType())
     {
     //case TimerType::Empty:
-    //    cout<<"Handle OtherEvent, Empty: "<<endl;
+    //    cout<<"Handle OtherEvent, Empty: \n";
     //    break;
     default:
-        cout<<"No handler for otherEventType: "<<(int)otherEvent.getType()<<". Please create one!"<<endl;
+        cout<<"No handler for otherEventType: "<<(int)otherEvent.getType()<<". Please create one!\n";
         break;
     }
 }

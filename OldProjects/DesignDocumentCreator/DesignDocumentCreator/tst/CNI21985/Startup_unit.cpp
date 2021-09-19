@@ -21,11 +21,11 @@ using namespace StringHelpers;
 TEST_F(ModuleTest, TupcStartup)
 {
     UmlLogger& umlLogger(getUmlLogger());
-    Oam& oam(*dynamic_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
-    TupcIlm& tupcIlm(*dynamic_cast<TupcIlm*>(getComponentAndActivateAsParticipant(ComponentName::TupcIlm, "TUPC/ILM")));
-    TupcLom& tupcLom(*dynamic_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
-    TupcCm& tupcCm(*dynamic_cast<TupcCm*>(getComponentAndActivateAsParticipant(ComponentName::TupcCm, "TUPC/CM")));
-    TupcTbm& tupcTbm(*dynamic_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
+    Oam& oam(*static_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
+    TupcIlm& tupcIlm(*static_cast<TupcIlm*>(getComponentAndActivateAsParticipant(ComponentName::TupcIlm, "TUPC/ILM")));
+    TupcLom& tupcLom(*static_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
+    TupcCm& tupcCm(*static_cast<TupcCm*>(getComponentAndActivateAsParticipant(ComponentName::TupcCm, "TUPC/CM")));
+    TupcTbm& tupcTbm(*static_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
 
     umlLogger.logNoteOnComponents(ComponentNames{ComponentName::TupcIlm, ComponentName::TupcTbm}, "TUPCexe starts");
 
@@ -50,10 +50,10 @@ TEST_F(ModuleTest, TupcStartup)
 TEST_F(ModuleTest, TupcReceivesTcomDeploymentFromTcomDuringLinkStateUp)
 {
     UmlLogger& umlLogger(getUmlLogger());
-    Oam& oam(*dynamic_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
-    TcomToam& tcomToam(*dynamic_cast<TcomToam*>(getComponentAndActivateAsParticipant(ComponentName::TcomToam, "TCOM/TOAM")));
-    TupcLom& tupcLom(*dynamic_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
-    TupcTbm& tupcTbm(*dynamic_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
+    Oam& oam(*static_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
+    TcomToam& tcomToam(*static_cast<TcomToam*>(getComponentAndActivateAsParticipant(ComponentName::TcomToam, "TCOM/TOAM")));
+    TupcLom& tupcLom(*static_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
+    TupcTbm& tupcTbm(*static_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
 
     sendMessage(ComponentName::Oam, ComponentName::TcomToam, createLinkStatesMsg());
     tcomToam.handleOneEvent();
@@ -70,10 +70,10 @@ TEST_F(ModuleTest, TupcReceivesTcomDeploymentFromTcomDuringLinkStateUp)
 TEST_F(ModuleTest, TupcReceivesTcomDeploymentFromTcomDuringHwAvailableOrAddition)
 {
     UmlLogger& umlLogger(getUmlLogger());
-    Oam& oam(*dynamic_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
-    TcomToam& tcomToam(*dynamic_cast<TcomToam*>(getComponentAndActivateAsParticipant(ComponentName::TcomToam, "TCOM/TOAM")));
-    TupcLom& tupcLom(*dynamic_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
-    TupcTbm& tupcTbm(*dynamic_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
+    Oam& oam(*static_cast<Oam*>(getComponentAndActivateAsParticipant(ComponentName::Oam, "OAM")));
+    TcomToam& tcomToam(*static_cast<TcomToam*>(getComponentAndActivateAsParticipant(ComponentName::TcomToam, "TCOM/TOAM")));
+    TupcLom& tupcLom(*static_cast<TupcLom*>(getComponentAndActivateAsParticipant(ComponentName::TupcLom, "TUPC/LOM")));
+    TupcTbm& tupcTbm(*static_cast<TupcTbm*>(getComponentAndActivateAsParticipant(ComponentName::TupcTbm, "TUPC/TBM")));
 
     sendMessage(ComponentName::Oam, ComponentName::TcomToam, createTcomHwConfigurationChangeMsg());
     tcomToam.handleOneEvent();

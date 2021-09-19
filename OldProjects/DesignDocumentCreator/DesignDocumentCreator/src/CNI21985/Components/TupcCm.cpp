@@ -148,13 +148,13 @@ void TupcCm::handleMessageEvent(GenericMessage const& genericMessage)
         handleCmBearersModifyReqMsg(genericMessage);
         break;
     default:
-        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<endl;
+        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<"\n";
     }
 }
 
 void TupcCm::handleTimerEvent(Timer const& timer)
 {
-    cout<<"Handle Timer, timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<endl;
+    cout<<"Handle Timer, timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<"\n";
 }
 
 void TupcCm::handleOtherEvent(OtherEvent const& otherEvent)
@@ -168,7 +168,7 @@ void TupcCm::handleOtherEvent(OtherEvent const& otherEvent)
        handleTupcCmStartup();
        break;
    default:
-       cout<<"No handler for handleOtherEvent "<<endl;
+       cout<<"No handler for handleOtherEvent \n";
        break;
    }
 }

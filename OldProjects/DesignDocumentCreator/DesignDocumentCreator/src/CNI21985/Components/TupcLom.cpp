@@ -80,14 +80,14 @@ void TupcLom::handleMessageEvent(GenericMessage const& genericMessage)
         handleTcomDeploymentMessage(genericMessage);
         break;
     default:
-        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<endl;
+        cout<<"No handler for messageName: "<<genericMessage.getMessageNameInString()<<" in component: "<<getComponentNameInString()<<"\n";
         break;
     }
 }
 
 void TupcLom::handleTimerEvent(Timer const& timer)
 {
-    cout<<"Handle Timer, timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<endl;
+    cout<<"Handle Timer, timerType: "<<convertToString(timer.getType())<<" timerId:"<<(int)timer.getId()<<"\n";
 }
 
 void TupcLom::handleOtherEvent(OtherEvent const& otherEvent)
@@ -98,7 +98,7 @@ void TupcLom::handleOtherEvent(OtherEvent const& otherEvent)
        handleStartup();
        break;
    default:
-       cout<<"No handler for handleOtherEvent "<<endl;
+       cout<<"No handler for handleOtherEvent \n";
        break;
    }
 }
