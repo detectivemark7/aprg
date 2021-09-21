@@ -155,6 +155,7 @@ Modeling::ValidationResult Modeling::validate()
     unsigned int dataHeight = m_validationDataForY.getNumberOfRows();
     unsigned int dataWidthForX = m_validationDataForX.getNumberOfColumns();
     unsigned int index=0;
+
     for(unsigned int j=0; j<dataHeight; j++)
     {
         double yPredicted=0;
@@ -299,7 +300,9 @@ void Modeling::calculateCoefficientsUsingLeastSquares()
     }
 
     gsl_multifit_linear_workspace *work = gsl_multifit_linear_alloc(dataHeight, dataWidth);
-    gsl_multifit_linear(xModelingData, yModelingData, calculatedCoefficients, calculatedCovariance, &chisq, work);
+    auto multifitError =  gsl_multifit_linear(xModelingData, yModelingData, calculatedCoefficients, calculatedCovariance, &chisq, work);
+
+    cout << "Error status is [" << multifitError << "] which means: [" << gsl_strerror(multifitError) << "]\n";
 
     m_coefficients.clearAndResize(dataWidth, 1);
     for(unsigned int i=0; i<dataWidth; i++)
