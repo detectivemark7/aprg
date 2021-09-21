@@ -27,7 +27,7 @@ TEST(AlbaLocalTimerHelperTest, DISABLED_SleepUntilWorks) // this is unstable bec
     sleepUntil(inputTime);
 
     timer.stopTimer();
-    EXPECT_EQ(4321U, timer.getElapsedTimeInMilliseconds());
+    EXPECT_EQ(0U, timer.getElapsedTimeInMilliseconds());
 }
 
 TEST(AlbaLocalTimerHelperTest, DISABLED_ConvertSystemTimeToAlbaDateTimeWorks) // this is unstable because time varies
