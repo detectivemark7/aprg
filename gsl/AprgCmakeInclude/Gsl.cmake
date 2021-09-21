@@ -4,7 +4,7 @@ set(GSL_DIR ${APRG_DIR}/gsl/)
 if(WIN32)
     #Include GSL files and directories
     set(GSL_INCLUDE_DIRECTORIES
-        ${GSL_DIR}/include/
+        ${GSL_DIR}/include/gsl2.7/
     )
 
     include_directories(${GSL_INCLUDE_DIRECTORIES})
