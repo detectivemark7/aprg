@@ -87,7 +87,7 @@ unsigned int TermsWithAssociation::getSize() const
 
 BaseTerm const& TermsWithAssociation::getFirstTermConstReference() const
 {
-    return getBaseTermConstReferenceFromSharedPointer(m_termsWithDetails.front().baseTermSharedPointer);
+    return getBaseTermConstReferenceFromUniquePointer(m_termsWithDetails.front().baseTermPointer);
 }
 
 TermAssociationType TermsWithAssociation::getFirstAssociationType() const
@@ -115,7 +115,7 @@ void TermsWithAssociation::sort(
 {
     for(TermWithDetails & termWithDetails : m_termsWithDetails)
     {
-        Term & term(getTermReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer));
+        Term & term(getTermReferenceFromUniquePointer(termWithDetails.baseTermPointer));
         term.sort();
     }
     if(dontSortFirstItem)
@@ -133,7 +133,7 @@ void TermsWithAssociation::sort(
 
 void TermsWithAssociation::putTermWithDetails(TermWithDetails const& termWithDetails)
 {
-    m_termsWithDetails.emplace_back(getBaseTermConstReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer), termWithDetails.association);
+    m_termsWithDetails.emplace_back(getBaseTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer), termWithDetails.association);
 }
 
 void TermsWithAssociation::putTermsWithDetails(initializer_list<TermWithDetails> const& termsWithDetails)

@@ -14,26 +14,26 @@ namespace algebra
 TermWithDetails::TermWithDetails(
         BaseTerm const& baseTerm,
         TermAssociationType const associationParameter)
-    : baseTermSharedPointer(copyAndCreateNewTermAndReturnSharedPointer(getTermConstReferenceFromBaseTerm(baseTerm)))
+    : baseTermPointer(createAUniquePointerFromTerm(getTermConstReferenceFromBaseTerm(baseTerm)))
     , association(associationParameter)
 {}
 
 TermWithDetails::TermWithDetails(TermWithDetails const& termWithDetails)
-    : baseTermSharedPointer(createNewTermAndReturnSharedPointer(termWithDetails.baseTermSharedPointer))
+    : baseTermPointer(createAUniquePointerFromTerm(getTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer)))
     , association(termWithDetails.association)
 {}
 
 TermWithDetails & TermWithDetails::operator=(TermWithDetails const& termWithDetails)
 {
-    baseTermSharedPointer = createNewTermAndReturnSharedPointer(termWithDetails.baseTermSharedPointer);
+    baseTermPointer = createAUniquePointerFromTerm(getTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer));
     association = termWithDetails.association;
     return *this;
 }
 
 bool TermWithDetails::operator==(TermWithDetails const& second) const
 {
-    Term const& term1(getTermConstReferenceFromSharedPointer(baseTermSharedPointer));
-    Term const& term2(getTermConstReferenceFromSharedPointer(second.baseTermSharedPointer));
+    Term const& term1(getTermConstReferenceFromUniquePointer(baseTermPointer));
+    Term const& term2(getTermConstReferenceFromUniquePointer(second.baseTermPointer));
     return term1 == term2 && association == second.association;
 }
 
@@ -47,8 +47,8 @@ bool TermWithDetails::operator<(TermWithDetails const& second) const
     bool result(false);
     if(association == second.association)
     {
-        Term const& term1(getTermConstReferenceFromSharedPointer(baseTermSharedPointer));
-        Term const& term2(getTermConstReferenceFromSharedPointer(second.baseTermSharedPointer));
+        Term const& term1(getTermConstReferenceFromUniquePointer(baseTermPointer));
+        Term const& term2(getTermConstReferenceFromUniquePointer(second.baseTermPointer));
         result = term1 < term2;
     }
     else
@@ -67,7 +67,6 @@ bool TermWithDetails::hasNegativeAssociation() const
 {
     return TermAssociationType::Negative == association;
 }
-
 unsigned int TermWithDetails::getAssociationPriority() const
 {
     return algebra::getAssociationPriority(association);
@@ -75,7 +74,7 @@ unsigned int TermWithDetails::getAssociationPriority() const
 
 void TermWithDetails::clear()
 {
-    baseTermSharedPointer.reset();
+    baseTermPointer.reset();
     association = TermAssociationType::Positive;
 }
 

@@ -31,7 +31,7 @@ struct TermWithDetails
     unsigned int getAssociationPriority() const;
     void clear();
     void reverseAssociation();
-    BaseTermSharedPointer baseTermSharedPointer;
+    BaseTermUniquePointer baseTermPointer;
     TermAssociationType association;
 };
 

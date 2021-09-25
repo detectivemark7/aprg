@@ -117,13 +117,13 @@ string Expression::getDebugString() const
     {
         TermWithDetails const& firstTermWithDetails(termsWithDetails.front());
         ss << getFirstStringIfNegativeAssociation(m_commonOperatorLevel, firstTermWithDetails.association)
-           << getTermConstReferenceFromSharedPointer(firstTermWithDetails.baseTermSharedPointer).getDebugString()
+           << getTermConstReferenceFromUniquePointer(firstTermWithDetails.baseTermPointer).getDebugString()
            << getEnumShortString(firstTermWithDetails.association);
         for(auto it=termsWithDetails.cbegin()+1; it!=termsWithDetails.cend(); it++)
         {
             TermWithDetails const& termWithDetails(*it);
             ss << getOperatingString(m_commonOperatorLevel, termWithDetails.association)
-               << getTermConstReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer).getDebugString()
+               << getTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer).getDebugString()
                << getEnumShortString(termWithDetails.association);
         }
     }
@@ -421,7 +421,7 @@ void Expression::clearAllInnerSimplifiedFlags()
 {
     for(TermWithDetails & termWithDetails : m_termsWithAssociation.getTermsWithDetailsReference())
     {
-        Term & term(getTermReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer));
+        Term & term(getTermReferenceFromUniquePointer(termWithDetails.baseTermPointer));
         term.clearAllInnerSimplifiedFlags();
     }
     clearSimplifiedFlag();
@@ -683,7 +683,7 @@ void Expression::distributeAndMultiply(
     {
         distributeAndMultiply(
                     createOrCopyExpressionFromATerm(getTermConstReferenceFromBaseTerm(baseTerm)),
-                    getBaseTermConstReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer),
+                    getBaseTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer),
                     termWithDetails.hasPositiveAssociation());
     }
 }
@@ -695,7 +695,7 @@ void Expression::distributeAndMultiply(
     for(TermWithDetails const& termWithDetails : termsWithDetails)
     {
         distributeAndMultiply(
-                    createOrCopyExpressionFromATerm(getTermConstReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer)),
+                    createOrCopyExpressionFromATerm(getTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer)),
                     baseTerm,
                     termWithDetails.hasPositiveAssociation());
     }
@@ -709,8 +709,8 @@ void Expression::distributeAndMultiply(
     {
         for(TermWithDetails const& termWithDetails2 : termsWithDetails2)
         {
-            Term const& term1(getTermConstReferenceFromSharedPointer(termWithDetails1.baseTermSharedPointer));
-            Term const& term2(getTermConstReferenceFromSharedPointer(termWithDetails2.baseTermSharedPointer));
+            Term const& term1(getTermConstReferenceFromUniquePointer(termWithDetails1.baseTermPointer));
+            Term const& term2(getTermConstReferenceFromUniquePointer(termWithDetails2.baseTermPointer));
             distributeAndMultiply(
                         createOrCopyExpressionFromATerm(term1),
                         term2,
@@ -745,12 +745,12 @@ ostream & operator<<(ostream & out, Expression const& expression)
     {
         TermWithDetails const& firstTermWithDetails(termsWithDetails.front());
         out << getFirstStringIfNegativeAssociation(operatorLevel, firstTermWithDetails.association)
-            << getTermConstReferenceFromSharedPointer(firstTermWithDetails.baseTermSharedPointer);
+            << getTermConstReferenceFromUniquePointer(firstTermWithDetails.baseTermPointer);
         for(auto it=termsWithDetails.cbegin()+1; it!=termsWithDetails.cend(); it++)
         {
             TermWithDetails const& termWithDetails(*it);
             out << getOperatingString(operatorLevel, termWithDetails.association)
-                << getTermConstReferenceFromSharedPointer(termWithDetails.baseTermSharedPointer);
+                << getTermConstReferenceFromUniquePointer(termWithDetails.baseTermPointer);
         }
     }
     out << ")";
