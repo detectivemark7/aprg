@@ -25,13 +25,6 @@ Expression::Expression()
     , m_isSimplified(false)
 {}
 
-Expression::Expression(
-        Expression const& expression)
-    : m_commonOperatorLevel(expression.m_commonOperatorLevel)
-    , m_termsWithAssociation(expression.m_termsWithAssociation)
-    , m_isSimplified(expression.m_isSimplified)
-{}
-
 Expression::Expression(BaseTerm const& baseTerm)
     : m_commonOperatorLevel(OperatorLevel::Unknown)
     , m_termsWithAssociation()
@@ -52,9 +45,6 @@ Expression::Expression(
         m_commonOperatorLevel = OperatorLevel::Unknown;
     }
 }
-
-Expression::~Expression()
-{}
 
 bool Expression::operator==(Expression const& second) const
 {

@@ -10,9 +10,6 @@ namespace alba
 namespace algebra
 {
 
-Operator::Operator()
-{}
-
 Operator::Operator(string const& operatingString)
     : m_operatingString(operatingString)
 {}

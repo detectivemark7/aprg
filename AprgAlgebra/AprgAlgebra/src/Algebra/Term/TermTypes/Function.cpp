@@ -19,13 +19,6 @@ Function::Function()
     , m_isSimplified(false)
 {}
 
-Function::Function(Function const& functionObject)
-    : m_functionName(functionObject.m_functionName)
-    , m_inputTermPointer(make_unique<Term>(getTermConstReferenceFromUniquePointer(functionObject.m_inputTermPointer)))
-    , m_evaluationFunction(functionObject.m_evaluationFunction)
-    , m_isSimplified(functionObject.isSimplified())
-{}
-
 Function::Function(
         string const& functionName,
         BaseTerm const& baseTerm,
@@ -36,12 +29,19 @@ Function::Function(
     , m_isSimplified(getTermConstReferenceFromBaseTerm(baseTerm).isSimplified())
 {}
 
+Function::Function(Function const& functionObject)
+    : m_functionName(functionObject.m_functionName)
+    , m_inputTermPointer(make_unique<Term>(getTermConstReferenceFromUniquePointer(functionObject.m_inputTermPointer)))
+    , m_evaluationFunction(functionObject.m_evaluationFunction)
+    , m_isSimplified(functionObject.m_isSimplified)
+{}
+
 Function& Function::operator=(Function const& functionObject)
 {
     m_functionName = functionObject.m_functionName;
-    m_inputTermPointer= make_unique<Term>(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+    m_inputTermPointer = make_unique<Term>(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
     m_evaluationFunction = functionObject.m_evaluationFunction;
-    clearSimplifiedFlag();
+    m_isSimplified = functionObject.m_isSimplified;
     return *this;
 }
 

@@ -23,6 +23,13 @@ TermWithDetails::TermWithDetails(TermWithDetails const& termWithDetails)
     , association(termWithDetails.association)
 {}
 
+TermWithDetails & TermWithDetails::operator=(TermWithDetails const& termWithDetails)
+{
+    baseTermSharedPointer = createNewTermAndReturnSharedPointer(termWithDetails.baseTermSharedPointer);
+    association = termWithDetails.association;
+    return *this;
+}
+
 bool TermWithDetails::operator==(TermWithDetails const& second) const
 {
     Term const& term1(getTermConstReferenceFromSharedPointer(baseTermSharedPointer));

@@ -22,6 +22,8 @@ public:
         : Constant(AlbaNumber(value))
     {}
 
+    // rule of zero
+
     bool operator==(Constant const& second) const;
     bool operator!=(Constant const& second) const;
     bool operator<(Constant const& second) const;

@@ -16,6 +16,8 @@ public:
     Variable();
     Variable(std::string const& variableName);
 
+    // rule of zero
+
     bool operator==(Variable const& second) const;
     bool operator!=(Variable const& second) const;
     bool operator<(Variable const& second) const;

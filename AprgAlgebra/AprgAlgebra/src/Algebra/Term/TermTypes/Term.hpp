@@ -25,8 +25,9 @@ namespace algebra
 class Term : public BaseTerm
 {
 public:
+    using BaseTermDataPointer = std::unique_ptr<BaseTermData>;
+
     Term();
-    Term(Term const& term);
     Term(AlbaNumber const& number);
     Term(char const* const characterString);
     Term(std::string const& stringAsParameter);
@@ -43,7 +44,12 @@ public:
         : Term(AlbaNumber(value))
     {}
 
+    // rule of five or six
+    ~Term() = default;
+    Term(Term const& term);
     Term & operator=(Term const& term);
+    Term(Term && term) = default;
+    Term & operator=(Term && term) = default;
 
     bool operator==(Term const& second) const;
     bool operator!=(Term const& second) const;
@@ -86,14 +92,14 @@ public:
     void clearAllInnerSimplifiedFlags();
 
 private:
-    void resetBaseDataTermPointerBasedFromTerm(Term const& term);
+    BaseTermDataPointer createANewPointerFrom(Term const& term);
     void initializeBasedOnString(std::string const& stringAsParameter);
 
     friend std::ostream & operator<<(std::ostream & out, Term const& term);
 
     TermType m_type;
     bool m_isSimplified;
-    std::unique_ptr<BaseTermData> m_baseTermDataPointer;
+    BaseTermDataPointer m_baseTermDataPointer;
 };
 
 using Terms = std::vector<Term>;

@@ -12,13 +12,9 @@ namespace alba
 namespace algebra
 {
 
-
-TermsWithAssociation::TermsWithAssociation()
-{}
-
 TermsWithAssociation::TermsWithAssociation(
-        TermsWithAssociation const& termsWithAssociation)
-    : m_termsWithDetails(termsWithAssociation.getTermsWithDetails())
+        TermsWithDetails const& termsWithDetails)
+    : m_termsWithDetails(termsWithDetails)
 {}
 
 TermsWithAssociation::TermsWithAssociation(
@@ -26,14 +22,6 @@ TermsWithAssociation::TermsWithAssociation(
 {
     putTermsWithDetails(termsWithDetails);
 }
-
-TermsWithAssociation::TermsWithAssociation(
-        TermsWithDetails const& termsWithDetails)
-    : m_termsWithDetails(termsWithDetails)
-{}
-
-TermsWithAssociation::~TermsWithAssociation()
-{}
 
 bool TermsWithAssociation::operator==(TermsWithAssociation const& second) const
 {
