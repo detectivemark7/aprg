@@ -28,11 +28,11 @@ public:
     {}
 
     AlbaAny(AlbaAny const&) = default;
-    AlbaAny(AlbaAny &&) = delete;
+    AlbaAny(AlbaAny &&) = default;
     AlbaAny& operator=(AlbaAny const&) = default;
-    AlbaAny& operator=(AlbaAny && any) = delete;
+    AlbaAny& operator=(AlbaAny && any) = default;
 
-    operator bool() const
+    operator bool() const // not explicit
     {
         return hasContent();
     }

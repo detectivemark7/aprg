@@ -141,8 +141,7 @@ void multiplyValueInRowAndPutProductInAnotherRow(
         unsigned int const yInput,
         unsigned int const yOutput)
 {
-    unsigned int numberOfRows(matrix.getNumberOfRows());
-    assert((yInput < numberOfRows) && (yOutput < numberOfRows));
+    assert((yInput < matrix.getNumberOfRows()) && (yOutput < matrix.getNumberOfRows()));
     traverseWithUnaryOperationForDifferentRows(
                 matrix, yInput, yOutput, UnaryFunction<DataType>([&](DataType const& input)
     {
@@ -158,8 +157,7 @@ void subtractRowsWithMultiplierPutDifferenceInAnotherRow(
         unsigned int const yInput2,
         unsigned int const yOutput)
 {
-    unsigned int numberOfRows(matrix.getNumberOfRows());
-    assert((yInput1 < numberOfRows) && (yInput2 < numberOfRows) && (yOutput < numberOfRows));
+    assert((yInput1 < matrix.getNumberOfRows()) && (yInput2 < matrix.getNumberOfRows()) && (yOutput < matrix.getNumberOfRows()));
     traverseWithBinaryOperationForDifferentRows(
                 matrix, yInput1, yInput2, yOutput, BinaryFunction<DataType>([&](DataType const& input1, DataType const& input2)
     {

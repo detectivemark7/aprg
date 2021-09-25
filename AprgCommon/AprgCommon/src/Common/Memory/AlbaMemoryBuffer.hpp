@@ -17,7 +17,12 @@ public:
     AlbaMemoryBuffer() = default;
     AlbaMemoryBuffer(void const* sourcePointer, unsigned int const size);
 
-    operator bool() const;
+    AlbaMemoryBuffer(AlbaMemoryBuffer const&) = default;
+    AlbaMemoryBuffer(AlbaMemoryBuffer && buffer) = default;
+    AlbaMemoryBuffer& operator=(AlbaMemoryBuffer const&) = default;
+    AlbaMemoryBuffer& operator=(AlbaMemoryBuffer && any) = default;
+
+    operator bool() const; // not explicit
     bool hasContent() const;
     unsigned int getSize() const;
     void const* getConstantBufferPointer() const;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/Types/AlbaTypeHelper.hpp>
+
 #include <cstdint>
 #include <memory>
 
@@ -7,7 +9,7 @@ namespace alba
 {
 
 using TypeId = uintptr_t;
-static constexpr TypeId EMPTY_TYPE_ID = 0;
+constexpr TypeId EMPTY_TYPE_ID = 0;
 
 namespace detail
 {
@@ -28,7 +30,7 @@ public:
 template <class T>
 TypeId GetTypeId()
 {
-    return detail::TypeIdGenerator<T>::GetTypeId();
+    return detail::TypeIdGenerator<typeHelper::GetPlainType<T>>::GetTypeId();
 }
 
 } // namespace alba

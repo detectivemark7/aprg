@@ -178,7 +178,6 @@ private:
     // static functions
     static double getComparisonTolerance();
     static double getFloatAdjustmentTolerance();
-
     static double adjustFloatValue(float const value);
     static ComplexFloat createComplexFloat(ComplexNumberData const& data);
     static void correctPowerResult(double & powerResult, double const base, double const exponent);

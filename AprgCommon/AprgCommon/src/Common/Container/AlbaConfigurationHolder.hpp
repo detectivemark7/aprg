@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Common/Container/AlbaSingleton.hpp>
+#include <Common/Utility/AlbaScopeGuard.hpp>
 
 namespace alba
 {
@@ -52,13 +53,8 @@ public:
     AlbaConfigurationScopeObject()
         : m_savedConfigurationDetails(
               AlbaConfigurationHolder<ConfigurationDetails>::getInstance().getConfigurationDetails())
+        , m_scopeGuard([&]() noexcept {setInThisScopeTheValuesBack();})
     {}
-
-    ~AlbaConfigurationScopeObject() noexcept // destructor/cleanup code should not throw an exception
-    {
-        // put a try catch here to ensure that it will not throw? nah, we dont use exceptions anyway
-        setInThisScopeTheValuesBack();
-    }
 
     void setInThisScopeThisConfiguration(
             ConfigurationDetails const& configurationDetails) const
@@ -68,12 +64,13 @@ public:
 
 private:
 
-    void setInThisScopeTheValuesBack() const
+    void setInThisScopeTheValuesBack() const noexcept // called in scope guard
     {
         AlbaConfigurationHolder<ConfigurationDetails>::getInstance().setConfigurationDetails(m_savedConfigurationDetails);
     }
 
     ConfigurationDetails m_savedConfigurationDetails;
+    AlbaScopeGuard m_scopeGuard; // important to be after configuration details (for order of destruction)
 };
 
 } // namespace alba

@@ -25,7 +25,7 @@ public:
         : m_contentPointer(std::make_unique<ContentType>(content))
     {}
 
-    AlbaOptional(AlbaOptional<ContentType> const& optional)
+    AlbaOptional(AlbaOptional const& optional)
     {
         if(optional.m_contentPointer)
         {
@@ -33,11 +33,11 @@ public:
         }
     }
 
-    AlbaOptional(AlbaOptional<ContentType>&& optional)
+    AlbaOptional(AlbaOptional&& optional)
         : m_contentPointer(std::move(optional.m_contentPointer))
     {}
 
-    AlbaOptional<ContentType>& operator=(AlbaOptional<ContentType> const& optional)
+    AlbaOptional& operator=(AlbaOptional const& optional)
     {
         if(optional.m_contentPointer)
         {
@@ -46,7 +46,7 @@ public:
         return *this;
     }
 
-    AlbaOptional<ContentType>& operator=(AlbaOptional<ContentType>&& optional)
+    AlbaOptional& operator=(AlbaOptional&& optional)
     {
         m_contentPointer = std::move(optional.m_contentPointer);
         return *this;
@@ -128,7 +128,7 @@ public:
 
 private:
 
-    friend std::ostream & operator<<(std::ostream & out, AlbaOptional<ContentType> const& optional)
+    friend std::ostream & operator<<(std::ostream & out, AlbaOptional const& optional)
     {
         out << "hasContent: " << optional.hasContent();
         if(optional.hasContent())
