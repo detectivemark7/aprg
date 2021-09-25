@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/Types/AlbaTypeHelper.hpp>
+
 #include <ostream>
 
 namespace alba
@@ -10,10 +12,14 @@ class AlbaComplexNumber
 {
 public:
 
+    static_assert(typeHelper::isArithmeticType<DataType>(), "DataType should be an arithmetic type.");
+
     AlbaComplexNumber();
     AlbaComplexNumber(
             DataType const realPart,
             DataType const imaginaryPart);
+
+    // rule of zero
 
     bool operator==(AlbaComplexNumber const& second) const;
     AlbaComplexNumber<DataType> operator+(AlbaComplexNumber<DataType> const& second) const;

@@ -13,6 +13,9 @@ class AlbaStreamParameterWriter
 {
 public:
     explicit AlbaStreamParameterWriter(std::ostream& stream);
+
+    // rule of zero
+
     template <typename TypeToWrite> void writeData(TypeToWrite const& data) const;
     template <typename TypeToWrite> void writeVectorData(std::vector<TypeToWrite> const& vectorOfData) const;
     template <typename TypeToWrite> void writeSetData(std::set<TypeToWrite> const& setOfData) const;

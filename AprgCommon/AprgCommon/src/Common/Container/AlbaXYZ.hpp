@@ -24,6 +24,8 @@ public:
         , m_z(zValue)
     {}
 
+    // rule of zero
+
     bool operator==(AlbaXYZ const& xyz) const
     {
         return mathHelper::isAlmostEqual(m_x, xyz.m_x)

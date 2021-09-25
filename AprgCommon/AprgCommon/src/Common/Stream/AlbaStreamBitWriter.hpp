@@ -19,6 +19,8 @@ public:
     explicit AlbaStreamBitWriter(std::ostream& stream);
     ~AlbaStreamBitWriter();
 
+    // rule of zero
+
     void writeBoolData(bool const data);
     void writeCharData(char const data);
     void writeStringData(std::string const& data);

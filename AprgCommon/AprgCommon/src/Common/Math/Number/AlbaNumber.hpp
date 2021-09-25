@@ -81,6 +81,7 @@ public:
         void setInThisScopeTheTolerancesToZero() const;
     };
 
+
     // static functions
 
     static AlbaNumber createNumberFromDoubleAndRoundIfNeeded(double const doubleValue);
@@ -130,6 +131,8 @@ public:
         : m_type(Type::ComplexNumber)
         , m_data(complexNumberData)
     {}
+
+    // rule of zero
 
     AlbaNumber(char const character) = delete; // remove character to integer conversion (delete any functions is a C++11 feature)
 

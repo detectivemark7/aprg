@@ -11,9 +11,12 @@ namespace alba
 //#pragma warning("The class AlbaDebug is used. Please remove after your done debugging.") // Unknown pragma
 #warning("The class AlbaDebug is used. Please remove after your done debugging.") // GCC extension
 
-#ifdef ALBA_PRINT_OUTPUT_STREAM_FILE_PATH
-static ofstream debugStream(ALBA_PRINT_OUTPUT_STREAM_FILE_PATH);
+#if defined(ALBA_PRINT_EXTERNAL_OUTPUT_STREAM_FILE_PATH)
+#include <ofstream>
+inline std::ofstream debugStream(ALBA_PRINT_EXTERNAL_OUTPUT_STREAM_FILE_PATH);
 #define ALBA_PRINT_OUTPUT_STREAM debugStream
+#elif defined(ALBA_PRINT_EXTERNAL_OUTPUT_STREAM_OBJECT)
+#define ALBA_PRINT_OUTPUT_STREAM ALBA_PRINT_EXTERNAL_OUTPUT_STREAM_OBJECT
 #else
 #define ALBA_PRINT_OUTPUT_STREAM std::cout
 #endif

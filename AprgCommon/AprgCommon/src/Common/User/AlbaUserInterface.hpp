@@ -12,6 +12,8 @@ class AlbaUserInterface
 public:
     template <typename AnswerType> using Choices = std::map<AnswerType, std::string>;
 
+    // rule of zero
+
     std::string getUserInput();
     std::string getFilePathInput();
     template <typename NumberType> NumberType getNumberFromInput();

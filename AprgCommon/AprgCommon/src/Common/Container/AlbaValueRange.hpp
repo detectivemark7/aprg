@@ -23,6 +23,7 @@ class AlbaValueRange
 public:
     using TerminationCondition = std::function<bool(DataType,DataType)>;
     using TraverseOperation = std::function<void(DataType)>;
+
     AlbaValueRange()
         : m_startValue(0)
         , m_endValue(0)
@@ -34,6 +35,8 @@ public:
         , m_endValue(endValue)
         , m_intervalMagnitude(mathHelper::getAbsoluteValue(intervalMagnitude))
     {}
+
+    // rule of zero
 
     bool isEmpty() const
     {

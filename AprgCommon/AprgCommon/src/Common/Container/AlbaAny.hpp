@@ -27,10 +27,7 @@ public:
 
     {}
 
-    AlbaAny(AlbaAny const&) = default;
-    AlbaAny(AlbaAny &&) = default;
-    AlbaAny& operator=(AlbaAny const&) = default;
-    AlbaAny& operator=(AlbaAny && any) = default;
+    // rule of zero
 
     operator bool() const // not explicit
     {

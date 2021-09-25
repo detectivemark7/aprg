@@ -22,6 +22,8 @@ public:
         , m_y(yValue)
     {}
 
+    // rule of zero
+
     bool operator==(AlbaXY const& xy) const
     {
         return mathHelper::isAlmostEqual(m_x, xy.m_x) && mathHelper::isAlmostEqual(m_y, xy.m_y);

@@ -28,6 +28,8 @@ public:
     DisplayTableCell(std::string const& displayText);
     DisplayTableCell(std::string const& displayText, DisplayTableCellMode const horizontalMode);
 
+    // rule of zero
+
     std::string getText() const;
     DisplayTableCellMode getHorizontalMode() const;
 
@@ -46,6 +48,8 @@ class DisplayTableRow
 public:
     DisplayTableRow() = default;
     DisplayTableRow(unsigned int const numberOfCells);
+
+    // rule of zero
 
     unsigned int getNumberOfColumns() const;
     unsigned int getCharacters() const;
@@ -66,6 +70,8 @@ class DisplayTable
 public:
     DisplayTable() = default;
     DisplayTable(unsigned int const numberOfColumns, unsigned int const numberOfRows);
+
+    // rule of zero
 
     unsigned int getTotalRows() const;
     unsigned int getTotalColumns() const;

@@ -17,6 +17,9 @@ class AlbaAngle
 public:
     AlbaAngle();
     AlbaAngle(AngleUnitType const angleUnitType, double const angleValue);
+
+    // rule of zero
+
     bool operator==(AlbaAngle const& angle) const;
     bool operator!=(AlbaAngle const& angle) const;
     bool operator<(AlbaAngle const& angle) const;

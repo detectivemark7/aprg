@@ -13,6 +13,8 @@ public:
             AlbaNumberIntervalEndpoint const& firstEndpoint,
             AlbaNumberIntervalEndpoint const& secondEndpoint);
 
+    // rule of zero
+
     bool operator==(AlbaNumberInterval const& second) const;
     bool isValueInsideTheInterval(AlbaNumber const& value) const;
     bool isValueInsideTheIntervalExceptAtTheEndpoints(AlbaNumber const& value) const;

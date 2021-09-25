@@ -84,6 +84,8 @@ public:
         m_matrixData.shrink_to_fit();
     }
 
+    // rule of zero
+
     bool operator==(AlbaMatrix const& secondMatrix) const
     {
         bool isEqual(true);
@@ -155,7 +157,7 @@ public:
 
     AlbaMatrix& operator*=(DataType const& scalarMultiplier)
     {
-        std::function<DataType(DataType const &)> scalarMultiplication
+        std::function<DataType(DataType const&)> scalarMultiplication
             = std::bind(std::multiplies<DataType>(), std::placeholders::_1, scalarMultiplier);
         doUnaryAssignmentOperation(*this, scalarMultiplication);
         return *this;

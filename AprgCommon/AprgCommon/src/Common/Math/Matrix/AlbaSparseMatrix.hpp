@@ -53,6 +53,8 @@ public:
         setEntries(matrixData);
     }
 
+    // rule of zero
+
     bool operator==(AlbaSparseMatrix const& secondMatrix) const
     {
         bool isEqual(true);
