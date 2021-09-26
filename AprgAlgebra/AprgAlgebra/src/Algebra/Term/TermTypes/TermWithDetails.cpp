@@ -14,14 +14,14 @@ namespace algebra
 TermWithDetails::TermWithDetails(
         BaseTerm const& baseTerm,
         TermAssociationType const associationParameter)
-    : baseTermPointer(getTermConstReferenceFromBaseTerm(baseTerm).createBasePointerByCopy())
+    : baseTermPointer(createBasePointer(baseTerm))
     , association(associationParameter)
 {}
 
 TermWithDetails::TermWithDetails(
         BaseTerm && baseTerm,
         TermAssociationType const associationParameter)
-    : baseTermPointer(getTermRValueReferenceFromBaseTerm(move(baseTerm)).createBasePointerByMove())
+    : baseTermPointer(createBasePointer(baseTerm))
     , association(associationParameter)
 {}
 

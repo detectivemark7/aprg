@@ -24,7 +24,7 @@ Function::Function(
         BaseTerm const& baseTerm,
         EvaluationFunction const& evaluationFunction)
     : m_functionName(functionName)
-    , m_inputTermPointer(getTermConstReferenceFromBaseTerm(baseTerm).createBasePointerByCopy())
+    , m_inputTermPointer(createBasePointer(baseTerm))
     , m_evaluationFunction(evaluationFunction)
     , m_isSimplified(false)
 {}
@@ -34,7 +34,7 @@ Function::Function(
         BaseTerm && baseTerm,
         EvaluationFunction const& evaluationFunction)
     : m_functionName(functionName)
-    , m_inputTermPointer(getTermRValueReferenceFromBaseTerm(move(baseTerm)).createBasePointerByMove())
+    , m_inputTermPointer(createBasePointer(baseTerm))
     , m_evaluationFunction(evaluationFunction)
     , m_isSimplified(false)
 {}

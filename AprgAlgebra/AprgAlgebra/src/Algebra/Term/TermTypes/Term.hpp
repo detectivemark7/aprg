@@ -85,7 +85,6 @@ public:
     Expression & getExpressionReference();
     Function & getFunctionReference();
 
-    BaseTermUniquePointer createBasePointerByCopy() const;
     BaseTermUniquePointer createBasePointerByMove();
 
     void clear();

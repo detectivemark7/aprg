@@ -12,13 +12,29 @@ namespace alba
 namespace algebra
 {
 
-TEST(BaseTermHelpersTest, DuplicateUniquePointerWorks)
+TEST(BaseTermHelpersTest, CreateBasePointerWorksForLValue)
 {
     Term originalTerm(7896);
 
-    BaseTermUniquePointer uniquePointer(duplicateUniquePointer(originalTerm.createBasePointerByCopy()));
+    BaseTermUniquePointer uniquePointer(createBasePointer(originalTerm));
 
     EXPECT_EQ(Term(7896), getTermConstReferenceFromUniquePointer(uniquePointer));
+}
+
+TEST(BaseTermHelpersTest, CreateBasePointerWorksForRValue)
+{
+    BaseTermUniquePointer uniquePointer(createBasePointer(Term(7896)));
+
+    EXPECT_EQ(Term(7896), getTermConstReferenceFromUniquePointer(uniquePointer));
+}
+
+TEST(BaseTermHelpersTest, DuplicateUniquePointerWorks)
+{
+    BaseTermUniquePointer originalPointer(createBasePointer(Term(7896)));
+
+    BaseTermUniquePointer duplicatedPointer(duplicateUniquePointer(originalPointer));
+
+    EXPECT_EQ(Term(7896), getTermConstReferenceFromUniquePointer(duplicatedPointer));
 }
 
 TEST(BaseTermHelpersTest, GetTermConstReferenceFromBaseTermWorks)
@@ -32,7 +48,7 @@ TEST(BaseTermHelpersTest, GetTermConstReferenceFromBaseTermWorks)
 
 TEST(BaseTermHelpersTest, GetTermConstReferenceFromUniquePointerWorks)
 {
-    BaseTermUniquePointer uniquePointer(Term(9541).createBasePointerByMove());
+    BaseTermUniquePointer uniquePointer(createBasePointer(Term(9541)));
 
     Term const& termToVerify(getTermConstReferenceFromUniquePointer(uniquePointer));
 
@@ -51,7 +67,7 @@ TEST(BaseTermHelpersTest, GetTermReferenceFromBaseTermWorks)
 
 TEST(BaseTermHelpersTest, GetTermReferenceFromUniquePointerWorks)
 {
-    BaseTermUniquePointer uniquePointer(Term(9652).createBasePointerByMove());
+    BaseTermUniquePointer uniquePointer(createBasePointer(Term(9652)));
 
     Term & termToChange(getTermReferenceFromUniquePointer(uniquePointer));
     termToChange.getConstantReference().setNumber(763);
@@ -72,7 +88,7 @@ TEST(BaseTermHelpersTest, GetBaseTermConstReferenceFromTermWorks)
 
 TEST(BaseTermHelpersTest, GetBaseTermConstReferenceFromUniquePointerWorks)
 {
-    BaseTermUniquePointer uniquePointer(Term(6415).createBasePointerByMove());
+    BaseTermUniquePointer uniquePointer(createBasePointer(Term(6415)));
 
     BaseTerm const& baseTerm(getBaseTermConstReferenceFromUniquePointer(uniquePointer));
 
@@ -93,7 +109,7 @@ TEST(BaseTermHelpersTest, GetBaseTermReferenceFromTermWorks)
 
 TEST(BaseTermHelpersTest, GetBaseTermReferenceFromUniquePointerWorks)
 {
-    BaseTermUniquePointer uniquePointer(Term(6415).createBasePointerByMove());
+    BaseTermUniquePointer uniquePointer(createBasePointer(Term(6415)));
 
     BaseTerm & baseTerm(getBaseTermReferenceFromUniquePointer(uniquePointer));
 

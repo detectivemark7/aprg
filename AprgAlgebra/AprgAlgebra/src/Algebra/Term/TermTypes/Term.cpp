@@ -394,11 +394,6 @@ Function & Term::getFunctionReference()
     return *static_cast<Function*>(m_baseTermDataPointer.get());
 }
 
-BaseTermUniquePointer Term::createBasePointerByCopy() const
-{
-    return static_cast<BaseTermUniquePointer>(make_unique<Term>(*this));
-}
-
 BaseTermUniquePointer Term::createBasePointerByMove()
 {
     return static_cast<BaseTermUniquePointer>(make_unique<Term>(m_type, m_isSimplified, move(m_baseTermDataPointer)));

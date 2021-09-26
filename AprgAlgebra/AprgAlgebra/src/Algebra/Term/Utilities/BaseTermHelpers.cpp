@@ -8,9 +8,19 @@ namespace alba
 namespace algebra
 {
 
+BaseTermUniquePointer createBasePointer(BaseTerm const& baseTerm)
+{
+    return static_cast<BaseTermUniquePointer>(make_unique<Term>(getTermConstReferenceFromBaseTerm(baseTerm)));
+}
+
+BaseTermUniquePointer createBasePointer(BaseTerm && baseTerm)
+{
+    return getTermRValueReferenceFromBaseTerm(move(baseTerm)).createBasePointerByMove();
+}
+
 BaseTermUniquePointer duplicateUniquePointer(BaseTermUniquePointer const& uniquePointer)
 {
-    return make_unique<Term>(getTermConstReferenceFromUniquePointer(uniquePointer));
+    return static_cast<BaseTermUniquePointer>(make_unique<Term>(getTermConstReferenceFromUniquePointer(uniquePointer)));
 }
 
 Term const& getTermConstReferenceFromBaseTerm(BaseTerm const& baseTerm)

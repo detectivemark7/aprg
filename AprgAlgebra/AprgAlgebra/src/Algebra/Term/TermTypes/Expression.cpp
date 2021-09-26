@@ -40,28 +40,18 @@ Expression::Expression(BaseTerm && baseTerm)
 Expression::Expression(
         OperatorLevel const operatorLevel,
         TermsWithDetails const& termsWithDetails)
-    : m_commonOperatorLevel(operatorLevel)
+    : m_commonOperatorLevel(termsWithDetails.empty() ? OperatorLevel::Unknown : operatorLevel)
     , m_termsWithAssociation(termsWithDetails)
     , m_isSimplified(false)
-{
-    if(m_termsWithAssociation.getTermsWithDetails().empty())
-    {
-        m_commonOperatorLevel = OperatorLevel::Unknown;
-    }
-}
+{}
 
 Expression::Expression(
         OperatorLevel const operatorLevel,
         TermsWithDetails && termsWithDetails)
-    : m_commonOperatorLevel(operatorLevel)
+    : m_commonOperatorLevel(termsWithDetails.empty() ? OperatorLevel::Unknown : operatorLevel)
     , m_termsWithAssociation(move(termsWithDetails))
     , m_isSimplified(false)
-{
-    if(m_termsWithAssociation.getTermsWithDetails().empty())
-    {
-        m_commonOperatorLevel = OperatorLevel::Unknown;
-    }
-}
+{}
 
 bool Expression::operator==(Expression const& second) const
 {
