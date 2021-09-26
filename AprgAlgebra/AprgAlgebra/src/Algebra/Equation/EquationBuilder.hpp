@@ -15,6 +15,9 @@ class EquationBuilder
 {
 public:
     EquationBuilder(std::string const& equationInString);
+
+    // rule of zero
+
     Equation getEquation() const;
     stringHelper::strings const& getTermStrings() const;
     stringHelper::strings const& getEquationOperatorStrings() const;

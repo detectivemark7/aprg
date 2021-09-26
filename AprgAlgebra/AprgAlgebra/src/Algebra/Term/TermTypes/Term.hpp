@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Algebra/Term/TermTypes/BaseTermData.hpp>
+#include <Algebra/Term/TermTypes/BaseTermPointers.hpp>
 #include <Algebra/Term/TermTypes/Constant.hpp>
 #include <Algebra/Term/TermTypes/Expression.hpp>
 #include <Algebra/Term/TermTypes/Function.hpp>
@@ -28,6 +29,7 @@ public:
     using BaseTermDataPointer = std::unique_ptr<BaseTermData>;
 
     Term();
+    Term(TermType const type, bool const isSimplified, BaseTermDataPointer && m_baseTermDataPointer); // for move
     Term(AlbaNumber const& number);
     Term(char const* const characterString);
     Term(std::string const& stringAsParameter);
@@ -83,6 +85,9 @@ public:
     Expression & getExpressionReference();
     Function & getFunctionReference();
 
+    BaseTermUniquePointer createBasePointerByCopy() const;
+    BaseTermUniquePointer createBasePointerByMove();
+
     void clear();
     void simplify();
     void sort();
@@ -92,7 +97,8 @@ public:
     void clearAllInnerSimplifiedFlags();
 
 private:
-    BaseTermDataPointer createANewPointerFrom(Term const& term);
+
+    BaseTermDataPointer createANewDataPointerFrom(Term const& term);
     void initializeBasedOnString(std::string const& stringAsParameter);
 
     friend std::ostream & operator<<(std::ostream & out, Term const& term);

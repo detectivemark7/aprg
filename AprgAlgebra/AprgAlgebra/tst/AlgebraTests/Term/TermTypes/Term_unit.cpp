@@ -659,6 +659,25 @@ TEST(TermTest, GetDebugStringWorks)
     EXPECT_EQ("functionName(5{Constant}){Function}", term8.getDebugString());
 }
 
+TEST(TermTest, GetBasePointerByCopyWorks)
+{
+    Term termToTest(6415);
+
+    BaseTermUniquePointer uniquePointerToVerify(termToTest.createBasePointerByCopy());
+
+    EXPECT_EQ(Term(6415), getTermConstReferenceFromUniquePointer(uniquePointerToVerify));
+    EXPECT_EQ(Term(6415), termToTest);
+}
+
+TEST(TermTest, GetBasePointerByMoveWorks)
+{
+    Term termToTest(6415);
+
+    BaseTermUniquePointer uniquePointerToVerify(termToTest.createBasePointerByMove());
+
+    EXPECT_EQ(Term(6415), getTermConstReferenceFromUniquePointer(uniquePointerToVerify));
+}
+
 TEST(TermTest, ClearWorks)
 {
     Term constantTerm(1475);

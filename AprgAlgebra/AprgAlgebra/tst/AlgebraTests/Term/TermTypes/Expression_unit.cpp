@@ -66,19 +66,6 @@ TEST(ExpressionTest, ExpressionThatIsCopyConstructedHasIsSimplifiedFlagCopied)
     EXPECT_TRUE(expression2.isSimplified());
 }
 
-TEST(ExpressionTest, ExpressionThatIsConstructedWithTermHasIsSimplifiedFlagCopied)
-{
-    Term termWithSimplifiedNotSet;
-    Term termWithSimplifiedSet;
-    termWithSimplifiedSet.setAsSimplified();
-
-    Expression expression1(termWithSimplifiedNotSet);
-    Expression expression2(termWithSimplifiedSet);
-
-    EXPECT_FALSE(expression1.isSimplified());
-    EXPECT_TRUE(expression2.isSimplified());
-}
-
 TEST(ExpressionTest, ExpressionThatIsConstructedWithTermsWithDetailsHasIsSimplifiedFlagNotSet)
 {
     TermWithDetails termWithDetails1(Term(10), TermAssociationType::Positive);

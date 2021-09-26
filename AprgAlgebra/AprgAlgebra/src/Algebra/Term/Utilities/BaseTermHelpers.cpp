@@ -8,14 +8,9 @@ namespace alba
 namespace algebra
 {
 
-BaseTermUniquePointer createAUniquePointerFromTerm(Term const& term)
+BaseTermUniquePointer duplicateUniquePointer(BaseTermUniquePointer const& uniquePointer)
 {
-    return BaseTermUniquePointer(static_cast<BaseTermUniquePointer>(make_unique<Term>(term)));
-}
-
-BaseTermSharedPointer createASharedPointerFromTerm(Term const& term)
-{
-    return BaseTermSharedPointer(static_cast<BaseTermSharedPointer>(make_shared<Term>(term)));
+    return make_unique<Term>(getTermConstReferenceFromUniquePointer(uniquePointer));
 }
 
 Term const& getTermConstReferenceFromBaseTerm(BaseTerm const& baseTerm)
@@ -28,9 +23,9 @@ Term const& getTermConstReferenceFromUniquePointer(BaseTermUniquePointer const& 
     return static_cast<Term const&>(*uniquePointer.get());
 }
 
-Term const& getTermConstReferenceFromSharedPointer(BaseTermSharedPointer const& sharedPointer)
+Term && getTermRValueReferenceFromBaseTerm(BaseTerm && baseTerm)
 {
-    return static_cast<Term const&>(*sharedPointer.get());
+    return static_cast<Term &&>(baseTerm);
 }
 
 Term & getTermReferenceFromBaseTerm(BaseTerm & baseTerm)
@@ -43,11 +38,6 @@ Term & getTermReferenceFromUniquePointer(BaseTermUniquePointer & uniquePointer)
     return *static_cast<Term*>(uniquePointer.get());
 }
 
-Term & getTermReferenceFromSharedPointer(BaseTermSharedPointer & sharedPointer)
-{
-    return *static_cast<Term*>(sharedPointer.get());
-}
-
 BaseTerm const& getBaseTermConstReferenceFromTerm(Term const& term)
 {
     return static_cast<BaseTerm const&>(term);
@@ -58,11 +48,6 @@ BaseTerm const& getBaseTermConstReferenceFromUniquePointer(BaseTermUniquePointer
     return static_cast<BaseTerm const&>(*uniquePointer.get());
 }
 
-BaseTerm const& getBaseTermConstReferenceFromSharedPointer(BaseTermSharedPointer const& sharedPointer)
-{
-    return static_cast<BaseTerm const&>(*sharedPointer.get());
-}
-
 BaseTerm & getBaseTermReferenceFromTerm(Term & term)
 {
     return static_cast<BaseTerm &>(term);
@@ -71,11 +56,6 @@ BaseTerm & getBaseTermReferenceFromTerm(Term & term)
 BaseTerm & getBaseTermReferenceFromUniquePointer(BaseTermUniquePointer const& uniquePointer)
 {
     return static_cast<BaseTerm &>(*uniquePointer.get());
-}
-
-BaseTerm & getBaseTermReferenceFromSharedPointer(BaseTermSharedPointer const& sharedPointer)
-{
-    return static_cast<BaseTerm &>(*sharedPointer.get());
 }
 
 }

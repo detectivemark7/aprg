@@ -8,9 +8,6 @@ namespace alba
 namespace algebra
 {
 
-EquationOperator::EquationOperator()
-{}
-
 EquationOperator::EquationOperator(string const& operatingString)
     : m_operatingString(operatingString)
 {}

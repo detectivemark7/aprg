@@ -12,9 +12,6 @@ namespace alba
 namespace algebra
 {
 
-Equation::Equation()
-{}
-
 Equation::Equation(
         Term const& leftHandTerm,
         string const& equationOperator,

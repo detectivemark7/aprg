@@ -15,6 +15,7 @@ namespace algebra
 struct TermWithDetails
 {
     TermWithDetails(BaseTerm const& baseTerm, TermAssociationType const associationParameter);
+    TermWithDetails(BaseTerm && baseTerm, TermAssociationType const associationParameter);
 
     // rule of five or six
     ~TermWithDetails() = default;

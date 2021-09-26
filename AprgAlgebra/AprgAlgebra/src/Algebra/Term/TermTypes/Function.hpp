@@ -24,6 +24,10 @@ public:
             std::string const& functionName,
             BaseTerm const& baseTerm,
             EvaluationFunction const& evaluationFunction);
+    Function(
+            std::string const& functionName,
+            BaseTerm && baseTerm,
+            EvaluationFunction const& evaluationFunction);
 
     // rule of five of six
     ~Function() = default;
