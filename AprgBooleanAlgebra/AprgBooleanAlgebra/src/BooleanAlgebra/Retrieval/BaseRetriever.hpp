@@ -51,7 +51,7 @@ public:
     {
         for(WrappedTerm const& wrappedTerm : expression.getWrappedTerms())
         {
-            retrieveFromTerm(getTermConstReferenceFromSharedPointer(wrappedTerm.baseTermSharedPointer));
+            retrieveFromTerm(getTermConstReferenceFromUniquePointer(wrappedTerm.baseTermPointer));
         }
     }
 

@@ -17,7 +17,7 @@ using VariableTermPair = std::pair<std::string, Term>;
 class SubstitutionOfVariablesToTerms
 {
 public:
-    SubstitutionOfVariablesToTerms();
+    SubstitutionOfVariablesToTerms() = default;
     SubstitutionOfVariablesToTerms(std::initializer_list<VariableTermPair> const& variablesWithTerms);
     SubstitutionOfVariablesToTerms(VariablesToTermsMap const& variablesWithTerms);
 

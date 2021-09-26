@@ -94,7 +94,7 @@ void distributeTermsWithRecursion(
     {
         for(WrappedTerm const& subExpressionTerm : innerExpressions.at(index).getWrappedTerms())
         {
-            innerTermsCombinations.emplace_back(getTermConstReferenceFromSharedPointer(subExpressionTerm.baseTermSharedPointer));
+            innerTermsCombinations.emplace_back(getTermConstReferenceFromUniquePointer(subExpressionTerm.baseTermPointer));
             distributeTermsWithRecursion(outputTerm, innerTermsCombinations, innerExpressions, outerFactor, outerOperation, innerOperation, index+1);
             innerTermsCombinations.pop_back();
         }
@@ -114,7 +114,7 @@ Terms getTermOrSubTerms(Term const& term)
     {
         for(WrappedTerm const& subTerm : term.getExpressionConstReference().getWrappedTerms())
         {
-            terms.emplace_back(getTermConstReferenceFromSharedPointer(subTerm.baseTermSharedPointer));
+            terms.emplace_back(getTermConstReferenceFromUniquePointer(subTerm.baseTermPointer));
         }
     }
     else
@@ -211,7 +211,7 @@ void simplifyAndCopyTermsAndChangeOperatorLevelIfNeeded(
 {
     for(WrappedTerm const& oldWrappedTerm : oldWrappedTerms)
     {
-        Term const& term(getTermConstReferenceFromSharedPointer(oldWrappedTerm.baseTermSharedPointer));
+        Term const& term(getTermConstReferenceFromUniquePointer(oldWrappedTerm.baseTermPointer));
         if(term.isExpression())
         {
             Expression subExpression(term.getExpressionConstReference());
@@ -235,7 +235,7 @@ Terms createUniqueTerms(
     result.reserve(terms.size());
     transform(terms.cbegin(), terms.cend(), back_inserter(result), [](WrappedTerm const& wrappedTerm)
     {
-        return getTermConstReferenceFromSharedPointer(wrappedTerm.baseTermSharedPointer);
+        return getTermConstReferenceFromUniquePointer(wrappedTerm.baseTermPointer);
     });
     sort(result.begin(), result.end());
     result.erase(unique(result.begin(), result.end()), result.end());
@@ -369,7 +369,7 @@ void distributeTermsIfNeeded(
                     {
                         for(WrappedTerm const& subExpressionTerm : subExpression.getWrappedTerms())
                         {
-                            outerFactors.emplace_back(getTermConstReferenceFromSharedPointer(subExpressionTerm.baseTermSharedPointer));
+                            outerFactors.emplace_back(getTermConstReferenceFromUniquePointer(subExpressionTerm.baseTermPointer));
                         }
                     }
                 }

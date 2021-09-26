@@ -23,7 +23,7 @@ VariableTerm::VariableTerm(string const& variableName)
     : m_variableName(getStringWithoutStartingAndTrailingWhiteSpace(variableName))
     , m_isNegated(false)
 {
-    initialize();
+    initializeIfNotEmpty();
 }
 
 VariableTerm VariableTerm::createNegatedVariableTerm(
@@ -85,7 +85,7 @@ void VariableTerm::negate()
     m_isNegated = !m_isNegated;
 }
 
-void VariableTerm::initialize()
+void VariableTerm::initializeIfNotEmpty()
 {
     int lastIndex = m_variableName.length()-1;
     int index=lastIndex;

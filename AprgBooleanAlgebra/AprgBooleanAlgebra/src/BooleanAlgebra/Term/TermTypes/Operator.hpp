@@ -15,7 +15,7 @@ namespace booleanAlgebra
 class Operator : public BaseTermData
 {
 public:
-    Operator();
+    Operator() = default;
     Operator(std::string const& operatingString);
 
     bool operator==(Operator const& second) const;

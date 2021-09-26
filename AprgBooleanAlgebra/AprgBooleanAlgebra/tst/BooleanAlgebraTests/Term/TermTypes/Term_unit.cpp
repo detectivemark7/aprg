@@ -84,7 +84,7 @@ TEST(TermTest, TermsAsExpressionsWorks)
     EXPECT_EQ(OperatorLevel::Unknown, expression2.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify2(expression2.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify2.size());
-    EXPECT_EQ(Term("x"), getTermConstReferenceFromSharedPointer(termsToVerify2.at(0).baseTermSharedPointer));
+    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify2.at(0).baseTermPointer));
 }
 
 TEST(TermTest, TermsAsConstructedAsStringWorks)

@@ -11,9 +11,6 @@ namespace alba
 namespace booleanAlgebra
 {
 
-SubstitutionOfTermsToTerms::SubstitutionOfTermsToTerms()
-{}
-
 SubstitutionOfTermsToTerms::SubstitutionOfTermsToTerms(initializer_list<TermTermPair> const& variablesWithValues)
 {
     putTermsToTermsMapping(variablesWithValues);
@@ -111,7 +108,7 @@ void SubstitutionOfTermsToTerms::performSubstitutionForWrappedTerms(WrappedTerms
 {
     for(WrappedTerm & wrappedTerm : wrappedTerms)
     {
-        Term & term(getTermReferenceFromSharedPointer(wrappedTerm.baseTermSharedPointer));
+        Term & term(getTermReferenceFromUniquePointer(wrappedTerm.baseTermPointer));
         term = performSubstitutionTo(term);
     }
 }

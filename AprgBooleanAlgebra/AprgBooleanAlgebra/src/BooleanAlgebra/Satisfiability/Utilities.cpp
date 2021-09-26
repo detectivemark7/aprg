@@ -52,7 +52,7 @@ SatisfiabilityTerms getSatisfiabilityTerms(
         for(WrappedTerm const& subWrappedTerm : expression.getWrappedTerms())
         {
             bool isInvalid(false);
-            Term const& termInAnd(getTermConstReferenceFromSharedPointer(subWrappedTerm.baseTermSharedPointer));
+            Term const& termInAnd(getTermConstReferenceFromUniquePointer(subWrappedTerm.baseTermPointer));
             if(termInAnd.isVariableTerm())
             {
                 result.emplace_back(SatisfiabilityTerm{termInAnd.getVariableTermConstReference()});
@@ -62,7 +62,7 @@ SatisfiabilityTerms getSatisfiabilityTerms(
                 SatisfiabilityTerm satisfiabilityTerm;
                 for(WrappedTerm const& subSubWrappedTerm : termInAnd.getExpressionConstReference().getWrappedTerms())
                 {
-                    Term const& termInOr(getTermConstReferenceFromSharedPointer(subSubWrappedTerm.baseTermSharedPointer));
+                    Term const& termInOr(getTermConstReferenceFromUniquePointer(subSubWrappedTerm.baseTermPointer));
                     if(termInOr.isVariableTerm())
                     {
                         satisfiabilityTerm.emplace_back(termInOr.getVariableTermConstReference());

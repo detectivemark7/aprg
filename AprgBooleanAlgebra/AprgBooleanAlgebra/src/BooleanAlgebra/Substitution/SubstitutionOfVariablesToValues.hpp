@@ -16,7 +16,7 @@ using VariableValuePair = std::pair<std::string, bool>;
 class SubstitutionOfVariablesToValues
 {
 public:
-    SubstitutionOfVariablesToValues();
+    SubstitutionOfVariablesToValues() = default;
     SubstitutionOfVariablesToValues(std::initializer_list<VariableValuePair> const& variablesWithValues);
     SubstitutionOfVariablesToValues(VariablesToValuesMap const& variablesWithValues);
 

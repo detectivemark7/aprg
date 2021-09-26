@@ -9,7 +9,7 @@ namespace booleanAlgebra
 {
 
 Constant::Constant()
-    : m_booleanValue{}
+    : m_booleanValue(false)
 {}
 
 Constant::Constant(bool const boolValue)

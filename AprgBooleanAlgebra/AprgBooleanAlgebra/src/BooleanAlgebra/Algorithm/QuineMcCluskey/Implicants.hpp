@@ -20,8 +20,7 @@ public:
     using ImplicantWithMintermInitializerList = std::initializer_list<ImplicantWithMinterm>;
     using ImplicantWithMintermSet = std::set<ImplicantWithMinterm>;
 
-    Implicants()
-    {}
+    Implicants()=default;
 
     Implicants(ImplicantWithMintermInitializerList const& implicants)
         : m_implicantsData(implicants)
