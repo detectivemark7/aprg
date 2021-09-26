@@ -13,8 +13,8 @@ namespace alba
 class AlbaWindowsPathHandler: public AlbaPathHandler
 {
 public:
-    AlbaWindowsPathHandler(PathInitialValueSource const initialValueSource);
     AlbaWindowsPathHandler(std::string const& path);
+
     // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
     void clear() override;
@@ -23,7 +23,6 @@ public:
     AlbaDateTime getFileCreationTime();
     bool isFoundInLocalSystem() const;
     bool isRelativePath() const;
-    void setPathToDetectedLocalPath();
     void createDirectoriesForNonExisitingDirectories() const;
     bool deleteFile();
     bool deleteDirectoryWithoutFilesAndDirectories(); //do tests
@@ -46,6 +45,7 @@ public:
             std::string const& wildCardSearch,
             ListOfPaths& listOfFiles,
             ListOfPaths& listOfDirectories) const;
+
 private:
     void save(std::string const& path) override;
     void setPath(std::string const& path);
@@ -62,5 +62,20 @@ private:
     bool m_foundInLocalSystem;
     bool m_relativePath;
 };
+
+
+namespace AlbaPathHandlerUtility
+{
+std::string getCurrentDetectedPath();
+
+template<PathInitialValue initialValue>
+AlbaWindowsPathHandler createPathWithInitialValue() // Base case is invalid
+{
+    static_assert(initialValue != initialValue, "This source is not supported. Please add a specialization if needed.");
+    return AlbaWindowsPathHandler(std::string());
+}
+
+template<> AlbaWindowsPathHandler createPathWithInitialValue<PathInitialValue::CurrentDetectedPath>();
+}
 
 }//namespace alba

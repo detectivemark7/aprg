@@ -212,10 +212,6 @@ OutputStringType convertToAnotherBasicStringVariant(InputStringType const& input
     return OutputStringType(inputString.cbegin(), inputString.cend());
 }
 
-std::wstring convertStringToWideString(std::string const& stringInput);
-std::string convertWideStringToString(std::wstring const& wstringInput);
-
-
 
 // Alignments
 

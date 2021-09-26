@@ -819,16 +819,6 @@ void splitToStringsUsingASeriesOfDelimeters(strings & listOfStrings, string cons
     }
 }
 
-wstring convertStringToWideString(string const& stringInput)
-{
-    return wstring(stringInput.begin(), stringInput.end());
-}
-
-string convertWideStringToString(wstring const& wstringInput)
-{
-    return string(wstringInput.begin(), wstringInput.end());
-}
-
 string getStringWithJustifyAlignment(string const& mainString, unsigned int const targetLength)
 {
     string result;

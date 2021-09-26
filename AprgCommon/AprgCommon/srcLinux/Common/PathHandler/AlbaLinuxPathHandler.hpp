@@ -15,7 +15,7 @@ namespace alba
 class AlbaLinuxPathHandler: public AlbaPathHandler
 {
 public:
-    AlbaLinuxPathHandler(PathInitialValueSource const initialValueSource);
+    AlbaLinuxPathHandler(PathInitialValue const initialValue);
     AlbaLinuxPathHandler(std::string const& path);
     // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 

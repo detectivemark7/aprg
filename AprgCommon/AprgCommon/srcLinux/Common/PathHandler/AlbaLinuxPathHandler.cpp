@@ -22,12 +22,12 @@ using namespace std;
 namespace alba
 {
 
-AlbaLinuxPathHandler::AlbaLinuxPathHandler(PathInitialValueSource const initialValueSource)
+AlbaLinuxPathHandler::AlbaLinuxPathHandler(PathInitialValue const initialValue)
     : AlbaPathHandler(R"(/)")
     , m_foundInLocalSystem(false)
     , m_relativePath(false)
 {
-    if(PathInitialValueSource::DetectedLocalPath == initialValueSource)
+    if(PathInitialValue::DetectedLocalPath == initialValue)
     {
         setPathToDetectedLocalPath();
     }

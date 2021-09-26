@@ -394,7 +394,7 @@ template <AlbaDateTime::PrintFormat printFormat>
 ostream & operator<<(ostream & out,  AlbaDateTime::PrintObject<printFormat> const&)
 {
     using PrintObjectWithFormat = AlbaDateTime::PrintObject<printFormat>;
-    static_assert(sizeof(PrintObjectWithFormat) != sizeof(PrintObjectWithFormat),
+    static_assert(sizeof(PrintObjectWithFormat) == -1,
             "This print format is not supported. Please add a specialization if needed.");
     return out;
 }

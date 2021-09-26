@@ -6,9 +6,10 @@
 namespace alba
 {
 
-enum class PathInitialValueSource
+enum class PathInitialValue
 {
-    DetectedLocalPath
+    CurrentDetectedPath,
+    TemporaryLocalPath,
 };
 
 using ListOfPaths = std::set<std::string>;
