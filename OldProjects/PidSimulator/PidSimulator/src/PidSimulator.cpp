@@ -211,7 +211,7 @@ void PidSimulator::calculateAndGenerateOutputImage()
     updateAllMaxWithBuffer(xLeftMax, xRightMax, yBottomMax, yTopMax);
     cout << "max list:[" << xLeftMax << ", " << xRightMax << ", " << yBottomMax << ", " << yTopMax << "]\n";
 
-    AlbaLocalPathHandler detectedPath(PathInitialValueSource::DetectedLocalPath);
+    AlbaLocalPathHandler detectedPath(AlbaLocalPathHandler::createPathHandlerForDetectedPath());
     AlbaLocalPathHandler defaultFile(detectedPath.getDirectory() + R"(Default24Bit.bmp)");
     cout << "defaultFile:[" << defaultFile.getFullPath() << "]\n";
     if(defaultFile.isFoundInLocalSystem())
