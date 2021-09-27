@@ -23,6 +23,11 @@ AlbaWindowsPathHandler::AlbaWindowsPathHandler(string const& path)
     setPath(path);
 }
 
+AlbaWindowsPathHandler AlbaWindowsPathHandler::createPathHandlerForDetectedPath()
+{
+    return AlbaWindowsPathHandler(getCurrentDetectedPath());
+}
+
 void AlbaWindowsPathHandler::clear()
 {
     AlbaPathHandler::clear();
@@ -297,6 +302,23 @@ void AlbaWindowsPathHandler::findFilesAndDirectoriesWithDepth(
     }
 }
 
+string AlbaWindowsPathHandler::getCurrentDetectedPath()
+{
+    string result;
+    constexpr unsigned int MAXIMUM_CHARACTERS_PATH = 1000;
+    WCHAR currentPathFromWindowsWideCharArray[MAXIMUM_CHARACTERS_PATH];
+    if (GetModuleFileNameW(NULL, currentPathFromWindowsWideCharArray, MAX_PATH))
+    {
+        result = convertToAnotherBasicStringVariant<wstring, string>(wstring(currentPathFromWindowsWideCharArray));
+    }
+    else
+    {
+        cout<<"Error in AlbaWindowsPathHandler::getDetectedLocalPath() \n";
+        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
+    }
+    return result;
+}
+
 void AlbaWindowsPathHandler::save(string const& path)
 {
     setPath(path);
@@ -361,34 +383,6 @@ bool AlbaWindowsPathHandler::isSlashNeededAtTheEnd(string const& correctedPath, 
         }
     }
     return result;
-}
-
-namespace AlbaPathHandlerUtility
-{
-
-string getCurrentDetectedPath()
-{
-    string result;
-    constexpr unsigned int MAXIMUM_CHARACTERS_PATH = 1000;
-    WCHAR currentPathFromWindowsWideCharArray[MAXIMUM_CHARACTERS_PATH];
-    if (GetModuleFileNameW(NULL, currentPathFromWindowsWideCharArray, MAX_PATH))
-    {
-        result = convertToAnotherBasicStringVariant<wstring, string>(wstring(currentPathFromWindowsWideCharArray));
-    }
-    else
-    {
-        cout<<"Error in AlbaWindowsPathHandler::getDetectedLocalPath() \n";
-        cout<<AlbaWindowsHelper::getLastFormattedErrorMessage()<<"\n";
-    }
-    return result;
-}
-
-template<>
-AlbaWindowsPathHandler createPathWithInitialValue<PathInitialValue::CurrentDetectedPath>()
-{
-    return AlbaWindowsPathHandler(getCurrentDetectedPath());
-}
-
 }
 
 }//namespace alba

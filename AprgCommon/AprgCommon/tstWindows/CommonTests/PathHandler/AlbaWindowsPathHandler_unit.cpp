@@ -419,7 +419,7 @@ TEST_F(AlbaWindowsPathHandlerTest, FileSizeTest_FileIsExisting)
 
 TEST_F(AlbaWindowsPathHandlerTest, CreatePathWithInitialValueWorks)
 {
-    AlbaWindowsPathHandler pathHandler(AlbaPathHandlerUtility::createPathWithInitialValue<PathInitialValue::CurrentDetectedPath>());
+    AlbaWindowsPathHandler pathHandler(AlbaWindowsPathHandler::createPathHandlerForDetectedPath());
 
     EXPECT_EQ(PathType::File, pathHandler.getPathType());
     ASSERT_TRUE(pathHandler.isFoundInLocalSystem());

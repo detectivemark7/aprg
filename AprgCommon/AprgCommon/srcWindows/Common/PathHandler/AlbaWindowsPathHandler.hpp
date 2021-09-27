@@ -17,6 +17,8 @@ public:
 
     // no need for virtual destructor because base destructor is virtual (similar to other virtual functions)
 
+    static AlbaWindowsPathHandler createPathHandlerForDetectedPath();
+
     void clear() override;
     std::string getDriveOrRoot() const;
     double getFileSizeEstimate();
@@ -47,6 +49,7 @@ public:
             ListOfPaths& listOfDirectories) const;
 
 private:
+    static std::string getCurrentDetectedPath();
     void save(std::string const& path) override;
     void setPath(std::string const& path);
     void setDriveOrRoot();
@@ -62,20 +65,5 @@ private:
     bool m_foundInLocalSystem;
     bool m_relativePath;
 };
-
-
-namespace AlbaPathHandlerUtility
-{
-std::string getCurrentDetectedPath();
-
-template<PathInitialValue initialValue>
-AlbaWindowsPathHandler createPathWithInitialValue() // Base case is invalid
-{
-    static_assert(initialValue != initialValue, "This source is not supported. Please add a specialization if needed.");
-    return AlbaWindowsPathHandler(std::string());
-}
-
-template<> AlbaWindowsPathHandler createPathWithInitialValue<PathInitialValue::CurrentDetectedPath>();
-}
 
 }//namespace alba
