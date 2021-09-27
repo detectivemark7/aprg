@@ -253,9 +253,9 @@ string AprgGraph::getBitmapFilePathOfCharacter(char const character) const
     }
     filename+=".bmp";
 
-#ifdef APRG_RELEASE
+#ifndef APRG_RELEASE
     //This is based on detectedPath (for release builds), there should be a common file for this (on pathhandlers maybe?)
-    AlbaLocalPathHandler detectedPath(PathInitialValueSource::DetectedLocalPath);
+    AlbaLocalPathHandler detectedPath(AlbaLocalPathHandler::createPathHandlerForDetectedPath());
     AlbaLocalPathHandler bitmapCharacterFile(detectedPath.getDirectory() + R"(BitmapCharacters/)"+filename);
     return bitmapCharacterFile.getFullPath();
 #endif
