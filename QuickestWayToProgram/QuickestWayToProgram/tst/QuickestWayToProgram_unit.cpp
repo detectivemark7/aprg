@@ -1616,7 +1616,7 @@ TEST(SampleTest, DISABLED_VectorAccumulate)
 
 TEST(SampleTest, DISABLED_GenerateSupplementarySacksHpp)
 {
-    AlbaLocalPathHandler currentDirectory(PathInitialValueSource::DetectedLocalPath);
+    AlbaLocalPathHandler currentDirectory(AlbaLocalPathHandler::createPathHandlerForDetectedPath());
     AlbaLocalPathHandler supplementaryDirectory(currentDirectory.getDirectory()+R"(\SupplementarySacks\)");
     AlbaLocalPathHandler supplementaryHeaderFilePath(currentDirectory.getDirectory()+R"(\SupplementarySacks.hpp)");
     ListOfPaths files;
@@ -1633,7 +1633,7 @@ TEST(SampleTest, DISABLED_GenerateSupplementarySacksHpp)
 
 TEST(SampleTest, DISABLED_GenerateFeatureSpecificComponentFiles)
 {
-    AlbaLocalPathHandler currentDirectory(PathInitialValueSource::DetectedLocalPath);
+    AlbaLocalPathHandler currentDirectory(AlbaLocalPathHandler::createPathHandlerForDetectedPath());
     AlbaLocalPathHandler featureSpecificDirectory(currentDirectory.getDirectory());
 
     ifstream componentNameFile(featureSpecificDirectory.getFullPath()+"ComponentName.hpp");
