@@ -1182,7 +1182,7 @@ void SOOSA::saveHeadersToCsvFile() const
 
 void SOOSA::saveOutputHtmlFile(string const& processedFilePath) const
 {
-    AlbaLocalPathHandler basisHtmlPath(PathInitialValueSource::DetectedLocalPath);
+    AlbaLocalPathHandler basisHtmlPath(AlbaLocalPathHandler::createPathHandlerForDetectedPath());
     basisHtmlPath.input(basisHtmlPath.getDirectory() + "basis.html");
     ifstream htmlBasisFileStream(basisHtmlPath.getFullPath());
     if(htmlBasisFileStream.is_open())
