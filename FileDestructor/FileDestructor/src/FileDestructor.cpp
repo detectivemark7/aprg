@@ -10,7 +10,7 @@ namespace alba
 {
 
 FileDestructor::FileDestructor()
-    : m_pathToDestroy(PathInitialValueSource::DetectedLocalPath)
+    : m_pathToDestroy(AlbaLocalPathHandler::createPathHandlerForDetectedPath())
 {}
 
 void FileDestructor::destroy() const
