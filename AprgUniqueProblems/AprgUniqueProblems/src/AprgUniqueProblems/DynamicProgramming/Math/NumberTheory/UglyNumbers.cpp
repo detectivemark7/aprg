@@ -12,7 +12,7 @@ UglyNumbers::UglyNumbers(Number const nth)
     : m_nth(nth)
 {}
 
-UglyNumbers::Number UglyNumbers::getNthUglyNumberByCheckingPreviousUglyNumbersUsingTabularDP() const
+UglyNumbers::Number UglyNumbers::getNthUglyNumberByCheckingPreviousUglyNumbersUsingIterativeDP() const
 {
     // Time Complexity: O(n)
     // Auxiliary Space: O(n)
@@ -43,7 +43,7 @@ UglyNumbers::Number UglyNumbers::getNthUglyNumberByCheckingPreviousUglyNumbersUs
     return result;
 }
 
-UglyNumbers::Number UglyNumbers::getNthUglyNumberByMultiplesUsingTabularDP() const
+UglyNumbers::Number UglyNumbers::getNthUglyNumberByMultiplesUsingIterativeDP() const
 {
     // Time Complexity: O(n)
     // Auxiliary Space: O(n)

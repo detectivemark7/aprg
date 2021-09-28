@@ -13,8 +13,8 @@ TEST(LongestPalindromicSubsequenceTest, GetLongestLengthWorksOnExample1)
 
     EXPECT_EQ(5U, queryForTest.getLongestLengthUsingNaiveRecursion());
     EXPECT_EQ(5U, queryForTest.getLongestLengthUsingMemoizationDP());
-    EXPECT_EQ(5U, queryForTest.getLongestLengthUsingTabularDP());
-    EXPECT_EQ(5U, queryForTest.getLongestLengthUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(5U, queryForTest.getLongestLengthUsingIterativeDP());
+    EXPECT_EQ(5U, queryForTest.getLongestLengthUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(LongestPalindromicSubsequenceTest, GetLongestLengthWorksOnExample2)
@@ -23,8 +23,8 @@ TEST(LongestPalindromicSubsequenceTest, GetLongestLengthWorksOnExample2)
 
     EXPECT_EQ(7U, queryForTest.getLongestLengthUsingNaiveRecursion());
     EXPECT_EQ(7U, queryForTest.getLongestLengthUsingMemoizationDP());
-    EXPECT_EQ(7U, queryForTest.getLongestLengthUsingTabularDP());
-    EXPECT_EQ(7U, queryForTest.getLongestLengthUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(7U, queryForTest.getLongestLengthUsingIterativeDP());
+    EXPECT_EQ(7U, queryForTest.getLongestLengthUsingIterativeDPAndSpaceEfficient());
 }
 
 }

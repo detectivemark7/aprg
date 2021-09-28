@@ -13,8 +13,8 @@ TEST(BinomialCoefficientTest, GetMinimumNumberOfOperationsWorksOnExample1)
 
     EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingNaiveRecursion());
     EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingMemoizationDP());
-    EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingTabularDP());
-    EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingIterativeDP());
+    EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(1U, queryForTest.getBinomialCoefficientUsingGcf());
 }
 
@@ -24,8 +24,8 @@ TEST(BinomialCoefficientTest, GetMinimumNumberOfOperationsWorksOnExample2)
 
     EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingNaiveRecursion());
     EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingMemoizationDP());
-    EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingTabularDP());
-    EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingIterativeDP());
+    EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(10U, queryForTest.getBinomialCoefficientUsingGcf());
 }
 
@@ -35,8 +35,8 @@ TEST(BinomialCoefficientTest, GetMinimumNumberOfOperationsWorksOnExample3)
 
     // EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingNaiveRecursion()); // Too long
     EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingMemoizationDP());
-    EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingTabularDP());
-    EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingIterativeDP());
+    EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(2333606220U, queryForTest.getBinomialCoefficientUsingGcf());
 }
 

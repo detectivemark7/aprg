@@ -34,25 +34,25 @@ PathSumInGridInRightOrDownTraversal::Value PathSumInGridInRightOrDownTraversal::
     return pathSum;
 }
 
-PathSumInGridInRightOrDownTraversal::Value PathSumInGridInRightOrDownTraversal::getBestPathSumUsingTabularDP() const
+PathSumInGridInRightOrDownTraversal::Value PathSumInGridInRightOrDownTraversal::getBestPathSumUsingIterativeDP() const
 {
     // Time Complexity of the DP implementation is O(mn) which is much better than Naive Recursive implementation.
 
     Value pathSum(0);
     if(!m_inputGrid.isEmpty())
     {
-        Grid partialSumGrid(getPartialSumGridUsingTabularDP());
+        Grid partialSumGrid(getPartialSumGridUsingIterativeDP());
         pathSum = partialSumGrid.getEntry(partialSumGrid.getNumberOfColumns()-1, partialSumGrid.getNumberOfRows()-1);
     }
     return pathSum;
 }
 
-PathSumInGridInRightOrDownTraversal::Path PathSumInGridInRightOrDownTraversal::getBestPathUsingTabularDP() const
+PathSumInGridInRightOrDownTraversal::Path PathSumInGridInRightOrDownTraversal::getBestPathUsingIterativeDP() const
 {
     Path path;
     if(!m_inputGrid.isEmpty())
     {
-        Grid partialSumGrid(getPartialSumGridUsingTabularDP());
+        Grid partialSumGrid(getPartialSumGridUsingIterativeDP());
         Index x=partialSumGrid.getNumberOfColumns()-1, y=partialSumGrid.getNumberOfRows()-1;
         path = {m_inputGrid.getEntry(x, y)};
         while(true)
@@ -138,7 +138,7 @@ PathSumInGridInRightOrDownTraversal::Value PathSumInGridInRightOrDownTraversal::
     return result;
 }
 
-PathSumInGridInRightOrDownTraversal::Grid PathSumInGridInRightOrDownTraversal::getPartialSumGridUsingTabularDP() const
+PathSumInGridInRightOrDownTraversal::Grid PathSumInGridInRightOrDownTraversal::getPartialSumGridUsingIterativeDP() const
 {
     Grid result(m_inputGrid);
     for(Index x=1; x<result.getNumberOfColumns(); x++)  // first row has only left neighbors

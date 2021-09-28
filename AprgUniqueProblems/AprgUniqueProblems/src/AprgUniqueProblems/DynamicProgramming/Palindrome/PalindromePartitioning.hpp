@@ -22,8 +22,8 @@ public:
 
     Count getMinimumNumberOfCutsUsingNaiveRecursion() const;
     Count getMinimumNumberOfCutsUsingMemoizationDP() const;
-    Count getMinimumNumberOfCutsUsingTabularDP() const;
-    Count getMinimumNumberOfCutsUsingTabularDPAndTimeEfficient() const;
+    Count getMinimumNumberOfCutsUsingIterativeDP() const;
+    Count getMinimumNumberOfCutsUsingIterativeDPAndTimeEfficient() const;
 
 private:
     bool isPalindrome(Index const left, Index const right) const;

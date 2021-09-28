@@ -25,7 +25,7 @@ public:
 
     Profit getBestProfitUsingNaiveRecursion() const;
     Profit getBestProfitUsingMemoizationDP() const;
-    Profit getBestProfitUsingTabularDP() const;
+    Profit getBestProfitUsingIterativeDP() const;
 
 private:
     Profit getBestProfitUsingNaiveRecursion(Length const remainingLength) const;

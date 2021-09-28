@@ -13,8 +13,8 @@ TEST(TotalNumberOfNonDecreasingNumbersWithNDigitsTest, GetCountWorksOnExample1)
 
     EXPECT_EQ(0U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(0U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(0U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(0U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(0U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(0U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(0U, queryForTest.getCountUsingSummationFormula());
 }
 
@@ -24,8 +24,8 @@ TEST(TotalNumberOfNonDecreasingNumbersWithNDigitsTest, GetCountWorksOnExample2)
 
     EXPECT_EQ(10U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(10U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(10U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(10U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(10U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(10U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(10U, queryForTest.getCountUsingSummationFormula());
 }
 
@@ -35,8 +35,8 @@ TEST(TotalNumberOfNonDecreasingNumbersWithNDigitsTest, GetCountWorksOnExample3)
 
     EXPECT_EQ(55U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(55U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(55U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(55U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(55U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(55U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(55U, queryForTest.getCountUsingSummationFormula());
 }
 
@@ -46,8 +46,8 @@ TEST(TotalNumberOfNonDecreasingNumbersWithNDigitsTest, GetCountWorksOnExample4)
 
     EXPECT_EQ(220U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(220U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(220U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(220U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(220U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(220U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(220U, queryForTest.getCountUsingSummationFormula());
 }
 
@@ -57,8 +57,8 @@ TEST(TotalNumberOfNonDecreasingNumbersWithNDigitsTest, GetCountWorksOnExample5)
 
     EXPECT_EQ(92378U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(92378U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(92378U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(92378U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(92378U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(92378U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
     EXPECT_EQ(92378U, queryForTest.getCountUsingSummationFormula());
 }
 

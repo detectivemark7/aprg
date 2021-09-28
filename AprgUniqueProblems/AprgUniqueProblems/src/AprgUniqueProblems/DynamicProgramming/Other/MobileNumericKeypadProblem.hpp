@@ -22,8 +22,8 @@ public:
 
     Count getCountUsingNaiveRecursion() const;
     Count getCountUsingMemoizationDP() const;
-    Count getCountUsingTabularDP() const;
-    Count getCountUsingTabularDPAndSpaceEfficient() const;
+    Count getCountUsingIterativeDP() const;
+    Count getCountUsingIterativeDPAndSpaceEfficient() const;
 
 private:
     Count getCountForValueUsingNaiveRecursion(Count const length, NumpadValue const numpadValue) const;

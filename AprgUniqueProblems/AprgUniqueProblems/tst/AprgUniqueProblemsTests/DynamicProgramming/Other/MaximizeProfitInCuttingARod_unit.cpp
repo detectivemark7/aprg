@@ -14,8 +14,8 @@ TEST(MaximizeProfitInCuttingARodTest, GetBestProfitWorksOnExample1)
 
     EXPECT_EQ(22U, queryForTest.getBestProfitUsingNaiveRecursion());
     EXPECT_EQ(22U, queryForTest.getBestProfitUsingMemoizationDP());
-    /*EXPECT_EQ(22U, queryForTest.getBestProfitUsingTabularDP());
-    EXPECT_EQ(22U, queryForTest.getBestProfitUsingTabularDPAndSpaceEfficient());*/
+    /*EXPECT_EQ(22U, queryForTest.getBestProfitUsingIterativeDP());
+    EXPECT_EQ(22U, queryForTest.getBestProfitUsingIterativeDPAndSpaceEfficient());*/
 }
 
 TEST(MaximizeProfitInCuttingARodTest, GetBestProfitWorksOnExample2)
@@ -25,8 +25,8 @@ TEST(MaximizeProfitInCuttingARodTest, GetBestProfitWorksOnExample2)
 
     EXPECT_EQ(24U, queryForTest.getBestProfitUsingNaiveRecursion());
     EXPECT_EQ(24U, queryForTest.getBestProfitUsingMemoizationDP());
-    /*EXPECT_EQ(24U, queryForTest.getBestProfitUsingTabularDP());
-    EXPECT_EQ(24U, queryForTest.getBestProfitUsingTabularDPAndSpaceEfficient());*/
+    /*EXPECT_EQ(24U, queryForTest.getBestProfitUsingIterativeDP());
+    EXPECT_EQ(24U, queryForTest.getBestProfitUsingIterativeDPAndSpaceEfficient());*/
 }
 
 }

@@ -27,7 +27,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingMemoi
     return getLevenshteinDistanceUsingMemoizationDP(indexGrid, m_string1.length(), m_string2.length());
 }
 
-LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabularDP() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingIterativeDP() const
 {
     // Time Complexity: O(m x n)
     // Auxiliary Space: O(m x n)
@@ -78,7 +78,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabul
     return indexGrid.getEntry(indexGrid.getNumberOfColumns()-1, indexGrid.getNumberOfRows()-1);
 }
 
-LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingTabularDPAndSpaceEfficient() const
+LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingIterativeDPAndSpaceEfficient() const
 {
     // Note this is same implementation in AlbaStringHelper
 

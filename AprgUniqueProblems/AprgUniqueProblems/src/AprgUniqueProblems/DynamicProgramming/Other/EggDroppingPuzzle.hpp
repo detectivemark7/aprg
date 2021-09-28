@@ -20,7 +20,7 @@ public:
 
     Count getMinimumNumberOfTrialsUsingNaiveRecursion() const;
     Count getMinimumNumberOfTrialsUsingMemoizationDP() const;
-    Count getMinimumNumberOfTrialsUsingTabularDP() const;
+    Count getMinimumNumberOfTrialsUsingIterativeDP() const;
 
 private:
     Count getMinimumNumberOfTrialsUsingNaiveRecursion(Count const remainingEggs, Count const floorIndexPlusOne) const;

@@ -31,7 +31,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingNaiveRecursion() c
 
 bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingMemoizationDP() const
 {
-    // Time Complexity: O(sum*n) (same as tabular)
+    // Time Complexity: O(sum*n) (same as iterative)
     // Auxiliary Space: O(sum*n)
 
     bool result(false);
@@ -47,7 +47,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingMemoizationDP() co
     return result;
 }
 
-bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingTabularDP() const
+bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingIterativeDP() const
 {
     // Time Complexity: O(sum*n)
     // Auxiliary Space: O(sum*n)
@@ -78,7 +78,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingTabularDP() const
     return result;
 }
 
-bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingTabularDPAndSpaceEfficient() const
+bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingIterativeDPAndSpaceEfficient() const
 {
     // Time Complexity: O(sum * n)
     // Auxiliary Space: O(sum)

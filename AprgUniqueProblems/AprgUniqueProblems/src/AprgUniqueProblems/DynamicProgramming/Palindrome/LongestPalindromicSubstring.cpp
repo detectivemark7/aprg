@@ -24,7 +24,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
 
 LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLengthUsingMemoizationDP() const
 {
-    // Time Complexity: O(n^2) (should be same as Tabular DP)
+    // Time Complexity: O(n^2) (should be same as Iterative DP)
     // Auxiliary Space: O(n^2)
 
     Index result(0);
@@ -36,7 +36,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
     return result;
 }
 
-LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLengthUsingTabularDP() const
+LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLengthUsingIterativeDP() const
 {
     // Time complexity: O(n^2).
     // -> Two nested traversals are needed.
@@ -78,7 +78,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
     return result;
 }
 
-LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLengthUsingTabularDPAndSpaceEfficient() const
+LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLengthUsingIterativeDPAndSpaceEfficient() const
 {
     // Time complexity: O(n).
     // Auxiliary Space: O(n).
@@ -106,7 +106,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
     return result;
 }
 
-string LongestPalindromicSubstring::getLongestStringUsingTabularDPAndSpaceEfficient() const
+string LongestPalindromicSubstring::getLongestStringUsingIterativeDPAndSpaceEfficient() const
 {
     // Time complexity: O(n).
     // Auxiliary Space: O(n).

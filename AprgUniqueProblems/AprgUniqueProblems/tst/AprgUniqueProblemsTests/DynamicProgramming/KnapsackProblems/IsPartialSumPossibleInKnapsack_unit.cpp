@@ -13,8 +13,8 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample1)
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDPAndSpaceEfficient());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDP());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample2)
@@ -23,8 +23,8 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample2)
 
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
-    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingTabularDP());
-    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingTabularDPAndSpaceEfficient());
+    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingIterativeDP());
+    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample3)
@@ -33,8 +33,8 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample3)
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDPAndSpaceEfficient());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDP());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample4)
@@ -43,8 +43,8 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample4)
 
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
-    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingTabularDP());
-    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingTabularDPAndSpaceEfficient());
+    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingIterativeDP());
+    EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample5)
@@ -53,8 +53,8 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample5)
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDP());
-    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingTabularDPAndSpaceEfficient());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDP());
+    EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingIterativeDPAndSpaceEfficient());
 }
 
 }

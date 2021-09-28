@@ -29,7 +29,7 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
 
 BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberOfWaysForTrueUsingMemoizationDP() const
 {
-    // Time Complexity: O(n^3) (should be same as Tabular DP)
+    // Time Complexity: O(n^3) (should be same as Iterative DP)
     // Auxiliary Space: O(n^2)
 
     Count result(0);
@@ -41,7 +41,7 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
     return result;
 }
 
-BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberOfWaysForTrueUsingTabularDP() const
+BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberOfWaysForTrueUsingIterativeDP() const
 {
     // Time Complexity: O(n^3)
     // Auxiliary Space: O(n^2)

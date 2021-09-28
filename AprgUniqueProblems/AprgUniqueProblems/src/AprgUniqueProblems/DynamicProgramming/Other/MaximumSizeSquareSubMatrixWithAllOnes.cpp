@@ -12,7 +12,7 @@ MaximumSizeSquareSubMatrixWithAllOnes::MaximumSizeSquareSubMatrixWithAllOnes(
 
 MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getMaximumSquareAreaUsingMemoizationDP() const
 {
-    // Time Complexity: O(m*n*max(m,n)) (same as tabular DP)
+    // Time Complexity: O(m*n*max(m,n)) (same as iterative DP)
     // Auxiliary Space: O(m*n)
 
     Unit result(0);
@@ -41,7 +41,7 @@ MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOne
     return result;
 }
 
-MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getMaximumSquareAreaUsingTabularDP() const
+MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getMaximumSquareAreaUsingIterativeDP() const
 {
     // Time Complexity: O(m*n*max(m,n))
     // Auxiliary Space: O(m*n)
@@ -92,7 +92,7 @@ MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOne
     return result;
 }
 
-MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getMaximumSquareAreaUsingTabularDPAndTimeEfficient() const
+MaximumSizeSquareSubMatrixWithAllOnes::Unit MaximumSizeSquareSubMatrixWithAllOnes::getMaximumSquareAreaUsingIterativeDPAndTimeEfficient() const
 {
     // Time Complexity: O(m*n)
     // Auxiliary Space: O(m*n)

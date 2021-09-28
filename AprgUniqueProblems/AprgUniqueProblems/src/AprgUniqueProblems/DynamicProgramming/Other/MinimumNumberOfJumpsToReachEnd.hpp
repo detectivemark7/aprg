@@ -22,8 +22,8 @@ public:
 
     Count getMinimumNumberOfJumpsUsingNaiveRecursion() const;
     Count getMinimumNumberOfJumpsUsingMemoizationDP() const;
-    Count getMinimumNumberOfJumpsUsingTabularDP() const;
-    Count getMinimumNumberOfJumpsUsingTabularDPAndTimeEfficient() const;
+    Count getMinimumNumberOfJumpsUsingIterativeDP() const;
+    Count getMinimumNumberOfJumpsUsingIterativeDPAndTimeEfficient() const;
     Indices getPathOfMinimumNumberOfJumps() const;
 
 private:

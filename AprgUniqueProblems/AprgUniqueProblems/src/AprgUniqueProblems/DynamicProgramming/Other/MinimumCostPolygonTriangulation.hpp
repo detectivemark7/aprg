@@ -22,7 +22,7 @@ public:
 
     Cost getMinimumNumberOfOperationsUsingNaiveRecursion() const;
     Cost getMinimumNumberOfOperationsUsingMemoizationDP() const;
-    Cost getMinimumNumberOfOperationsUsingTabularDP() const;
+    Cost getMinimumNumberOfOperationsUsingIterativeDP() const;
 
 private:
     Cost getMinimumNumberOfOperationsUsingNaiveRecursion(Index const left, Index const right) const;

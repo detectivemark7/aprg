@@ -18,8 +18,8 @@ public:
     MaximumSizeSquareSubMatrixWithAllOnes(BooleanMatrix const& booleanMatrix);
 
     Unit getMaximumSquareAreaUsingMemoizationDP() const;
-    Unit getMaximumSquareAreaUsingTabularDP() const;
-    Unit getMaximumSquareAreaUsingTabularDPAndTimeEfficient() const;
+    Unit getMaximumSquareAreaUsingIterativeDP() const;
+    Unit getMaximumSquareAreaUsingIterativeDPAndTimeEfficient() const;
 
 private:
     Unit getMaximumSideUsingMemoizationDP(UnitMatrix & sideMatrix, Index const x, Index const y) const;

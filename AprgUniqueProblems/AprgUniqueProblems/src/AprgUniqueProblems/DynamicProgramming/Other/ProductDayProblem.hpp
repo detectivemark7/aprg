@@ -25,7 +25,7 @@ public:
     ProductDayProblem(PriceMatrix const& pricesInDayByProduct);
 
     Price getMinimumPriceUsingMemoizationDP() const;
-    Price getMinimumPriceUsingTabularDP() const;
+    Price getMinimumPriceUsingIterativeDP() const;
 
 private:
     Price getMinimumPriceUsingMemoizationDP(PriceMatrix & minimumPrices, Day const day, ProductBits const productBits) const;

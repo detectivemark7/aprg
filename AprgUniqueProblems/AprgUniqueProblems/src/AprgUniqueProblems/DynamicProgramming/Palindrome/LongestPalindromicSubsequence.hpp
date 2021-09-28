@@ -22,8 +22,8 @@ public:
 
     Count getLongestLengthUsingNaiveRecursion() const;
     Count getLongestLengthUsingMemoizationDP() const;
-    Count getLongestLengthUsingTabularDP() const;
-    Count getLongestLengthUsingTabularDPAndSpaceEfficient() const;
+    Count getLongestLengthUsingIterativeDP() const;
+    Count getLongestLengthUsingIterativeDPAndSpaceEfficient() const;
 
 private:
 

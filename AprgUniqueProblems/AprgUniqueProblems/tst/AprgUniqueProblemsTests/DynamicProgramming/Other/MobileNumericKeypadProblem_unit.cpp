@@ -13,8 +13,8 @@ TEST(MobileNumericKeypadProblemTest, GetMinimumCostWorksOnExample1)
 
     EXPECT_EQ(10U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(10U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(10U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(10U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(10U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(10U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(MobileNumericKeypadProblemTest, GetMinimumCostWorksOnExample2)
@@ -23,8 +23,8 @@ TEST(MobileNumericKeypadProblemTest, GetMinimumCostWorksOnExample2)
 
     EXPECT_EQ(36U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(36U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(36U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(36U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(36U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(36U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(MobileNumericKeypadProblemTest, GetMinimumCostWorksOnExample3)
@@ -33,8 +33,8 @@ TEST(MobileNumericKeypadProblemTest, GetMinimumCostWorksOnExample3)
 
     EXPECT_EQ(1944059U, queryForTest.getCountUsingNaiveRecursion());
     EXPECT_EQ(1944059U, queryForTest.getCountUsingMemoizationDP());
-    EXPECT_EQ(1944059U, queryForTest.getCountUsingTabularDP());
-    EXPECT_EQ(1944059U, queryForTest.getCountUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(1944059U, queryForTest.getCountUsingIterativeDP());
+    EXPECT_EQ(1944059U, queryForTest.getCountUsingIterativeDPAndSpaceEfficient());
 }
 
 }

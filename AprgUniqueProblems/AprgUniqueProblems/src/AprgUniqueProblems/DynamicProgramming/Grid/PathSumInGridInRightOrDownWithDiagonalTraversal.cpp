@@ -34,25 +34,25 @@ PathSumInGridInRightOrDownWithDiagonalTraversal::Value PathSumInGridInRightOrDow
     return pathSum;
 }
 
-PathSumInGridInRightOrDownWithDiagonalTraversal::Value PathSumInGridInRightOrDownWithDiagonalTraversal::getBestPathSumUsingTabularDP() const
+PathSumInGridInRightOrDownWithDiagonalTraversal::Value PathSumInGridInRightOrDownWithDiagonalTraversal::getBestPathSumUsingIterativeDP() const
 {
     // Time Complexity of the DP implementation is O(mn) which is much better than Naive Recursive implementation.
 
     Value pathSum(0);
     if(!m_inputGrid.isEmpty())
     {
-        Grid partialSumGrid(getPartialSumGridUsingTabularDP());
+        Grid partialSumGrid(getPartialSumGridUsingIterativeDP());
         pathSum = partialSumGrid.getEntry(partialSumGrid.getNumberOfColumns()-1, partialSumGrid.getNumberOfRows()-1);
     }
     return pathSum;
 }
 
-PathSumInGridInRightOrDownWithDiagonalTraversal::Path PathSumInGridInRightOrDownWithDiagonalTraversal::getBestPathUsingTabularDP() const
+PathSumInGridInRightOrDownWithDiagonalTraversal::Path PathSumInGridInRightOrDownWithDiagonalTraversal::getBestPathUsingIterativeDP() const
 {
     Path path;
     if(!m_inputGrid.isEmpty())
     {
-        Grid partialSumGrid(getPartialSumGridUsingTabularDP());
+        Grid partialSumGrid(getPartialSumGridUsingIterativeDP());
         Index x=partialSumGrid.getNumberOfColumns()-1, y=partialSumGrid.getNumberOfRows()-1;
         path = {m_inputGrid.getEntry(x, y)};
         while(true)
@@ -122,7 +122,7 @@ PathSumInGridInRightOrDownWithDiagonalTraversal::Value PathSumInGridInRightOrDow
     return result;
 }
 
-PathSumInGridInRightOrDownWithDiagonalTraversal::Grid PathSumInGridInRightOrDownWithDiagonalTraversal::getPartialSumGridUsingTabularDP() const
+PathSumInGridInRightOrDownWithDiagonalTraversal::Grid PathSumInGridInRightOrDownWithDiagonalTraversal::getPartialSumGridUsingIterativeDP() const
 {
     Grid result(m_inputGrid);
     for(Index x=1; x<result.getNumberOfColumns(); x++)  // first row has only left neighbors

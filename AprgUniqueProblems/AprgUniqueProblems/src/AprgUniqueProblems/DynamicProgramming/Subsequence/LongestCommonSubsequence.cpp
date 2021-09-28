@@ -30,7 +30,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingM
     return getLongestLengthUsingMemoizationDP(lengthMatrix, m_sequence1.size(), m_sequence2.size());
 }
 
-LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingTabularDP() const
+LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingIterativeDP() const
 {
     // Time Complexity: O(m x n)
     // Auxiliary Space: O(m x n)
@@ -58,7 +58,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingT
     return lengthMatrix.getEntry(m_sequence1.size(), m_sequence2.size());
 }
 
-LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingTabularDPAndSpaceEfficient() const
+LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingIterativeDPAndSpaceEfficient() const
 {
     // Note this is same implementation in AlbaStringHelper
 

@@ -25,7 +25,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingNaive
 
 BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoizationDP() const
 {
-    // Time Complexity: O(n*k) (should be same as Tabular DP)
+    // Time Complexity: O(n*k) (should be same as Iterative DP)
     // Auxiliary Space: O(n*k)
 
     Value result(0);
@@ -37,7 +37,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingMemoi
     return result;
 }
 
-BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabularDP() const
+BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingIterativeDP() const
 {
     // Time Complexity: O(n*k)
     // Auxiliary Space: O(n*k)
@@ -70,7 +70,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabul
     return result;
 }
 
-BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingTabularDPAndSpaceEfficient() const
+BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingIterativeDPAndSpaceEfficient() const
 {
     // Time Complexity: O(n*k)
     // Auxiliary Space: O(k)
@@ -127,7 +127,6 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingGcf()
     Value result(0);
     if(m_n >= m_k)
     {
-        result = 1;
         Value numerator=m_n;
         Value denominator=m_k;
         Value accumulatedNumerator=1;

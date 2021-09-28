@@ -25,6 +25,11 @@ public:
 
 }
 
+// APPROACH
+// Same as getting the Fibonacci number
+
+
+
 // Count ways to reach the n’th stair
 
 // There are n stairs, a person standing at the bottom wants to reach the top.

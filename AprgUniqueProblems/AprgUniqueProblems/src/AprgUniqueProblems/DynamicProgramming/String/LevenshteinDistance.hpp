@@ -20,8 +20,8 @@ public:
 
     Count getLevenshteinDistanceUsingNaiveRecursion() const;
     Count getLevenshteinDistanceUsingMemoizationDP() const;
-    Count getLevenshteinDistanceUsingTabularDP() const;
-    Count getLevenshteinDistanceUsingTabularDPAndSpaceEfficient() const;
+    Count getLevenshteinDistanceUsingIterativeDP() const;
+    Count getLevenshteinDistanceUsingIterativeDPAndSpaceEfficient() const;
 private:
     Count getLevenshteinDistanceUsingNaiveRecursion(Index const index1, Index const index2) const;
     Count getLevenshteinDistanceUsingMemoizationDP(CountGrid & indexGrid, Index const index1, Index const index2) const;

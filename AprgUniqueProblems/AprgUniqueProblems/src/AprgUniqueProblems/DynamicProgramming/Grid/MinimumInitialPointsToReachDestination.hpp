@@ -15,7 +15,7 @@ public:
 
     MinimumInitialPointsToReachDestination(Grid const& inputGrid);
 
-    Value getMinimalInitialPointsUsingTabularDP() const;
+    Value getMinimalInitialPointsUsingIterativeDP() const;
 
 private:
     Grid m_inputGrid;
@@ -24,7 +24,7 @@ private:
 }
 
 // APPROACH:
-// 1) Dynamic Programming by Tabular method:
+// 1) Dynamic Programming by Iterative method:
 // -> Each "cell" has a value of "needed points to make path"
 // -> Reverse traversal (from bottom-right to top-left)
 // -> Traversal uses previous values to compute for a new value

@@ -13,8 +13,8 @@ TEST(MaximizeProfitInKnapsackTest, GetBestProfitWorksOnExample1)
 
     EXPECT_EQ(220U, queryForTest.getBestProfitUsingNaiveRecursion());
     EXPECT_EQ(220U, queryForTest.getBestProfitUsingMemoizationDP());
-    EXPECT_EQ(220U, queryForTest.getBestProfitUsingTabularDP());
-    EXPECT_EQ(220U, queryForTest.getBestProfitUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(220U, queryForTest.getBestProfitUsingIterativeDP());
+    EXPECT_EQ(220U, queryForTest.getBestProfitUsingIterativeDPAndSpaceEfficient());
 }
 
 TEST(MaximizeProfitInKnapsackTest, GetBestProfitWorksOnExample2)
@@ -24,8 +24,8 @@ TEST(MaximizeProfitInKnapsackTest, GetBestProfitWorksOnExample2)
 
     EXPECT_EQ(22U, queryForTest.getBestProfitUsingNaiveRecursion());
     EXPECT_EQ(22U, queryForTest.getBestProfitUsingMemoizationDP());
-    EXPECT_EQ(22U, queryForTest.getBestProfitUsingTabularDP());
-    EXPECT_EQ(22U, queryForTest.getBestProfitUsingTabularDPAndSpaceEfficient());
+    EXPECT_EQ(22U, queryForTest.getBestProfitUsingIterativeDP());
+    EXPECT_EQ(22U, queryForTest.getBestProfitUsingIterativeDPAndSpaceEfficient());
 }
 
 }

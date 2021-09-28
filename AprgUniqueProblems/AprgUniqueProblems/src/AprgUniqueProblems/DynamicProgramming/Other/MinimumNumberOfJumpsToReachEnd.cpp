@@ -29,7 +29,7 @@ MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimum
 
 MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingMemoizationDP() const
 {
-    // Time complexity: O(n^2). (same as tabular DP)
+    // Time complexity: O(n^2). (same as iterative DP)
     // Auxiliary Space: O(n).
 
     Count result(0);
@@ -41,7 +41,7 @@ MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimum
     return result;
 }
 
-MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingTabularDP() const
+MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingIterativeDP() const
 {
     // Time complexity: O(n^2).
     // -> Nested traversal of the array is needed.
@@ -68,7 +68,7 @@ MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimum
     return result;
 }
 
-MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingTabularDPAndTimeEfficient() const
+MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingIterativeDPAndTimeEfficient() const
 {
     // Time complexity: O(n).
     // -> Only one traversal of the array is needed.

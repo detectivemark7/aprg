@@ -31,7 +31,7 @@ private:
 
 
 // APPROACH:
-// 1) Naive Recursion /  Dynamic Programming by Memoization:
+// 1) Naive Recursion / Dynamic Programming by Memoization:
 // -> Each "cell" has a count for "longest length" and this can be computed by:
 // ---> Search for the neighbors with the next value
 // ---> Recursively call the count of these neighbors

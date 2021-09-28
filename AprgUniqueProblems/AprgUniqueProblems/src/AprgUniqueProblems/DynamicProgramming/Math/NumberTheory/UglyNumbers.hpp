@@ -17,14 +17,16 @@ public:
 
     UglyNumbers(Number const nth);
 
-    Number getNthUglyNumberByCheckingPreviousUglyNumbersUsingTabularDP() const;
-    Number getNthUglyNumberByMultiplesUsingTabularDP() const;
+    Number getNthUglyNumberByCheckingPreviousUglyNumbersUsingIterativeDP() const;
+    Number getNthUglyNumberByMultiplesUsingIterativeDP() const;
 
 private:
     Number const m_nth;
 };
 
 }
+
+
 
 // Ugly Numbers
 

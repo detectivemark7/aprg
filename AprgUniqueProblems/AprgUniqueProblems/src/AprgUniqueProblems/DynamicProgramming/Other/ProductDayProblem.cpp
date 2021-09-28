@@ -30,7 +30,7 @@ ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingMemoizationDP() 
     return result;
 }
 
-ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingTabularDP() const
+ProductDayProblem::Price ProductDayProblem::getMinimumPriceUsingIterativeDP() const
 {
     // set half max to all entries (half max because theres addition so values might exceed if we use max)
     PriceMatrix minimumPrices(getNumberOfDays(), getNumberOfProductsSubsets(), static_cast<Price>(UNUSED_PRICE));

@@ -36,7 +36,7 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingMem
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingTabularDP() const
+MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIterativeDP() const
 {
     // Time Complexity: O(N*W).
     // -> where ‘N’ is the number of weight element and ‘W’ is capacity. As for every weight element we traverse through all weight capacities 1<=w<=W.
@@ -67,7 +67,7 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingTab
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingTabularDPAndSpaceEfficient() const
+MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIterativeDPAndSpaceEfficient() const
 {
     // Complexity Analysis:
     // Time Complexity: O(N*W). As redundant calculations of states are avoided.

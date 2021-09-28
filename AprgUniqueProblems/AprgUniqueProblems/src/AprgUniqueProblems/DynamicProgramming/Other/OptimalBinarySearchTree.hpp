@@ -24,7 +24,7 @@ public:
     OptimalBinarySearchTree(ValueAndFrequencyPairs const& valueAndFrequencyPairs);
 
     Cost getMinimumCostUsingNaiveRecursion() const;
-    Cost getMinimumCostUsingTabularDP() const;
+    Cost getMinimumCostUsingIterativeDP() const;
 
 private:
     Cost getMinimumCostUsingNaiveRecursion(Cost const depth, Index const left, Index const right) const;
@@ -96,7 +96,7 @@ private:
 // We calculate column number ‘j’ using the values of ‘i’ and ‘L’.
 
 // Notes
-// 1) The time complexity of the tabular solution is O(n^3).
+// 1) The time complexity of the iterative solution is O(n^3).
 // -> The time complexity is reduced to O(n^3) by pre-calculating sum of frequencies instead of calling sum() again and again.
 // 2) In the above solutions, we have computed optimal cost only.
 // -> The solutions can be easily modified to store the structure of BSTs also.

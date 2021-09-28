@@ -22,7 +22,7 @@ unsigned int CoinProblem::getNumberOfFewestCoinsUsingMemoizationDP(Value const t
     return getNumberOfFewestCoinsUsingMemoizationDPInternal(countPerValue, total);
 }
 
-unsigned int CoinProblem::getNumberOfFewestCoinsTabularDP(Value const total) const
+unsigned int CoinProblem::getNumberOfFewestCoinsIterativeDP(Value const total) const
 {
     CountPerValue countPerValue(getMaxOfTotalAndMaxCoinPlusOne(total), static_cast<unsigned int>(UNUSED_COUNT));
 
@@ -54,7 +54,7 @@ CoinProblem::Coins CoinProblem::getFewestCoinsUsingMemoizationDP(Value const tot
     return getFewestCoinsUsingMemoizationDPInternal(fewestCoins, total);
 }
 
-CoinProblem::Coins CoinProblem::getFewestCoinsUsingTabularDP(Value const total) const
+CoinProblem::Coins CoinProblem::getFewestCoinsUsingIterativeDP(Value const total) const
 {
     VectorOfCoins fewestCoins(total+1);
     for(Value partialValue=1; partialValue<=total; partialValue++)
@@ -82,7 +82,7 @@ unsigned int CoinProblem::getNumberOfCoinPermutationsMemoizationDP(Value const t
     return getNumberOfCoinPermutationsMemoizationDPInternal(countPerValue, total);
 }
 
-unsigned int CoinProblem::getNumberOfCoinPermutationsTabularDP(Value const total) const
+unsigned int CoinProblem::getNumberOfCoinPermutationsIterativeDP(Value const total) const
 {
     CountPerValue countPerValue(total+1, 0);
     countPerValue[0] = 1; // null set
@@ -105,7 +105,7 @@ CoinProblem::CoinPermutations CoinProblem::getCoinPermutationsUsingMemoizationDP
     return getCoinPermutationsUsingMemoizationDPInternal(coinPermutationsPerValue, total);
 }
 
-CoinProblem::CoinPermutations CoinProblem::getCoinPermutationsUsingTabularDP(Value const total) const
+CoinProblem::CoinPermutations CoinProblem::getCoinPermutationsUsingIterativeDP(Value const total) const
 {
     CoinPermutationsPerValue coinPermutationsPerValue(getMaxOfTotalAndMaxCoinPlusOne(total));
 
@@ -147,7 +147,7 @@ unsigned int CoinProblem::getNumberOfCoinCombinationsUsingMemoizationDP(Value co
     return result;
 }
 
-unsigned int CoinProblem::getNumberOfCoinCombinationsUsingTabularDP(Value const total) const
+unsigned int CoinProblem::getNumberOfCoinCombinationsUsingIterativeDP(Value const total) const
 {
     // Time Complexity: O(mn)
 
@@ -180,7 +180,7 @@ unsigned int CoinProblem::getNumberOfCoinCombinationsUsingTabularDP(Value const 
     return result;
 }
 
-unsigned int CoinProblem::getNumberOfCoinCombinationsUsingTabularDPAndSpaceEfficient(Value const total) const
+unsigned int CoinProblem::getNumberOfCoinCombinationsUsingIterativeDPAndSpaceEfficient(Value const total) const
 {
     // Time Complexity: O(mn)
     // The auxiliary space required here is O(n) only.
@@ -207,7 +207,7 @@ CoinProblem::CoinCombinations CoinProblem::getCoinCombinationsUsingMemoizationDP
     return getCoinCombinationsUsingMemoizationDPInternal(coinCombinationsPerValue, total);
 }
 
-CoinProblem::CoinCombinations CoinProblem::getCoinCombinationsUsingTabularDP(Value const total) const
+CoinProblem::CoinCombinations CoinProblem::getCoinCombinationsUsingIterativeDP(Value const total) const
 {
     CoinCombinationsPerValue coinCombinationsPerValue(getMaxOfTotalAndMaxCoinPlusOne(total));
 

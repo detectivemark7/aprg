@@ -19,8 +19,8 @@ public:
     CountNumberOfBinaryStringsWithoutConsecutiveOnes(Count const length);
 
     Count getCountUsingNaiveRecursion() const;
-    Count getCountUsingTabularDP() const;
-    Count getCountUsingTabularDPAndSpaceEfficient() const;
+    Count getCountUsingIterativeDP() const;
+    Count getCountUsingIterativeDPAndSpaceEfficient() const;
     Count getCountUsingFibonacci() const;
 private:
     Count getCountUsingNaiveRecursion(bool const previousValue, Count const length) const;
@@ -29,6 +29,11 @@ private:
 };
 
 }
+
+// APPROACH
+// Same as getting the Fibonacci number
+
+
 
 // Given a positive integer N, count all possible distinct binary strings of length N such that there are no consecutive 1’s.
 
