@@ -89,7 +89,7 @@ LongestCommonSubsequence::Count LongestCommonSubsequence::getLongestLengthUsingI
         }
     }
 
-    Counts const& lastCurrent(previousAndCurrentCounts.at((m_sequence1.size()+1)%2));
+    Counts const& lastCurrent(previousAndCurrentCounts.at((m_sequence2.size()+1)%2));
     return lastCurrent.back();
 }
 
