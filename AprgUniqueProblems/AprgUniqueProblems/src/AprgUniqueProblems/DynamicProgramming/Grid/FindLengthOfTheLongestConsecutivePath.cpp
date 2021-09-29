@@ -7,7 +7,7 @@ namespace alba
 
 namespace
 {
-vector<pair<int, int>> neighborOffsets
+vector<pair<int, int>> columnOffsets
 {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 0}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 }
 
@@ -52,7 +52,7 @@ FindLengthOfTheLongestConsecutivePath::Count FindLengthOfTheLongestConsecutivePa
     Count result(0);
     Value nextValue = m_inputGrid.getEntry(x,y)+1;
 
-    for(auto const& neighborOffset : neighborOffsets)
+    for(auto const& neighborOffset : columnOffsets)
     {
         Index neighborX = x+neighborOffset.first, neighborY = y+neighborOffset.second;
         if(m_inputGrid.isInside(neighborX, neighborY) && m_inputGrid.getEntry(neighborX, neighborY)==nextValue)
@@ -88,7 +88,7 @@ FindLengthOfTheLongestConsecutivePath::Count FindLengthOfTheLongestConsecutivePa
         result = 0;
         Value nextValue = m_inputGrid.getEntry(x,y)+1;
 
-        for(auto const& neighborOffset : neighborOffsets)
+        for(auto const& neighborOffset : columnOffsets)
         {
             Index neighborX = x+neighborOffset.first, neighborY = y+neighborOffset.second;
             if(m_inputGrid.isInside(neighborX, neighborY) && m_inputGrid.getEntry(neighborX, neighborY)==nextValue)
