@@ -61,7 +61,7 @@ ComputeSumOfDigitsInAllNumbersFrom1ToN::Value ComputeSumOfDigitsInAllNumbersFrom
 ComputeSumOfDigitsInAllNumbersFrom1ToN::Value ComputeSumOfDigitsInAllNumbersFrom1ToN::getValueUsingMemoizationDP(
         Value const number) const
 {
-    // Time Complexity: O(numberOfDigits)
+    // Time Complexity: Even though there are recursion calls the time complexity is O(numberOfDigits)
     // Auxiliary Space: O(numberOfDigits^2)
 
     Value result(0);

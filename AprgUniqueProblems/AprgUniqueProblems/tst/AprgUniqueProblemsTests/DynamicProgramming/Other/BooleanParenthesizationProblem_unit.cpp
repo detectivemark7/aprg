@@ -7,7 +7,7 @@ using namespace std;
 namespace alba
 {
 
-TEST(BooleanParenthesizationProblemTest, GgetNumberOfWaysForTrueWorksOnWrongArguments)
+TEST(BooleanParenthesizationProblemTest, GetNumberOfWaysForTrueWorksOnWrongArguments)
 {
     BooleanParenthesizationProblem queryForTest({true, false, true}, {'^'});
 
@@ -16,7 +16,7 @@ TEST(BooleanParenthesizationProblemTest, GgetNumberOfWaysForTrueWorksOnWrongArgu
     EXPECT_EQ(0U, queryForTest.getNumberOfWaysForTrueUsingIterativeDP());
 }
 
-TEST(BooleanParenthesizationProblemTest, GgetNumberOfWaysForTrueWorksOnExample1)
+TEST(BooleanParenthesizationProblemTest, GetNumberOfWaysForTrueWorksOnExample1)
 {
     BooleanParenthesizationProblem queryForTest({true, false, true}, {'^', '&'});
 
@@ -25,7 +25,7 @@ TEST(BooleanParenthesizationProblemTest, GgetNumberOfWaysForTrueWorksOnExample1)
     EXPECT_EQ(2U, queryForTest.getNumberOfWaysForTrueUsingIterativeDP());
 }
 
-TEST(BooleanParenthesizationProblemTest, GgetNumberOfWaysForTrueWorksOnExample2)
+TEST(BooleanParenthesizationProblemTest, GetNumberOfWaysForTrueWorksOnExample2)
 {
     BooleanParenthesizationProblem queryForTest({true, true, false, true}, {'|', '&', '^'});
 
