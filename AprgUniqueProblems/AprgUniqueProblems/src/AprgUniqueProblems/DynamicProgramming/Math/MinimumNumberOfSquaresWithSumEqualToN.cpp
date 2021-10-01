@@ -18,20 +18,28 @@ MinimumNumberOfSquaresWithSumEqualToN::MinimumNumberOfSquaresWithSumEqualToN(
 
 MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualToN::getMinimumCountUsingNaiveRecursion() const
 {
+    // Time Complexity: Exponential -> Since there are n calls per iteration:  O(n^n)
+    // Auxiliary Space: Constant
+
     return getMinimumCountUsingNaiveRecursion(m_sumOfSquares);
 }
 
 MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualToN::getMinimumCountUsingMemoizationDP() const
 {
+    // Time Complexity: Exponential -> Since there are n calls per iteration:  O(n^n)
+    // Auxiliary Space: O(n)
+
     Counts savedMinimumCounts(m_sumOfSquares+1, MAX_COUNT); // plus one so no more conversion
     return getMinimumCountUsingMemoizationDP(savedMinimumCounts, m_sumOfSquares);
 }
 
 MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualToN::getMinimumCountUsingIterativeDP() const
 {
+    // Time Complexity: O(n^(3/2))
+    // Auxiliary Space: O(n)
+
     Counts minimumCounts(m_sumOfSquares+1, MAX_COUNT); // plus one so no more conversion
     minimumCounts[0] = 0;
-    minimumCounts[1] = 1;
     for(Count previousSumOfSquares=1; previousSumOfSquares<=m_sumOfSquares; previousSumOfSquares++)
     {
         Count entryResult(MAX_COUNT);
@@ -46,6 +54,9 @@ MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualT
 
 MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualToN::getMinimumCountUsingBfs() const
 {
+    // Time Complexity: O(n^(3/2))
+    // Auxiliary Space: O(n)
+
     Count result(MAX_COUNT);
     vector<bool> isProcessed(m_sumOfSquares+1, false);
     struct NodeDetails
@@ -127,7 +138,7 @@ MinimumNumberOfSquaresWithSumEqualToN::Count MinimumNumberOfSquaresWithSumEqualT
         {
             for(Count base=highestBase; base>=1 && result!=1; base--)
             {
-                result = min(result, getMinimumCountUsingNaiveRecursion(sumOfSquares - base*base));
+                result = min(result, getMinimumCountUsingMemoizationDP(savedMinimumCounts, sumOfSquares - base*base));
             }
             ++result;
         }

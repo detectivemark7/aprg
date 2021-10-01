@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/ShortestCommonSupersequence.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/SupersequenceAndSubsequence/ShortestCommonSupersequence.hpp>
 
 #include <gtest/gtest.h>
 

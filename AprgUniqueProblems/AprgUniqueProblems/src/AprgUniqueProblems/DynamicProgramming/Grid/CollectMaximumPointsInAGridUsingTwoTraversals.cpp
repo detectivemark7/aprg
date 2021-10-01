@@ -18,6 +18,9 @@ CollectMaximumPointsInAGridUsingTwoTraversals::CollectMaximumPointsInAGridUsingT
 
 CollectMaximumPointsInAGridUsingTwoTraversals::Value CollectMaximumPointsInAGridUsingTwoTraversals::getMaximumPointsUsingNaiveRecursion() const
 {
+    // Time Complexity: Exponential -> Since there are nine calls per iteration:  O(9^rows)
+    // Auxiliary Space: Constant
+
     Value result(0);
     if(!m_inputGrid.isEmpty())
     {
@@ -28,6 +31,9 @@ CollectMaximumPointsInAGridUsingTwoTraversals::Value CollectMaximumPointsInAGrid
 
 CollectMaximumPointsInAGridUsingTwoTraversals::Value CollectMaximumPointsInAGridUsingTwoTraversals::getMaximumPointsUsingMemoizationDP() const
 {
+    // Time Complexity: Exponential -> Since there are nine calls per iteration:  O(9^rows)
+    // Auxiliary Space: O(rows*columns*columns)
+
     Value result(0);
     if(!m_inputGrid.isEmpty())
     {
@@ -40,6 +46,9 @@ CollectMaximumPointsInAGridUsingTwoTraversals::Value CollectMaximumPointsInAGrid
 
 CollectMaximumPointsInAGridUsingTwoTraversals::Value CollectMaximumPointsInAGridUsingTwoTraversals::getMaximumPointsUsingIterativeDP() const
 {
+    // Time Complexity: O(rows*columns*columns)
+    // Auxiliary Space: O(rows*columns*columns)
+
     Value result(0);
     if(!m_inputGrid.isEmpty())
     {

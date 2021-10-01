@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Subsequence/LongestCommonSubsequence.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/SupersequenceAndSubsequence/LongestCommonSubsequence.hpp>
 
 #include <gtest/gtest.h>
 
