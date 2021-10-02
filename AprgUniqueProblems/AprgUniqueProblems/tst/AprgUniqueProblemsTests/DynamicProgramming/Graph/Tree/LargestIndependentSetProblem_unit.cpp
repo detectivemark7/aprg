@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Graph/LargestIndependentSetProblem.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Graph/Tree/LargestIndependentSetProblem.hpp>
 
 #include <gtest/gtest.h>
 
