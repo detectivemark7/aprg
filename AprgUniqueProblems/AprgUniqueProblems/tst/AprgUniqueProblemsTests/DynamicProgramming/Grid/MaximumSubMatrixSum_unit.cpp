@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DynamicProgramming/Other/MaximumSubMatrixSum.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/Grid/MaximumSubMatrixSum.hpp>
 
 #include <gtest/gtest.h>
 
@@ -16,10 +16,10 @@ using SubArrayDetails=MaximumSubMatrixSum::SubArrayDetails;
 TEST(MaximumSubMatrixSumTest, GetMaximumSubMatrixSumWorksOnExample1)
 {
     ValueMatrix pricesInDayByProduct(5U, 4U,
-    {1, 2, -1, -4, -20,
-     -8, -3, 4, 2, 1,
-     3, 8, 10, 1, 3,
-     -4, -1, 1, 7, -6});
+    {  1,   2,  -1,  -4, -20,
+      -8,  -3,   4,   2,   1,
+       3,   8,  10,   1,   3,
+      -4,  -1,   1,   7,  -6});
     MaximumSubMatrixSum queryForTest(pricesInDayByProduct);
 
     EXPECT_EQ(29, queryForTest.getMaximumSubMatrixSum());
@@ -28,10 +28,10 @@ TEST(MaximumSubMatrixSumTest, GetMaximumSubMatrixSumWorksOnExample1)
 TEST(MaximumSubMatrixSumTest, GetMaximumSubMatrixSumWithDetailsWorksOnExample1)
 {
     ValueMatrix pricesInDayByProduct(5U, 4U,
-    {1, 2, -1, -4, -20,
-     -8, -3, 4, 2, 1,
-     3, 8, 10, 1, 3,
-     -4, -1, 1, 7, -6});
+    {  1,   2,  -1,  -4, -20,
+      -8,  -3,   4,   2,   1,
+       3,   8,  10,   1,   3,
+      -4,  -1,   1,   7,  -6});
     MaximumSubMatrixSum queryForTest(pricesInDayByProduct);
 
     SubArrayDetails subArrayDetailsToVerify(queryForTest.getMaximumSubMatrixSumWithDetails());

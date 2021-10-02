@@ -31,7 +31,7 @@ private:
     Count getMaximumCountUsingMemoizationDP(VertexToCountMap & vertexToCountMap, Vertex const vertex) const;
     SetOfVertices getMaximumSetUsingMemoizationDP(VertexToSetOfVerticesMap & vertexToMaximumSetMap, Vertex const vertex) const;
 
-    Graph m_binaryTreeGraph;
+    Graph m_nAryTreeGraph;
     Vertex m_rootOfTree;
     ChildrenInTree m_childrenInTree;
 };
@@ -47,6 +47,8 @@ private:
 // ---> Return the maximum of the two counts
 
 
+
+// Largest Independent Set Problem
 
 // Given a Binary Tree, find size of the Largest Independent Set(LIS) in it.
 // A subset of all tree nodes is an independent set if there is no edge between any two nodes of the subset.
@@ -90,7 +92,7 @@ private:
 // The recursive function LISS() calculates ‘liss’ for a node only if it is not already set.
 
 // Following extensions to above solution can be tried as an exercise:
-// 1) Extend the above solution for n-ary tree.
+// 1) Extend the above solution for n-ary tree. (DONE!)
 // 2) The above solution modifies the given tree structure by adding an additional field ‘liss’ to tree nodes.
 // -> Extend the solution so that it doesn’t modify the tree structure.
 // 3) The above solution only returns size of LIS, it doesn’t print elements of LIS.

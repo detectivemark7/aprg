@@ -1,6 +1,6 @@
 #include "MaximumSubMatrixSum.hpp"
 
-#include <AprgUniqueProblems/DynamicProgramming/Other/MaximumSubArraySum.hpp>
+#include <AprgUniqueProblems/DynamicProgramming/SubArray/MaximumSubArraySum.hpp>
 
 using namespace std;
 

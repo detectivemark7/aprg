@@ -9,9 +9,9 @@ namespace alba
 {
 
 LargestIndependentSetProblem::LargestIndependentSetProblem(Graph const& binaryTreeGraph, Vertex const rootOfTree)
-    : m_binaryTreeGraph(binaryTreeGraph)
+    : m_nAryTreeGraph(binaryTreeGraph)
     , m_rootOfTree(rootOfTree)
-    , m_childrenInTree(m_binaryTreeGraph, m_rootOfTree)
+    , m_childrenInTree(m_nAryTreeGraph, m_rootOfTree)
 {}
 
 LargestIndependentSetProblem::Count LargestIndependentSetProblem::getMaximumCountUsingNaiveRecursion() const
@@ -20,7 +20,7 @@ LargestIndependentSetProblem::Count LargestIndependentSetProblem::getMaximumCoun
     // Auxiliary Space: Constant
 
     Count result(0);
-    if(!m_binaryTreeGraph.isEmpty())
+    if(!m_nAryTreeGraph.isEmpty())
     {
         result = getMaximumCountUsingNaiveRecursion(m_rootOfTree);
     }
@@ -33,7 +33,7 @@ LargestIndependentSetProblem::Count LargestIndependentSetProblem::getMaximumCoun
     // Auxiliary Space: O(n)
 
     Count result(0);
-    if(!m_binaryTreeGraph.isEmpty())
+    if(!m_nAryTreeGraph.isEmpty())
     {
         VertexToCountMap vertexToCountMap;
         result = getMaximumCountUsingMemoizationDP(vertexToCountMap, m_rootOfTree);
@@ -47,7 +47,7 @@ LargestIndependentSetProblem::SetOfVertices LargestIndependentSetProblem::getMax
     // Auxiliary Space: O(n)
 
     SetOfVertices result;
-    if(!m_binaryTreeGraph.isEmpty())
+    if(!m_nAryTreeGraph.isEmpty())
     {
         VertexToSetOfVerticesMap vertexToMaximumSetMap;
         result = getMaximumSetUsingMemoizationDP(vertexToMaximumSetMap, m_rootOfTree);
@@ -109,12 +109,12 @@ LargestIndependentSetProblem::SetOfVertices LargestIndependentSetProblem::getMax
         SetOfVertices setIfVertexIsNotIncluded;
         for(Vertex const child : m_childrenInTree.getChildren(vertex))
         {
-            SetOfVertices childMaxSet(getMaximumSetUsingMemoizationDP(vertexToMaximumSetMap, child));
-            copy(childMaxSet.cbegin(), childMaxSet.cend(), inserter(setIfVertexIsNotIncluded, setIfVertexIsNotIncluded.begin()));
+            SetOfVertices childSet(getMaximumSetUsingMemoizationDP(vertexToMaximumSetMap, child));
+            copy(childSet.cbegin(), childSet.cend(), inserter(setIfVertexIsNotIncluded, setIfVertexIsNotIncluded.begin()));
             for(Vertex const grandChild : m_childrenInTree.getChildren(child))
             {
-                SetOfVertices grandChildMaxSet(getMaximumSetUsingMemoizationDP(vertexToMaximumSetMap, grandChild));
-                copy(grandChildMaxSet.cbegin(), grandChildMaxSet.cend(), inserter(setIfVertexIsIncluded, setIfVertexIsIncluded.begin()));
+                SetOfVertices grandChildSet(getMaximumSetUsingMemoizationDP(vertexToMaximumSetMap, grandChild));
+                copy(grandChildSet.cbegin(), grandChildSet.cend(), inserter(setIfVertexIsIncluded, setIfVertexIsIncluded.begin()));
             }
         }
         if(setIfVertexIsIncluded.size() >= setIfVertexIsNotIncluded.size())
