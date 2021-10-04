@@ -11,8 +11,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    cout << "Survey Output Optical Scan Analyzer developed by the IRPDS\n\n";
-    cout << "code version: " << APRG_CODE_REVISION << "\n";
+    cout << "Survey Output Optical Scan Analyzer developed by the IRPDS\n";
+    cout << "Code version: " << APRG_CODE_REVISION << "\n\n";
 
     strings argumentsInMain(getArgumentsToStringInMain(argc, argv));
 
@@ -36,6 +36,8 @@ int main(int argc, char *argv[])
     {
         cout << "Exiting program because the number of input arguments is wrong.\n";
     }
+    cout << "\n";
+    cout.flush();
 
     system("pause");
 }
