@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Common/Bit/AlbaBitManipulation.hpp>
+#include <Common/Bit/Common/AlbaBitManipulationClassDefinition.hpp>
 
 namespace alba
 {
