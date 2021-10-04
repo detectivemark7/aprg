@@ -20,7 +20,7 @@ public:
     using VertexToSetOfVerticesMap = std::map<Vertex, SetOfVertices>;
     static constexpr unsigned int UNUSED_COUNT=std::numeric_limits<unsigned int>::max();
 
-    LargestIndependentSetProblem(Graph const& binaryTreeGraph, Vertex const rootOfTree);
+    LargestIndependentSetProblem(Graph const& nAryTreeGraph, Vertex const rootOfTree);
 
     Count getMaximumCountUsingNaiveRecursion() const;
     Count getMaximumCountUsingMemoizationDP() const;

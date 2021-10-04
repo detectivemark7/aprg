@@ -8,8 +8,8 @@ using namespace std;
 namespace alba
 {
 
-LargestIndependentSetProblem::LargestIndependentSetProblem(Graph const& binaryTreeGraph, Vertex const rootOfTree)
-    : m_nAryTreeGraph(binaryTreeGraph)
+LargestIndependentSetProblem::LargestIndependentSetProblem(Graph const& nAryTreeGraph, Vertex const rootOfTree)
+    : m_nAryTreeGraph(nAryTreeGraph)
     , m_rootOfTree(rootOfTree)
     , m_childrenInTree(m_nAryTreeGraph, m_rootOfTree)
 {}
