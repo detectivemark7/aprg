@@ -1,6 +1,6 @@
 #pragma once
 
-namespace P2_BoringNumbers
+namespace P1_KickStart
 {
 
 int main(); // this is main

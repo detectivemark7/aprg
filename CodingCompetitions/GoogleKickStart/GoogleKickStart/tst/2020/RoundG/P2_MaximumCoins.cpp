@@ -1,17 +1,23 @@
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
-#include "P2_BoringNumbers.hpp"
+//#define FOR_SUBMISSION
+#ifndef FOR_SUBMISSION
+#include "P2_MaximumCoins.hpp"
 #include <Common/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
+#endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
 #include <cstdint>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
+#ifndef FOR_SUBMISSION
 using namespace alba;
-namespace P2_BoringNumbers
+#endif
+namespace P2_MaximumCoins
 {
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
@@ -22,48 +28,21 @@ namespace P2_BoringNumbers
 
 void runTestCase(unsigned int const testCaseNumber)
 {
-    int64_t L, R;
-    my_cin >> L >> R;
-    ++R;
-    bool parity = 0;
-    int64_t coeff = 1;
-    int64_t ans = 0;
-    while (L < R)
-    {
-        auto is_good = [&](int64_t v)
-        {
-            bool d = v % 2;
-            while (v > 0) {
-                if (v % 2 != d) return false;
-                d = !d;
-                v /= 10;
-            }
-            return d == 0;
-        };
-        while (L < R && L % 10 != 0)
-        {
-            if (is_good(L)) {
-                ans += coeff;
-            }
-            L++;
+    int n;
+    my_cin >> n;
+    map<int, long long> mapka;
+    for(int row = 0; row < n; ++row) {
+        for(int col = 0; col < n; ++col) {
+            int x;
+            my_cin >> x;
+            mapka[row-col] += x;
         }
-        while (L < R && R % 10 != 0)
-        {
-            --R;
-            if (is_good(R)) {
-                ans += coeff;
-            }
-        }
-
-        if (L == R) break;
-
-        L /= 10;
-        R /= 10;
-
-        coeff *= 5;
-        parity = !parity;
     }
-    my_cout << "Case #" << testCaseNumber << ": " << ans << '\n';
+    long long answer = 0;
+    for(auto pp : mapka) {
+        answer = max(answer, pp.second);
+    }
+    my_cout << "Case #" << testCaseNumber << ": " << answer << '\n';
 }
 
 void runAllTestCases()
@@ -88,6 +67,7 @@ int main()
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
 }
+#undef FOR_SUBMISSION
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
 

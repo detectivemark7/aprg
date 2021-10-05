@@ -22,7 +22,7 @@ TEST(P1_RetypeTest, Test1)
             << "10 7 6" "\n"
             << endl;
 
-    fake_main();
+    main();
 
     EXPECT_EQ(
                 "Case #1: 15" "\n"

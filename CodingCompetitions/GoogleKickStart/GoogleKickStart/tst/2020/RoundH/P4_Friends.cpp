@@ -1,5 +1,4 @@
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
-// NOTE: Remember to delete "fake_"
 #include "P4_Friends.hpp"
 #include <Common/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
@@ -18,10 +17,15 @@ namespace P4_Friends
 {
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
+#ifndef my_cout
+#define my_cout cout
+#define my_cin cin
+#endif
+
 void runTestCase(unsigned int const testCaseNumber)
 {
     int N, Q;
-    fake_cin >> N >> Q;
+    my_cin >> N >> Q;
     const int INF = 1e9;
     vector<vector<int>> dist(26, vector<int>(26, INF));
     for (int i = 0; i < 26; i++) dist[i][i] = 0;
@@ -29,7 +33,7 @@ void runTestCase(unsigned int const testCaseNumber)
     vector<int> msks(N);
     for (int z = 0; z < N; z++) {
         string S;
-        fake_cin >> S;
+        my_cin >> S;
         int msk = 0;
         for (char c : S) {
             msk |= (1 << (c - 'A'));
@@ -52,9 +56,9 @@ void runTestCase(unsigned int const testCaseNumber)
         }
     }
 
-    fake_cout << "Case #" << testCaseNumber << ":";
+    my_cout << "Case #" << testCaseNumber << ":";
     for (int q = 0; q < Q; q++) {
-        int u, v; fake_cin >> u >> v; u--, v--;
+        int u, v; my_cin >> u >> v; u--, v--;
         int ans = INF;
         for (int m1 = msks[u]; m1; m1 &= m1-1) {
             int i = __builtin_ctz(m1);
@@ -64,25 +68,25 @@ void runTestCase(unsigned int const testCaseNumber)
             }
         }
         if (ans == INF) ans = -1;
-        fake_cout << ' ' << ans;
+        my_cout << ' ' << ans;
     }
-    fake_cout << '\n';
+    my_cout << '\n';
 }
 
 void runAllTestCases()
 {
     unsigned int numberOfTestCases;
-    fake_cin >> numberOfTestCases;
+    my_cin >> numberOfTestCases;
     for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++)
     {
         runTestCase(testCaseNumber);
     }
 }
 
-int fake_main()
+int main()
 {
     ios_base::sync_with_stdio(false);
-    fake_cin.tie(nullptr);
+    my_cin.tie(nullptr);
 
     runAllTestCases();
 

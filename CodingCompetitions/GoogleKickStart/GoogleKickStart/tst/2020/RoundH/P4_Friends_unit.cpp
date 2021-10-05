@@ -28,7 +28,7 @@ TEST(P4_FriendsTest, Test1)
             << "1 2                            " "\n"
             << endl;
 
-    fake_main();
+    main();
 
     EXPECT_EQ(
                 "Case #1: 2 3" "\n"

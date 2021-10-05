@@ -1,6 +1,6 @@
 #pragma once
 
-namespace P2_BoringNumbers
+namespace P3_PaintersDuel
 {
 
 int main(); // this is main

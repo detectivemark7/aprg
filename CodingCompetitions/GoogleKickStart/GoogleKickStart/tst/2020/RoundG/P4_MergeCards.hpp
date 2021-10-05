@@ -1,6 +1,6 @@
 #pragma once
 
-namespace P2_BoringNumbers
+namespace P4_MergeCards
 {
 
 int main(); // this is main

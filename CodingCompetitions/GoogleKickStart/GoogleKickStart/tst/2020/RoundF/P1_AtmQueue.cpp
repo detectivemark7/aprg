@@ -1,17 +1,24 @@
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
-#include "P2_BoringNumbers.hpp"
+//#define FOR_SUBMISSION
+#ifndef FOR_SUBMISSION
+#include "P1_AtmQueue.hpp"
 #include <Common/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
+#endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
+#include <algorithm>
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
+#ifndef FOR_SUBMISSION
 using namespace alba;
-namespace P2_BoringNumbers
+#endif
+namespace P1_AtmQueue
 {
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
@@ -22,48 +29,20 @@ namespace P2_BoringNumbers
 
 void runTestCase(unsigned int const testCaseNumber)
 {
-    int64_t L, R;
-    my_cin >> L >> R;
-    ++R;
-    bool parity = 0;
-    int64_t coeff = 1;
-    int64_t ans = 0;
-    while (L < R)
-    {
-        auto is_good = [&](int64_t v)
-        {
-            bool d = v % 2;
-            while (v > 0) {
-                if (v % 2 != d) return false;
-                d = !d;
-                v /= 10;
-            }
-            return d == 0;
-        };
-        while (L < R && L % 10 != 0)
-        {
-            if (is_good(L)) {
-                ans += coeff;
-            }
-            L++;
-        }
-        while (L < R && R % 10 != 0)
-        {
-            --R;
-            if (is_good(R)) {
-                ans += coeff;
-            }
-        }
-
-        if (L == R) break;
-
-        L /= 10;
-        R /= 10;
-
-        coeff *= 5;
-        parity = !parity;
+    int n, x;
+    my_cin >> n >> x;
+    vector <int> a(n);
+    for (int i = 0; i < n; i++) my_cin >> a[i];
+    vector <pair <int, int> > q;
+    for (int i = 0; i < n; i++) {
+      q.push_back({(a[i] + x - 1) / x, i});
     }
-    my_cout << "Case #" << testCaseNumber << ": " << ans << '\n';
+    sort(q.begin(), q.end());
+    vector <int> ord(n);
+    for (int i = 0; i < n; i++) ord[i] = q[i].second;
+    my_cout << "Case #" << testCaseNumber << ":";
+    for (int answer : ord) my_cout << ' ' << answer + 1;
+    my_cout << '\n';
 }
 
 void runAllTestCases()
@@ -88,6 +67,7 @@ int main()
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
 }
+#undef FOR_SUBMISSION
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
 

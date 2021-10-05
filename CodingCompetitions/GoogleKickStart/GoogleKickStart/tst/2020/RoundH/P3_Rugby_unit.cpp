@@ -27,7 +27,7 @@ TEST(P3_RugbyTest, Test1)
             << "1 3" "\n"
             << endl;
 
-    fake_main();
+    main();
 
     EXPECT_EQ(
                 "Case #1: 5" "\n"

@@ -1,17 +1,24 @@
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
-#include "P2_BoringNumbers.hpp"
+//#define FOR_SUBMISSION
+#ifndef FOR_SUBMISSION
+#include "P2_MetalHarvest.hpp"
 #include <Common/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
+#endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
+#include <algorithm>
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
+#ifndef FOR_SUBMISSION
 using namespace alba;
-namespace P2_BoringNumbers
+#endif
+namespace P2_MetalHarvest
 {
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
@@ -22,46 +29,24 @@ namespace P2_BoringNumbers
 
 void runTestCase(unsigned int const testCaseNumber)
 {
-    int64_t L, R;
-    my_cin >> L >> R;
-    ++R;
-    bool parity = 0;
-    int64_t coeff = 1;
-    int64_t ans = 0;
-    while (L < R)
-    {
-        auto is_good = [&](int64_t v)
-        {
-            bool d = v % 2;
-            while (v > 0) {
-                if (v % 2 != d) return false;
-                d = !d;
-                v /= 10;
-            }
-            return d == 0;
-        };
-        while (L < R && L % 10 != 0)
-        {
-            if (is_good(L)) {
-                ans += coeff;
-            }
-            L++;
-        }
-        while (L < R && R % 10 != 0)
-        {
-            --R;
-            if (is_good(R)) {
-                ans += coeff;
-            }
-        }
-
-        if (L == R) break;
-
-        L /= 10;
-        R /= 10;
-
-        coeff *= 5;
-        parity = !parity;
+    int n, k;
+    my_cin >> n >> k;
+    vector <pair <int, int> > e;
+    for (int i = 0; i < n; i++) {
+      int l, r;
+      my_cin >> l >> r;
+      e.push_back({l, r});
+    }
+    sort(e.begin(), e.end());
+    int last = 0;
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+      e[i].first = max(e[i].first, last);
+      if (e[i].first < e[i].second) {
+        int ret = (e[i].second - e[i].first + k - 1) / k;
+        ans += ret;
+        last = e[i].first + ret * k;
+      }
     }
     my_cout << "Case #" << testCaseNumber << ": " << ans << '\n';
 }
@@ -88,6 +73,7 @@ int main()
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
 }
+#undef FOR_SUBMISSION
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
 

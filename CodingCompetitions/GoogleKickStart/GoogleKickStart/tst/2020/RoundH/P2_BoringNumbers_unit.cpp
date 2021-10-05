@@ -23,7 +23,7 @@ TEST(P2_BoringNumbersTest, Test1)
             << "779 783" "\n"
             << endl;
 
-    fake_main();
+    main();
 
     EXPECT_EQ(
                 "Case #1: 6" "\n"

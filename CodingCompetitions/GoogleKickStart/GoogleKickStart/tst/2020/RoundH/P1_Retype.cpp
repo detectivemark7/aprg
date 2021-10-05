@@ -1,8 +1,10 @@
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
-// NOTE: Remember to delete "fake_"
+//#define FOR_SUBMISSION
+#ifndef FOR_SUBMISSION
 #include "P1_Retype.hpp"
 #include <Common/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
+#endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
 #include <cstdint>
@@ -11,34 +13,41 @@
 using namespace std;
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
+#ifndef FOR_SUBMISSION
 using namespace alba;
+#endif
 namespace P1_Retype
 {
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
+#ifndef my_cout
+#define my_cout cout
+#define my_cin cin
+#endif
+
 void runTestCase(unsigned int const testCaseNumber)
 {
     int64_t n, k, s;
-    fake_cin >> n >> k >> s;
+    my_cin >> n >> k >> s;
     int64_t answer = min(n+1, (k-s)+(n-s)+1) + (k-1);
 
-    fake_cout << "Case #" << testCaseNumber << ": " << answer << '\n';
+    my_cout << "Case #" << testCaseNumber << ": " << answer << '\n';
 }
 
 void runAllTestCases()
 {
     unsigned int numberOfTestCases;
-    fake_cin >> numberOfTestCases;
+    my_cin >> numberOfTestCases;
     for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++)
     {
         runTestCase(testCaseNumber);
     }
 }
 
-int fake_main()
+int main()
 {
     ios_base::sync_with_stdio(false);
-    fake_cin.tie(nullptr);
+    my_cin.tie(nullptr);
 
     runAllTestCases();
 
@@ -47,4 +56,5 @@ int fake_main()
 
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING START ~~~~~~~~~
 }
+#undef FOR_SUBMISSION
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~

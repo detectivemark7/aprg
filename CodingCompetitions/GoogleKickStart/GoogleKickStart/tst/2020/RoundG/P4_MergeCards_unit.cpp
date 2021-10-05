@@ -1,4 +1,4 @@
-#include "P2_SampleProblem.hpp"
+#include "P4_MergeCards.hpp"
 
 #include <Common/FakeObjects.hpp>
 
@@ -7,29 +7,28 @@
 using namespace alba;
 using namespace std;
 
-namespace P2_SampleProblem
+namespace P4_MergeCards
 {
 
-TEST(P2_SampleProblemTest, Test1)
+TEST(P4_MergeCardsTest, Test1)
 {
     stringstream & inputStringStream(FakeObjects::getInstance().inputStringStream);
     stringstream & outputStringStream(FakeObjects::getInstance().outputStringStream);
     inputStringStream = stringstream();
     outputStringStream = stringstream();
     inputStringStream
-            << "" "\n"
-            << "" "\n"
-            << "" "\n"
-            << "" "\n"
+            << "2           " "\n"
+            << "3           " "\n"
+            << "2 1 10      " "\n"
+            << "5           " "\n"
+            << "19 3 78 2 31" "\n"
             << endl;
 
     main();
 
     EXPECT_EQ(
-                "" "\n"
-                "" "\n"
-                "" "\n"
-                "" "\n"
+                "Case #1: 20" "\n"
+                "Case #2: 352.3333333" "\n"
                 , outputStringStream.str());
 }
 
