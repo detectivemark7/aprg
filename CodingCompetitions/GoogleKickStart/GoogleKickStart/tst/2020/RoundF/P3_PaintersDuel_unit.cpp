@@ -1,6 +1,6 @@
 #include "P3_PaintersDuel.hpp"
 
-#include <Common/FakeObjects.hpp>
+#include <Fake/FakeObjects.hpp>
 
 #include <gtest/gtest.h>
 

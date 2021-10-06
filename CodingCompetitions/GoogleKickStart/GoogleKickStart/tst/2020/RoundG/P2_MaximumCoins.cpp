@@ -2,7 +2,7 @@
 //#define FOR_SUBMISSION
 #ifndef FOR_SUBMISSION
 #include "P2_MaximumCoins.hpp"
-#include <Common/FakeNames.hpp>
+#include <Fake/FakeNames.hpp>
 //#include <Common/Debug/AlbaDebug.hpp>
 #endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
