@@ -7,8 +7,10 @@
 #endif
 // ~~~~~~~~~ DELETE THIS WHEN SUBMITTING END   ~~~~~~~~~
 
+#include <algorithm>
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -27,7 +29,37 @@ namespace KickStart_2019_RoundA_P1_Training
 
 void runTestCase(unsigned int const testCaseNumber)
 {
-    //my_cout << "Case #" << testCaseNumber << ": " << answer << '\n';
+    int numberOfStudents, numberOfStudentsPerTeam;
+    my_cin >> numberOfStudents >> numberOfStudentsPerTeam;
+    vector<int> skillsOfStudents(numberOfStudents);
+    for(int i=0; i<numberOfStudents; ++i)
+    {
+        my_cin >> skillsOfStudents[i];
+    }
+
+    sort(skillsOfStudents.begin(), skillsOfStudents.end());
+
+    int hoursOfCoaching=0;
+    if(numberOfStudentsPerTeam <= numberOfStudents && numberOfStudents > 0 && numberOfStudentsPerTeam > 0)
+    {
+        int maxSkillOfTeam = *max_element(skillsOfStudents.cbegin(), skillsOfStudents.cbegin()+numberOfStudentsPerTeam);
+        int i=0;
+        for(; i<numberOfStudentsPerTeam; ++i)
+        {
+            hoursOfCoaching += maxSkillOfTeam-skillsOfStudents[i];
+        }
+
+        int currentHoursOfCoaching = hoursOfCoaching;
+        for(; i<numberOfStudents; ++i)
+        {
+            int maxDifference = skillsOfStudents[i] - skillsOfStudents[i-1];
+            int lastDifference = skillsOfStudents[i] - skillsOfStudents[i-numberOfStudentsPerTeam];
+            currentHoursOfCoaching = currentHoursOfCoaching + maxDifference*(numberOfStudentsPerTeam) - lastDifference;
+            hoursOfCoaching = min(hoursOfCoaching, currentHoursOfCoaching);
+        }
+    }
+
+    my_cout << "Case #" << testCaseNumber << ": " << hoursOfCoaching << '\n';
 }
 
 void runAllTestCases()

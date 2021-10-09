@@ -9,6 +9,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -25,9 +26,62 @@ namespace KickStart_2019_RoundB_P1_BuildingPalindromes
 #define my_cin cin
 #endif
 
+using Question = pair<int, int>;
+using Questions = vector<Question>;
+
+int32_t getPalindromeValue(
+        string const& blocksString,
+        Question const& question)
+{
+    // this can be faster using dynamic programming
+    int32_t result = 0;
+    for(int i=question.first; i<=question.second; i++)
+    {
+        result ^= 1 << (blocksString.at(i-1)-'A');
+    }
+    return result;
+}
+
+bool canPalindrome(
+        string const& blocksString,
+        Question const& question)
+{
+    int length = question.second-question.first + 1;
+    if(length%2 == 0)
+    {
+        return __builtin_popcount(getPalindromeValue(blocksString, question)) == 0;
+    }
+    else
+    {
+        return __builtin_popcount(getPalindromeValue(blocksString, question)) == 1;
+    }
+}
+
 void runTestCase(unsigned int const testCaseNumber)
 {
-    //my_cout << "Case #" << testCaseNumber << ": " << answer << '\n';
+    int numberOfBlocks, numberOfQuestions;
+    my_cin >> numberOfBlocks >> numberOfQuestions;
+    string blocksString;
+    my_cin >> blocksString;
+
+    Questions questions;
+    for(int y=0; y<numberOfQuestions; ++y)
+    {
+        int leftIndex, rightIndex;
+        my_cin >> leftIndex >> rightIndex;
+        questions.emplace_back(leftIndex, rightIndex);
+    }
+
+    int numberOfPalindromes=0;
+    for(Question const& question : questions)
+    {
+        if(canPalindrome(blocksString, question))
+        {
+            numberOfPalindromes++;
+        }
+    }
+
+    my_cout << "Case #" << testCaseNumber << ": " << numberOfPalindromes << '\n';
 }
 
 void runAllTestCases()
