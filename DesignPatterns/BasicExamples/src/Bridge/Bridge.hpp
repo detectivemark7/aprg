@@ -84,6 +84,7 @@ private:
 // Intent:
 // Decouple an abstraction from its implementation so that the two can vary independently.
 // Bridge pattern has structural purpose and applies to objects, so it deals with the composition of objects.
+// NOTE: This is related to "Dependency Inversion Principle".
 
 // When to use (applicability):
 // -> you want to avoid a permanent binding between an abstraction and its implementation

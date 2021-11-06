@@ -138,6 +138,7 @@ public:
 // Pattern applies to object and deal with object relationships (families), which are more dynamic.
 // In contrast to Factory Method, Abstract Factory pattern produces family of types that are related,
 // ie. it has more than one method of types it produces.
+// NOTE: This is related to "Open Close Principle".
 
 // When to use (applicability):
 // -> a system should be independent of how its products are created, composed, and represented

@@ -83,6 +83,7 @@ private:
 // Strategy defines a family of algorithms, encapsulates each one, and makes them interchangeable.
 // It lets the algorithm vary independently from clients that use it.
 // The pattern has behavioral purpose and applies to the objects.
+// NOTE: This is related to "Dependency Inversion Principle".
 
 // When to use (applicability):
 // -> many related classes differ only in their behavior
