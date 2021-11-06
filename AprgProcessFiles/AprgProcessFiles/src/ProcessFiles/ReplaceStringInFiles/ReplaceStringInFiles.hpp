@@ -10,10 +10,23 @@ namespace alba
 class ReplaceStringInFiles
 {
 public:
-    ReplaceStringInFiles();
+    using StringPair=std::pair<std::string, std::string>;
+    using StringPairs=std::vector<StringPair>;
+
+    ReplaceStringInFiles()=default;
+
+    void replaceStringWithStringOnDirectories(
+            std::string const& inputDirectory,
+            std::string const& outputDirectory,
+            StringPairs const& replacePairs);
+    void replaceStringWithStringOnFile(
+            std::string const& inputFilePath,
+            std::string const& outputFilePath,
+            StringPairs const& replacePairs);
+
     void replaceCToCPlusPlusStylePrintOnDirectories(std::string const& inputDirectory, std::string const& outputDirectory);
     void replaceCToCPlusPlusStylePrintOnFile(std::string const& inputFilePath, std::string const& outputFilePath);
-    std::string gethCPlusPlusStylePrintFromC(std::string const& inputString) const;
+    std::string getCPlusPlusStylePrintFromC(std::string const& inputString) const;
 
 
 private:
