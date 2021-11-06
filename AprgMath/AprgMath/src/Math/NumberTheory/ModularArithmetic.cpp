@@ -1,6 +1,7 @@
 #include "ModularArithmetic.hpp"
 
 #include <Common/Math/Helpers/CombinatoricsHelpers.hpp>
+#include <Common/Math/Helpers/FactorAndMulitplesHelpers.hpp>
 #include <Common/Math/Helpers/PowerHelpers.hpp>
 #include <Math/NumberTheory/PrimeAndFactorUtilities.hpp>
 
@@ -131,13 +132,68 @@ UnsignedInteger getModularExponentiation(
     return result;
 }
 
-UnsignedInteger getModularInverse(
+
+// Modular Inverse:
+
+// The inverse of x modulo m is a number such that: (x*inverse) mod m = 1
+// Using modular inverses, we can divide numbers modulo m, because division by x corresponds to multiplication by the inverse.
+// However, a modular inverse does not always exist.
+
+UnsignedInteger getModularInverseByIteratingPossibleValues(
         UnsignedInteger const number,
         UnsignedInteger const modulo)
 {
-    // The inverse of x modulo m is a number such that: (x*inverse) mod m = 1
-    // Using modular inverses, we can divide numbers modulo m, because division by x corresponds to multiplication by the inverse.
-    // However, a modular inverse does not always exist. The inverse can be calculated exactly when x and m are coprime.
+    // Time Complexity: O(m)
+
+    UnsignedInteger result{};
+    for (UnsignedInteger possibleInverse = 1; possibleInverse < modulo; possibleInverse++)
+    {
+        if(((number%modulo) * (possibleInverse%modulo)) % modulo == 1)
+        {
+            result = possibleInverse;
+            break;
+        }
+    }
+    return result;
+}
+
+UnsignedInteger getModularInverseByGcfEuclidAlgorithm(
+        UnsignedInteger const number,
+        UnsignedInteger const modulo)
+{
+    // Time Complexity: O(log(m)) (because of gcf)
+
+    // The inverse can be calculated exactly when x and m are coprime using Extended Euclid Algorithm.
+
+    // The idea is to use Extended Euclidean algorithms that takes two integers ‘a’ and ‘b’, finds their gcd and also find ‘x’ and ‘y’ such that
+    // -> ax + by = gcd(a, b)
+    // To find multiplicative inverse of ‘a’ under ‘m’, we put b = m in above formula.
+    // Since we know that a and m are relatively prime, we can put value of gcd as 1.
+    // -> ax + my = 1
+    // If we take modulo m on both sides, we get
+    // -> ax + my = 1 (mod m)
+    // We can remove the second term on left side as ‘my (mod m)’ would always be 0 for an integer y.
+    // -> ax = 1 (mod m)
+    // So the 'x' is the multiplicative inverse of 'a'
+    // Note: getGreatestCommonFactorWithLastValues in AprgCommon already implements GCF with last values.
+
+    UnsignedInteger result{};
+    UnsignedInteger x, y;
+    UnsignedInteger gcf = getGreatestCommonFactorWithLastValues(number, modulo, x, y);
+    if(1 == gcf) // is coprime
+    {
+        result = (x%modulo + modulo) % modulo;
+    }
+    return result;
+}
+
+UnsignedInteger getModularInverseByEulersTheorem(
+        UnsignedInteger const number,
+        UnsignedInteger const modulo)
+{
+    // Time Complexity: O(log(m)) (because of exponentiation)
+
+    // The inverse can be calculated exactly when x and m are coprime using Euler's theorem.
 
     // Formula:  inverse = x^(phi(m)-1)
 
@@ -153,6 +209,30 @@ UnsignedInteger getModularInverse(
     // Euler theorem: (x^(phi(m))) mod m = 1
     // (x * x^(phi(m)-1)) mod m = 1
     // inverse = x^(phi(m)-1)
+}
+
+UnsignedInteger getModularInverseByFermatsLittleTheorem(
+        UnsignedInteger const number,
+        UnsignedInteger const modulo)
+{
+    // Time Complexity: O(log(m)) (because of exponentiation)
+
+    // If we know m is prime, then we can also use Fermats’s little theorem to find the inverse.
+
+    // Fermat's little theorem states that if p is a prime number, then for any integer a, the number ap − a is an integer multiple of p.
+    // In the notation of modular arithmetic, a^p ~= a (mod p)
+
+    // Thus:
+    // -> a^(m-1) ~= 1 (mod m)
+    // If we multiply both sides with a-1, we get:
+    // -> a^(-1) != a^(m-2) (mod m)
+
+    UnsignedInteger result{};
+    if(isPrime(modulo))
+    {
+        result = getModularExponentiation(number, modulo-2, modulo);
+    }
+    return result;
 }
 
 UnsignedInteger getModularFactorial(
