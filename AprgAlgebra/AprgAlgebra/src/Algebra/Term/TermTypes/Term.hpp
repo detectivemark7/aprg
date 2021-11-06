@@ -41,7 +41,7 @@ public:
     Term(Expression const& expression);
     Term(Function const& function);
 
-    template< typename ArithmeticType, typename = std::enable_if_t<typeHelper::isArithmeticType<ArithmeticType>()>> // enabled via a type template parameter
+    template<typename ArithmeticType, typename = std::enable_if_t<typeHelper::isArithmeticType<ArithmeticType>()>> // enabled via a type template parameter
     Term(ArithmeticType const value)
         : Term(AlbaNumber(value))
     {}
