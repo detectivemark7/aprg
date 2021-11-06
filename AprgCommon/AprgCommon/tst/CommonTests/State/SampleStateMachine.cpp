@@ -35,7 +35,7 @@ void SampleStateMachine::processInput(Action const& action)
     }
 }
 
-void SampleStateMachine::processStateWithNoValue(Action const& action)
+void SampleStateMachine::processStateWithNoValue(Action const action)
 {
     switch(action)
     {
@@ -57,7 +57,7 @@ void SampleStateMachine::processStateWithNoValue(Action const& action)
     }
 }
 
-void SampleStateMachine::processState1(Action const& action)
+void SampleStateMachine::processState1(Action const action)
 {
     switch(action)
     {
@@ -79,7 +79,7 @@ void SampleStateMachine::processState1(Action const& action)
     }
 }
 
-void SampleStateMachine::processState2(Action const& action)
+void SampleStateMachine::processState2(Action const action)
 {
     switch(action)
     {
@@ -101,7 +101,7 @@ void SampleStateMachine::processState2(Action const& action)
     }
 }
 
-void SampleStateMachine::processState3(Action const& action)
+void SampleStateMachine::processState3(Action const action)
 {
     switch(action)
     {
@@ -123,7 +123,7 @@ void SampleStateMachine::processState3(Action const& action)
     }
 }
 
-void SampleStateMachine::processState4(Action const& action)
+void SampleStateMachine::processState4(Action const action)
 {
     switch(action)
     {

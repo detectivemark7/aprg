@@ -94,8 +94,8 @@ AlbaNumber AlbaNumber::createFraction(int32_t const numerator, uint32_t const de
 template <typename NumberType>
 AlbaNumber AlbaNumber::createComplexNumber(NumberType const realPart, NumberType const imaginaryPart)
 {
-    double adjustedRealPart = adjustFloatValue(realPart);
-    double adjustedImaginaryPart = adjustFloatValue(imaginaryPart);
+    double adjustedRealPart = adjustFloatValue(static_cast<float>(realPart));
+    double adjustedImaginaryPart = adjustFloatValue(static_cast<float>(imaginaryPart));
     if(isinf(adjustedRealPart)
             || isnan(adjustedRealPart)
             || isAlmostEqual(adjustedImaginaryPart, 0.0, getComparisonTolerance()))
