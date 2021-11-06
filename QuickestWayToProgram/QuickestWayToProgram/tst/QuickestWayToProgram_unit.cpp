@@ -30,6 +30,33 @@ int numberOfFilesAnalyzedForExtraction;
 
 TEST(SampleTest, CountFromMsbValue)
 {
+    vector<pair<int, int>> container{{3,3}, {5,5}};
+    auto itRight = upper_bound(container.cbegin(), container.cend(), 1, [](
+                int const value, pair<int, int> const& intPair)
+    {
+        return value < intPair.first;
+    });
+    auto itLeft = prev(itRight, 1);
+    if(itLeft != container.cend())
+    {
+        ALBA_PRINT1(*itLeft);
+    }
+    else
+    {
+        ALBA_PRINT1("itLeft is end");
+    }
+    if(itRight != container.cend())
+    {
+        ALBA_PRINT1(*itRight);
+    }
+    else
+    {
+        ALBA_PRINT1("itRight is end");
+    }
+}
+
+/*TEST(SampleTest, CountFromMsbValue)
+{
     cout << "{";
     for(unsigned int value=0; value<256; value++)
     {
@@ -52,8 +79,6 @@ TEST(SampleTest, CountFromMsbValue)
     }
     cout << "}";
 }
-
-/*
 
 TEST(SampleTest, NumeratorAndDenominator)
 {
