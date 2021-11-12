@@ -51,7 +51,7 @@ public:
 // Adapter discussion:
 
 // ONE LINE NOTE:
-// -> ADAPT a MISMATCHED interface into a matched interface using a class inhertance or object composition
+// -> ADAPT a MISMATCHED interface into a matched interface using a class inheritance or object composition
 
 // Intent:
 // Convert the interface of a class into another interface the clients expect.

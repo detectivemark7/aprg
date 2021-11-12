@@ -108,7 +108,7 @@ public:
 // -> when extension by subclassing is impractical
 
 // Consequences:
-// -> More flexibility than static inhertance.
+// -> More flexibility than static inheritance.
 // ---> With decorators, responsibilities can be added and removed at runtime simply by attaching and detaching them.
 // ---> Providing different Decorator classes for a specific Component class lets you mix and match responsibilities.
 // ---> Decorators also make it easy to add a property twice.

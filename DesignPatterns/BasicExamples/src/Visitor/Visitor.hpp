@@ -100,7 +100,7 @@ public:
 // Visitor discussion:
 
 // ONE LINE NOTE:
-// -> Provide an ABSTRACT "visitor" that can be PASSED to an ABSTRACT ELEMENT so that it can perform "visit operations" without relying on concretions.
+// -> Provide an ABSTRACT VISITOR that can be PASSED to an ABSTRACT ELEMENT so that it can perform "visit operations" without relying on concretions.
 
 // Intent:
 // Visitor represents an operation to be performed on the elements of an object structure.

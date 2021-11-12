@@ -91,7 +91,7 @@ public:
 // Chain of Responsibility discussion:
 
 // ONE LINE NOTE:
-// -> Have a CHAIN of handlers that can process a request and ANY handler is RESPONSIBLE on consuming the request
+// -> Have a CHAIN of handlers (with subclassing) that can process a request and ANY handler is RESPONSIBLE on consuming the request
 
 // Intent:
 // Chain of Responsibility pattern avoids coupling the sender of a request to its receiver

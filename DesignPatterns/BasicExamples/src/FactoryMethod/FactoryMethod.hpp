@@ -85,7 +85,7 @@ public:
 // FactoryMethod discussion:
 
 // ONE LINE NOTE:
-// -> Provide a "factory method" for creating objects and let polymophism and subclassing support DIFFERENT VERSIONS of the "factory method".
+// -> Provide a "factory method" for creating objects and let polymorphism and subclassing support DIFFERENT VERSIONS of the "factory method".
 
 // Intent:
 // Define an interface for creating an object, but let subclasses decide which class to instantiate.

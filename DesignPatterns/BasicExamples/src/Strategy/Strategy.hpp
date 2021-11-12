@@ -77,7 +77,7 @@ private:
 // Strategy discussion:
 
 // ONE LINE NOTE:
-// -> Implement a common ABSTRACT STRATEGY INTERFACE and implement different strategies or FAMILIES OF ALGORITHMS by subclassing that can be changed in runtime.
+// -> Implement a common ABSTRACT STRATEGY INTERFACE and implement different strategies or FAMILIES OF ALGORITHMS by subclassing so that it can be changed in runtime.
 
 // Intent:
 // Strategy defines a family of algorithms, encapsulates each one, and makes them interchangeable.

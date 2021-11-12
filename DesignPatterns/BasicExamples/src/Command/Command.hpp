@@ -110,7 +110,7 @@ private:
 // Command discussion:
 
 // ONE LINE NOTE:
-// -> Encapsulate a REQUEST into a "command object" that can INVOKE different operations (such execute/undo)
+// -> Encapsulate a REQUEST into a "command object" that can INVOKE different operations (such as execute/undo)
 
 // Intent:
 // Command pattern encapsulates a request as an object,
