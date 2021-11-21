@@ -5,6 +5,8 @@
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/Math/Number/AlbaNumber.hpp>
 
+#include <numeric>
+
 namespace alba
 {
 
@@ -49,6 +51,14 @@ template <typename NumberType> NumberType getGreatestPowerOf2Factor(NumberType c
 }
 
 template <typename NumberType> NumberType getGreatestCommonFactor(NumberType const firstNumber, NumberType const secondNumber)
+{
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+
+    // Consider using std::common_type as return type
+    return std::gcd(firstNumber, secondNumber);
+}
+
+template <typename NumberType> NumberType getGreatestCommonFactorUsingEuclidAlgorithm(NumberType const firstNumber, NumberType const secondNumber)
 {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
@@ -106,6 +116,14 @@ template <typename NumberType> NumberType getGreatestCommonFactorWithLastValues(
 }
 
 template <typename NumberType> NumberType getLeastCommonMultiple(NumberType const firstNumber, NumberType const secondNumber)
+{
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+
+    // Consider using std::common_type as return type
+    return std::lcm(firstNumber, secondNumber);
+}
+
+template <typename NumberType> NumberType getLeastCommonMultipleUsingEuclidAlgorithm(NumberType const firstNumber, NumberType const secondNumber)
 {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 

@@ -1,4 +1,4 @@
-// Source: https://github.com/swansontec/map-macro/blob/master/map.h
+// Inspired by: https://github.com/swansontec/map-macro/blob/master/map.h
 
 #define ALBA_MACROS_FOR_EACH_EVAL0(...) __VA_ARGS__
 #define ALBA_MACROS_FOR_EACH_EVAL1(...) ALBA_MACROS_FOR_EACH_EVAL0(ALBA_MACROS_FOR_EACH_EVAL0(ALBA_MACROS_FOR_EACH_EVAL0(__VA_ARGS__)))

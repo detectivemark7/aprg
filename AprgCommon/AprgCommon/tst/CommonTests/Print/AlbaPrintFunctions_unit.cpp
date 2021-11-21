@@ -91,7 +91,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithTuple)
 
     printParameterWithName(ssToVerify, "name", pairToTest);
 
-    EXPECT_EQ("name : [(300, hello, A, )]", ssToVerify.str());
+    EXPECT_EQ("name : [(300, hello, A)]", ssToVerify.str());
 }
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithArray)
