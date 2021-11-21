@@ -104,7 +104,7 @@ private:
 // ---> Radix sort is better because of fixed width.
 // ---> For each digit, we can use 20 bits (or 16 bits which is more practical).
 // -----> If we use 16 bits: O((n+b) * logb(k)) = 1000000+65536 * log65536(2^32) = 1065536 * 2 = 2131072
-// -----> In comparison for a comparison based algorithm: O(n*lg(n)) = 1000000*lg(1000000) = 1000000*lg(19.93....) = 19931568.
+// -----> In comparison for a comparison based algorithm: O(n*lg(n)) = 1000000*lg(1000000) = 1000000*19.931568.... = 19931568.
 // -----> So Radix sort is better.
 
 // Applications of Radix Sort :
