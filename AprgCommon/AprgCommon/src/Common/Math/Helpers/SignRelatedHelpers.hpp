@@ -32,8 +32,8 @@ template <> inline unsigned int getSign<unsigned int>(unsigned int const)
 
 template <typename NumberType> inline NumberType getPositiveDelta(NumberType const value1, NumberType const value2)
 {
-    std::pair<NumberType, NumberType> minMaxPair = std::minmax(value1, value2);
-    return minMaxPair.second-minMaxPair.first;
+    auto && [minimum, maximum] = std::minmax(value1, value2); // C++17, structured bindings
+    return maximum-minimum;
 }
 
 template <typename NumberType>
@@ -58,8 +58,8 @@ inline AlbaNumber getSign(AlbaNumber const& value) // pass as const reference
 
 inline AlbaNumber getPositiveDelta(AlbaNumber const& value1, AlbaNumber const& value2) // pass as const reference
 {
-    std::pair<AlbaNumber, AlbaNumber> minMaxPair = std::minmax(value1, value2);
-    return minMaxPair.second-minMaxPair.first;
+    auto && [minimum, maximum] = std::minmax(value1, value2);
+    return maximum-minimum;
 }
 
 }//namespace mathHelper

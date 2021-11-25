@@ -756,9 +756,8 @@ void splitLinesToAchieveTargetLength(strings & strings, string const& mainString
 
         if(!isWhiteSpace(currentCharacter))
         {
-            auto pairOfIndex = containerHelper::getLowerAndUpperValuesForSet(transitionIndexes, splittingIndex);
-            unsigned int lowerTransitionIndex(pairOfIndex.first+1);
-            unsigned int upperTransitionIndex(pairOfIndex.second);
+            auto && [lowerTransitionIndex, upperTransitionIndex] = containerHelper::getLowerAndUpperValuesForSet(transitionIndexes, splittingIndex);
+            ++lowerTransitionIndex;
             int lowerDelta = static_cast<int>(splittingIndex-lowerTransitionIndex);
             int upperDelta = static_cast<int>(upperTransitionIndex-splittingIndex);
 

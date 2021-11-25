@@ -209,13 +209,10 @@ std::pair<typename ContainerType::const_iterator, typename ContainerType::const_
 getLowerAndUpperConstIteratorsInMap(ContainerType const& container, KeyType const& keyValue)
 {
     using ConstIterator = typename ContainerType::const_iterator;
-    std::pair<ConstIterator, ConstIterator> result;
     ConstIterator itLower(container.lower_bound(keyValue));
     ConstIterator itUpper(container.upper_bound(keyValue));
     adjustLowerAndUpperIteratorsInMap(container, keyValue, itLower, itUpper);
-    result.first = itLower;
-    result.second = itUpper;
-    return result;
+    return std::pair<ConstIterator, ConstIterator> (itLower, itUpper);
 }
 
 template <typename KeyType, typename ContainerType>
@@ -223,13 +220,10 @@ std::pair<typename ContainerType::iterator, typename ContainerType::iterator>
 getLowerAndUpperIteratorsInMap(ContainerType & container, KeyType const& keyValue)
 {
     using Iterator = typename ContainerType::iterator;
-    std::pair<Iterator, Iterator> result;
     Iterator itLower(container.lower_bound(keyValue));
     Iterator itUpper(container.upper_bound(keyValue));
     adjustLowerAndUpperIteratorsInMap(container, keyValue, itLower, itUpper);
-    result.first = itLower;
-    result.second = itUpper;
-    return result;
+    return std::pair<Iterator, Iterator>(itLower, itUpper);
 }
 
 template <typename Adapter>
@@ -301,17 +295,17 @@ void saveContentsToStream(std::ostream & outputStream, Container<KeyType, ValueT
     std::string delimeter(getDelimeterBasedOnFormat(streamFormat));
     if(StreamFormat::String==streamFormat)
     {
-        for(auto const& content : container)
+        for(auto const& [key, value] : container) //C++17, structured bindings
         {
-            outputStream << "{"  << content.first << ":" << content.second << "}" << delimeter;
+            outputStream << "{"  << key << ":" << value << "}" << delimeter;
         }
     }
     else
     {
-        for(auto const& content : container)
+        for(auto const& [key, value]  : container)
         {
-            outputStream << content.first << delimeter;
-            outputStream << content.second << delimeter;
+            outputStream << key << delimeter;
+            outputStream << value << delimeter;
         }
     }
 }

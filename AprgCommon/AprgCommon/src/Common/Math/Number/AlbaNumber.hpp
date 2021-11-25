@@ -26,17 +26,17 @@ public:
         Fraction,
         ComplexNumber
     };
-    struct FractionData
+    struct  FractionData // alignas(8) has no effect on performance (tested in benchmark)
     {
         int32_t numerator;
         uint32_t denominator;
     };
-    struct ComplexNumberData
+    struct ComplexNumberData // alignas(8) has no effect on performance (tested in benchmark)
     {
         float realPart;
         float imaginaryPart;
     };
-    union NumberUnionData
+    union NumberUnionData // alignas(8) has no effect on performance (tested in benchmark)
     {
         constexpr NumberUnionData()
             : intData{}

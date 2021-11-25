@@ -65,6 +65,15 @@ TEST(ComputationHelpersTest, ClampHigherBoundWorks)
     EXPECT_EQ(3, clampHigherBound(5, 3));
 }
 
+TEST(ComputationHelpersTest, ClampWithinWorks)
+{
+    EXPECT_EQ(2, clampWithin(1, 2, 4));
+    EXPECT_EQ(2, clampWithin(2, 2, 4));
+    EXPECT_EQ(3, clampWithin(3, 2, 4));
+    EXPECT_EQ(4, clampWithin(4, 2, 4));
+    EXPECT_EQ(4, clampWithin(5, 2, 4));
+}
+
 TEST(ComputationHelpersTest, GetAverageOfTwoNumbersForAlbaNumberWorks)
 {
     EXPECT_EQ(AlbaNumber(0),

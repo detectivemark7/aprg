@@ -51,6 +51,12 @@ template <typename NumberType> inline NumberType clampHigherBound(NumberType con
     return (value>limit) ? limit : value;
 }
 
+template <typename NumberType> inline NumberType clampWithin(NumberType const value, NumberType const lowest, NumberType const highest)
+{
+    // you can also use std::clamp but its in <algorithm>
+    return clampHigherBound(clampLowerBound(value, lowest), highest);
+}
+
 inline AlbaNumber getAverage(AlbaNumber const& value1, AlbaNumber const& value2)  // pass as const reference
 {
     return (value1+value2)/2;
