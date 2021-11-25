@@ -1,11 +1,14 @@
-#include "CommonHeaderForTranslationUnits.hpp"
+#include "CommonHeaderForStaticOnTranslationUnits.hpp"
 
 #include <gtest/gtest.h>
+
+// Inspired by: https://medium.com/pranayaggarwal25/unnamed-namespaces-static-f1498741c527
 
 namespace alba
 {
 
-// Inspired by: https://medium.com/pranayaggarwal25/unnamed-namespaces-static-f1498741c527
+namespace StaticOnTranslationUnits
+{
 
 // int integer; // extern(external linkage) by default, cannot redefine here because it conflicts with TranslationUnit1
 extern int externInteger;  // explicitly extern(external linkage), only a declaration and not a definition
@@ -17,7 +20,7 @@ extern const int externConstInteger; // explicitly extern(external linkage), onl
 //     return 2;
 // }
 
-int staticFreeFunction()
+int staticFreeFunction() // if this is not defined, errors will occur because its used on this translation unit.
 {
     return 2;
 }
@@ -29,7 +32,7 @@ TranslationUnitValues getValuesInTranslationUnit2()
     return TranslationUnitValues{constInteger, staticInteger, 0, externInteger, externConstInteger};
 }
 
-TEST(StaticOnTranslationUnitTest_TranslationUnit2, DISABLED_VariableValuesAreCorrect) // Flaky test
+TEST(StaticOnTranslationUnit2Test, DISABLED_VariableValuesAreCorrect) // Flaky test
 {
     EXPECT_EQ(100, constInteger);
     EXPECT_EQ(200, staticInteger);
@@ -38,7 +41,7 @@ TEST(StaticOnTranslationUnitTest_TranslationUnit2, DISABLED_VariableValuesAreCor
     EXPECT_EQ(500, externConstInteger);
 }
 
-TEST(StaticOnTranslationUnitTest_TranslationUnit2, VariableValuesCanBeChanged)
+TEST(StaticOnTranslationUnit2Test, VariableValuesCanBeChanged)
 {
     //constInteger = 101; // Const cannot change
     staticInteger = 201;
@@ -53,7 +56,7 @@ TEST(StaticOnTranslationUnitTest_TranslationUnit2, VariableValuesCanBeChanged)
     EXPECT_EQ(500, externConstInteger);
 }
 
-TEST(StaticOnTranslationUnitTest_TranslationUnit2, VariableValuesAreChangedAndReflectedOnOtherTranslationUnit)
+TEST(StaticOnTranslationUnit2Test, VariableValuesAreChangedAndReflectedOnOtherTranslationUnit)
 {
     //constInteger = 103; // Const cannot change
     staticInteger = 203;
@@ -69,10 +72,12 @@ TEST(StaticOnTranslationUnitTest_TranslationUnit2, VariableValuesAreChangedAndRe
     EXPECT_EQ(500, otherTranslationUnitValues.externConstInteger);
 }
 
-TEST(StaticOnTranslationUnitTest_TranslationUnit2, FunctionReturnValuesAreCorrect)
+TEST(StaticOnTranslationUnit2Test, FunctionReturnValuesAreCorrect)
 {
     EXPECT_EQ(1, freeFunction());
     EXPECT_EQ(2, staticFreeFunction());
+}
+
 }
 
 }

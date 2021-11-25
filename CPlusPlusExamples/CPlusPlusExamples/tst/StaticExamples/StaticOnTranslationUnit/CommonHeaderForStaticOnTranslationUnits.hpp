@@ -1,13 +1,12 @@
 #pragma once
 
-#include <functional>
-
 namespace alba
 {
 
-// in namespace or global scope
+namespace StaticOnTranslationUnits
+{
 
-const int constInteger=100; // static(internal linkage) by default
+constexpr int constInteger=100; // static(internal linkage) by default
 static int staticInteger=200; // explicitly static(internal linkage)
 
 // Linking failure if we include things with external linkage in the header:
@@ -21,7 +20,9 @@ int freeFunction(); // extern by default
 static int staticFreeFunction(); // explicitly static
 
 
+
 // Utilities for tests
+
 struct TranslationUnitValues
 {
     int constInteger;
@@ -33,6 +34,8 @@ struct TranslationUnitValues
 
 TranslationUnitValues getValuesInTranslationUnit1();
 TranslationUnitValues getValuesInTranslationUnit2();
+
+}
 
 }
 
