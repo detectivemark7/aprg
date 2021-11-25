@@ -107,6 +107,7 @@ C: Classes and class hierarchies
     C.1: Organize related data into structures (structs or classes)
     C.2: Use class if the class has an invariant; use struct if the data members can vary independently
 -----> Note: An invariant is a logical condition for the members of an object that a constructor must establish for the public member functions to assume.
+-----> Note: Invariants are condition that must be true before and after interacting with an object
     C.3: Represent the distinction between an interface and an implementation using a class
     C.4: Make a function a member only if it needs direct access to the representation of a class
     C.5: Place helper functions in the same namespace as the class they support
