@@ -100,8 +100,10 @@ public:
 
     AlbaSparseMatrix operator*(DataType const& scalarMultiplier) const //scalar multiplication
     {
-        std::function<DataType(DataType const&)> scalarMultiplication = std::bind(std::multiplies<DataType>(), std::placeholders::_1, scalarMultiplier);
-        return doUnaryOperation(*this, scalarMultiplication);
+        return doUnaryOperation(*this, [&scalarMultiplier](DataType const& data)
+        {
+            return scalarMultiplier*data;
+        });
     }
 
     AlbaSparseMatrix operator*(AlbaSparseMatrix const& secondMatrix) const //matrix multiplication

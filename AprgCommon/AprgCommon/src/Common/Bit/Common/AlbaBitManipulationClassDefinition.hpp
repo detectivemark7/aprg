@@ -42,7 +42,7 @@ public:
         return shiftNibblesToTheLeft<sizeof...(Arguments)>(currentByte & AlbaBitConstants::NIBBLE_MASK) | concatenateNibbles(arguments...);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftBytesToTheLeft(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -52,7 +52,7 @@ public:
         return static_cast<DataType>(static_cast<DataType>(value) << shiftValue*AlbaBitConstants::BYTE_SIZE_IN_BITS);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftBytesToTheRight(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -62,7 +62,7 @@ public:
         return (static_cast<DataType>(value) >> shiftValue*AlbaBitConstants::BYTE_SIZE_IN_BITS);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftNibblesToTheLeft(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -72,7 +72,7 @@ public:
         return (static_cast<DataType>(value) << shiftValue*AlbaBitConstants::NIBBLE_SIZE_IN_BITS);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftNibblesToTheRight(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -82,7 +82,7 @@ public:
         return (static_cast<DataType>(value) >> shiftValue*AlbaBitConstants::NIBBLE_SIZE_IN_BITS);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftBitsToTheLeft(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -92,7 +92,7 @@ public:
         return (static_cast<DataType>(value) << shiftValue);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType shiftBitsToTheRight(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -102,7 +102,7 @@ public:
         return (static_cast<DataType>(value) >> shiftValue);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType rotateBitToTheLeft(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -116,7 +116,7 @@ public:
         return rotateBitToTheLeftWithShiftValue(value, shiftValue);
     }
 
-    template <unsigned char shiftValue, typename ArgumentType>
+    template <auto shiftValue, typename ArgumentType>
     static constexpr inline DataType rotateBitToTheRight(ArgumentType const value)
     {
         static_assert(typeHelper::isIntegralType<ArgumentType>(), "ArgumentType must be an integer");
@@ -155,7 +155,7 @@ public:
         return (newValue >> shiftValue) | (newValue << (NUMBER_OF_BITS-shiftValue));
     }
 
-    template <unsigned char position>
+    template <auto position>
     static constexpr inline unsigned char getByteAt(DataType const value)
     {
         static_assert(sizeof(DataType) > position,
@@ -164,7 +164,7 @@ public:
         return static_cast<unsigned char>(shiftBytesToTheRight<position>(value));
     }
 
-    template <unsigned char position>
+    template <auto position>
     static constexpr inline unsigned char getNibbleAt(DataType const value)
     {
         static_assert(sizeof(DataType)*AlbaBitConstants::NUMBER_OF_NIBBLES_IN_BYTE > position,
@@ -173,7 +173,7 @@ public:
         return shiftNibblesToTheRight<position>(value) & AlbaBitConstants::NIBBLE_MASK;
     }
 
-    template <unsigned char position>
+    template <auto position>
     static constexpr inline unsigned char getBitAt(DataType const value)
     {
         static_assert(sizeof(DataType)*AlbaBitConstants::BYTE_SIZE_IN_BITS > position,
@@ -182,7 +182,7 @@ public:
         return shiftBitsToTheRight<position>(value) & AlbaBitConstants::BIT_MASK;
     }
 
-    template <unsigned char size>
+    template <ssize_t size>
     static constexpr inline DataType swapWithBytes(DataType const)
     {
         static_assert(size != size, "This size or type is not supported. Please add a specialization if needed.");

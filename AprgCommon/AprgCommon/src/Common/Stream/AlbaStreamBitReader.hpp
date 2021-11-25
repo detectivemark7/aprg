@@ -28,7 +28,7 @@ public:
     template <typename TypeToWrite> TypeToWrite readNumberData(AlbaStreamBitEndianType const endianType);
     template <typename TypeToWrite> TypeToWrite readBigEndianNumberData();
     template <typename TypeToWrite> TypeToWrite readLittleEndianNumberData();
-    template <unsigned int BITSET_SIZE> std::bitset<BITSET_SIZE> readBitsetData(unsigned int const startBitsetIndex, unsigned int const endBitsetIndex);
+    template <auto BITSET_SIZE> std::bitset<BITSET_SIZE> readBitsetData(unsigned int const startBitsetIndex, unsigned int const endBitsetIndex);
 
     std::istream& getInputStream();
 
@@ -87,11 +87,11 @@ TypeToWrite AlbaStreamBitReader::readLittleEndianNumberData()
     return static_cast<TypeToWrite>(dataBitset.to_ullong());
 }
 
-template <unsigned int BITSET_SIZE>
+template <auto BITSET_SIZE>
 std::bitset<BITSET_SIZE> AlbaStreamBitReader::readBitsetData(unsigned int const startBitsetIndex, unsigned int const endBitsetIndex)
 {
     std::bitset<BITSET_SIZE> result;
-    unsigned int const numberOfBitsToRead = std::min(endBitsetIndex-startBitsetIndex+1, BITSET_SIZE);
+    unsigned int const numberOfBitsToRead = std::min(endBitsetIndex-startBitsetIndex+1, static_cast<unsigned int>(BITSET_SIZE));
     readIfNeeded(numberOfBitsToRead);
     AlbaValueRange<int> bitsetRange(static_cast<int>(startBitsetIndex), static_cast<int>(endBitsetIndex), 1U);
     unsigned int bitBufferIndex=0;

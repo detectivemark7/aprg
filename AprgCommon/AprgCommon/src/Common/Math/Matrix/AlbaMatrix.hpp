@@ -22,17 +22,16 @@ namespace matrix
 // constexpr functions:
 
 template <typename DataType>
-constexpr std::enable_if_t<typeHelper::isArithmeticType<DataType>(), AlbaMatrixData<DataType>>
-getDefaultMatrix(unsigned int const numberOfColumns, unsigned int const numberOfRows)
+constexpr AlbaMatrixData<DataType> getDefaultMatrix(unsigned int const numberOfColumns, unsigned int const numberOfRows)
 {
-    return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows, DataType{}); // if arithmetic type, initialize it to zero
-}
-
-template <typename DataType>
-constexpr std::enable_if_t<!typeHelper::isArithmeticType<DataType>(), AlbaMatrixData<DataType>>
-getDefaultMatrix(unsigned int const numberOfColumns, unsigned int const numberOfRows)
-{
-    return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows); // if non arithmetic type, default construct it
+    if constexpr(typeHelper::isArithmeticType<DataType>())
+    {
+        return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows, DataType{}); // if arithmetic type, initialize it to zero
+    }
+    else
+    {
+        return AlbaMatrixData<DataType>(numberOfColumns*numberOfRows); // if non arithmetic type, default construct it
+    }
 }
 
 template <typename DataType>
@@ -129,7 +128,10 @@ public:
 
     AlbaMatrix operator*(DataType const& scalarMultiplier) const //scalar multiplication
     {
-        std::function<DataType(DataType const&)> scalarMultiplication = std::bind(std::multiplies<DataType>(), std::placeholders::_1, scalarMultiplier);
+        UnaryFunction<DataType> scalarMultiplication = [&scalarMultiplier](DataType const& value)
+        {
+            return scalarMultiplier*value;
+        };
         return doUnaryOperation(*this, scalarMultiplication);
     }
 
@@ -157,8 +159,10 @@ public:
 
     AlbaMatrix& operator*=(DataType const& scalarMultiplier)
     {
-        std::function<DataType(DataType const&)> scalarMultiplication
-            = std::bind(std::multiplies<DataType>(), std::placeholders::_1, scalarMultiplier);
+        UnaryFunction<DataType> scalarMultiplication = [&scalarMultiplier](DataType const& value)
+        {
+            return scalarMultiplier*value;
+        };
         doUnaryAssignmentOperation(*this, scalarMultiplication);
         return *this;
     }

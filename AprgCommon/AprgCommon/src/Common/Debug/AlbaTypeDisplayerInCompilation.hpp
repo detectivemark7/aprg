@@ -8,7 +8,7 @@ namespace alba
 // 2) Boost.TypeIndex (.pretty_name()) provide accurate information in runtime, but we dont use boost.
 
 // NOTES on type deduction:
-// 1) auto type deduction is the same with template type deduction, except for brace initializer list (automatically converts to std::initializer_list type)
+// 1) auto type deduction is the same with template type deduction, except for brace initializer list (automatically converts to std::initializer_list type) (ill-formed in C++17)
 // 2) lambda capture type deduction
 // 2.1) capture by reference -> same with template type deduction
 // 2.2) init capture in c++14 -> same with auto type deduction
