@@ -29,7 +29,7 @@ TEST(AlbaDebugTest, PrintingSingleParametersWorks) {
     ALBA_PRINT3(singleParameter1, singleParameter2, singleParameter3);
 
     EXPECT_EQ(
-        R"(ALBA_PRINT in line:  34 in TestBody(...): singleParameter1 : [12] singleParameter2 : [345] singleParameter3 : [6789])"
+        R"(ALBA_PRINT in line:  29 in TestBody(...): singleParameter1 : [12] singleParameter2 : [345] singleParameter3 : [6789])"
         "\n",
         s_debugStringStream.str());
 }
@@ -44,7 +44,7 @@ TEST(AlbaDebugTest, PrintinPointersWorks) {
     ALBA_PRINT3(nullPointer, rawPointer, uniquePointer);
 
     EXPECT_EQ(
-        R"(ALBA_PRINT in line:  48 in TestBody(...): nullPointer : [nullptr] *rawPointer : [695] *uniquePointer : [695])"
+        R"(ALBA_PRINT in line:  44 in TestBody(...): nullPointer : [nullptr] *rawPointer : [695] *uniquePointer : [695])"
         "\n",
         s_debugStringStream.str());
 }
@@ -58,7 +58,7 @@ TEST(AlbaDebugTest, PrintinContainersWorks) {
     ALBA_PRINT2(container1, container2);
 
     EXPECT_EQ(
-        R"(ALBA_PRINT in line:  61 in TestBody(...): container1 : [{size: 4 | 454, 6, 512, 315, }] container2 : [{size: 4 | (1, A), (5, E), (7, G), (8, H), }])"
+        R"(ALBA_PRINT in line:  58 in TestBody(...): container1 : [{size: 4 | 454, 6, 512, 315, }] container2 : [{size: 4 | (1, A), (5, E), (7, G), (8, H), }])"
         "\n",
         s_debugStringStream.str());
 }
@@ -74,7 +74,7 @@ TEST(AlbaDebugTest, ManipulateOutputStreamsWorks) {
     ALBA_PRINT_MANIPULATE_OUTPUT(dec);
 
     EXPECT_EQ(
-        R"(ALBA_PRINT in line:  4B in TestBody(...): singleParameter1 : [C] singleParameter2 : [159] singleParameter3 : [1A85])"
+        R"(ALBA_PRINT in line:  49 in TestBody(...): singleParameter1 : [C] singleParameter2 : [159] singleParameter3 : [1A85])"
         "\n",
         s_debugStringStream.str());
 }
@@ -107,7 +107,7 @@ TEST(AlbaDebugTest, DebugClassOutputOperatorsWorks) {
     ALBA_PRINT1(object);
 
     EXPECT_EQ(
-        R"(ALBA_PRINT in line: 114 in TestBody(...): object : [(parameter1:1234,parameter2:7777,sum:9011)])"
+        R"(ALBA_PRINT in line: 107 in TestBody(...): object : [(parameter1:1234,parameter2:7777,sum:9011)])"
         "\n",
         s_debugStringStream.str());
 }
