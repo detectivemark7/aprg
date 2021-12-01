@@ -9,6 +9,7 @@ set(APRG_COMPILER_FLAGS_FOR_DEBUG "-g --coverage -fno-rtti")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_RTTI "-g --coverage")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_FAST_COMPILATION "-g --coverage -O0") #-O0 is actually the default so this is useless
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_SPEED "-g --coverage -O3")
+set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_SPEED_AND_FAST_MATH "-g --coverage -O3 -ffast-math")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_MORE_SPEED "-g --coverage -Ofast")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_NO_STACK_PROTECTOR "-g --coverage -fno-stack-protector") #let the stack smash (for debugging)
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_ASAN "-g --coverage -fsanitize=address -fno-omit-frame-pointer")
@@ -17,6 +18,7 @@ set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_TSAN "-g --coverage -fsanitize=thread")
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_MSAN "-g --coverage -fsanitize=memory -fno-omit-frame-pointer -fPIE") # not supported by gcc, only on clang
 set(APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_UBSAN "-g --coverage -fsanitize=undefined") # looks like not working
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED "-O3 -DNDEBUG -fno-rtti")
+set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED_AND_FAST_MATH "-O3 -DNDEBUG -fno-rtti -ffast-math")
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED_WITH_RTTI "-O3 -DNDEBUG")
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_MIN_SIZE "-Os -DNDEBUG")
 set(APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_DEBUG "-O2 -g -DNDEBUG")
