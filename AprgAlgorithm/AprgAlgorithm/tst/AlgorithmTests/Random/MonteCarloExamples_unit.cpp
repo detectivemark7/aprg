@@ -1,6 +1,6 @@
 #include <Algorithm/Random/MonteCarlo.hpp>
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
-#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
+#include <Common/Randomizer/AlbaUniformNonDeterministicRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -17,7 +17,7 @@ TEST(MonteCarloTest, VerifyingMatrixExample) {
 
     using MatrixForTest = matrix::AlbaMatrix<unsigned int>;
 
-    AlbaSimpleRandomizer randomizer;
+    AlbaUniformNonDeterministicRandomizer<unsigned int> randomizer(1, 10);
     MatrixForTest a(3, 2, {1, 2, 3, 4, 5, 6});
     MatrixForTest b(4, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
     MatrixForTest c(4, 2, {38, 44, 50, 56, 83, 98, 113, 128});
@@ -36,7 +36,7 @@ TEST(MonteCarloTest, VerifyingMatrixExample) {
 
         MatrixForTest x(1, b.getNumberOfColumns());
         for (unsigned int i = 0; i < x.getNumberOfRows(); i++) {
-            x.setEntry(0, i, static_cast<unsigned int>(randomizer.getRandomIntegerInUniformDistribution(1, 10)));
+            x.setEntry(0, i, randomizer.getRandomValue());
         }
         MatrixForTest bx = b * x;
         MatrixForTest abx = a * bx;

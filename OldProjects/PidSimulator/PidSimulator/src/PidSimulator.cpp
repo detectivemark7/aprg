@@ -25,7 +25,7 @@ PidSimulator::PidSimulator(stringHelper::strings const& argumentsInMain)
       m_xGridInterval(0),
       m_yGridInterval(0),
       m_inputSample(),
-      m_randomizer() {}
+      m_randomizer(0, static_cast<int>(m_conf.amplitudeOfInputDemand)) {}
 
 double PidSimulator::calculatePid(double const input, double const target) {
     // https://en.wikipedia.org/wiki/PID_controller
@@ -116,12 +116,9 @@ void PidSimulator::generateStepDownForInput() {
 }
 
 void PidSimulator::generateRandomForInput() {
-    m_randomizer.resetRandomSeed();
     for (unsigned int j = 0; j < m_conf.numberOfLoopsOfPeriodicInputDemand; j++) {
         for (unsigned int i = 0; i < m_conf.numberOfSamplesOfInputDemandInOnePeriod; i++) {
-            m_inputSample.emplace_back(
-                m_randomizer.getRandomIntegerInUniformDistribution(0, static_cast<int>(m_conf.amplitudeOfInputDemand)) +
-                m_conf.addedOffsetOfInputDemand);
+            m_inputSample.emplace_back(m_randomizer.getRandomValue() + m_conf.addedOffsetOfInputDemand);
         }
     }
 }

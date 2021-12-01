@@ -2,7 +2,7 @@
 
 #include <Common/File/AlbaFileReader.hpp>
 #include <Common/PathHandler/AlbaLocalPathHandler.hpp>
-#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
+#include <Common/Randomizer/AlbaUniformNonDeterministicRandomizer.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 #include <gsl/gsl_multifit.h>
 
@@ -200,10 +200,9 @@ void Modeling::saveRetrievedDataToMatrixRandomly(
     MatrixOfDoubles& matrixInX, MatrixOfDoubles& matrixInY, unsigned int numberOfSamples) {
     matrixInX.clearAndResize(m_retrievedDataForX.getNumberOfColumns(), numberOfSamples);
     matrixInY.clearAndResize(1, numberOfSamples);
-    AlbaSimpleRandomizer randomizer;
+    AlbaUniformNonDeterministicRandomizer<unsigned int> randomizer(0, m_retrievedDataForY.getNumberOfRows() - 1);
     for (unsigned int j = 0; j < numberOfSamples; j++) {
-        unsigned int randomRow((unsigned int)randomizer.getRandomIntegerInUniformDistribution(
-            0, m_retrievedDataForY.getNumberOfRows() - 1));
+        unsigned int randomRow(randomizer.getRandomValue());
         matrixInY.setEntry(0, j, m_retrievedDataForY.getEntry(0, randomRow));
         for (unsigned int i = 0; i < m_retrievedDataForX.getNumberOfColumns(); i++) {
             matrixInX.setEntry(i, j, m_retrievedDataForX.getEntry(i, randomRow));

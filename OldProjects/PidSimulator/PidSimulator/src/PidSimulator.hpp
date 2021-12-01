@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
+#include <Common/Randomizer/AlbaUniformNonDeterministicRandomizer.hpp>
 #include <PidSimulatorConfiguration.hpp>
 
 #include <vector>
@@ -45,7 +45,7 @@ private:
     double m_xGridInterval;
     double m_yGridInterval;
     std::vector<double> m_inputSample;
-    AlbaSimpleRandomizer m_randomizer;
+    AlbaUniformNonDeterministicRandomizer<int> m_randomizer;
 };
 
 }  // namespace alba
