@@ -1,4 +1,4 @@
-#include <Common/Randomizer/AlbaSimpleRandomizer.hpp>
+#include <Common/Randomizer/AlbaOldRandomizer.hpp>
 
 #include <gtest/gtest.h>
 
@@ -8,8 +8,8 @@ using namespace std;
 
 namespace alba {
 
-TEST(AlbaSimpleRandomizerTest, GetRandomIntegerInUniformDistributionWorks_WithinMinimumAndMaximumValues) {
-    AlbaSimpleRandomizer randomizer;
+TEST(AlbaOldRandomizerTest, GetRandomIntegerInUniformDistributionWorks_WithinMinimumAndMaximumValues) {
+    AlbaOldRandomizer randomizer;
     constexpr int minimumValue(0);
     constexpr int maximumValue(9);
     for (int i = 0; i < 1000; i++) {
@@ -19,13 +19,13 @@ TEST(AlbaSimpleRandomizerTest, GetRandomIntegerInUniformDistributionWorks_Within
     }
 }
 
-TEST(AlbaSimpleRandomizerTest, GetRandomIntegerInUniformDistributionWorks_AsUniformlyDistributed) {
-    AlbaSimpleRandomizer randomizer;
+TEST(AlbaOldRandomizerTest, GetRandomIntegerInUniformDistributionWorks_AsUniformlyDistributed) {
+    AlbaOldRandomizer randomizer;
     constexpr int minimumValue(0);
     constexpr int maximumValue(9);
     int numberOfRandomValues(maximumValue - minimumValue + 1);
     int const iterations(1000);
-    int const allowedDeviation(iterations/10);
+    int const allowedDeviation(iterations / 10);
     vector<int> hitsForEachValue(static_cast<unsigned long>(numberOfRandomValues), 0);
 
     for (int i = 0; i < iterations; i++) {
@@ -39,8 +39,8 @@ TEST(AlbaSimpleRandomizerTest, GetRandomIntegerInUniformDistributionWorks_AsUnif
     EXPECT_LE(deviation, allowedDeviation);
 }
 
-TEST(AlbaSimpleRandomizerTest, GetRandomValueInUniformDistributionWorks_WithinMinimumAndMaximumValues) {
-    AlbaSimpleRandomizer randomizer;
+TEST(AlbaOldRandomizerTest, GetRandomValueInUniformDistributionWorks_WithinMinimumAndMaximumValues) {
+    AlbaOldRandomizer randomizer;
     constexpr double minimumValue(-11.5);
     constexpr double maximumValue(23.25);
     for (int i = 0; i < 1000; i++) {
