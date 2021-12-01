@@ -27,7 +27,11 @@ public:
             sizeof(DataType) > sizeof...(Arguments),
             "concatenateBytes: sizeof(DataType) size is greater than Arguments size");
 
-        return shiftBytesToTheLeft<sizeof...(Arguments)>(currentByte) | concatenateBytes(arguments...);
+        if constexpr (sizeof...(Arguments) > 0) {
+            return shiftBytesToTheLeft<sizeof...(Arguments)>(currentByte) | concatenateBytes(arguments...);
+        } else {
+            return currentByte;
+        }
     }
 
     template <typename ArgumentType, typename... Arguments>
@@ -38,8 +42,12 @@ public:
             sizeof(DataType) * AlbaBitConstants::NUMBER_OF_NIBBLES_IN_BYTE > sizeof...(Arguments),
             "concatenateNibbles: sizeof(DataType) size is greater than two times the Arguments size");
 
-        return shiftNibblesToTheLeft<sizeof...(Arguments)>(currentByte & AlbaBitConstants::NIBBLE_MASK) |
-               concatenateNibbles(arguments...);
+        if constexpr (sizeof...(Arguments) > 0) {
+            return shiftNibblesToTheLeft<sizeof...(Arguments)>(currentByte & AlbaBitConstants::NIBBLE_MASK) |
+                   concatenateNibbles(arguments...);
+        } else {
+            return currentByte & AlbaBitConstants::NIBBLE_MASK;
+        }
     }
 
     template <auto shiftValue, typename ArgumentType>
@@ -184,19 +192,6 @@ public:
     static constexpr inline DataType swapForFourBytes(DataType const value) { return swapWithBytes<4>(value); }
 
     static constexpr inline DataType swapForEightBytes(DataType const value) { return swapWithBytes<8>(value); }
-
-private:
-    template <typename ArgumentType>
-    static constexpr inline DataType concatenateBytes(ArgumentType arg) {
-        static_assert(sizeof(ArgumentType) == 1, "concatenateBytes: ArgumentType size is greater than a byte");
-        return arg;
-    }
-
-    template <typename ArgumentType>
-    static constexpr inline DataType concatenateNibbles(ArgumentType arg) {
-        static_assert(sizeof(ArgumentType) == 1, "concatenateNibbles: ArgumentType size is greater than a byte");
-        return arg & AlbaBitConstants::NIBBLE_MASK;
-    }
 };
 
 }  // namespace alba

@@ -26,13 +26,7 @@ public:
 
     bool operator<(AlbaXY const& xy) const  // this is added so it can be used in map
     {
-        bool result(false);
-        if (m_x < xy.m_x) {
-            result = true;
-        } else if (m_x == xy.m_x) {
-            result = (m_y < xy.m_y);
-        }
-        return result;
+        return std::tie(m_x, m_y) < std::tie(xy.m_x, xy.m_y);
     }
 
     AlbaXY operator+() const { return *this; }
