@@ -9,7 +9,7 @@ struct SampleClassWithStatic {
 
     // static int staticData = 200; // Error: non-const static data member must be initialized out of line
     static int staticData;  // declaration only (incomplete type and must be defined)
-    constexpr static int staticConstData = 300;
+    static constexpr int staticConstData = 300;
     static inline int staticInlinedData = 400;  // C++17, this saves the hassle of defining static data
     static inline std::string staticInlinedString = "500";
     // mutable static int staticMutableData; // Static data members cannot be mutable.
@@ -21,8 +21,10 @@ struct SampleClassWithStatic {
     int nonStaticFunctionWithClassDefinition() { return nonStaticData; }
 
     static int staticFunctionWithClassDefinition() {
-        // return this->staticData; // Static member functions are not associated with any object. When called, they
-        // have no this pointer.
+        // return this->staticData;
+        // Static member functions are not associated with any object.
+        // When called, they have no "this" pointer.
+
         return staticData;
     }
 

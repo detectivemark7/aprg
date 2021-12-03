@@ -11,7 +11,7 @@ namespace InlineOnTranslationUnits {
 // int inlineIntegerWithDeclaration=300; // Error: redefinition of 'inlineIntegerWithDeclaration'
 inline int inlineIntegerAtTranslationUnit = 420;  // different definition (results in undefined behavior)
 // int nonInlineAtTranslationUnit=500; // Linker error: multiple definition of
-// `alba::InlineOnTranslationUnits::nonInlineAtTranslationUnit'
+// 'alba::InlineOnTranslationUnits::nonInlineAtTranslationUnit'
 inline int externInlineInteger =
     620;  // definition (complete type), different definition (results in undefined behavior)
 
@@ -30,6 +30,7 @@ TranslationUnitValues getValuesInTranslationUnit2() {
         inlineIntegerAtTranslationUnit,
         0,
         externInlineInteger,
+        staticInlineInteger,
         inlineString};
 }
 
@@ -38,12 +39,12 @@ TEST(InlineOnTranslationUnit2Test, DISABLED_VariableValuesAreCorrect)  // Flaky 
     EXPECT_EQ(100, constInteger);
     EXPECT_EQ(200, inlineIntegerWithDefinition);
     EXPECT_EQ(0, inlineIntegerWithDeclaration);
-    EXPECT_EQ(410, inlineIntegerAtTranslationUnit);  // Undefined behavior really but in this case in takes the
-                                                     // implementation from TranslationUnit1
-    // EXPECT_EQ(0, nonInlineAtTranslationUnit); // no "nonInlineAtTranslationUnit" here because it conflicts with
-    // TranslationUnit1
+    EXPECT_EQ(410, inlineIntegerAtTranslationUnit);
+    // Undefined behavior really but in this case in takes the implementation from TranslationUnit1
+    // EXPECT_EQ(0, nonInlineAtTranslationUnit); // conflicts with TranslationUnit1
     EXPECT_EQ(610, externInlineInteger);
-    EXPECT_EQ("700", inlineString);
+    EXPECT_EQ(700, staticInlineInteger);
+    EXPECT_EQ("800", inlineString);
     EXPECT_EQ(1000, SampleClassWithInline::constIntegerInClass);
 }
 
@@ -53,16 +54,17 @@ TEST(InlineOnTranslationUnit2Test, VariableValuesCanBeChanged) {
     inlineIntegerWithDeclaration = 301;
     inlineIntegerAtTranslationUnit = 411;
     externInlineInteger = 611;
-    inlineString = "701";
+    staticInlineInteger = 711;
+    inlineString = "801";
 
     EXPECT_EQ(100, constInteger);
     EXPECT_EQ(201, inlineIntegerWithDefinition);
     EXPECT_EQ(301, inlineIntegerWithDeclaration);
     EXPECT_EQ(411, inlineIntegerAtTranslationUnit);
-    // EXPECT_EQ(0, nonInlineAtTranslationUnit); // no "nonInlineAtTranslationUnit" here because it conflicts with
-    // TranslationUnit1
+    // EXPECT_EQ(0, nonInlineAtTranslationUnit); // conflicts with TranslationUnit1
     EXPECT_EQ(611, externInlineInteger);
-    EXPECT_EQ("701", inlineString);
+    EXPECT_EQ(711, staticInlineInteger);
+    EXPECT_EQ("801", inlineString);
 }
 
 TEST(InlineOnTranslationUnit2Test, VariableValuesAreChangedAndReflectedOnOtherTranslationUnit) {
@@ -73,7 +75,8 @@ TEST(InlineOnTranslationUnit2Test, VariableValuesAreChangedAndReflectedOnOtherTr
     // nonInlineAtTranslationUnit = 503; // no "nonInlineAtTranslationUnit" here because it conflicts with
     // TranslationUnit1
     externInlineInteger = 613;
-    inlineString = "703";
+    staticInlineInteger = 713;
+    inlineString = "803";
 
     TranslationUnitValues otherTranslationUnitValues(getValuesInTranslationUnit1());
     EXPECT_EQ(100, otherTranslationUnitValues.constInteger);
@@ -82,7 +85,8 @@ TEST(InlineOnTranslationUnit2Test, VariableValuesAreChangedAndReflectedOnOtherTr
     EXPECT_EQ(413, otherTranslationUnitValues.inlineIntegerAtTranslationUnit);
     EXPECT_EQ(500, otherTranslationUnitValues.nonInlineAtTranslationUnit);
     EXPECT_EQ(613, otherTranslationUnitValues.externInlineInteger);
-    EXPECT_EQ("703", otherTranslationUnitValues.inlineString);
+    EXPECT_EQ(700, otherTranslationUnitValues.staticInlineInteger);  // static overrides inline
+    EXPECT_EQ("803", otherTranslationUnitValues.inlineString);
 }
 
 TEST(InlineOnTranslationUnit2Test, FunctionReturnValuesAreCorrect) {

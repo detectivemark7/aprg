@@ -27,6 +27,7 @@ TranslationUnitValues getValuesInTranslationUnit1() {
         inlineIntegerAtTranslationUnit,
         nonInlineAtTranslationUnit,
         externInlineInteger,
+        staticInlineInteger,
         inlineString};
 }
 
@@ -38,7 +39,8 @@ TEST(InlineOnTranslationUnit1Test, DISABLED_VariableValuesAreCorrect)  // Flaky 
     EXPECT_EQ(410, inlineIntegerAtTranslationUnit);
     EXPECT_EQ(500, nonInlineAtTranslationUnit);
     EXPECT_EQ(610, externInlineInteger);
-    EXPECT_EQ("700", inlineString);
+    EXPECT_EQ(700, staticInlineInteger);
+    EXPECT_EQ("800", inlineString);
     EXPECT_EQ(1000, SampleClassWithInline::constIntegerInClass);
 }
 
@@ -49,7 +51,8 @@ TEST(InlineOnTranslationUnit1Test, VariableValuesCanBeChanged) {
     inlineIntegerAtTranslationUnit = 411;
     nonInlineAtTranslationUnit = 501;
     externInlineInteger = 611;
-    inlineString = "701";
+    staticInlineInteger = 711;
+    inlineString = "801";
 
     EXPECT_EQ(100, constInteger);
     EXPECT_EQ(201, inlineIntegerWithDefinition);
@@ -57,7 +60,8 @@ TEST(InlineOnTranslationUnit1Test, VariableValuesCanBeChanged) {
     EXPECT_EQ(411, inlineIntegerAtTranslationUnit);
     EXPECT_EQ(501, nonInlineAtTranslationUnit);
     EXPECT_EQ(611, externInlineInteger);
-    EXPECT_EQ("701", inlineString);
+    EXPECT_EQ(711, staticInlineInteger);
+    EXPECT_EQ("801", inlineString);
 }
 
 TEST(InlineOnTranslationUnit1Test, VariableValuesAreChangedAndReflectedOnOtherTranslationUnit) {
@@ -67,18 +71,19 @@ TEST(InlineOnTranslationUnit1Test, VariableValuesAreChangedAndReflectedOnOtherTr
     inlineIntegerAtTranslationUnit = 412;
     nonInlineAtTranslationUnit = 502;
     externInlineInteger = 612;
-    inlineString = "702";
+    staticInlineInteger = 712;
+    inlineString = "802";
 
     TranslationUnitValues otherTranslationUnitValues(getValuesInTranslationUnit2());
     EXPECT_EQ(100, otherTranslationUnitValues.constInteger);
     EXPECT_EQ(202, otherTranslationUnitValues.inlineIntegerWithDefinition);
     EXPECT_EQ(302, otherTranslationUnitValues.inlineIntegerWithDeclaration);
     EXPECT_EQ(412, otherTranslationUnitValues.inlineIntegerAtTranslationUnit);
-    EXPECT_EQ(
-        0, otherTranslationUnitValues
-               .nonInlineAtTranslationUnit);  // no "nonInlineAtTranslationUnit" on Translation Unit 2
+    EXPECT_EQ(0, otherTranslationUnitValues.nonInlineAtTranslationUnit);
+    // no "nonInlineAtTranslationUnit" on Translation Unit 2
     EXPECT_EQ(612, otherTranslationUnitValues.externInlineInteger);
-    EXPECT_EQ("702", otherTranslationUnitValues.inlineString);
+    EXPECT_EQ(700, otherTranslationUnitValues.staticInlineInteger);  // static overrides inline
+    EXPECT_EQ("802", otherTranslationUnitValues.inlineString);
 }
 
 TEST(InlineOnTranslationUnit1Test, FunctionReturnValuesAreCorrect) {
