@@ -86,8 +86,9 @@ public:
 #undef COUNTS
 };
 
-// Note: CRTP (curiously recurring template pattern) can also be an approach it does not track user defined
-// construction. Example:
+// Note: CRTP (curiously recurring template pattern) can also be an approach
+// But it does not track user defined construction.
+// Example:
 //   template <typename T>
 //   struct counter
 //   {

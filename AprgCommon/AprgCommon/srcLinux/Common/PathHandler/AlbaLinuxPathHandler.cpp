@@ -153,7 +153,7 @@ bool AlbaLinuxPathHandler::copyToNewFile(string_view newFilePath) {
 
     readFileDescriptor = open(getFullPath().c_str(), O_RDONLY);
     if (0 == stat(getFullPath().c_str(), &statBuffer)) {
-        writeFileDescriptor = open(newFilePath.c_str(), O_WRONLY | O_CREAT, statBuffer.st_mode);
+        writeFileDescriptor = open(newFilePath.data(), O_WRONLY | O_CREAT, statBuffer.st_mode);
         if (isFile()) {
             int errorReturnValue = static_cast<int>(sendfile(
                 writeFileDescriptor, readFileDescriptor, &offset, static_cast<size_t>(statBuffer.st_size)));
@@ -177,7 +177,7 @@ bool AlbaLinuxPathHandler::copyToNewFile(string_view newFilePath) {
 bool AlbaLinuxPathHandler::renameFile(string_view newFileName) {
     bool isSuccessful(false);
     if (isFile()) {
-        string newPath(m_directory + newFileName);
+        string newPath(m_directory + string(newFileName));
         int errorReturnValue = rename(getFullPath().c_str(), newPath.c_str());
         isSuccessful = errorReturnValue == 0;
         if (!isSuccessful) {
@@ -195,7 +195,7 @@ bool AlbaLinuxPathHandler::renameImmediateDirectory(string_view newDirectoryName
     if (isDirectory()) {
         AlbaLinuxPathHandler newPathHandler(getFullPath());
         newPathHandler.goUp();
-        newPathHandler.input(newPathHandler.getDirectory() + m_slashCharacterString + newDirectoryName);
+        newPathHandler.input(newPathHandler.getDirectory() + m_slashCharacterString + string(newDirectoryName));
         int errorReturnValue = rename(getFullPath().c_str(), newPathHandler.getFullPath().c_str());
         isSuccessful = errorReturnValue == 0;
         if (!isSuccessful) {
@@ -265,7 +265,7 @@ void AlbaLinuxPathHandler::findFilesAndDirectoriesWithDepth(
 
     DIR* directoryStream;
 
-    directoryStream = opendir(currentDirectory.c_str());
+    directoryStream = opendir(currentDirectory.data());
     if (directoryStream != nullptr) {
         loopAllFilesAndDirectoriesInDirectoryStream(
             directoryStream, currentDirectory, wildCardSearch, listOfFiles, listOfDirectories, depth);
@@ -290,7 +290,7 @@ void AlbaLinuxPathHandler::loopAllFilesAndDirectoriesInDirectoryStream(
             bool isTheNameNotComposedOfPeriods =
                 "." != immediateFileOrDirectoryName && ".." != immediateFileOrDirectoryName;
             if (isTheNameNotComposedOfPeriods && canProceedBasedOnWildcard) {
-                string fullFileOrDirectoryName(currentDirectory + immediateFileOrDirectoryName);
+                string fullFileOrDirectoryName(string(currentDirectory) + immediateFileOrDirectoryName);
                 if (isPathADirectory(fullFileOrDirectoryName)) {
                     string fullFileOrDirectoryNameWithSlash(fullFileOrDirectoryName + "/");
                     listOfDirectories.emplace(fullFileOrDirectoryNameWithSlash);
@@ -312,7 +312,7 @@ bool AlbaLinuxPathHandler::isPathADirectory(string_view fileOrDirectoryName) con
     bool result(false);
     if (canBeLocated(fileOrDirectoryName)) {
         struct stat statBuffer {};
-        if (0 == stat(fileOrDirectoryName.c_str(), &statBuffer)) {
+        if (0 == stat(fileOrDirectoryName.data(), &statBuffer)) {
             result = S_ISDIR(statBuffer.st_mode);
         } else {
             cout << "Error in AlbaLinuxPathHandler::isPathADirectory() path:[" << getFullPath()
@@ -324,7 +324,7 @@ bool AlbaLinuxPathHandler::isPathADirectory(string_view fileOrDirectoryName) con
 
 bool AlbaLinuxPathHandler::canBeLocated(string_view fullPath) const {
     struct stat statBuffer {};
-    return stat(fullPath.c_str(), &statBuffer) == 0;
+    return stat(fullPath.data(), &statBuffer) == 0;
 }
 
 bool AlbaLinuxPathHandler::isSlashNeededAtTheEnd(string_view correctedPath, string_view originalPath) const {

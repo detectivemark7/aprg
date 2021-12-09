@@ -17,8 +17,8 @@ namespace BitUtilitiesBuiltIn {
 
 INLINE_WITHOUT_BUILT_IN namespace BitUtilitiesWithoutBuiltIn {
     template <typename DataType>
-    constexpr inline size_t getNumberOfOnes(DataType const value) {
-        size_t result(0);
+    constexpr inline std::size_t getNumberOfOnes(DataType const value) {
+        std::size_t result(0);
         for (auto temporary(value); temporary != 0; temporary >>= 1) {
             if ((temporary & 1) != 0) {
                 ++result;
@@ -31,8 +31,8 @@ INLINE_WITHOUT_BUILT_IN namespace BitUtilitiesWithoutBuiltIn {
         return (getNumberOfOnes(value) & 1) == 0;  // AND implementation because we sure that its Unsigned
     }
     template <typename DataType>
-    constexpr inline size_t getNumberOfConsecutiveZerosFromMsb(DataType const value) {
-        size_t result(0);
+    constexpr inline std::size_t getNumberOfConsecutiveZerosFromMsb(DataType const value) {
+        std::size_t result(0);
         for (DataType mask = DataType(1) << ((sizeof(DataType) * AlbaBitConstants::BYTE_SIZE_IN_BITS) - 1); mask != 0;
              mask >>= 1) {
             if ((value & mask) == 0) {
@@ -44,8 +44,8 @@ INLINE_WITHOUT_BUILT_IN namespace BitUtilitiesWithoutBuiltIn {
         return result;
     }
     template <typename DataType>
-    constexpr inline size_t getNumberOfConsecutiveZerosFromLsb(DataType const value) {
-        size_t result(0);
+    constexpr inline std::size_t getNumberOfConsecutiveZerosFromLsb(DataType const value) {
+        std::size_t result(0);
         for (DataType mask = 1; mask != 0; mask <<= 1) {
             if ((value & mask) == 0) {
                 ++result;
@@ -68,7 +68,7 @@ INLINE_WITH_BUILT_IN namespace BitUtilitiesWithBuiltIn {
         }
     }
     template <typename DataType>
-    constexpr inline size_t getNumberOfOnes(DataType const value) {
+    constexpr inline std::size_t getNumberOfOnes(DataType const value) {
         if constexpr (sizeof(DataType) <= 4) {
             return __builtin_popcount(value);
         } else {
@@ -76,7 +76,7 @@ INLINE_WITH_BUILT_IN namespace BitUtilitiesWithBuiltIn {
         }
     }
     template <typename DataType>
-    constexpr inline size_t getNumberOfConsecutiveZerosFromMsb(DataType const value) {
+    constexpr inline std::size_t getNumberOfConsecutiveZerosFromMsb(DataType const value) {
         if constexpr (sizeof(DataType) < 4) {
             static_assert(
                 typeHelper::isUnsignedType<DataType>(),
@@ -90,7 +90,7 @@ INLINE_WITH_BUILT_IN namespace BitUtilitiesWithBuiltIn {
         }
     }
     template <typename DataType>
-    constexpr inline size_t getNumberOfConsecutiveZerosFromLsb(DataType const value) {
+    constexpr inline std::size_t getNumberOfConsecutiveZerosFromLsb(DataType const value) {
         if constexpr (sizeof(DataType) <= 4) {
             return __builtin_ctz(value);
         } else {

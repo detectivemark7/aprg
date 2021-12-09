@@ -24,6 +24,8 @@ public:
 
     ValueType getRandomValue() { return m_randomNumberDistribution(m_randomEngine); }
 
+    void setRandomSeed(ValueType const customSeed) { m_randomEngine.seed(customSeed); }
+
 private:
     RandomEngine m_randomEngine;
     Distribution m_randomNumberDistribution;

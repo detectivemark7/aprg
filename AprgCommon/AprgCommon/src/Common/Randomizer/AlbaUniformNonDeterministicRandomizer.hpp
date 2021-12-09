@@ -31,6 +31,8 @@ public:
 
     ValueType getRandomValue() { return m_randomNumberDistribution(m_randomEngine); }
 
+    void resetRandomSeed() { m_randomEngine.seed(m_entropySeedSource()); }
+
 private:
     EntropySeedSource m_entropySeedSource;
     RandomEngine m_randomEngine;
