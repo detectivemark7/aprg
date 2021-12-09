@@ -1,6 +1,43 @@
+Taken from Conor Hoekstra's lecture "Algorithm Intuition"
+
+----------------------------------------------------------------------------------------
+| Algorithm                 | Indexes | Accumulator           | Reduce /  | Default OP |
+|                           | viewed  |                       | Transform |            |
+----------------------------------------------------------------------------------------
+| accumulate / reduce       | 1       | Yes                   | Reduce    | plus{}     |
+|                           |         | (init = specified)    |           |            |
+----------------------------------------------------------------------------------------
+| inner_product /           | 1       | Yes                   | Reduce    | plus{}     |
+| transform_reduce          |         | (init = specified)    |           | mult{}     |
+----------------------------------------------------------------------------------------
+| partial_sum /             | 1       | Yes                   | Transform | plus{}     |
+| inclusive_scan            |         | (init = FirstElement) |           |            |
+----------------------------------------------------------------------------------------
+| exclusive_scan            | 1       | Yes                   | Transform | plus{}     |
+|                           |         | (init = specified)    |           |            |
+----------------------------------------------------------------------------------------
+| [adjacent_transform] /    | 2       | No                    | Transform |            |
+| adjacent_difference       |         |                       |           | minus{}    |
+----------------------------------------------------------------------------------------
+| [adjacent_inclusive_scan] | 2       | No                    | Transform |            |
+|                           |         |                       |           |            |
+----------------------------------------------------------------------------------------
+| [adjacent_reduce]         | 2       | Yes                   | Reduce    |            |
+----------------------------------------------------------------------------------------
+| adjacent_find             | 2       | No                    | Transform | equal_to   |
+----------------------------------------------------------------------------------------
+| transform                 | 1*      | No                    | Transform |            |
+----------------------------------------------------------------------------------------
+| find                      | 1       | No                    | Reduce    |            |
+----------------------------------------------------------------------------------------
+| iota                      | N/A     | N/A                   | Transform |            |
+----------------------------------------------------------------------------------------
+
+*The algorithms wrapped in [] does not exisr in standard library but might be in the future (or it can be implemented).
+
+
 
 Taken from [https://en.cppreference.com/w/cpp/algorithm]
-
 
 
 -> C++ Algorithm library
