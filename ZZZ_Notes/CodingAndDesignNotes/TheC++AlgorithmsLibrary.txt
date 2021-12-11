@@ -1,5 +1,10 @@
 Taken from Conor Hoekstra's lecture "Algorithm Intuition"
+Taken from  Jonathan Boccara's lecture "105 STL Algorithms in Less Than an Hour"
+Taken from [https://en.cppreference.com/w/cpp/algorithm]
 
+
+-> Algorithm intuition
+ 
 ----------------------------------------------------------------------------------------
 | Algorithm                 | Indexes | Accumulator           | Reduce /  | Default OP |
 |                           | viewed  |                       | Transform |            |
@@ -33,11 +38,219 @@ Taken from Conor Hoekstra's lecture "Algorithm Intuition"
 | iota                      | N/A     | N/A                   | Transform |            |
 ----------------------------------------------------------------------------------------
 
-*The algorithms wrapped in [] does not exisr in standard library but might be in the future (or it can be implemented).
+*The algorithms wrapped in [] does not exist in standard library but might be in the future (or it can be implemented).
+
+
+-> Importance of STL Algorithm library?
+---> STL can make code more expressive
+-----> Raising the levels of abstraction
+-----> Sometimes, it can be spectacular
+-----> Replace you loops by the right algorithm
+---> Avoid common mistakes
+-----> off by one
+-----> empty loops
+-----> naive complexity
+---> Used by lots of people
+-----> A common vocabulary
+-----> Whatever the version of your compiler
+---> Thus, We need to know them. All. Well. Very well.
+
+-> Look for the image of "The world of C++ STL algorithms"
+
+
+-> HEAPS
+---> make_heap
+-----> enforce heap order
+---> push_heap
+-----> add something to the heap
+---> pop_heap
+-----> remove top of heap
+-----> heap sort can be done by continuously "pop"ing a range with heap order
+
+-> SORTING
+---> sort
+---> partial_sort
+---> nth_element
+---> sort_heap
+-----> similar to continuously calling pop_heap in a range with heap order
+---> inplace_merge
+-----> incremental step in a merge sort
+-----> in the same container: we have two parts already sorted, the way to combine them is inplace_merge
+
+-> PARTITIONING
+---> partition
+-----> group the items with a condition
+-----> the border between the items that satisfies the condition and does not satisfy the condition is called the "partition point"
+
+-> OTHER PERMUTATIONS
+---> rotate
+---> shuffle
+---> next_permutation
+---> prev_permutation
+---> reverse
+
+-> NUMERIC_ALGORITHMS
+---> count
+---> inner_product
+---> accumulate/(transform_)reduce
+---> adjacent_difference
+---> partialSum, (transform_)inclusive_scan, (transform_)exclusive_scan
+---> sample
+ 
+-> QUERYING A PROPERTY
+---> all_of
+-----> If input is empty, it returns true
+---> any_of
+-----> If input is empty, it returns false
+---> none_of
+-----> If input is empty, it returns true
+
+-> QUERYING A PROPERTY ON TWO RANGES
+---> equal
+-----> use this to compare same elements in the same order
+---> is_permutation
+-----> use this to compare same elements not neccesarily the same order
+---> lexicograpical_compare
+-----> returns true if one range is lexicographically less than another 
+-----> basically a dictionary compare
+---> mismatch
+-----> find the first position where they differ
+-----> returns a pair of iterators (for corresponding containers)
+-------> use C++17 structure binding
+
+-> SEARCHING A VALUE
+---> NOT SORTED
+-----> find
+-------> linear search the range
+-----> adjacent_find
+-------> similar to find but finds the first two adjacent items that are equal (or satisfy a given predicate)
+---> SORTED
+-----> equal_range
+-----> lower_bound
+-----> upper_bound
+-----> binary_search
+-------> returns a boolean (determines if an element exists in a certain range), but does not tell you where
+
+-> SEARCHING A RANGES
+---> search
+-----> not the best name
+---> find_end
+-----> similar to search, but find the last part
+---> find_first_of
+
+-> SEARCHING A RELATIVE VALUE
+---> max_element
+---> min_element
+---> minmax_element
+
+-> ALGOS ON SETS
+---> these algorithms need the input to be sorted
+---> set_difference
+---> set_intersection
+---> set_union
+---> set_symmetric_difference
+-----> longest name in the whole library
+---> includes
+-----> returns a boolean
+
+-> MOVERS
+---> copy
+---> move
+-----> there is std::move for move_semantics, there is std::move the algorithm
+---> swap_ranges 
+---> copy_backward
+-----> if you use copy directly (it might crash)
+---> move_backward
+
+-> VALUE MODIFIERS
+---> fill
+-----> put the same value in the range
+---> generate
+-----> use a function to generate values in the range
+---> iota
+-----> use increments to put values in the range
+---> replace
+-----> replaces all instances of value in the range with another value
+
+-> STRUCTURE CHANGES
+---> remove
+-----> just moves the "non-removed" elements at the start, the invalid elements at the end have unspecified values
+-------> From CPP reference: Iterators pointing to an element between the new logical end and the physical end of the range are still dereferenceable, 
+---------> but the elements themselves have unspecified values (as per MoveAssignable post-condition). 
+-----> have to erase
+---> unique
+-----> just moves the adjacent duplicate elements at the start, the invalid elements at the end have unspecified values
+-----> have to erase
+
+-> LONELY ISLANDS
+---> transform
+-----> applies a function in a range (or two ranges)
+---> for each
+-----> uses a function that returns a void
+-------> can have side-effects
+
+-> ALGOS ON RAW MEMORY
+---> These algorithms uses the assignment operator (operator=)
+-----> fill 
+-----> copy 
+-----> move 
+---> If we use a assignment operator, it means that object has been constructed. 
+-----> In some rare cases, we have objects that are not constructed yet, just chunks memory.
+-----> We would like to construct instead of using the assignment operator.
+---> Just use this algorithms:
+-----> uninitialized_fill (calls the constructor)
+-----> uninitialized_copy (calls the copy constructor)
+-----> uninitialized_move (calls the move constructor)
+---> You to destroy it since youre the one who created it
+-----> destroy (calls the destructor)
+---> Other algorithms that uses constructors
+-----> uninitialized_default_construct (calls the default_constructor)
+-----> uninitialized_value_construct (calls the "value constructor")
+
+-> SECRET RUNES
+---> stable_*
+-----> stable_sort
+-----> stable_partition
+---> *_copy
+-----> These algorithms leave the original range untouched and just copy it in a new range.
+-----> remove_copy
+-----> unique_copy
+-----> reverse_copy
+-----> rotate_copy
+-----> replace_copy
+-----> partition_copy
+-----> partial_sort_copy
+---> *_n
+-----> copy_n
+-----> fill_n
+-----> generate_n
+-----> search_n
+-----> for_each_n
+-----> uninitialized_copy_n
+-----> uninitialized_fill_n
+-----> uninitialized_move_n
+-----> uninitialized_default_construct_n
+-----> uninitialized_value_construct_n
+-----> destroy_n
+---> is_*
+-----> is_sorted
+-----> is_partitioned
+-----> is_heap
+---> is_*_until
+-----> is_sorted_until
+-----> is_heap_until
+---> *_if
+-----> find_if
+-----> find_if_not
+-----> count_if
+-----> remove_ir
+-----> remove_copy_if
+-----> replace_if
+-----> replace_copy_if
+-----> copy_if
 
 
 
-Taken from [https://en.cppreference.com/w/cpp/algorithm]
 
 
 -> C++ Algorithm library
