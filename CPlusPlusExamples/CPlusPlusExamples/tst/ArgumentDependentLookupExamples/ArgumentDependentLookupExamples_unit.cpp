@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// Taken from Arthur O Dwyer's lecture (ADT Puzzler")
+// Taken from Arthur O Dwyer's lecture ("ADT Puzzler")
 
 namespace alba {
 
