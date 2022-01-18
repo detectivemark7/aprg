@@ -259,7 +259,7 @@ void retrieveContentsFromStream(std::istream& inputStream, Container<ValueType, 
     // tested on array
     std::istream_iterator<ValueType> inputIterator(inputStream);
     std::istream_iterator<ValueType> inputIteratorEnd;
-    std::copy(inputIterator, inputIteratorEnd, container.begin());
+    std::copy(inputIterator, inputIteratorEnd, begin(container));
 }
 
 template <typename ValueType, template <typename, typename = std::allocator<ValueType>> class Container>
@@ -267,7 +267,7 @@ void retrieveContentsFromStream(std::istream& inputStream, Container<ValueType>&
     // tested on vector
     std::istream_iterator<ValueType> inputIterator(inputStream);
     std::istream_iterator<ValueType> inputIteratorEnd;
-    std::copy(inputIterator, inputIteratorEnd, std::inserter(container, container.end()));
+    std::copy(inputIterator, inputIteratorEnd, std::inserter(container, end(container)));
 }
 
 template <
@@ -277,7 +277,7 @@ void retrieveContentsFromStream(std::istream& inputStream, Container<ValueType>&
     // tested on set
     std::istream_iterator<ValueType> inputIterator(inputStream);
     std::istream_iterator<ValueType> inputIteratorEnd;
-    std::copy(inputIterator, inputIteratorEnd, std::inserter(container, container.end()));
+    std::copy(inputIterator, inputIteratorEnd, std::inserter(container, end(container)));
 }
 
 template <
@@ -298,7 +298,7 @@ void retrieveContentsFromStream(std::istream& inputStream, Container<KeyType, Va
             state = StreamState::SendSecond;
         } else if (StreamState::SendSecond == state) {
             inputStream >> tempPair.second;
-            container.insert(container.end(), tempPair);
+            container.insert(end(container), tempPair);
             state = StreamState::SendFirst;
         }
     }

@@ -9,8 +9,8 @@
 
 namespace alba {
 
-// class [[deprecated("Use std::any instead! (needs c++17)")]] AlbaAny // lets remove [[deprecated]] to avoid
-// unnecessary warnings
+// class [[deprecated("Use std::any instead! (needs c++17)")]] AlbaAny
+// lets remove [[deprecated]] to avoid unnecessary warnings
 class AlbaAny {
     // This requires copy constructor and default constructor on ContentType
 public:

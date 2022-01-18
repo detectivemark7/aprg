@@ -1,6 +1,7 @@
 #include "AlbaStreamBitReader.hpp"
 
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -68,7 +69,7 @@ void AlbaStreamBitReader::readIfNeeded(size_t const numberOfBitsRequired) {
 }
 
 void AlbaStreamBitReader::eraseBitsInBitBuffer(size_t const numberOfBitsToErase) {
-    m_bitBuffer.erase(m_bitBuffer.begin(), m_bitBuffer.begin() + numberOfBitsToErase);
+    m_bitBuffer.erase(begin(m_bitBuffer), begin(m_bitBuffer) + numberOfBitsToErase);
 }
 
 }  // namespace alba

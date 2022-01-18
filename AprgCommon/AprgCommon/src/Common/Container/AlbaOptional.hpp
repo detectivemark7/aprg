@@ -97,8 +97,8 @@ private:
 };
 
 template <typename ContentType>
-// class [[deprecated("Check if std::reference_wrapper can be used instead.")]] AlbaOptional // lets remove
-// [[deprecated]] to avoid unnecessary warnings
+// class [[deprecated("Check if std::reference_wrapper can be used instead.")]] AlbaOptional
+// lets remove [[deprecated]] to avoid unnecessary warnings
 class AlbaOptional<ContentType&> {
 public:
     //#warning Please make sure that object still exists in the life time of an optional reference object
