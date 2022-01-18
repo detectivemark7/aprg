@@ -258,6 +258,7 @@ void Modeling::calculateCoefficientsUsingLeastSquares() {
     }
 
     gsl_multifit_linear_free(work);
+
     gsl_matrix_free(calculatedCovariance);
     gsl_vector_free(calculatedCoefficients);
     gsl_vector_free(yModelingData);
