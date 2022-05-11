@@ -1556,7 +1556,8 @@ By the theory of simple types I mean the doctrine which says that the objects of
 ---------> Each component in a layer serves a particular actor, so when that actor request a change, only one component per layer will have to be changed.
 
 -----> The common reuse principle (CRP)
--------> The principle states that: "You should group classes that are used together, separate classes that arent use together."
+-------> The principle states that: "You should group classes that are used together, separate classes that arent use together.
+-------> ME: EXAMPLE: MESSAGES/MESSAGE_FACTORY/MESSAGE_HANDLER ON FRAMEWORK (THIS CLASSES SHOULD BE ON THE SAME COMPONENT)
 -------> Similar to ISP
 -------> Imagine you have a SINGLE common class in your component that is used by another component.
 ---------> If OTHER parts of the orginal components changed (not the common class), it will trigger recompilation and retesting of the other component.
