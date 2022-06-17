@@ -39,12 +39,16 @@ stringHelper::StringPairs const& ChessPeekConfiguration::getUciOptionNamesAndVal
 
 void ChessPeekConfiguration::initialize() {
     initializeCommonParameters();
-    if (ChessPeekConfigurationType::ChessDotComUserVsUser == m_type) {
-        initializeChessDotComUserVsUser();
-    } else if (ChessPeekConfigurationType::ChessDotComUserVsComputer == m_type) {
-        initializeChessDotComUserVsComputer();
-    } else if (ChessPeekConfigurationType::LichessDotOrg == m_type) {
-        initializeLichessDotOrg();
+    switch (m_type) {
+        case ChessPeekConfigurationType::ChessDotComUserVsUser: {
+            initializeChessDotComUserVsUser();
+        }
+        case ChessPeekConfigurationType::ChessDotComUserVsComputer: {
+            initializeChessDotComUserVsComputer();
+        }
+        case ChessPeekConfigurationType::LichessDotOrg: {
+            initializeLichessDotOrg();
+        }
     }
 }
 
