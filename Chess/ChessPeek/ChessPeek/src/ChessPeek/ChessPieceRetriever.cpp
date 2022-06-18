@@ -72,12 +72,19 @@ void ChessPieceRetriever::initialize(ChessPeekConfigurationType const type) {
     switch (type) {
         case ChessPeekConfigurationType::ChessDotComUserVsUser: {
             initializeConverterToChessDotCom();
+            break;
         }
         case ChessPeekConfigurationType::ChessDotComUserVsComputer: {
-            initializeConverterToChessDotCom();
+            initializeConverterToChessDotCom();  // same with chess.com (use this as approximation)
+            break;
         }
-        case ChessPeekConfigurationType::LichessDotOrg: {
-            initializeConverterToLichessDotOrg();
+        case ChessPeekConfigurationType::LichessVersus: {
+            initializeConverterToLichessVersus();
+            break;
+        }
+        case ChessPeekConfigurationType::LichessStream: {
+            initializeConverterToLichessVersus();  // same with lichess.org (use this as approximation)
+            break;
         }
     }
 }
@@ -134,7 +141,7 @@ void ChessPieceRetriever::initializeConverterToChessDotCom() {
         0B0000000000000000000000000000000011110111110111111111100010101110;
 }
 
-void ChessPieceRetriever::initializeConverterToLichessDotOrg() {
+void ChessPieceRetriever::initializeConverterToLichessVersus() {
     m_checkMaxPoint = BitmapXY(93, 93);
     m_checkDetails =
         CheckDetails{{{12, 25}, WhiteOrBlack::White}, {{16, 44}, WhiteOrBlack::White}, {{17, 59}, WhiteOrBlack::White},
