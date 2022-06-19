@@ -46,7 +46,10 @@ public:
     void startEngineAnalysisOfNewPosition();
     void calculationMonitoringCallBackForEngine(EngineCalculationDetails const& engineCalculationDetails);
 
+#ifndef APRG_TEST_MODE_ON
 private:
+#endif
+
     bool didBoardChange(Board::PieceMatrix const& previousPieceMatrix) const;
     bool canAnalyzeBoard() const;
     bool doCorrectKingsExist() const;
@@ -68,15 +71,23 @@ private:
     void displayCalculationDetailsIfNotDisplayedYet();
     void printCalculationDetailsFromEngine();
 
-    Moves getCurrentMoves(std::string const& bestMoveToDisplay) const;
+    Moves getCurrentMoves() const;
     Moves getFutureMoves() const;
-    std::string getBestMoveToDisplayString() const;
+    std::string getBestMoveString() const;
 
-    void printCalculationDetails() const;
+    void printCalculationDetails(Moves const& currentMoves, Moves const& futureMoves) const;
     void printMoveTables(Moves const& currentMoves, Moves const& futureMoves) const;
     void putSeparators(DisplayTable& displayTable) const;
     void putCurrentMovesTable(Moves const& currentMoves) const;
     void printFutureMovesTable(Moves const& futureMoves) const;
+    void putCurrentMovesOnDisplayTable(
+        DisplayTable& displayTable, Moves const& currentMoves, unsigned int const numberOfMoves) const;
+    void putFutureMovesAndBoardsOnDisplayTable(
+        DisplayTable& displayTable, Moves const& futureMoves, unsigned int const numberOfMoves) const;
+    void putSeparatorsOnDisplayTable(
+        DisplayTable& displayTable, unsigned int const numberOfColumns, unsigned int const numberOfRows) const;
+    void putChessBoardOnDisplayTable(
+        DisplayTable& displayTable, Board const& temporaryBoard, unsigned int const xOffset) const;
     std::string getChessCellForDisplay(
         Piece const& piece, unsigned int const moveNumberStart, bool const canPreMove) const;
     unsigned int getNumberOfColumnsOfDisplayTable(unsigned int const numberOfChessBoards) const;
@@ -97,7 +108,7 @@ private:
     Coordinate m_opponentKingCoordinate;
     unsigned int m_numberOfDetectedKings;
     bool m_isEngineNewlyReseted;
-    bool m_hasUnDisplayedCalculationDetails;
+    bool m_hasPendingCalculationDetailsToDisplay;
 };
 
 }  // namespace chess

@@ -7,12 +7,17 @@
 #include <Common/User/DisplayTable.hpp>
 
 #include <algorithm>
+#include <atomic>
 #include <iostream>
 
 using namespace alba::AprgBitmap;
 using namespace alba::mathHelper;
 using namespace alba::stringHelper;
 using namespace std;
+
+namespace {
+constexpr unsigned int offsetForNextTable = 9U;
+}
 
 namespace alba {
 
@@ -41,7 +46,7 @@ ChessPeek::ChessPeek()
       m_opponentKingCoordinate{},
       m_numberOfDetectedKings{},
       m_isEngineNewlyReseted(true),
-      m_hasUnDisplayedCalculationDetails(false) {
+      m_hasPendingCalculationDetailsToDisplay(false) {
     initialize();
 }
 
@@ -49,7 +54,6 @@ void ChessPeek::runForever() {
     while (true) {
         runOneIteration();
         // Sleep(1);
-        // break; //
     }
 }
 
@@ -70,7 +74,7 @@ void ChessPeek::checkScreenAndSaveDetails() {
     BitmapSnippet snippet(
         m_bitmap.getSnippetReadFromFile(m_configuration.getTopLeftCorner(), m_configuration.getBottomRightCorner()));
     checkSnippetAndSaveDetails(snippet);
-    // m_bitmap.setSnippetWriteToFile(snippet);  // for debugging
+    m_bitmap.setSnippetWriteToFile(snippet);  // for debugging
 }
 
 void ChessPeek::startEngineAnalysisOfNewPosition() {
@@ -148,8 +152,8 @@ bool ChessPeek::isPlayerToMoveInLichessVersus() const {
 }
 
 void ChessPeek::checkSnippetAndSaveDetails(BitmapSnippet& snippet) {
-    // snippet.setPixelAt(snippet.getTopLeftCorner(), 0x00A1BA);      // for debugging
-    // snippet.setPixelAt(snippet.getBottomRightCorner(), 0x00A1BA);  // for debugging
+    // snippet.setPixelAt(snippet.getTopLeftCorner(), 0x00A1BA);      // for corner point debugging
+    // snippet.setPixelAt(snippet.getBottomRightCorner(), 0x00A1BA);  // for corner point debugging
 
     m_numberOfDetectedKings = 0U;
     unsigned int pieceCount = 0U;
@@ -262,75 +266,68 @@ void ChessPeek::displayCalculationDetailsBasedFromTimer() {
 
     m_displayTimer.stopTimer();
     if (m_displayTimer.getElapsedTimeInMilliseconds() > minimumMillisecondsDelayToDisplay) {
+        m_hasPendingCalculationDetailsToDisplay = false;
         printCalculationDetailsFromEngine();
-        m_hasUnDisplayedCalculationDetails = false;
         m_displayTimer.resetTimer();
     } else {
-        m_hasUnDisplayedCalculationDetails = true;
+        m_hasPendingCalculationDetailsToDisplay = true;
     }
 }
 
 void ChessPeek::displayCalculationDetailsIfNotDisplayedYet() {
-    if (m_hasUnDisplayedCalculationDetails) {
+    if (m_hasPendingCalculationDetailsToDisplay) {
+        m_hasPendingCalculationDetailsToDisplay = false;
         printCalculationDetailsFromEngine();
-        m_hasUnDisplayedCalculationDetails = false;
     }
 }
 
 void ChessPeek::printCalculationDetailsFromEngine() {
-    string bestMoveToDisplayString(getBestMoveToDisplayString());
-    Moves currentMoves(getCurrentMoves(bestMoveToDisplayString));
-    Moves futureMoves(getFutureMoves());
-    printCalculationDetails();
-    printMoveTables(currentMoves, futureMoves);
-    cout << "\n";
-    cout.flush();
+    static std::atomic_bool currentlyPrinting = false;
+    if (!currentlyPrinting) {
+        currentlyPrinting = true;
+        Moves currentMoves(getCurrentMoves());
+        Moves futureMoves(getFutureMoves());
+        printCalculationDetails(currentMoves, futureMoves);
+        printMoveTables(currentMoves, futureMoves);
+        cout << "\n";
+        cout.flush();
+        currentlyPrinting = false;
+    }
 }
 
-Moves ChessPeek::getCurrentMoves(string const& bestMoveToDisplay) const {
-    constexpr unsigned int maxNumberOfCurrentMoves = 5U;
+Moves ChessPeek::getCurrentMoves() const {
     Moves result;
-    result.reserve(maxNumberOfCurrentMoves);
-
     strings const& searchingMovesStrings(m_savedCalculationDetails.currentlySearchingMoves);
     for (string const& searchingMoveString : searchingMovesStrings) {
         Move move(m_chessBoard.getMoveFromTwoLetterNumberNotation(searchingMoveString));
         if (isValidMove(move)) {
             result.emplace_back(move);
-            if (result.size() >= maxNumberOfCurrentMoves) {
-                break;
-            }
         }
     }
 
-    Move bestMove(m_chessBoard.getMoveFromTwoLetterNumberNotation(bestMoveToDisplay));
-    if (isValidMove(bestMove) && result.empty()) {
-        result.emplace_back(bestMove);
+    if (result.empty()) {
+        string bestMoveString(getBestMoveString());
+        Move bestMove(m_chessBoard.getMoveFromTwoLetterNumberNotation(bestMoveString));
+        if (isValidMove(bestMove)) {
+            result.emplace_back(bestMove);
+        }
     }
     return result;
 }
 
 Moves ChessPeek::getFutureMoves() const {
-    constexpr unsigned int maxNumberOfFuturePlayerMoves = 5U;
     Moves result;
-    result.reserve(maxNumberOfFuturePlayerMoves);
-
     strings const& pvMovesStrings(m_savedCalculationDetails.pvMovesInBestLine);
-    unsigned int maxNumberOfFutureMoves =
-        maxNumberOfFuturePlayerMoves == 0 ? 0 : (maxNumberOfFuturePlayerMoves * 2U) - 1U;
     for (string const& pvMoveString : pvMovesStrings) {
         Move move(m_chessBoard.getMoveFromTwoLetterNumberNotation(pvMoveString));
         if (isValidMove(move)) {
             result.emplace_back(move);
-            if (result.size() >= maxNumberOfFutureMoves) {
-                break;
-            }
         }
     }
     return result;
 }
 
-string ChessPeek::getBestMoveToDisplayString() const {
+string ChessPeek::getBestMoveString() const {
     if (!m_savedCalculationDetails.bestMove.empty()) {
         return m_savedCalculationDetails.bestMove;
     }
@@ -349,25 +346,25 @@ string ChessPeek::getBestMoveToDisplayString() const {
     return string();
 }
 
-void ChessPeek::printCalculationDetails() const {
-    constexpr unsigned int maxNumberOfMovesToDisplay = 10U;
+void ChessPeek::printCalculationDetails(Moves const& currentMoves, Moves const& futureMoves) const {
     cout << "Player: " << m_playerColor << ", Depth: " << m_savedCalculationDetails.depth
          << ", Score: " << static_cast<double>(m_savedCalculationDetails.scoreInCentipawns) / 100
          << ", Mate: " << m_savedCalculationDetails.mateInNumberOfMoves << "\n";
     cout << "Best move: [" << m_savedCalculationDetails.bestMove << "]\n";
 
     cout << "Searching moves: ";
-    ostream_iterator<string> outputIterator(cout, ", ");
-    auto itStart = m_savedCalculationDetails.currentlySearchingMoves.cbegin();
-    auto itEnd = min(m_savedCalculationDetails.currentlySearchingMoves.cend(), itStart + maxNumberOfMovesToDisplay);
-    copy(itStart, itEnd, outputIterator);
+    for (Move const& currentMove : currentMoves) {
+        cout << m_chessBoard.getReadableStringForMove(currentMove) << ", ";
+    }
     cout << "\n";
 
+    Board temporaryBoard(m_chessBoard);
     cout << "PV: ";
-    itStart = m_savedCalculationDetails.pvMovesInBestLine.cbegin();
-    itEnd = min(m_savedCalculationDetails.pvMovesInBestLine.cend(), itStart + maxNumberOfMovesToDisplay);
-    copy(itStart, itEnd, outputIterator);
-    cout << "\n";
+    for (Move const& futureMove : futureMoves) {
+        cout << temporaryBoard.getReadableStringForMove(futureMove) << ", ";
+        temporaryBoard.move(futureMove);
+    }
+    cout << "\n\n";
 }
 
 void ChessPeek::printMoveTables(Moves const& currentMoves, Moves const& futureMoves) const {
@@ -382,29 +379,43 @@ void ChessPeek::printMoveTables(Moves const& currentMoves, Moves const& futureMo
 }
 
 void ChessPeek::putCurrentMovesTable(Moves const& currentMoves) const {
-    constexpr unsigned int offsetToNextTable = 9U;
-    unsigned int numberOfColumns = getNumberOfColumnsOfDisplayTable(currentMoves.size());
-    DisplayTable displayTable(numberOfColumns, 8U);
+    constexpr unsigned int maxNumberOfCurrentMoves = 5U;
+    constexpr unsigned int numberOfRows = 8U;
+    unsigned int numberOfMoves = min(maxNumberOfCurrentMoves, static_cast<unsigned int>(currentMoves.size()));
+    unsigned int numberOfColumns = getNumberOfColumnsOfDisplayTable(numberOfMoves);
+
+    DisplayTable displayTable(numberOfColumns, numberOfRows);
     displayTable.setBorders("-", "|");
 
-    // put separators
-    for (CoordinateDataType j = 0; j < 8; j++) {
-        for (unsigned int separatorIndex = 8; separatorIndex < numberOfColumns; separatorIndex += offsetToNextTable) {
-            displayTable.getCellReferenceAt(separatorIndex, j).setText("     ");
-        }
-    }
-
+    putSeparatorsOnDisplayTable(displayTable, numberOfColumns, numberOfRows);
     // put chess board
-    for (CoordinateDataType j = 0; j < 8; j++) {
-        for (CoordinateDataType i = 0; i < 8; i++) {
-            for (unsigned int offset = 0; offset < numberOfColumns; offset += offsetToNextTable) {
-                Piece piece(m_chessBoard.getPieceAt(Coordinate(i, j)));
-                displayTable.getCellReferenceAt(i + offset, j).setText(getChessCellForDisplay(piece, 0U, false));
-            }
-        }
+    for (unsigned int xOffset = 0; xOffset < numberOfColumns; xOffset += offsetForNextTable) {
+        putChessBoardOnDisplayTable(displayTable, m_chessBoard, xOffset);
     }
+    putCurrentMovesOnDisplayTable(displayTable, currentMoves, numberOfMoves);
 
-    // put moves
+    cout << displayTable;
+}
+
+void ChessPeek::printFutureMovesTable(Moves const& futureMoves) const {
+    constexpr unsigned int maxNumberOfFuturePlayerMoves = 5U;
+    constexpr unsigned int numberOfRows = 8U;
+    unsigned int numberOfMoves =
+        min(maxNumberOfFuturePlayerMoves, static_cast<unsigned int>((futureMoves.size() + 1U) / 2U));
+    unsigned int numberOfColumns = getNumberOfColumnsOfDisplayTable(numberOfMoves);
+
+    DisplayTable displayTable(numberOfColumns, numberOfRows);
+    displayTable.setBorders("-", "|");
+
+    putSeparatorsOnDisplayTable(displayTable, numberOfColumns, numberOfRows);
+    putFutureMovesAndBoardsOnDisplayTable(displayTable, futureMoves, numberOfMoves);
+
+    cout << displayTable;
+}
+
+void ChessPeek::putCurrentMovesOnDisplayTable(
+    DisplayTable& displayTable, Moves const& currentMoves, unsigned int const numberOfMoves) const {
+    unsigned int moveNumber = 1U;
     unsigned int offset = 0U;
     for (Move const& currentMove : currentMoves) {
         Piece piece(m_chessBoard.getPieceAt(currentMove.first));
@@ -412,43 +423,27 @@ void ChessPeek::putCurrentMovesTable(Moves const& currentMoves) const {
             .setText(getChessCellForDisplay(piece, 1U, false));
         displayTable.getCellReferenceAt(currentMove.second.getX() + offset, currentMove.second.getY())
             .setText(getChessCellForDisplay(piece, 2U, false));
-        offset += offsetToNextTable;
-    }
-
-    cout << displayTable;
-}
-
-void ChessPeek::printFutureMovesTable(Moves const& futureMoves) const {
-    constexpr unsigned int offsetForNextTable = 9U;
-    unsigned int numberOfColumns = getNumberOfColumnsOfDisplayTable((futureMoves.size() + 1U) / 2U);
-    DisplayTable displayTable(numberOfColumns, 8U);
-    displayTable.setBorders("-", "|");
-
-    // put separators
-    for (CoordinateDataType j = 0; j < 8; j++) {
-        for (unsigned int separatorIndex = 8; separatorIndex < numberOfColumns; separatorIndex += offsetForNextTable) {
-            displayTable.getCellReferenceAt(separatorIndex, j).setText("     ");
+        offset += offsetForNextTable;
+        moveNumber++;
+        if (moveNumber > numberOfMoves) {
+            break;
         }
     }
+}
 
-    // put board and moves
+void ChessPeek::putFutureMovesAndBoardsOnDisplayTable(
+    DisplayTable& displayTable, Moves const& futureMoves, unsigned int const numberOfMoves) const {
     unsigned int moveNumber = 1U;
     unsigned int xOffset = 0U;
-    unsigned int futureMoveCount = 1U;
+    unsigned int futureMoveCount = 0U;
+
     Board temporaryBoard(m_chessBoard);
     PieceColor opponentColor(getOppositeColor(m_playerColor));
     Coordinate previousDestination{};
     bool hasPreviouslyOneWayOfCapture(false);
     for (Move const& futureMove : futureMoves) {
-        if (isOdd(futureMoveCount)) {
-            // put chess board
-            for (CoordinateDataType y = 0; y < 8; y++) {
-                for (CoordinateDataType x = 0; x < 8; x++) {
-                    Piece piece(temporaryBoard.getPieceAt(Coordinate(x, y)));
-                    displayTable.getCellReferenceAt(x + xOffset, y).setText(getChessCellForDisplay(piece, 0U, false));
-                }
-            }
-
+        if (isEven(futureMoveCount)) {
+            putChessBoardOnDisplayTable(displayTable, temporaryBoard, xOffset);
             bool canPreMove = hasPreviouslyOneWayOfCapture && previousDestination == futureMove.second;
 
             Piece piece(temporaryBoard.getPieceAt(futureMove.first));
@@ -457,9 +452,12 @@ void ChessPeek::printFutureMovesTable(Moves const& futureMoves) const {
             displayTable.getCellReferenceAt(futureMove.second.getX() + xOffset, futureMove.second.getY())
                 .setText(getChessCellForDisplay(piece, moveNumber + 1, canPreMove));
 
-            moveNumber++;
             xOffset += offsetForNextTable;
             hasPreviouslyOneWayOfCapture = false;
+            moveNumber++;
+            if (moveNumber > numberOfMoves) {
+                break;
+            }
         } else {
             previousDestination = futureMove.second;
             hasPreviouslyOneWayOfCapture =
@@ -469,8 +467,27 @@ void ChessPeek::printFutureMovesTable(Moves const& futureMoves) const {
         temporaryBoard.move(futureMove);
         futureMoveCount++;
     }
+}
 
-    cout << displayTable;
+void ChessPeek::putSeparatorsOnDisplayTable(
+    DisplayTable& displayTable, unsigned int const numberOfColumns, unsigned int const numberOfRows) const {
+    for (unsigned int j = 0; j < numberOfRows; j++) {
+        for (unsigned int separatorIndex = offsetForNextTable - 1; separatorIndex < numberOfColumns;
+             separatorIndex += offsetForNextTable) {
+            displayTable.getCellReferenceAt(separatorIndex, j).setText("     ");
+        }
+    }
+}
+
+void ChessPeek::putChessBoardOnDisplayTable(
+    DisplayTable& displayTable, Board const& temporaryBoard, unsigned int const xOffset) const {
+    constexpr CoordinateDataType chessBoardDimension = 8U;
+    for (CoordinateDataType y = 0; y < chessBoardDimension; y++) {
+        for (CoordinateDataType x = 0; x < chessBoardDimension; x++) {
+            Piece piece(temporaryBoard.getPieceAt(Coordinate(x, y)));
+            displayTable.getCellReferenceAt(x + xOffset, y).setText(getChessCellForDisplay(piece, 0U, false));
+        }
+    }
 }
 
 string ChessPeek::getChessCellForDisplay(
