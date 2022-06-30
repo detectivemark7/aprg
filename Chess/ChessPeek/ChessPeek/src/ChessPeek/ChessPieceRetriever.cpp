@@ -1,12 +1,12 @@
 #include "ChessPieceRetriever.hpp"
 
+#include <ChessPeek/ColorUtilities.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <Common/Math/Helpers/PrecisionHelpers.hpp>
 
 #include <bitset>
 #include <iostream>
 
-using namespace alba::AprgBitmap;
 using namespace alba::mathHelper;
 using namespace std;
 
@@ -14,25 +14,24 @@ namespace alba {
 
 namespace chess {
 
-ChessPieceRetriever::ChessPieceRetriever(ChessPeekConfiguration const& configuration) : m_configuration(configuration) {
+ChessPieceRetriever::ChessPieceRetriever(
+    ChessPeekConfiguration const& configuration, AlbaLocalScreenMonitoring const& screenMonitoring)
+    : m_configuration(configuration), m_screenMonitoring(screenMonitoring) {
     initialize(configuration.getType());
 }
 
-Piece ChessPieceRetriever::getChessCellPiece(
-    BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex) const {
-    return Piece(
-        getBestPieceFromChessCellBitValue(getChessCellBitValue(chessBoardSnippet, xIndex, yIndex).to_ullong()));
+Piece ChessPieceRetriever::getChessCellPiece(int const xIndex, int const yIndex) const {
+    return Piece(getBestPieceFromChessCellBitValue(getChessCellBitValue(xIndex, yIndex).to_ullong()));
 }
 
-ChessPieceRetriever::BitSet64 ChessPieceRetriever::getChessCellBitValue(
-    BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex) const {
-    BitmapXY chessCellTopLeft, chessCellBottomRight;
-    retrieveChessCellTopLeftAndBottomRight(chessCellTopLeft, chessCellBottomRight, chessBoardSnippet, xIndex, yIndex);
+ChessPieceRetriever::BitSet64 ChessPieceRetriever::getChessCellBitValue(int const xIndex, int const yIndex) const {
+    XY chessCellTopLeft, chessCellBottomRight;
+    retrieveChessCellTopLeftAndBottomRight(chessCellTopLeft, chessCellBottomRight, xIndex, yIndex);
 
     BitSet64 result;  // The object is initialized with zeros.
-    unsigned int index(0U);
+    int index(0U);
     for (CheckDetail const& checkDetail : m_checkDetails) {
-        if (isBitValueAsserted(chessBoardSnippet, checkDetail, chessCellTopLeft, chessCellBottomRight)) {
+        if (isBitValueAsserted(checkDetail, chessCellTopLeft, chessCellBottomRight)) {
             result.set(63 - index, 1U);
         }
         if (index >= 63) {
@@ -40,41 +39,29 @@ ChessPieceRetriever::BitSet64 ChessPieceRetriever::getChessCellBitValue(
         }
         index++;
     }
+
     return result;
 }
 
-void ChessPieceRetriever::retrieveWhiteOffsetPoints(
-    BitmapXYs& bitmapXYs, BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex,
-    unsigned int const yIndex) const {
-    retrieveOffsetPointsWithCondition(bitmapXYs, chessBoardSnippet, xIndex, yIndex, [&](double const colorIntensity) {
+void ChessPieceRetriever::retrieveWhiteOffsetPoints(XYs& bitmapXYs, int const xIndex, int const yIndex) const {
+    retrieveOffsetPointsWithCondition(bitmapXYs, xIndex, yIndex, [&](double const colorIntensity) {
         return colorIntensity > m_configuration.getWhiteColorLimit();
     });
 }
 
-void ChessPieceRetriever::retrieveBlackOffsetPoints(
-    BitmapXYs& bitmapXYs, BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex,
-    unsigned int const yIndex) const {
-    retrieveOffsetPointsWithCondition(bitmapXYs, chessBoardSnippet, xIndex, yIndex, [&](double const colorIntensity) {
+void ChessPieceRetriever::retrieveBlackOffsetPoints(XYs& bitmapXYs, int const xIndex, int const yIndex) const {
+    retrieveOffsetPointsWithCondition(bitmapXYs, xIndex, yIndex, [&](double const colorIntensity) {
         return colorIntensity < m_configuration.getBlackColorLimit();
     });
 }
 
-void ChessPieceRetriever::setLogFile(string const& logFilePath) {
-    m_logFileStreamOptional.emplace();
-    m_logFileStreamOptional->open(logFilePath);
-
-    if (!m_logFileStreamOptional->is_open()) {
-        cout << string("Cannot open log file") << logFilePath;
-    }
-}
-
 void ChessPieceRetriever::initialize(ChessPeekConfigurationType const type) {
     switch (type) {
-        case ChessPeekConfigurationType::ChessDotComUserVsUser: {
+        case ChessPeekConfigurationType::ChessDotComVersus: {
             initializeConverterToChessDotCom();
             break;
         }
-        case ChessPeekConfigurationType::ChessDotComUserVsComputer: {
+        case ChessPeekConfigurationType::ChessDotComPuzzle: {
             initializeConverterToChessDotCom();  // same with chess.com (use this as approximation)
             break;
         }
@@ -90,7 +77,7 @@ void ChessPieceRetriever::initialize(ChessPeekConfigurationType const type) {
 }
 
 void ChessPieceRetriever::initializeConverterToChessDotCom() {
-    m_checkMaxPoint = BitmapXY(102, 102);
+    m_checkMaxPoint = XY(102, 102);
     m_checkDetails =
         CheckDetails{{{17, 34}, WhiteOrBlack::White}, {{20, 40}, WhiteOrBlack::White}, {{21, 54}, WhiteOrBlack::White},
                      {{25, 47}, WhiteOrBlack::White}, {{28, 42}, WhiteOrBlack::White}, {{31, 25}, WhiteOrBlack::White},
@@ -142,7 +129,7 @@ void ChessPieceRetriever::initializeConverterToChessDotCom() {
 }
 
 void ChessPieceRetriever::initializeConverterToLichessVersus() {
-    m_checkMaxPoint = BitmapXY(93, 93);
+    m_checkMaxPoint = XY(93, 93);
     m_checkDetails =
         CheckDetails{{{12, 25}, WhiteOrBlack::White}, {{16, 44}, WhiteOrBlack::White}, {{17, 59}, WhiteOrBlack::White},
                      {{22, 49}, WhiteOrBlack::White}, {{26, 42}, WhiteOrBlack::White}, {{27, 25}, WhiteOrBlack::White},
@@ -194,25 +181,25 @@ void ChessPieceRetriever::initializeConverterToLichessVersus() {
 }
 
 bool ChessPieceRetriever::isBitValueAsserted(
-    BitmapSnippet const& chessBoardSnippet, CheckDetail const& checkDetail, BitmapXY const& chessCellTopLeft,
-    BitmapXY const& chessCellBottomRight) const {
-    static const BitmapXYs aroundOffsets{BitmapXY(0, -1), BitmapXY(0, 1), BitmapXY(-1, 0), BitmapXY(1, 0)};
+    CheckDetail const& checkDetail, XY const& chessCellTopLeft, XY const& chessCellBottomRight) const {
+    static const XYs aroundOffsets{XY(0, -1), XY(0, 1), XY(-1, 0), XY(1, 0)};
 
     bool result(false);
-    unsigned int deltaX = chessCellBottomRight.getX() - chessCellTopLeft.getX();
-    unsigned int deltaY = chessCellBottomRight.getY() - chessCellTopLeft.getY();
-    unsigned int offsetInX = getIntegerAfterRoundingADoubleValue<unsigned int>(
+    int deltaX = chessCellBottomRight.getX() - chessCellTopLeft.getX();
+    int deltaY = chessCellBottomRight.getY() - chessCellTopLeft.getY();
+    int offsetInX = getIntegerAfterRoundingADoubleValue<int>(
         static_cast<double>(checkDetail.pointOffset.getX()) * deltaX / m_checkMaxPoint.getX());
-    unsigned int offsetInY = getIntegerAfterRoundingADoubleValue<unsigned int>(
+    int offsetInY = getIntegerAfterRoundingADoubleValue<int>(
         static_cast<double>(checkDetail.pointOffset.getY()) * deltaY / m_checkMaxPoint.getY());
-    BitmapXY pointToCheck{chessCellTopLeft.getX() + offsetInX, chessCellTopLeft.getY() + offsetInY};
-    uint32_t colorToCheck(chessBoardSnippet.getColorAt(pointToCheck));
+    XY pointToCheck{chessCellTopLeft.getX() + offsetInX, chessCellTopLeft.getY() + offsetInY};
+    uint32_t colorToCheck(m_screenMonitoring.getColorAt(pointToCheck.getX(), pointToCheck.getY()));
     double currentIntensity(calculateColorIntensityDecimal(colorToCheck));
     if (WhiteOrBlack::White == checkDetail.condition) {
         double maximum(currentIntensity);
-        for (BitmapXY const& aroundOffset : aroundOffsets) {
-            currentIntensity =
-                calculateColorIntensityDecimal(chessBoardSnippet.getColorAt(pointToCheck + aroundOffset));
+        for (XY const& aroundOffset : aroundOffsets) {
+            XY pointWithOffset = pointToCheck + aroundOffset;
+            currentIntensity = calculateColorIntensityDecimal(
+                m_screenMonitoring.getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
             if (maximum < currentIntensity) {
                 maximum = currentIntensity;
             }
@@ -220,9 +207,10 @@ bool ChessPieceRetriever::isBitValueAsserted(
         result = maximum > m_configuration.getWhiteColorLimit();
     } else if (WhiteOrBlack::Black == checkDetail.condition) {
         double minimum(currentIntensity);
-        for (BitmapXY const& aroundOffset : aroundOffsets) {
-            currentIntensity =
-                calculateColorIntensityDecimal(chessBoardSnippet.getColorAt(pointToCheck + aroundOffset));
+        for (XY const& aroundOffset : aroundOffsets) {
+            XY pointWithOffset = pointToCheck + aroundOffset;
+            currentIntensity = calculateColorIntensityDecimal(
+                m_screenMonitoring.getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
             if (minimum > currentIntensity) {
                 minimum = currentIntensity;
             }
@@ -239,17 +227,14 @@ PieceColorAndType ChessPieceRetriever::getBestPieceFromChessCellBitValue(uint64_
     if (bestFitPieces.size() == 1) {
         result = bestFitPieces.back();
     }
-    /*else if(m_logFileStreamOptional)
-    {
-        auto & logStream(m_logFileStreamOptional.getReference());
-        bitset<64> bitsetValue(bitValue);
-        logStream << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << "\n";
-        logStream << "BestFitTypes with size " << bestFitPieces.size() << " :{";
-        for(PieceColorAndType const bestFitPiece : bestFitPieces)
-        {
-            logStream << getEnumString(bestFitPiece) << ", ";
+    /*if (chessCellBitValue == 0b1001001100001011100101000100100100011001110101001010101100001000) {
+        bitset<64> bitsetValue(chessCellBitValue);
+        cout << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << "\n";
+        cout << "BestFitTypes with size " << bestFitPieces.size() << " :{";
+        for (PieceColorAndType const bestFitPiece : bestFitPieces) {
+            cout << getEnumString(bestFitPiece) << ", ";
         }
-        logStream << "}\n";
+        cout << "}\n";
     }*/
     return result;
 }
@@ -275,64 +260,44 @@ ChessPieceRetriever::PieceColorAndTypes ChessPieceRetriever::getBestFitPiecesFro
 }
 
 void ChessPieceRetriever::retrieveChessCellTopLeftAndBottomRight(
-    BitmapXY& chessCellTopLeft, BitmapXY& chessCellBottomRight, BitmapSnippet const& chessBoardSnippet,
-    unsigned int const xIndex, unsigned int const yIndex) const {
-    double startX = chessBoardSnippet.getTopLeftCorner().getX();
-    double startY = chessBoardSnippet.getTopLeftCorner().getY();
-    double endX = chessBoardSnippet.getBottomRightCorner().getX();
-    double endY = chessBoardSnippet.getBottomRightCorner().getY();
+    XY& chessCellTopLeft, XY& chessCellBottomRight, int const xIndex, int const yIndex) const {
+    double startX = m_configuration.getBoardTopLeft().getX();
+    double startY = m_configuration.getBoardTopLeft().getY();
+    double endX = m_configuration.getBoardBottomRight().getX();
+    double endY = m_configuration.getBoardBottomRight().getY();
     double deltaX = (endX - startX) / 8;
     double deltaY = (endY - startY) / 8;
-    chessCellTopLeft = BitmapXY{
-        static_cast<unsigned int>(round(startX + deltaX * xIndex)),
-        static_cast<unsigned int>(round(startY + deltaY * yIndex))};
-    chessCellBottomRight = BitmapXY{
-        static_cast<unsigned int>(round(startX + deltaX * (xIndex + 1))),
-        static_cast<unsigned int>(round(startY + deltaY * (yIndex + 1)))};
+    chessCellTopLeft =
+        XY{static_cast<int>(round(startX + deltaX * xIndex)), static_cast<int>(round(startY + deltaY * yIndex))};
+    chessCellBottomRight =
+        XY{static_cast<int>(round(startX + deltaX * (xIndex + 1))),
+           static_cast<int>(round(startY + deltaY * (yIndex + 1)))};
 }
 
 void ChessPieceRetriever::retrieveOffsetPointsWithCondition(
-    BitmapXYs& bitmapXYs, BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex,
-    BoolFunction const& condition) const {
-    double startX = chessBoardSnippet.getTopLeftCorner().getX();
-    double startY = chessBoardSnippet.getTopLeftCorner().getY();
-    double endX = chessBoardSnippet.getBottomRightCorner().getX();
-    double endY = chessBoardSnippet.getBottomRightCorner().getY();
+    XYs& bitmapXYs, int const xIndex, int const yIndex, BoolFunction const& condition) const {
+    double startX = m_configuration.getBoardTopLeft().getX();
+    double startY = m_configuration.getBoardTopLeft().getY();
+    double endX = m_configuration.getBoardBottomRight().getX();
+    double endY = m_configuration.getBoardBottomRight().getY();
     double deltaX = (endX - startX) / 8;
     double deltaY = (endY - startY) / 8;
-    BitmapXY chessCellTopLeft{
-        static_cast<unsigned int>(round(startX + deltaX * xIndex)),
-        static_cast<unsigned int>(round(startY + deltaY * yIndex))};
-    BitmapXY chessCellBottomRight{
-        static_cast<unsigned int>(round(startX + deltaX * (xIndex + 1))),
-        static_cast<unsigned int>(round(startY + deltaY * (yIndex + 1)))};
+    XY chessCellTopLeft{
+        static_cast<int>(round(startX + deltaX * xIndex)), static_cast<int>(round(startY + deltaY * yIndex))};
+    XY chessCellBottomRight{
+        static_cast<int>(round(startX + deltaX * (xIndex + 1))),
+        static_cast<int>(round(startY + deltaY * (yIndex + 1)))};
 
     int xLimit = chessCellBottomRight.getX() - chessCellTopLeft.getX();
     int yLimit = chessCellBottomRight.getY() - chessCellTopLeft.getY();
     for (int x = 0U; x < xLimit; x++) {
         for (int y = 0U; y < yLimit; y++) {
             if (condition(calculateColorIntensityDecimal(
-                    chessBoardSnippet.getColorAt({chessCellTopLeft.getX() + x, chessCellTopLeft.getY() + y})))) {
+                    m_screenMonitoring.getColorAt(chessCellTopLeft.getX() + x, chessCellTopLeft.getY() + y)))) {
                 bitmapXYs.emplace_back(x, y);
             }
         }
     }
-}
-
-double ChessPieceRetriever::calculateColorIntensityDecimal(uint32_t const color) const {
-    return (((double)extractRed(color) + extractGreen(color) + extractBlue(color)) / 0xFF) / 3;
-}
-
-uint8_t ChessPieceRetriever::extractRed(uint32_t const color) const {
-    return (AlbaBitManipulation<uint32_t>::getByteAt<2>(color));
-}
-
-uint8_t ChessPieceRetriever::extractGreen(uint32_t const color) const {
-    return (AlbaBitManipulation<uint32_t>::getByteAt<1>(color));
-}
-
-uint8_t ChessPieceRetriever::extractBlue(uint32_t const color) const {
-    return (AlbaBitManipulation<uint32_t>::getByteAt<0>(color));
 }
 
 }  // namespace chess

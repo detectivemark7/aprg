@@ -39,8 +39,6 @@ void ChessPeekPrintHelper::printCalculationDetails(
     constexpr unsigned int movesToDisplay = 10;
     cout << "Player: " << m_playerColor << ", Depth: " << m_calculationDetails.depthInPlies
          << ", Mate: " << m_calculationDetails.numberOfMovesTillMate << "\n";
-    cout << "Best move: [" << m_calculationDetails.bestMove << "]\n";
-
     unsigned int moveCount = 1;
     cout << "Searching moves: ";
     for (MoveAndScorePair const& moveAndScorePair : moveAndScorePairs) {
@@ -62,7 +60,8 @@ void ChessPeekPrintHelper::printCalculationDetails(
             break;
         }
     }
-    cout << "\n\n";
+    cout << "\n";
+    cout << "Best move: [" << m_calculationDetails.bestMove << "]\n\n";
 }
 
 void ChessPeekPrintHelper::printMoveTables(MoveAndScorePairs const& moveAndScorePairs, Moves const& futureMoves) const {

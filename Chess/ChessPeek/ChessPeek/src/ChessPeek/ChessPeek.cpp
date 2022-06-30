@@ -1,12 +1,12 @@
 #include "ChessPeek.hpp"
 
 #include <ChessPeek/ChessPeekPrintHelper.hpp>
+#include <ChessPeek/ColorUtilities.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 
 #include <atomic>
 #include <optional>
 
-using namespace alba::AprgBitmap;
 using namespace std;
 
 namespace alba {
@@ -14,12 +14,11 @@ namespace alba {
 namespace chess {
 
 ChessPeek::ChessPeek()
-    : m_configuration(ChessPeekConfigurationType::ChessDotComUserVsUser),
-      m_pieceRetriever(m_configuration),
+    : m_configuration(ChessPeekConfigurationType::ChessDotComPuzzle),
+      m_screenMonitoring(),
+      m_pieceRetriever(m_configuration, m_screenMonitoring),
       m_chessEngineHandler(m_configuration.getChessEnginePath()),
       m_chessEngineController(m_chessEngineHandler, m_configuration.getUciOptionNamesAndValuePairs()),
-      m_userAutomation(),
-      m_bitmap(m_configuration.getScreenShotPath()),
       m_chessBoard(Board::Orientation::BlackUpWhiteDown, {}),
       m_chessBoardDetails{},
       m_playerColor(PieceColor::White),
@@ -45,17 +44,10 @@ void ChessPeek::runOneIteration() {
     }
 }
 
-void ChessPeek::saveBitmapOnScreen() const { m_userAutomation.saveBitmapOnScreen(m_configuration.getScreenShotPath()); }
-
 void ChessPeek::checkScreenAndSaveDetails() {
-    saveBitmapOnScreen();
-    BitmapSnippet snippet(
-        m_bitmap.getSnippetReadFromFile(m_configuration.getTopLeftCorner(), m_configuration.getBottomRightCorner()));
-    checkSnippetAndSaveDetails(snippet);
-
-    // snippet.setPixelAt(snippet.getTopLeftCorner(), 0x00A1BA);      // for corner point debugging
-    // snippet.setPixelAt(snippet.getBottomRightCorner(), 0x00A1BA);  // for corner point debugging
-    // m_bitmap.setSnippetWriteToFile(snippet);  // for debugging
+    m_screenMonitoring.capturePixelsFromScreen();
+    saveChessBoardAndItsDetails();
+    updatePlayerColorAndOrientation();
 }
 
 void ChessPeek::startEngineAnalysisOfNewPosition() {
@@ -78,7 +70,6 @@ void ChessPeek::calculationMonitoringCallBackForEngine(EngineCalculationDetails 
 }
 
 void ChessPeek::initialize() {
-    m_pieceRetriever.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\PieceConverter.log)");
     m_chessEngineHandler.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineHandler.log)");
     m_chessEngineController.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineController.log)");
     m_chessEngineController.setAdditionalStepsInCalculationMonitoring(
@@ -88,15 +79,11 @@ void ChessPeek::initialize() {
     m_chessEngineController.initializeController();
 }
 
-void ChessPeek::checkSnippetAndSaveDetails(BitmapSnippet const& snippet) {
-    saveChessBoardAndItsDetails(snippet);
-    updatePlayerColorAndOrientation();
-}
-void ChessPeek::saveChessBoardAndItsDetails(BitmapSnippet const& snippet) {
+void ChessPeek::saveChessBoardAndItsDetails() {
     m_chessBoardDetails = {};
     for (unsigned int j = 0; j < 8; j++) {
         for (unsigned int i = 0; i < 8; i++) {
-            Piece chessPiece(m_pieceRetriever.getChessCellPiece(snippet, i, j));
+            Piece chessPiece(m_pieceRetriever.getChessCellPiece(i, j));
             Coordinate chessCoordinate(i, j);
             m_chessBoard.setPieceAt(chessCoordinate, chessPiece);
             if (!chessPiece.isEmpty()) {
@@ -108,20 +95,32 @@ void ChessPeek::saveChessBoardAndItsDetails(BitmapSnippet const& snippet) {
 }
 
 void ChessPeek::updatePlayerColorAndOrientation() {
-    if (m_configuration.getType() == ChessPeekConfigurationType::LichessStream) {
+    if (m_configuration.getType() == ChessPeekConfigurationType::ChessDotComPuzzle) {
+        updatePlayerColorIfChessDotComPuzzle();
+    } else if (m_configuration.getType() == ChessPeekConfigurationType::LichessStream) {
         updatePlayerColorIfLichessStream();
     } else {
         updatePlayerColorAndOrientationBasedOnPositionsOfTheKings();
     }
 }
 
+void ChessPeek::updatePlayerColorIfChessDotComPuzzle() {
+    auto intensity = calculateColorIntensityDecimal(m_screenMonitoring.getColorAt(3337, 137));
+    if (intensity < m_configuration.getBlackColorLimit()) {
+        setOrientationDependingOnBelowColor(PieceColor::Black);
+        setPlayerColorAndResetEngineIfNeeded(PieceColor::Black);
+    } else if (intensity > m_configuration.getWhiteColorLimit()) {
+        setOrientationDependingOnBelowColor(PieceColor::White);
+        setPlayerColorAndResetEngineIfNeeded(PieceColor::White);
+    }
+}
+
 void ChessPeek::updatePlayerColorIfLichessStream() {
-    BitmapSnippet moveWidgetSnippet(m_bitmap.getSnippetReadFromFile(BitmapXY(3304, 199), BitmapXY(3636, 897)));
     constexpr auto xForWhiteSection = 3387, xForBlackSection = 3553;
     constexpr auto lastMovePixelColor = 0x2A4053U, rgbMask = 0xFFFFFFU;
     for (auto yCoordinate = 897; yCoordinate >= 199; yCoordinate -= 1) {
-        auto pixelColorInWhiteSection = moveWidgetSnippet.getColorAt(BitmapXY(xForWhiteSection, yCoordinate)) & rgbMask;
-        auto pixelColorInBlackSection = moveWidgetSnippet.getColorAt(BitmapXY(xForBlackSection, yCoordinate)) & rgbMask;
+        auto pixelColorInWhiteSection = m_screenMonitoring.getColorAt(xForWhiteSection, yCoordinate) & rgbMask;
+        auto pixelColorInBlackSection = m_screenMonitoring.getColorAt(xForBlackSection, yCoordinate) & rgbMask;
         if (lastMovePixelColor == pixelColorInWhiteSection) {
             setPlayerColorAndResetEngineIfNeeded(PieceColor::Black);
             break;
@@ -144,6 +143,7 @@ void ChessPeek::updatePlayerColorAndOrientationBasedOnPositionsOfTheKings() {
         } else if (m_chessBoardDetails.blackKingCoordinate.getY() == 0U) {
             kingColorAtTheBottomOptional = PieceColor::White;  // top row has a black king
         }
+
         if (kingColorAtTheBottomOptional) {
             setOrientationDependingOnBelowColor(kingColorAtTheBottomOptional.value());
             setPlayerColorAndResetEngineIfNeeded(kingColorAtTheBottomOptional.value());
@@ -249,14 +249,11 @@ bool ChessPeek::isPlayerToMove() const {
 
 bool ChessPeek::isPlayerToMoveInLichessVersus() const {
     bool result(true);
-    BitmapSnippet moveWidgetSnippet(m_bitmap.getSnippetReadFromFile(BitmapXY(3326, 397), BitmapXY(3644, 500)));
     constexpr auto xForWhiteSection = 3406, xForBlackSection = 3565;
     constexpr auto lastMoveColor = 0x293A49U, rgbMask = 0xFFFFFFU;
     for (auto yCoordinate = 500; yCoordinate >= 397; yCoordinate -= 1) {
-        auto colorOfMoveInWhiteSection =
-            moveWidgetSnippet.getColorAt(BitmapXY(xForWhiteSection, yCoordinate)) & rgbMask;
-        auto colorOfMoveInBlackSection =
-            moveWidgetSnippet.getColorAt(BitmapXY(xForBlackSection, yCoordinate)) & rgbMask;
+        auto colorOfMoveInWhiteSection = m_screenMonitoring.getColorAt(xForWhiteSection, yCoordinate) & rgbMask;
+        auto colorOfMoveInBlackSection = m_screenMonitoring.getColorAt(xForBlackSection, yCoordinate) & rgbMask;
         if (lastMoveColor == colorOfMoveInWhiteSection) {
             if (m_playerColor == PieceColor::White) {
                 result = false;

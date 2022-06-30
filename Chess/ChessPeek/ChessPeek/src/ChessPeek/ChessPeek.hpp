@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Bitmap/Bitmap.hpp>
 #include <ChessPeek/ChessPeekCalculationDetails.hpp>
 #include <ChessPeek/ChessPeekConfiguration.hpp>
 #include <ChessPeek/ChessPieceRetriever.hpp>
@@ -8,7 +7,7 @@
 #include <ChessUtilities/ChessEngineControllerWithUci.hpp>
 #include <ChessUtilities/ChessEngineHandler.hpp>
 #include <Common/Time/AlbaLocalTimer.hpp>
-#include <UserAutomation/AlbaLocalUserAutomation.hpp>
+#include <ScreenMonitoring/AlbaLocalScreenMonitoring.hpp>
 
 namespace alba {
 
@@ -32,7 +31,6 @@ public:
     void runForever();
     void runOneIteration();
 
-    void saveBitmapOnScreen() const;
     void checkScreenAndSaveDetails();
     void startEngineAnalysisOfNewPosition();
     void calculationMonitoringCallBackForEngine(EngineCalculationDetails const& engineCalculationDetails);
@@ -40,9 +38,9 @@ public:
 private:
     void initialize();
 
-    void checkSnippetAndSaveDetails(AprgBitmap::BitmapSnippet const& snippet);
-    void saveChessBoardAndItsDetails(AprgBitmap::BitmapSnippet const& snippet);
+    void saveChessBoardAndItsDetails();
     void updatePlayerColorAndOrientation();
+    void updatePlayerColorIfChessDotComPuzzle();
     void updatePlayerColorIfLichessStream();
     void updatePlayerColorAndOrientationBasedOnPositionsOfTheKings();
     void setPlayerColorAndResetEngineIfNeeded(PieceColor const newColor);
@@ -64,11 +62,10 @@ private:
     Coordinate getOpponentsKingCoordinate() const;
 
     ChessPeekConfiguration m_configuration;
+    AlbaLocalScreenMonitoring m_screenMonitoring;
     ChessPieceRetriever m_pieceRetriever;
     ChessEngineHandler m_chessEngineHandler;
     ChessEngineControllerWithUci m_chessEngineController;
-    AlbaLocalUserAutomation m_userAutomation;
-    AprgBitmap::Bitmap m_bitmap;
     AlbaLocalTimer m_displayTimer;
     ChessPeekCalculationDetails m_calculationDetails;
     Board m_chessBoard;

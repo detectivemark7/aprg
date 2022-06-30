@@ -1,11 +1,12 @@
 #pragma once
 
-#include <Bitmap/Bitmap.hpp>
 #include <ChessPeek/ChessPeekConfiguration.hpp>
+#include <ChessPeek/CommonTypes.hpp>
 #include <ChessUtilities/Board/BoardTypes.hpp>
 #include <ChessUtilities/Board/Piece.hpp>
 #include <Common/Bit/AlbaBitManipulation.hpp>
 #include <Common/Bit/AlbaBitValueUtilities.hpp>
+#include <ScreenMonitoring/AlbaLocalScreenMonitoring.hpp>
 
 #include <array>
 #include <bitset>
@@ -23,7 +24,7 @@ class ChessPieceRetriever {
 public:
     enum class WhiteOrBlack { White, Black };
     struct CheckDetail {
-        AprgBitmap::BitmapXY pointOffset;
+        XY pointOffset;
         WhiteOrBlack condition;
     };
     using BitSet64 = std::bitset<64>;
@@ -35,21 +36,13 @@ public:
     using BoolFunction = std::function<bool(double const)>;
 
     ChessPieceRetriever() = delete;
-    ChessPieceRetriever(ChessPeekConfiguration const& configuration);
+    ChessPieceRetriever(ChessPeekConfiguration const& configuration, AlbaLocalScreenMonitoring const& screenMonitoring);
 
-    Piece getChessCellPiece(
-        AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex) const;
-    BitSet64 getChessCellBitValue(
-        AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex) const;
+    Piece getChessCellPiece(int const xIndex, int const yIndex) const;
+    BitSet64 getChessCellBitValue(int const xIndex, int const yIndex) const;
 
-    void retrieveWhiteOffsetPoints(
-        AprgBitmap::BitmapXYs& bitmapXYs, AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex,
-        unsigned int const yIndex) const;
-    void retrieveBlackOffsetPoints(
-        AprgBitmap::BitmapXYs& bitmapXYs, AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex,
-        unsigned int const yIndex) const;
-
-    void setLogFile(std::string const& logFilePath);
+    void retrieveWhiteOffsetPoints(XYs& coordinates, int const xIndex, int const yIndex) const;
+    void retrieveBlackOffsetPoints(XYs& coordinates, int const xIndex, int const yIndex) const;
 
 private:
     void initialize(ChessPeekConfigurationType const type);
@@ -57,29 +50,21 @@ private:
     void initializeConverterToLichessVersus();
 
     bool isBitValueAsserted(
-        AprgBitmap::BitmapSnippet const& chessBoardSnippet, CheckDetail const& checkDetail,
-        AprgBitmap::BitmapXY const& chessCellTopLeft, AprgBitmap::BitmapXY const& chessCellBottomRight) const;
+        CheckDetail const& checkDetail, XY const& chessCellTopLeft, XY const& chessCellBottomRight) const;
 
     PieceColorAndType getBestPieceFromChessCellBitValue(uint64_t const chessCellBitValue) const;
     PieceColorAndTypes getBestFitPiecesFromChessCellBitValue(uint64_t const chessCellBitValue) const;
 
     void retrieveChessCellTopLeftAndBottomRight(
-        AprgBitmap::BitmapXY& chessCellTopLeft, AprgBitmap::BitmapXY& chessCellBottomRight,
-        AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex, unsigned int const yIndex) const;
+        XY& chessCellTopLeft, XY& chessCellBottomRight, int const xIndex, int const yIndex) const;
     void retrieveOffsetPointsWithCondition(
-        AprgBitmap::BitmapXYs& bitmapXYs, AprgBitmap::BitmapSnippet const& chessBoardSnippet, unsigned int const xIndex,
-        unsigned int const yIndex, BoolFunction const& condition) const;
+        XYs& coordinates, int const xIndex, int const yIndex, BoolFunction const& condition) const;
 
-    double calculateColorIntensityDecimal(uint32_t const color) const;
-    uint8_t extractRed(uint32_t const color) const;
-    uint8_t extractGreen(uint32_t const color) const;
-    uint8_t extractBlue(uint32_t const color) const;
-
-    ChessPeekConfiguration m_configuration;
-    AprgBitmap::BitmapXY m_checkMaxPoint;
+    ChessPeekConfiguration const& m_configuration;
+    AlbaLocalScreenMonitoring const& m_screenMonitoring;
+    XY m_checkMaxPoint;
     CheckDetails m_checkDetails;
     PieceToChessCellBitValueMap m_piecesToChessCellBitValuesMap;
-    std::optional<std::ofstream> m_logFileStreamOptional;
 };
 
 }  // namespace chess
