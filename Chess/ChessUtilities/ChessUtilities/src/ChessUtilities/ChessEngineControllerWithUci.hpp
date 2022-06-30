@@ -34,6 +34,7 @@ public:
     ChessEngineControllerWithUci(
         ChessEngineHandler& engineHandler, stringHelper::StringPairs const& uciOptionNamesAndValuePairs = {});
 
+    void initializeController();
     void resetToNewGame();
     void setupStartPosition();
     void setupMoves(std::string const& moves);
@@ -49,7 +50,6 @@ public:
     void setLogFile(std::string const& logFilePath);
 
 private:
-    void initialize();
     void resetEngine();
 
     // clear functions
@@ -59,6 +59,7 @@ private:
     // state functions
     void changeState(ControllerState const state);
     void proceedToIdleStateAndProcessPendingCommands();
+    void processPendingCommands();
 
     // log functions
     void log(std::string const& logString);
@@ -74,12 +75,12 @@ private:
     void send(Command const& command);
 
     // process functions
-    void processInWaitingForReadyOkay(std::string const& stringFromEngine);
     void processAStringFromEngine(std::string const& stringFromEngine);
     void processInWaitingForUciOkay(std::string const& stringToProcess);
     void processInCalculating(std::string const& stringToProcess);
 
     std::string constructUciOptionCommand(std::string const& name, std::string const& value);
+    void putStringProcessingFunctionAsCallBack();
 
     ChessEngineHandler& m_engineHandler;
     stringHelper::StringPairs m_uciOptionNamesAndValuePairs;

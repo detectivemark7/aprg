@@ -25,8 +25,10 @@ ChessEngineControllerWithUci::ChessEngineControllerWithUci(
       m_waitingForReadyOkay(false),
       m_currentCalculationDetails{},
       m_pendingCommands() {
-    initialize();
+    putStringProcessingFunctionAsCallBack();
 }
+
+void ChessEngineControllerWithUci::initializeController() { sendUciAndUciOptions(); }
 
 void ChessEngineControllerWithUci::resetToNewGame() {
     log("Resetting to a new game");
@@ -123,12 +125,6 @@ void ChessEngineControllerWithUci::setLogFile(string const& logFilePath) {
     }
 }
 
-void ChessEngineControllerWithUci::initialize() {
-    m_engineHandler.setAdditionalStepsInProcessingAStringFromEngine(
-        [&](string const& stringFromEngine) { processAStringFromEngine(stringFromEngine); });
-    sendUciAndUciOptions();
-}
-
 void ChessEngineControllerWithUci::resetEngine() {
     log("Resetting engine");
     clearData();
@@ -155,6 +151,10 @@ void ChessEngineControllerWithUci::changeState(ControllerState const state) {
 
 void ChessEngineControllerWithUci::proceedToIdleStateAndProcessPendingCommands() {
     changeState(ControllerState::Idle);
+    processPendingCommands();
+}
+
+void ChessEngineControllerWithUci::processPendingCommands() {
     bool hasGoCommandOnPending(false);
     while (!m_pendingCommands.empty() && !hasGoCommandOnPending) {
         Command pendingCommand(m_pendingCommands.front());
@@ -167,6 +167,7 @@ void ChessEngineControllerWithUci::proceedToIdleStateAndProcessPendingCommands()
 void ChessEngineControllerWithUci::log(string const& logString) {
     if (m_logFileStreamOptional) {
         m_logFileStreamOptional.value() << logString << "\n";
+        m_logFileStreamOptional.value().flush();
     }
 }
 
@@ -209,11 +210,13 @@ void ChessEngineControllerWithUci::send(Command const& command) {
                 m_engineHandler.sendStringToEngine(command.commandString);
                 changeState(ControllerState::WaitingForUciOkay);
             } else {
+                log(string("Since ControllerState::Initializing adding pending command: ") + command.commandString);
                 m_pendingCommands.emplace_back(command);
             }
             break;
         }
         case ControllerState::WaitingForUciOkay: {
+            log(string("Since ControllerState::WaitingForUciOkay adding pending command: ") + command.commandString);
             m_pendingCommands.emplace_back(command);
             break;
         }
@@ -222,6 +225,7 @@ void ChessEngineControllerWithUci::send(Command const& command) {
                 m_engineHandler.sendStringToEngine(command.commandString);
                 changeState(ControllerState::Idle);
             } else {
+                log(string("Since ControllerState::Calculating adding pending command: ") + command.commandString);
                 m_pendingCommands.emplace_back(command);
             }
             break;
@@ -238,16 +242,18 @@ void ChessEngineControllerWithUci::send(Command const& command) {
 }
 
 void ChessEngineControllerWithUci::processAStringFromEngine(string const& stringFromEngine) {
-    if (m_waitingForReadyOkay) {
-        processInWaitingForReadyOkay(stringFromEngine);
+    string stringToProcess(getStringWithoutStartingAndTrailingWhiteSpace(stringFromEngine));
+    if (m_waitingForReadyOkay && "readyok" == stringToProcess) {
+        log("Ready okay received");
+        m_waitingForReadyOkay = false;
     } else {
         switch (m_state) {
             case ControllerState::WaitingForUciOkay: {
-                processInWaitingForUciOkay(stringFromEngine);
+                processInWaitingForUciOkay(stringToProcess);
                 break;
             }
             case ControllerState::Calculating: {
-                processInCalculating(stringFromEngine);
+                processInCalculating(stringToProcess);
                 break;
             }
             default: {
@@ -258,22 +264,14 @@ void ChessEngineControllerWithUci::processAStringFromEngine(string const& string
     }
 }
 
-void ChessEngineControllerWithUci::processInWaitingForReadyOkay(string const& stringFromEngine) {
-    string stringToProcess(getStringWithoutStartingAndTrailingWhiteSpace(stringFromEngine));
-    if ("readyok" == stringToProcess) {
-        m_waitingForReadyOkay = false;
-    }
-}
-
-void ChessEngineControllerWithUci::processInWaitingForUciOkay(string const& stringFromEngine) {
-    string stringToProcess(getStringWithoutStartingAndTrailingWhiteSpace(stringFromEngine));
+void ChessEngineControllerWithUci::processInWaitingForUciOkay(string const& stringToProcess) {
     if ("uciok" == stringToProcess) {
         proceedToIdleStateAndProcessPendingCommands();
     }
 }
 
-void ChessEngineControllerWithUci::processInCalculating(string const& stringFromEngine) {
-    retrieveCalculationDetailsOnStringFromEngine(m_currentCalculationDetails, stringFromEngine);
+void ChessEngineControllerWithUci::processInCalculating(string const& stringToProcess) {
+    retrieveCalculationDetailsOnStringFromEngine(m_currentCalculationDetails, stringToProcess);
 
     if (!m_currentCalculationDetails.bestMove.empty()) {
         proceedToIdleStateAndProcessPendingCommands();
@@ -288,9 +286,14 @@ string ChessEngineControllerWithUci::constructUciOptionCommand(string const& nam
     return "setoption name " + name + " value " + value;
 }
 
+void ChessEngineControllerWithUci::putStringProcessingFunctionAsCallBack() {
+    m_engineHandler.setAdditionalStepsInProcessingAStringFromEngine(
+        [&](string const& stringFromEngine) { processAStringFromEngine(stringFromEngine); });
+}
+
 string getEnumString(ChessEngineControllerWithUci::ControllerState const state) {
     switch (state) {
-        ALBA_MACROS_CASE_ENUM_SHORT_STRING(ChessEngineControllerWithUci::ControllerState::Initializing, "Initializing,")
+        ALBA_MACROS_CASE_ENUM_SHORT_STRING(ChessEngineControllerWithUci::ControllerState::Initializing, "Initializing")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(
             ChessEngineControllerWithUci::ControllerState::WaitingForUciOkay, "WaitingForUciOkay")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(ChessEngineControllerWithUci::ControllerState::Idle, "Idle")
