@@ -83,16 +83,27 @@ void MapAnalyzer::analyze() {
                     getMultiplierForExperience(roMap.name) * monster.baseExperience * monsterData.spawnCount;
                 monsterData.potentialJobExperience =
                     getMultiplierForExperience(roMap.name) * monster.jobExperience * monsterData.spawnCount;
-                if (mapAnalyzerData.mapName == "gon_dun03") {
+                if (mapAnalyzerData.mapName == "prt_maze01") {
                     ALBA_PRINT_PRECISION(10);
-                    ALBA_PRINT5(
-                        mapAnalyzerData.mapName, monster.name, monsterData.potentialZeny,
-                        getPotentialZenyFromMonster(monster), monsterData.spawnCount);
-                    // ALBA_PRINT5(mapAnalyzerData.mapName, monster.name, monsterData.potentialBaseExperience,
-                    // monster.baseExperience, monsterData.spawnCount); ALBA_PRINT5(mapAnalyzerData.mapName,
+                    ALBA_PRINT1(mapAnalyzerData.mapName);
+                    ALBA_PRINT4(
+                        monster.name, monsterData.potentialZeny, getPotentialZenyFromMonster(monster),
+                        monsterData.spawnCount);
+                    ALBA_PRINT6(
+                        monster.name, monster.monsterId, monster.baseExperience, monsterData.spawnCount,
+                        monster.hitRequiredFor100Percent, monster.fleeRequiredFor95Percent);
+                    // ALBA_PRINT5(mapAnalyzerData.mapName,
                     // monster.name, monsterData.potentialJobExperience, monster.jobExperience, monsterData.spawnCount);
+                    for (auto const& dropWithRates : monster.dropsWithRates) {
+                        ALBA_PRINT2(dropWithRates.name, dropWithRates.rate);
+                    }
                 }
-                totalPotentialZeny += monsterData.potentialZeny;
+                // if (monster.fleeRequiredFor95Percent <= 200) {} // for homunculus lvling
+                if (monster.size == "Small")  // for homunculus star glad farming
+                {
+                    totalPotentialZeny += monsterData.potentialZeny;
+                    ALBA_PRINT3(monster.name, monster.size, totalPotentialZeny);
+                }
                 totalPotentialBaseExperience += monsterData.potentialBaseExperience;
                 totalPotentialJobExperience += monsterData.potentialJobExperience;
             }
@@ -107,7 +118,9 @@ void MapAnalyzer::analyze() {
                 if (monsterData.isAnnoyance) {
                     mapAnalyzerData.annoyanceHp += monster.hp;
                 }
-                if (/*!monsterData.isAnnoyance && */ monster.isAggressive()) {
+                // if (!monsterData.isAnnoyance && monster.isAggressive()) {  // annoying mobs
+                // if (monster.isAggressive()) { // aggressive mobs
+                if (monster.walkSpeed != "Immovable") {  // moving mobs
                     mapAnalyzerData.mobCount += monsterData.spawnCount;
                 }
             }
@@ -141,15 +154,20 @@ void MapAnalyzer::analyze() {
     // printPotentialZenyFromMonster("Banshee");
     // printPotentialZenyFromMonster("Flame Skull");
 
-    printPotentialZenyFromMonster("Zombie Prisoner");
-    printPotentialZenyFromMonster("Injustice");
+    // printPotentialZenyFromMonster("Zombie Prisoner");
+    // printPotentialZenyFromMonster("Injustice");
+
+    printPotentialZenyFromMonster("Cenere (Re-Stats)");
+    printPotentialZenyFromMonster("Antique Book (Re-Stats)");
+    printPotentialZenyFromMonster("Blue Lichtern / Lichtern (Re-Stats)");
+    printPotentialZenyFromMonster("Yellow Lichtern / Lichtern (Re-Stats)");
 }
 
 void MapAnalyzer::sortData() {
     sort(
         m_mapsAnalyzerData.begin(), m_mapsAnalyzerData.end(),
         [](MapAnalyzerData const& first, MapAnalyzerData const& second) {
-            if (first.zenyPotential == second.zenyPotential) {
+            if (first.zenyPotential == second.zenyPotential) {  // the first one is always tweaked depending on goal
                 if (first.zenyPotential == second.zenyPotential) {
                     if (first.annoyanceHp == second.annoyanceHp) {
                         return first.mobCount > second.mobCount;

@@ -596,10 +596,10 @@ Item RagnarokOnline::getItem(string const& fixedItemName) const {
         if (it2 != m_itemIdToItemMap.cend()) {
             result = it2->second;
         } else {
-            cout << "ITEM ID NOT FOUND! [" << it1->second << "]\n";
+            // cout << "ITEM ID NOT FOUND! [" << it1->second << "]\n";
         }
     } else {
-        cout << "ITEM NAME NOT FOUND! [" << fixedItemName << "]\n";
+        // cout << "ITEM NAME NOT FOUND! [" << fixedItemName << "]\n";
     }
     return result;
 }
