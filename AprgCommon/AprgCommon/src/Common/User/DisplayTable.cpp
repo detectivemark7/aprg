@@ -93,6 +93,10 @@ void DisplayTable::setBorders(string_view horizontalBorder, string_view vertical
     m_verticalBorder = verticalBorder;
 }
 
+void DisplayTable::setHorizontalBorder(std::string_view horizontalBorder) { m_horizontalBorder = horizontalBorder; }
+
+void DisplayTable::setVerticalBorder(std::string_view verticalBorder) { m_verticalBorder = verticalBorder; }
+
 string DisplayTable::getCellTextWithDesiredLength(DisplayTableCell const& cell, size_t const desiredLength) const {
     DisplayTableCellMode mode = cell.getHorizontalMode();
     string result;
