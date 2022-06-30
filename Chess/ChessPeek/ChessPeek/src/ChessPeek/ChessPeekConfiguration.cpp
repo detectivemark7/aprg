@@ -61,10 +61,8 @@ void ChessPeekConfiguration::initialize() {
 
 void ChessPeekConfiguration::initializeCommonParameters() {
     m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\stockfish15.exe)";
-    m_uciOptionNamesAndValuePairs = {{"Contempt", "100"}};
-
     // m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\zappa.exe)";
-
+    m_uciOptionNamesAndValuePairs = {{"MultiPV", "10"}};  // 10 moves
     m_screenShotPath = APRG_DIR R"(\Chess\ChessPeek\Files\ScreenShot.bmp)";
 }
 
