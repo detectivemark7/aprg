@@ -40,8 +40,7 @@ class Creator {
 public:
     virtual ~Creator() = default;
 
-    virtual std::unique_ptr<Product> createProductA() const = 0;
-    virtual std::unique_ptr<Product> createProductB() const = 0;
+    virtual std::unique_ptr<Product> createProduct() const = 0;
     // ...
 };
 
@@ -50,11 +49,15 @@ public:
 // one or more concrete products ie. it is class that has
 // the knowledge of how to create the products
 
-class ConcreteCreator : public Creator {
+class ConcreteCreatorA : public Creator {
 public:
-    std::unique_ptr<Product> createProductA() const override { return std::make_unique<ConcreteProductA>(); }
+    std::unique_ptr<Product> createProduct() const override { return std::make_unique<ConcreteProductA>(); }
+    // ...
+};
 
-    std::unique_ptr<Product> createProductB() const override { return std::make_unique<ConcreteProductB>(); }
+class ConcreteCreatorB : public Creator {
+public:
+    std::unique_ptr<Product> createProduct() const override { return std::make_unique<ConcreteProductB>(); }
     // ...
 };
 

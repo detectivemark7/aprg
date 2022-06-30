@@ -9,7 +9,7 @@ class AbstractClass {
 public:
     virtual ~AbstractClass() = default;
 
-    void templateMethod()  // should be NOT "virtual" or should be marked as "final"
+    void templateMethod()  // should NOT be "virtual" or should be marked as "final"
     {
         // ...
         primitiveOperation1();
@@ -23,7 +23,7 @@ public:
 protected:  // This ensures how primitive operations are used only by the templateMethod.
     virtual void primitiveOperation1() = 0;  // abstract operations MUST be overridden
     virtual void primitiveOperation2() = 0;
-    virtual void hookOperation() {}  // hooks MAY be overriden (can be empty an implementation)
+    virtual void hookOperation() {}  // hooks MAY be overriden (can be empty)
     // ...
 };
 
@@ -52,6 +52,8 @@ class ConcreteClass : public AbstractClass {
 }  // namespace TemplateMethod
 
 // Template Method discussion:
+
+// It has nothing to do with C++ templates and generics!
 
 // ONE LINE NOTE:
 // -> Provide a "template method" with KNOWN STEPS and allow polymorphism and subclassing to support DIFFERENT VERSION

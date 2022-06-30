@@ -16,7 +16,7 @@ public:
     }
 
     virtual void handleRequest() {
-        if (m_successorPointer != 0) {
+        if (m_successorPointer != nullptr) {
             m_successorPointer->handleRequest();
         }
     }

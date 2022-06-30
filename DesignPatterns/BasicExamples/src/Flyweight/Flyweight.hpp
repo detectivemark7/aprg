@@ -11,7 +11,25 @@ namespace Flyweight {
 class Flyweight {
 public:
     virtual ~Flyweight() = default;
-    virtual void operation() = 0;
+    virtual void operation(int const extrinsicState) = 0;
+    // ...
+};
+
+// SharedConcreteFlyweight
+// implements the Flyweight interface and adds storage for intrinsic state
+
+class SharedConcreteFlyweight : public Flyweight {
+public:
+    SharedConcreteFlyweight(int& intrinsicState) : m_sharedIntrinsicState(intrinsicState) {}
+
+    void operation(int const extrinsicState) override {
+        std::cout << "Concrete Flyweight with extrinsicState " << extrinsicState
+                  << " and sharedIntrinsicState:" << m_sharedIntrinsicState << "\n";
+    }
+    // ...
+
+private:
+    int& m_sharedIntrinsicState;  // This might be different on the example of the book (we store it as reference).
     // ...
 };
 
@@ -20,29 +38,16 @@ public:
 
 class UnsharedConcreteFlyweight : public Flyweight {
 public:
-    UnsharedConcreteFlyweight(int const intrinsicState) : m_state(intrinsicState) {}
+    UnsharedConcreteFlyweight(int const intrinsicState) : m_unsharedIntrinsicState(intrinsicState) {}
 
-    void operation() override { std::cout << "Unshared Flyweight with state " << m_state << "\n"; }
+    void operation(int const extrinsicState) override {
+        std::cout << "Unshared Flyweight with extrinsicState:" << extrinsicState
+                  << " and unsharedIntrinsicState:" << m_unsharedIntrinsicState << "\n";
+    }
     // ...
 
 private:
-    int m_state;
-    // ...
-};
-
-// ConcreteFlyweight
-// implements the Flyweight interface and adds storage
-// for intrinsic state
-
-class ConcreteFlyweight : public Flyweight {
-public:
-    ConcreteFlyweight(int const commonState) : m_state(commonState) {}
-
-    void operation() override { std::cout << "Concrete Flyweight with state " << m_state << "\n"; }
-    // ...
-
-private:
-    int m_state;
+    int m_unsharedIntrinsicState;
     // ...
 };
 
@@ -52,19 +57,22 @@ private:
 
 class FlyweightFactory {
 public:
-    Flyweight& getFlyweight(int const key) {
-        auto it = m_keyToFlyMap.find(key);
-        if (it != m_keyToFlyMap.end()) {
-            return *(it->second);
+    std::unique_ptr<Flyweight> getSharedFlyweight(int const key) {
+        auto it = m_keyToSharedValueMap.find(key);
+        if (it != m_keyToSharedValueMap.end()) {
+            return std::make_unique<SharedConcreteFlyweight>(it->second);
         } else {
-            auto iteratorAndFlagPair = m_keyToFlyMap.emplace(key, std::make_unique<ConcreteFlyweight>(key));
-            return *(iteratorAndFlagPair.first->second.get());
+            auto iteratorAndFlagPair = m_keyToSharedValueMap.emplace(key, key);  // use key as value
+            return std::make_unique<SharedConcreteFlyweight>(iteratorAndFlagPair.first->second);
         }
+    }
+    std::unique_ptr<Flyweight> getUnsharedFlyweight(int const value) {
+        return std::make_unique<UnsharedConcreteFlyweight>(value);
     }
     // ...
 
 private:
-    std::map<int, std::unique_ptr<Flyweight>> m_keyToFlyMap;
+    std::map<int, int> m_keyToSharedValueMap;
     // ...
 };
 
@@ -74,11 +82,14 @@ private:
 
 // ONE LINE NOTE:
 // -> Provide a "flyweight object" that can have SHARED data (extrinsic state) or SEPARATED data (intrinsic state)
+// -> Provide a "flyweight object" that SEPARATES INTRINSIC/NON-CONTEXT data (can be shared and saved in object) and
+// EXTRINSIC/CONTEXT data (can be removed and be sent to object instead)
 
 // Intent:
 // Flyweight pattern has has structural purpose, applies to objects and uses sharing to support large numbers of
-// fine-grained objects efficiently. The pattern can be used to reduce memory usage when you need to create a large
-// number of similar objects.
+// fine-grained objects efficiently.
+// The pattern can be used to reduce memory usage when you need to create a large number of similar objects.
+// Instead of storing the whole data on the object, separate intrinsic and extrinsic data to lessen memory usage.
 
 // When to use (applicability):
 // -> when one instance of a class can be used to provide many "virtual instances"
