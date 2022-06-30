@@ -15,7 +15,7 @@ namespace AprgBitmap {
 TEST(BitmapWriteTest, TestForWritingBitmap) {
     Bitmap bitmap(APRG_BITMAP_WRITE_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     BitmapSnippet snippet(bitmap.getSnippetReadFromFile(BitmapXY(50, 50), BitmapXY(150, 150)));

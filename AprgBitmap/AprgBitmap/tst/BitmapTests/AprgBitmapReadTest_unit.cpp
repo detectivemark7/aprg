@@ -25,7 +25,7 @@ TEST(BitmapReadTest, TestForInvalidBitmap) {
 TEST(BitmapReadTest, TestForMonochromeBitmap) {
     Bitmap bitmap(APRG_BITMAP_MONOCHROME_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
@@ -92,7 +92,7 @@ TEST(BitmapReadTest, TestForMonochromeBitmap) {
 TEST(BitmapReadTest, TestFor16ColorBitmap) {
     Bitmap bitmap(APRG_BITMAP_16_COLOR_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
@@ -164,7 +164,7 @@ TEST(BitmapReadTest, TestFor16ColorBitmap) {
 TEST(BitmapReadTest, TestFor256ColorBitmap) {
     Bitmap bitmap(APRG_BITMAP_256_COLOR_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
@@ -239,7 +239,7 @@ TEST(BitmapReadTest, TestFor256ColorBitmap) {
 TEST(BitmapReadTest, TestFor24BitBitmap) {
     Bitmap bitmap(APRG_BITMAP_24_BIT_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
@@ -328,7 +328,7 @@ TEST(BitmapReadTest, TestFor24BitBitmap) {
 TEST(BitmapReadTest, TestFor32BitBitmap) {
     Bitmap bitmap(APRG_BITMAP_32_BIT_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
@@ -349,7 +349,7 @@ TEST(BitmapReadTest, TestFor32BitBitmap) {
 TEST(BitmapReadTest, TestForMonochromeBitmapWithOutOfRangeValues) {
     Bitmap bitmap(APRG_BITMAP_MONOCHROME_TEST_FILE);
     ASSERT_TRUE(bitmap.getConfiguration().isValid());
-    ASSERT_EQ(CompressedMethodType::BI_RGB, bitmap.getConfiguration().getCompressedMethodType());
+    ASSERT_EQ(CompressedMethodType::RGB, bitmap.getConfiguration().getCompressedMethodType());
     ASSERT_TRUE(bitmap.getConfiguration().isCompressedMethodSupported());
 
     Colors colors(bitmap.getConfiguration().getColorTable());
