@@ -1,9 +1,11 @@
 #include "UciUtilities.hpp"
 
+#include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 
 #include <algorithm>
 
+using namespace alba::mathHelper;
 using namespace alba::stringHelper;
 using namespace std;
 
@@ -17,8 +19,8 @@ namespace {
 struct InfoDetails {
     unsigned int multipv;
     int scoreInCentipawns;
-    int mate;
-    strings pvMoves;
+    int mateScore;
+    strings pvHalfMoves;
     StringPairs nameAndValuePairs;
 };
 
@@ -46,17 +48,17 @@ void retrieveInfoDetailsFromInfoTokens(InfoDetails& infoDetails, strings const& 
         } else if ("cp" == token) {
             infoDetails.scoreInCentipawns = convertStringToNumber<int>(tokens.at(++i));
         } else if ("mate" == token) {
-            infoDetails.mate = convertStringToNumber<int>(tokens.at(++i));
+            infoDetails.mateScore = convertStringToNumber<int>(tokens.at(++i));
         } else if ("pv" == token) {
             i++;  // skip "pv"
             for (; i < tokens.size(); i++) {
-                infoDetails.pvMoves.emplace_back(tokens.at(i));
+                infoDetails.pvHalfMoves.emplace_back(tokens.at(i));
             }
         }
     }
 }
 
-void saveCalculationDetailsOnBestLine(CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
+void saveCommonDetailsOnBestLine(CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
     for (StringPair const& nameAndValuePair : infoDetails.nameAndValuePairs) {
         if (nameAndValuePair.first == "depth") {
             calculationDetails.depthInPlies = convertStringToNumber<unsigned int>(nameAndValuePair.second);
@@ -64,14 +66,13 @@ void saveCalculationDetailsOnBestLine(CalculationDetails& calculationDetails, In
             calculationDetails.selectiveDepthInPlies = convertStringToNumber<unsigned int>(nameAndValuePair.second);
         }
     }
-    calculationDetails.pvMovesInBestLine = infoDetails.pvMoves;
 }
 
 int getArtificialScore(InfoDetails const& infoDetails) {
     int result{};
-    if (infoDetails.mate == 0) {
+    if (infoDetails.mateScore == 0) {
         result = infoDetails.scoreInCentipawns;
-    } else if (infoDetails.mate > 0) {
+    } else if (infoDetails.mateScore > 0) {
         result = ARTIFICIAL_MATE_SCORE;
     } else {
         result = ARTIFICIAL_MATE_SCORE * -1;
@@ -79,24 +80,40 @@ int getArtificialScore(InfoDetails const& infoDetails) {
     return result;
 }
 
-void saveSearchingMoveAndScoreAndMateWithValidMultiPV(
+void saveSearchingMoveAndScorePairsWithValidMultiPV(
     CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
-    if (!infoDetails.pvMoves.empty()) {
-        calculationDetails.numberOfMovesTillMate = infoDetails.mate;
+    auto size = calculationDetails.searchingMoveAndScorePairs.size();
+    auto possibleNewSize = infoDetails.multipv;
+    auto index = infoDetails.multipv - 1;
+    auto move = infoDetails.pvHalfMoves.front();
+    auto artificialScore = getArtificialScore(infoDetails);
+    if (possibleNewSize == size + 1) {
+        calculationDetails.searchingMoveAndScorePairs.emplace_back(move, artificialScore);
+    } else if (possibleNewSize > size) {
+        calculationDetails.searchingMoveAndScorePairs.resize(possibleNewSize);
+        calculationDetails.searchingMoveAndScorePairs[index] = {move, artificialScore};
+    } else {
+        calculationDetails.searchingMoveAndScorePairs[index] = {move, artificialScore};
+    }
+}
 
-        auto size = calculationDetails.searchingMoveAndScorePairs.size();
-        auto possibleNewSize = infoDetails.multipv;
-        auto index = infoDetails.multipv - 1;
-        auto move = infoDetails.pvMoves.front();
-        auto artificialScore = getArtificialScore(infoDetails);
-        if (possibleNewSize == size + 1) {
-            calculationDetails.searchingMoveAndScorePairs.emplace_back(move, artificialScore);
-        } else if (possibleNewSize > size) {
-            calculationDetails.searchingMoveAndScorePairs.resize(possibleNewSize);
-            calculationDetails.searchingMoveAndScorePairs[index] = {move, artificialScore};
-        } else {
-            calculationDetails.searchingMoveAndScorePairs[index] = {move, artificialScore};
-        }
+void savePvLineWithBestLine(CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
+    calculationDetails.scoreInPvLine = infoDetails.scoreInCentipawns;
+    calculationDetails.pvHalfMovesInMonitoredLine = infoDetails.pvHalfMoves;
+}
+
+void savePvLineToHaveNearEqualLine(CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
+    if (getAbsoluteValue(infoDetails.scoreInCentipawns) < getAbsoluteValue(calculationDetails.scoreInPvLine)) {
+        calculationDetails.scoreInPvLine = infoDetails.scoreInCentipawns;
+        calculationDetails.pvHalfMovesInMonitoredLine = infoDetails.pvHalfMoves;
+    }
+}
+
+void savePvDetailsWithValidMultiPV(CalculationDetails& calculationDetails, InfoDetails const& infoDetails) {
+    if (!infoDetails.pvHalfMoves.empty()) {
+        calculationDetails.mateScore = infoDetails.mateScore;
+        saveSearchingMoveAndScorePairsWithValidMultiPV(calculationDetails, infoDetails);
+        savePvLineToHaveNearEqualLine(calculationDetails, infoDetails);
     }
 }
 
@@ -104,14 +121,16 @@ void processInfoTokens(CalculationDetails& calculationDetails, strings const& in
     InfoDetails infoDetails{};
     retrieveInfoDetailsFromInfoTokens(infoDetails, infoTokens);
 
-    if (!infoDetails.pvMoves.empty()) {
+    if (!infoDetails.pvHalfMoves.empty()) {
         if (infoDetails.multipv == 1) {
             // best line (because multipv is 1)
-            saveCalculationDetailsOnBestLine(calculationDetails, infoDetails);
-            saveSearchingMoveAndScoreAndMateWithValidMultiPV(calculationDetails, infoDetails);
+            saveCommonDetailsOnBestLine(calculationDetails, infoDetails);
+            savePvDetailsWithValidMultiPV(calculationDetails, infoDetails);
+            savePvLineWithBestLine(calculationDetails, infoDetails);  // dont remove this
         } else if (infoDetails.multipv > 1) {
             // other lines
-            saveSearchingMoveAndScoreAndMateWithValidMultiPV(calculationDetails, infoDetails);
+            savePvDetailsWithValidMultiPV(calculationDetails, infoDetails);
+            savePvLineToHaveNearEqualLine(calculationDetails, infoDetails);  // enable or disable
         }
     }
 }

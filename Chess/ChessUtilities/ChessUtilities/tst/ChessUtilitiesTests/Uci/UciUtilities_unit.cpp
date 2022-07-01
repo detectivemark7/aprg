@@ -20,8 +20,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnInfoEx
     StringAndIntPairs expectedMoveAndScorePairs{{"e8f7", -69}};
     EXPECT_EQ(3U, actualDetails.depthInPlies);
     EXPECT_EQ(3U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(0, actualDetails.numberOfMovesTillMate);
-    EXPECT_EQ(expectedPv, actualDetails.pvMovesInBestLine);
+    EXPECT_EQ(0, actualDetails.mateScore);
+    EXPECT_EQ(expectedPv, actualDetails.pvHalfMovesInBestLine);
     EXPECT_EQ(expectedMoveAndScorePairs, actualDetails.searchingMoveAndScorePairs);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.possibleResponseMove.empty());
@@ -38,8 +38,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnInfoEx
     StringAndIntPairs expectedMoveAndScorePairs{{"b2d2", -999999}};
     EXPECT_EQ(179U, actualDetails.depthInPlies);
     EXPECT_EQ(2U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(-1, actualDetails.numberOfMovesTillMate);
-    EXPECT_EQ(expectedPv, actualDetails.pvMovesInBestLine);
+    EXPECT_EQ(-1, actualDetails.mateScore);
+    EXPECT_EQ(expectedPv, actualDetails.pvHalfMovesInBestLine);
     EXPECT_EQ(expectedMoveAndScorePairs, actualDetails.searchingMoveAndScorePairs);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.possibleResponseMove.empty());
@@ -57,8 +57,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnInfoEx
     StringAndIntPairs expectedMoveAndScorePairs{{"f6e4", 14}};
     EXPECT_EQ(10U, actualDetails.depthInPlies);
     EXPECT_EQ(12U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(0, actualDetails.numberOfMovesTillMate);
-    EXPECT_EQ(expectedPv, actualDetails.pvMovesInBestLine);
+    EXPECT_EQ(0, actualDetails.mateScore);
+    EXPECT_EQ(expectedPv, actualDetails.pvHalfMovesInBestLine);
     EXPECT_EQ(expectedMoveAndScorePairs, actualDetails.searchingMoveAndScorePairs);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.possibleResponseMove.empty());
@@ -73,8 +73,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnInfoEx
 
     EXPECT_EQ(0U, actualDetails.depthInPlies);
     EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(0, actualDetails.numberOfMovesTillMate);
-    EXPECT_TRUE(actualDetails.pvMovesInBestLine.empty());
+    EXPECT_EQ(0, actualDetails.mateScore);
+    EXPECT_TRUE(actualDetails.pvHalfMovesInBestLine.empty());
     EXPECT_TRUE(actualDetails.searchingMoveAndScorePairs.empty());
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.possibleResponseMove.empty());
@@ -87,8 +87,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksOnBestMo
 
     EXPECT_EQ(0U, actualDetails.depthInPlies);
     EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(0, actualDetails.numberOfMovesTillMate);
-    EXPECT_TRUE(actualDetails.pvMovesInBestLine.empty());
+    EXPECT_EQ(0, actualDetails.mateScore);
+    EXPECT_TRUE(actualDetails.pvHalfMovesInBestLine.empty());
     EXPECT_TRUE(actualDetails.searchingMoveAndScorePairs.empty());
     EXPECT_EQ("b4c2", actualDetails.bestMove);
     EXPECT_EQ("e1d1", actualDetails.possibleResponseMove);
@@ -108,8 +108,8 @@ TEST(UciUtilitiesTest, RetrieveCalculationDetailsOnStringFromEngineWorksWithIgno
     // unchanged
     EXPECT_EQ(0U, actualDetails.depthInPlies);
     EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
-    EXPECT_EQ(0, actualDetails.numberOfMovesTillMate);
-    EXPECT_TRUE(actualDetails.pvMovesInBestLine.empty());
+    EXPECT_EQ(0, actualDetails.mateScore);
+    EXPECT_TRUE(actualDetails.pvHalfMovesInBestLine.empty());
     EXPECT_TRUE(actualDetails.searchingMoveAndScorePairs.empty());
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.possibleResponseMove.empty());

@@ -17,11 +17,12 @@ struct CalculationDetails {
     // Some programs also report a selective search depth beside the nominal search depth, most often much greater than
     // the nominal search depth. Some programs determine the highest distance to the root at any node, others only at
     // the horizon.
-    int numberOfMovesTillMate;  // mate in y moves, not plies.
-    stringHelper::strings pvMovesInBestLine;
+    int mateScore;  // mate in y moves, not plies.
     StringAndIntPairs searchingMoveAndScorePairs;
-    std::string bestMove;              // best move in position as determined by engine
-    std::string possibleResponseMove;  // move that engine is pondering after best move
+    int scoreInPvLine;
+    stringHelper::strings pvHalfMovesInMonitoredLine;  // can be best or most equal, depending on the code
+    std::string bestMove;                              // best move in position as determined by engine
+    std::string possibleResponseMove;                  // move that engine is pondering after best move
 };
 
 // Ply explanation:

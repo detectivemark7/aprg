@@ -40,7 +40,7 @@ ChessEngineHandler::ChessEngineHandler(string const& enginePath) : m_enginePath(
 
 ChessEngineHandler::~ChessEngineHandler() {
     shutdownEngine();
-    m_logFileStreamOptional->close();
+    shutdownLogging();
 }
 
 void ChessEngineHandler::reset() {
@@ -169,7 +169,6 @@ void ChessEngineHandler::initializeEngine() {
 }
 
 void ChessEngineHandler::shutdownEngine() {
-    m_logFileStreamOptional.value().flush();
     sendStringToEngine("quit\n");
     WaitForSingleObject(m_engineMonitoringThread, 1);
     CloseHandle(m_engineMonitoringThread);
@@ -178,6 +177,12 @@ void ChessEngineHandler::shutdownEngine() {
     CloseHandle(m_outputStreamOnEngineThread);
     CloseHandle(m_inputStreamOnHandler);
     CloseHandle(m_outputStreamOnHandler);
+}
+
+void ChessEngineHandler::shutdownLogging() {
+    if (m_logFileStreamOptional) {
+        m_logFileStreamOptional->close();
+    }
 }
 
 void ChessEngineHandler::log(LogType const logtype, string const& logString) {
