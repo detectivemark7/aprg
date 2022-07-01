@@ -24,9 +24,9 @@ string const& ChessPeekConfiguration::getChessEnginePath() const { return m_ches
 
 string const& ChessPeekConfiguration::getScreenShotPath() const { return m_screenShotPath; }
 
-XY ChessPeekConfiguration::getBoardTopLeft() const { return m_boardTopLeft; }
+XY ChessPeekConfiguration::getTopLeftOfBoard() const { return m_boardTopLeft; }
 
-XY ChessPeekConfiguration::getBoardBottomRight() const { return m_boardBottomRight; }
+XY ChessPeekConfiguration::getBottomRightOfBoard() const { return m_boardBottomRight; }
 
 double ChessPeekConfiguration::getWhiteColorLimit() const { return m_whiteColorLimit; }
 
@@ -38,6 +38,17 @@ stringHelper::StringPairs const& ChessPeekConfiguration::getUciOptionNamesAndVal
 
 void ChessPeekConfiguration::initialize() {
     initializeCommonParameters();
+    initializeSpecificParameters();
+}
+
+void ChessPeekConfiguration::initializeCommonParameters() {
+    m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\stockfish15.exe)";
+    // m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\zappa.exe)";
+    m_uciOptionNamesAndValuePairs = {{"MultiPV", "10"}};  // 10 moves
+    m_screenShotPath = APRG_DIR R"(\Chess\ChessPeek\Files\ScreenShot.bmp)";
+}
+
+void ChessPeekConfiguration::initializeSpecificParameters() {
     switch (m_type) {
         case ChessPeekConfigurationType::ChessDotComVersus: {
             initializeChessDotComVersus();
@@ -56,13 +67,6 @@ void ChessPeekConfiguration::initialize() {
             break;
         }
     }
-}
-
-void ChessPeekConfiguration::initializeCommonParameters() {
-    m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\stockfish15.exe)";
-    // m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\zappa.exe)";
-    m_uciOptionNamesAndValuePairs = {{"MultiPV", "10"}};  // 10 moves
-    m_screenShotPath = APRG_DIR R"(\Chess\ChessPeek\Files\ScreenShot.bmp)";
 }
 
 void ChessPeekConfiguration::initializeChessDotComVersus() {

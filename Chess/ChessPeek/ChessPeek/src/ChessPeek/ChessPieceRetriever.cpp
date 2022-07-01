@@ -1,12 +1,10 @@
 #include "ChessPieceRetriever.hpp"
 
-#include <ChessPeek/ColorUtilities.hpp>
+#include <ChessPeek/Utilities.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <Common/Math/Helpers/PrecisionHelpers.hpp>
 
-#include <bitset>
-#include <iostream>
-
+using namespace alba::AprgBitmap;
 using namespace alba::mathHelper;
 using namespace std;
 
@@ -16,7 +14,13 @@ namespace chess {
 
 ChessPieceRetriever::ChessPieceRetriever(
     ChessPeekConfiguration const& configuration, AlbaLocalScreenMonitoring const& screenMonitoring)
-    : m_configuration(configuration), m_screenMonitoring(screenMonitoring) {
+    : m_configuration(configuration), m_screenMonitoringPtr(&screenMonitoring), m_bitmapSnippetPtr(nullptr) {
+    initialize(configuration.getType());
+}
+
+ChessPieceRetriever::ChessPieceRetriever(
+    ChessPeekConfiguration const& configuration, BitmapSnippet const& bitmapSnippet)
+    : m_configuration(configuration), m_screenMonitoringPtr(nullptr), m_bitmapSnippetPtr(&bitmapSnippet) {
     initialize(configuration.getType());
 }
 
@@ -39,7 +43,6 @@ ChessPieceRetriever::BitSet64 ChessPieceRetriever::getChessCellBitValue(int cons
         }
         index++;
     }
-
     return result;
 }
 
@@ -192,14 +195,14 @@ bool ChessPieceRetriever::isBitValueAsserted(
     int offsetInY = getIntegerAfterRoundingADoubleValue<int>(
         static_cast<double>(checkDetail.pointOffset.getY()) * deltaY / m_checkMaxPoint.getY());
     XY pointToCheck{chessCellTopLeft.getX() + offsetInX, chessCellTopLeft.getY() + offsetInY};
-    uint32_t colorToCheck(m_screenMonitoring.getColorAt(pointToCheck.getX(), pointToCheck.getY()));
+    uint32_t colorToCheck(getColorAt(pointToCheck.getX(), pointToCheck.getY()));
     double currentIntensity(calculateColorIntensityDecimal(colorToCheck));
     if (WhiteOrBlack::White == checkDetail.condition) {
         double maximum(currentIntensity);
         for (XY const& aroundOffset : aroundOffsets) {
             XY pointWithOffset = pointToCheck + aroundOffset;
-            currentIntensity = calculateColorIntensityDecimal(
-                m_screenMonitoring.getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
+            currentIntensity =
+                calculateColorIntensityDecimal(getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
             if (maximum < currentIntensity) {
                 maximum = currentIntensity;
             }
@@ -209,13 +212,23 @@ bool ChessPieceRetriever::isBitValueAsserted(
         double minimum(currentIntensity);
         for (XY const& aroundOffset : aroundOffsets) {
             XY pointWithOffset = pointToCheck + aroundOffset;
-            currentIntensity = calculateColorIntensityDecimal(
-                m_screenMonitoring.getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
+            currentIntensity =
+                calculateColorIntensityDecimal(getColorAt(pointWithOffset.getX(), pointWithOffset.getY()));
             if (minimum > currentIntensity) {
                 minimum = currentIntensity;
             }
         }
         result = minimum < m_configuration.getBlackColorLimit();
+    }
+    return result;
+}
+
+uint32_t ChessPieceRetriever::getColorAt(int const x, int const y) const {
+    uint32_t result{};
+    if (m_screenMonitoringPtr) {
+        result = m_screenMonitoringPtr->getColorAt(x, y);
+    } else if (m_bitmapSnippetPtr) {
+        result = m_bitmapSnippetPtr->getColorAt({static_cast<unsigned int>(x), static_cast<unsigned int>(y)});
     }
     return result;
 }
@@ -227,15 +240,16 @@ PieceColorAndType ChessPieceRetriever::getBestPieceFromChessCellBitValue(uint64_
     if (bestFitPieces.size() == 1) {
         result = bestFitPieces.back();
     }
-    /*if (chessCellBitValue == 0b1001001100001011100101000100100100011001110101001010101100001000) {
-        bitset<64> bitsetValue(chessCellBitValue);
-        cout << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << "\n";
-        cout << "BestFitTypes with size " << bestFitPieces.size() << " :{";
-        for (PieceColorAndType const bestFitPiece : bestFitPieces) {
-            cout << getEnumString(bestFitPiece) << ", ";
-        }
-        cout << "}\n";
-    }*/
+    // For debugging
+    //    if (chessCellBitValue == 0b1001001100001011100101000100100100011001110101001010101100001000) {
+    //        bitset<64> bitsetValue(chessCellBitValue);
+    //        cout << "Cannot determine bestFitType with bitValue: " << bitsetValue.to_string() << "\n";
+    //        cout << "BestFitTypes with size " << bestFitPieces.size() << " :{";
+    //        for (PieceColorAndType const bestFitPiece : bestFitPieces) {
+    //            cout << getEnumString(bestFitPiece) << ", ";
+    //        }
+    //        cout << "}\n";
+    //    }
     return result;
 }
 
@@ -261,10 +275,10 @@ ChessPieceRetriever::PieceColorAndTypes ChessPieceRetriever::getBestFitPiecesFro
 
 void ChessPieceRetriever::retrieveChessCellTopLeftAndBottomRight(
     XY& chessCellTopLeft, XY& chessCellBottomRight, int const xIndex, int const yIndex) const {
-    double startX = m_configuration.getBoardTopLeft().getX();
-    double startY = m_configuration.getBoardTopLeft().getY();
-    double endX = m_configuration.getBoardBottomRight().getX();
-    double endY = m_configuration.getBoardBottomRight().getY();
+    double startX = m_configuration.getTopLeftOfBoard().getX();
+    double startY = m_configuration.getTopLeftOfBoard().getY();
+    double endX = m_configuration.getBottomRightOfBoard().getX();
+    double endY = m_configuration.getBottomRightOfBoard().getY();
     double deltaX = (endX - startX) / 8;
     double deltaY = (endY - startY) / 8;
     chessCellTopLeft =
@@ -276,10 +290,10 @@ void ChessPieceRetriever::retrieveChessCellTopLeftAndBottomRight(
 
 void ChessPieceRetriever::retrieveOffsetPointsWithCondition(
     XYs& bitmapXYs, int const xIndex, int const yIndex, BoolFunction const& condition) const {
-    double startX = m_configuration.getBoardTopLeft().getX();
-    double startY = m_configuration.getBoardTopLeft().getY();
-    double endX = m_configuration.getBoardBottomRight().getX();
-    double endY = m_configuration.getBoardBottomRight().getY();
+    double startX = m_configuration.getTopLeftOfBoard().getX();
+    double startY = m_configuration.getTopLeftOfBoard().getY();
+    double endX = m_configuration.getBottomRightOfBoard().getX();
+    double endY = m_configuration.getBottomRightOfBoard().getY();
     double deltaX = (endX - startX) / 8;
     double deltaY = (endY - startY) / 8;
     XY chessCellTopLeft{
@@ -293,7 +307,7 @@ void ChessPieceRetriever::retrieveOffsetPointsWithCondition(
     for (int x = 0U; x < xLimit; x++) {
         for (int y = 0U; y < yLimit; y++) {
             if (condition(calculateColorIntensityDecimal(
-                    m_screenMonitoring.getColorAt(chessCellTopLeft.getX() + x, chessCellTopLeft.getY() + y)))) {
+                    getColorAt(chessCellTopLeft.getX() + x, chessCellTopLeft.getY() + y)))) {
                 bitmapXYs.emplace_back(x, y);
             }
         }

@@ -16,8 +16,8 @@ public:
     ChessPeekConfigurationType getType() const;
     std::string const& getChessEnginePath() const;
     std::string const& getScreenShotPath() const;
-    XY getBoardTopLeft() const;
-    XY getBoardBottomRight() const;
+    XY getTopLeftOfBoard() const;
+    XY getBottomRightOfBoard() const;
     double getWhiteColorLimit() const;
     double getBlackColorLimit() const;
     stringHelper::StringPairs const& getUciOptionNamesAndValuePairs() const;
@@ -25,6 +25,7 @@ public:
 private:
     void initialize();
     void initializeCommonParameters();
+    void initializeSpecificParameters();
     void initializeChessDotComVersus();
     void initializeChessDotComPuzzle();
     void initializeLichessVersus();
