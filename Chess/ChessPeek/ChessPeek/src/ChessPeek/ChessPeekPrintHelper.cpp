@@ -314,14 +314,14 @@ void ChessPeekPrintHelper::sortNonBestMovesWithMoreHumanlyMovesFirst(MoveAndScor
                 int scoreLevel1 = getScoreLevel(pair1.second);
                 int scoreLevel2 = getScoreLevel(pair2.second);
                 if (scoreLevel1 == scoreLevel2) {
-                    int yMoveForwardCount1 = pair1.first.first.getY() - pair1.first.second.getY();
-                    int yMoveForwardCount2 = pair2.first.first.getY() - pair2.first.second.getY();
-                    if (yMoveForwardCount1 == yMoveForwardCount2) {
-                        int pieceTypeScore1 = getScoreOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
-                        int pieceTypeScore2 = getScoreOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
-                        return pieceTypeScore1 > pieceTypeScore2;  // higher pieces are prioritized
+                    int pieceTypeValue1 = getValueOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
+                    int pieceTypeValue2 = getValueOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
+                    if (pieceTypeValue1 == pieceTypeValue2) {
+                        int yMoveForwardCount1 = pair1.first.first.getY() - pair1.first.second.getY();
+                        int yMoveForwardCount2 = pair2.first.first.getY() - pair2.first.second.getY();
+                        return yMoveForwardCount1 > yMoveForwardCount2;  // offensive moves are prioritized
                     }
-                    return yMoveForwardCount1 > yMoveForwardCount2;  // offensive moves are prioritized
+                    return pieceTypeValue1 > pieceTypeValue2;  // higher pieces are prioritized
                 }
                 return scoreLevel1 > scoreLevel2;  // score level matter
             });
@@ -342,8 +342,8 @@ int ChessPeekPrintHelper::getScoreLevel(int const scoreInCentipawns) const {
         result = 3;  // clearly winning
     } else if (scoreInCentipawns > 0) {
         result = 2;  // has advantage
-    } else if (scoreInCentipawns > 200) {
-        result = 1;  // has opponent advantage
+    } else if (scoreInCentipawns > -100) {
+        result = 1;  // opponent has advantage
     } else {
         result = 0;  // clearly losing
     }

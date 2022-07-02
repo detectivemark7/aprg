@@ -34,7 +34,7 @@ void trackKeyPress() {
 }
 
 ChessPeek::ChessPeek()
-    : m_configuration(ChessPeekConfigurationType::LichessVersus),
+    : m_configuration(ChessPeekConfigurationType::ChessDotComVersus),
       m_screenMonitoring(),
       m_pieceRetriever(m_configuration, m_screenMonitoring),
       m_chessEngineHandler(m_configuration.getChessEnginePath()),
