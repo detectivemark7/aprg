@@ -48,10 +48,11 @@ private:
         Piece const& piece, unsigned int const moveNumberStart, bool const canPreMove) const;
     MoveAndScorePairs getCurrentMoveAndScorePairs() const;
     Moves getFutureHalfMoves() const;
-    void sortNonBestMovesWithMoreHumanlyMovesFirst(MoveAndScorePairs& moveAndScoreToBeSorted) const;
+    void sortSoThatHumanlyMovesAreAtTheStart(MoveAndScorePairs& moveAndScoreToBeSorted) const;
 
     unsigned int getNumberOfColumnsOfScoreDisplayTable(unsigned int const numberOfChessBoards) const;
     unsigned int getNumberOfColumnsOfBoardDisplayTable(unsigned int const numberOfChessBoards) const;
+    int getAcceptableScore(int const scoreInCentipawns) const;
     int getScoreLevel(int const scoreInCentipawns) const;
 
     PieceColor const& m_playerColor;

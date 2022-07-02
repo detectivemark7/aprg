@@ -9,7 +9,6 @@ namespace chess {
 ChessPeekConfiguration::ChessPeekConfiguration(ChessPeekConfigurationType const type)
     : m_type(type),
       m_chessEnginePath(),
-      m_screenShotPath(),
       m_uciOptionNamesAndValuePairs(),
       m_boardTopLeft{},
       m_boardBottomRight{},
@@ -21,8 +20,6 @@ ChessPeekConfiguration::ChessPeekConfiguration(ChessPeekConfigurationType const 
 ChessPeekConfigurationType ChessPeekConfiguration::getType() const { return m_type; }
 
 string const& ChessPeekConfiguration::getChessEnginePath() const { return m_chessEnginePath; }
-
-string const& ChessPeekConfiguration::getScreenShotPath() const { return m_screenShotPath; }
 
 XY ChessPeekConfiguration::getTopLeftOfBoard() const { return m_boardTopLeft; }
 
@@ -44,8 +41,8 @@ void ChessPeekConfiguration::initialize() {
 void ChessPeekConfiguration::initializeCommonParameters() {
     m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\stockfish15.exe)";
     // m_chessEnginePath = APRG_DIR R"(\Chess\ChessPeek\Files\zappa.exe)";
-    m_uciOptionNamesAndValuePairs = {{"MultiPV", "15"}};  // 10 moves
-    m_screenShotPath = APRG_DIR R"(\Chess\ChessPeek\Files\ScreenShot.bmp)";
+
+    m_uciOptionNamesAndValuePairs = {{"MultiPV", "20"}};  // number of moves to search
 }
 
 void ChessPeekConfiguration::initializeSpecificParameters() {

@@ -3,6 +3,7 @@
 #include <ChessPeek/LineOfMovesAnalyzer.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <Common/Math/Helpers/DivisibilityHelpers.hpp>
+#include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 #include <Common/User/DisplayTable.hpp>
 
@@ -263,12 +264,11 @@ MoveAndScorePairs ChessPeekPrintHelper::getCurrentMoveAndScorePairs() const {
         if (isMoveWithinTheBoard(move) && m_chessBoard.isAPossibleMove(move)) {
             result.emplace_back(move, searchingMoveAndScorePair.second);
         }
-
-        if (result.size() >= MAX_NUMBER_OF_MOVES_IN_TEXT) {
-            break;
-        }
     }
-    sortNonBestMovesWithMoreHumanlyMovesFirst(result);
+    sortSoThatHumanlyMovesAreAtTheStart(result);
+    if (result.size() > MAX_NUMBER_OF_MOVES_IN_TEXT) {
+        result.resize(MAX_NUMBER_OF_MOVES_IN_TEXT);
+    }
     return result;
 }
 
@@ -305,25 +305,32 @@ Moves ChessPeekPrintHelper::getFutureHalfMoves() const {
     return result;
 }
 
-void ChessPeekPrintHelper::sortNonBestMovesWithMoreHumanlyMovesFirst(MoveAndScorePairs& moveAndScoreToBeSorted) const {
+void ChessPeekPrintHelper::sortSoThatHumanlyMovesAreAtTheStart(MoveAndScorePairs& moveAndScoreToBeSorted) const {
     if (!moveAndScoreToBeSorted.empty()) {
         // skip best move
         stable_sort(
-            moveAndScoreToBeSorted.begin() + 1, moveAndScoreToBeSorted.end(),
+            moveAndScoreToBeSorted.begin(), moveAndScoreToBeSorted.end(),
             [&](MoveAndScorePair const& pair1, MoveAndScorePair const& pair2) {
-                int scoreLevel1 = getScoreLevel(pair1.second);
-                int scoreLevel2 = getScoreLevel(pair2.second);
-                if (scoreLevel1 == scoreLevel2) {
-                    int pieceTypeValue1 = getValueOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
-                    int pieceTypeValue2 = getValueOfPieceType(m_chessBoard.getPieceAt(pair1.first.first).getType());
-                    if (pieceTypeValue1 == pieceTypeValue2) {
-                        int yMoveForwardCount1 = pair1.first.first.getY() - pair1.first.second.getY();
-                        int yMoveForwardCount2 = pair2.first.first.getY() - pair2.first.second.getY();
-                        return yMoveForwardCount1 > yMoveForwardCount2;  // offensive moves are prioritized
+                int acceptableScore1 = getAcceptableScore(pair1.second);
+                int acceptableScore2 = getAcceptableScore(pair2.second);
+                if (acceptableScore1 == acceptableScore2) {
+                    Move const& move1(pair1.first);
+                    Move const& move2(pair2.first);
+                    int yMoveForwardCount1 = move1.first.getY() - move1.second.getY();
+                    int yMoveForwardCount2 = move2.first.getY() - move2.second.getY();
+                    if (yMoveForwardCount1 == yMoveForwardCount2) {
+                        int pieceTypeValue1 = getValueOfPieceType(m_chessBoard.getPieceAt(move1.first).getType());
+                        int pieceTypeValue2 = getValueOfPieceType(m_chessBoard.getPieceAt(move2.first).getType());
+                        if (pieceTypeValue1 == pieceTypeValue2) {
+                            int xDelta1 = getPositiveDelta(move1.first.getX(), move1.second.getX());
+                            int xDelta2 = getPositiveDelta(move2.first.getX(), move2.second.getX());
+                            return xDelta1 > xDelta2;  // more mobile moves are prioritized
+                        }
+                        return pieceTypeValue1 > pieceTypeValue2;  // higher pieces are prioritized
                     }
-                    return pieceTypeValue1 > pieceTypeValue2;  // higher pieces are prioritized
+                    return yMoveForwardCount1 > yMoveForwardCount2;  // offensive moves are prioritized
                 }
-                return scoreLevel1 > scoreLevel2;  // score level matter
+                return acceptableScore1 > acceptableScore2;  // put losing moves at the back
             });
     }
 }
@@ -336,16 +343,30 @@ unsigned int ChessPeekPrintHelper::getNumberOfColumnsOfBoardDisplayTable(unsigne
     return numberOfChessBoards == 0 ? 0U : numberOfChessBoards * 8U + numberOfChessBoards - 1;
 }
 
+int ChessPeekPrintHelper::getAcceptableScore(int const scoreInCentipawns) const {
+    int result{};
+    if (scoreInCentipawns > -300) {
+        result = 1;  // acceptable (can still win)
+    } else {
+        result = 0;  // not acceptable (losing)
+    }
+    return result;
+}
+
 int ChessPeekPrintHelper::getScoreLevel(int const scoreInCentipawns) const {
     int result{};
-    if (scoreInCentipawns >= 200) {
-        result = 3;  // clearly winning
+    if (scoreInCentipawns >= 9999.99) {
+        result = 5;  // mate
+    } else if (scoreInCentipawns >= 200) {
+        result = 4;  // clearly winning
     } else if (scoreInCentipawns > 0) {
-        result = 2;  // has advantage
+        result = 3;  // has advantage
     } else if (scoreInCentipawns > -100) {
-        result = 1;  // opponent has advantage
+        result = 2;  // opponent has advantage
+    } else if (scoreInCentipawns > -9999.99) {
+        result = 1;  // clearly losing
     } else {
-        result = 0;  // clearly losing
+        result = 0;  // mate
     }
     return result;
 }

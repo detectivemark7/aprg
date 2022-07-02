@@ -33,7 +33,6 @@ private:
 
     ChessPeekConfigurationType m_type;
     std::string m_chessEnginePath;
-    std::string m_screenShotPath;
     stringHelper::StringPairs m_uciOptionNamesAndValuePairs;
     XY m_boardTopLeft;
     XY m_boardBottomRight;
