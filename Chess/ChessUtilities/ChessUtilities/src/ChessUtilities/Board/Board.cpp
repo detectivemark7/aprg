@@ -93,7 +93,7 @@ Board::PieceMatrix const& Board::getPieceMatrix() const { return m_pieceMatrix; 
 
 Piece Board::getPieceAt(Coordinate const& coordinate) const {
     Piece result;
-    if ((isCoordinateOnBoard(coordinate))) {
+    if ((isCoordinateWithinTheBoard(coordinate))) {
         result = m_pieceMatrix.getEntry(coordinate.getX(), coordinate.getY());
     }
     return result;
@@ -243,7 +243,7 @@ string Board::getCastlingFenString() const {
 void Board::setOrientation(Orientation const orientation) { m_orientation = orientation; }
 
 void Board::setPieceAt(Coordinate const& coordinate, Piece const& piece) {
-    if ((isCoordinateOnBoard(coordinate))) {
+    if ((isCoordinateWithinTheBoard(coordinate))) {
         m_pieceMatrix.setEntry(coordinate.getX(), coordinate.getY(), piece);
     }
 }
@@ -386,7 +386,7 @@ bool Board::doesMoveHasNoBlockingPieceInBetween(Move const& move) const {
     Coordinate moveDelta = move.second - move.first;
     Coordinate oneIncrementDelta(getOneIncrementData(moveDelta.getX()), getOneIncrementData(moveDelta.getY()));
     Coordinate inBetween = move.first + oneIncrementDelta;
-    while (isCoordinateOnBoard(inBetween) && move.second != inBetween && getPieceAt(inBetween).isEmpty()) {
+    while (isCoordinateWithinTheBoard(inBetween) && move.second != inBetween && getPieceAt(inBetween).isEmpty()) {
         inBetween += oneIncrementDelta;
     }
     return inBetween == move.second;
@@ -398,7 +398,7 @@ unsigned int Board::getDiagonalMovesPossibleToThisDestination(
     if (maximumCount > 0) {
         for (Coordinate const& deltaCoordinate : getDiagonalIncrementDeltaCoordinates()) {
             Coordinate runningCoordinate = destination + deltaCoordinate;
-            while (isCoordinateOnBoard(runningCoordinate)) {
+            while (isCoordinateWithinTheBoard(runningCoordinate)) {
                 Piece piece(getPieceAt(runningCoordinate));
                 if (!piece.isEmpty()) {
                     if (color == piece.getColor() &&
@@ -423,7 +423,7 @@ unsigned int Board::getStraightMovesPossibleToThisDestination(
     if (maximumCount > 0) {
         for (Coordinate const& deltaCoordinate : getStraightIncrementDeltaCoordinates()) {
             Coordinate runningCoordinate = destination + deltaCoordinate;
-            while (isCoordinateOnBoard(runningCoordinate)) {
+            while (isCoordinateWithinTheBoard(runningCoordinate)) {
                 Piece piece(getPieceAt(runningCoordinate));
                 if (!piece.isEmpty()) {
                     if (color == piece.getColor() &&
@@ -799,7 +799,7 @@ void Board::retrievePossibleMovesByIncrements(
     while (true) {
         Piece pieceAtStart(getPieceAt(start));
         Piece pieceAtEnd(getPieceAt(end));
-        if (!isCoordinateOnBoard(end)) {
+        if (!isCoordinateWithinTheBoard(end)) {
             break;
         } else if (pieceAtEnd.isEmpty()) {
             addMoveToListOfMoves(result, Move(start, end));
@@ -814,7 +814,7 @@ void Board::retrievePossibleMovesByIncrements(
 }
 
 void Board::addMoveToListOfMoves(Moves& moves, Move const& move) const {
-    if (isValidMove(move)) {
+    if (isMoveWithinTheBoard(move)) {
         if (isEndEmptyOrHaveDifferentColors(move)) {
             moves.emplace_back(move);
         }
