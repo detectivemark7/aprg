@@ -19,7 +19,11 @@ public:
     using EngineCalculationDetails = CalculationDetails;
 
     struct ChessBoardDetails {
-        unsigned int m_pieceCount;
+        unsigned int pieceCount;
+        unsigned int whiteCountInUpperHalf;
+        unsigned int blackCountInUpperHalf;
+        unsigned int whiteCountInLowerHalf;
+        unsigned int blackCountInLowerHalf;
         unsigned int numberOfWhiteKings;
         unsigned int numberOfBlackKings;
         Coordinate whiteKingCoordinate;
@@ -39,13 +43,14 @@ private:
     void initialize();
 
     void saveChessBoardAndItsDetails();
+    void setChessBoardCountDetails(Coordinate const& chessCoordinate, Piece const& chessPiece);
+    void setChessBoardKingDetailsIfNeeded(Coordinate const& chessCoordinate, Piece const& chessPiece);
     void updatePlayerColorAndOrientation();
     void updatePlayerColorIfChessDotComPuzzle();
     void updatePlayerColorIfLichessStream();
-    void updatePlayerColorAndOrientationBasedOnPositionsOfTheKings();
+    void updatePlayerColorAndOrientationFromChessBoardDetails();
     void setPlayerColorAndResetEngineIfNeeded(PieceColor const newColor);
-    void setOrientationDependingOnBelowColor(PieceColor const belowColor);
-    void setKingDetailsIfPossible(Coordinate const& chessCoordinate, Piece const& chessPiece);
+    void setOrientationDependingOnLowerHalfColor(PieceColor const lowerHalfColor);
     void saveCalculationDetails(EngineCalculationDetails const& engineCalculationDetails);
 
     void displayCalculationDetailsBasedFromTimer();
@@ -57,8 +62,6 @@ private:
     bool canAnalyzeBoard() const;
     bool areKingsValid() const;
     bool isOpponentsKingOnCheck() const;
-    bool isPlayerToMove() const;
-    bool isPlayerToMoveInLichessVersus() const;
     Coordinate getOpponentsKingCoordinate() const;
 
     ChessPeekConfiguration m_configuration;

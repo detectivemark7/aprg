@@ -11,7 +11,7 @@ namespace chess {
 LineOfMovesAnalyzer::LineOfMovesAnalyzer(Board const& board) : m_board(board), m_analyzerData{} {}
 
 void LineOfMovesAnalyzer::checkMove(Move const& halfMove) {
-    if (isValidMove(halfMove)) {
+    if (isMoveWithinTheBoard(halfMove)) {
         m_analyzerData.previousMove = m_analyzerData.savedMove;
         m_analyzerData.previousPiece = m_analyzerData.savedPiece;
         m_analyzerData.savedMove = halfMove;
