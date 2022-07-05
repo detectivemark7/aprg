@@ -11,11 +11,10 @@ namespace ChessPeek {
 class SequenceOfMovesAnalyzer {
 public:
     struct AnalyzerData {
-        Move previousMove;
-        Piece previousPiece;
+        Board savedBoard;
         Move savedMove;
-        Piece savedPiece;
-        bool previouslyHadOnlyOnePossibleMoveToThisDestination;
+        Board previousBoard;
+        Move previousMove;
     };
 
     SequenceOfMovesAnalyzer(Board const& board);
@@ -24,14 +23,14 @@ public:
     void commitMove();
 
     bool canPreMove() const;
-    Piece getSavedPiece() const;
+    Piece getPieceFromMove() const;
     Board const& getCurrentBoard() const;
 
 private:
-    bool canPreMoveBecauseOnlyOnePossibleMoveBeforeCapture() const;
-    bool previousAndCurrentMoveHasSameDestination() const;
-    Board m_board;
-    AnalyzerData m_analyzerData;
+    bool canPreMoveBecauseOfRecapture() const;
+    bool didPreviousMoveHadOnlyOneWayToCapture() const;
+    bool isARecapture() const;
+    AnalyzerData m_data;
 };
 
 }  // namespace ChessPeek

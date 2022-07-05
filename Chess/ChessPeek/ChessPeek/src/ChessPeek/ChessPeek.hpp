@@ -31,7 +31,8 @@ public:
 
 private:
     bool shouldAnalyzeBoard() const;
-    bool didBoardFromScreenChange() const;
+    bool didPlayerChange() const;
+    bool didBoardChange() const;
 
     void initialize();
     void saveCalculationDetails(EngineCalculationDetails const& engineCalculationDetails);
@@ -48,7 +49,7 @@ private:
     DetailsFromTheScreen m_detailsFromTheScreen;
     DetailsOnTheEngine m_detailsOnTheEngine;
     CalculationDetails m_calculationDetails;
-    bool m_isEngineNewlyReseted;
+    bool m_engineWasJustReset;
     bool m_hasPendingPrintAction;
 };
 
