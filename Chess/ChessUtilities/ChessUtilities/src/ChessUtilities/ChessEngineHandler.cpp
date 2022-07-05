@@ -178,7 +178,7 @@ void ChessEngineHandler::initializeEngine() {
 }
 
 void ChessEngineHandler::shutdownEngine() {
-    sendStringToEngine("quit");
+    sendStringToEngine("quit\n");
     WaitForSingleObject(m_engineMonitoringThread, 1);
     CloseHandle(m_engineMonitoringThread);
     TerminateProcess(m_processInfo.hProcess, 0);
