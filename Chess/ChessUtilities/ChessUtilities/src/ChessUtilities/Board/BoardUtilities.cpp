@@ -115,7 +115,7 @@ string constructFenString(
     Board const& board, PieceColor const colorToMove, string const& castlingAvailability, string const& enPassantTarget,
     unsigned int const halfMoveClock, unsigned int const fullMoveNumber) {
     stringstream ss;
-    ss << board.getFenString() << " ";
+    ss << board.getNotationPartOfFenString() << " ";
     if (PieceColor::White == colorToMove) {
         ss << "w ";
     } else if (PieceColor::Black == colorToMove) {

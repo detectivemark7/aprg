@@ -210,10 +210,10 @@ TEST(BoardTest, GetFenStringWorks) {
         {4, 0, 3, 6,  5, 3, 0, 4, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0,  0,  0,  1,  0,  0,  0, 0,
          0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 9, 9, 9, 9, 0, 9, 9, 9, 12, 10, 11, 14, 13, 11, 0, 12});
 
-    string actualFenString1(board1.getFenString());
-    string actualFenString2(board2.getFenString());
-    string actualFenString3(board3.getFenString());
-    string actualFenString4(board4.getFenString());
+    string actualFenString1(board1.getNotationPartOfFenString());
+    string actualFenString2(board2.getNotationPartOfFenString());
+    string actualFenString3(board3.getNotationPartOfFenString());
+    string actualFenString4(board4.getNotationPartOfFenString());
 
     string expectedFenString1("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
     string expectedFenString2("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");

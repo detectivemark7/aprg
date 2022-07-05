@@ -2,11 +2,11 @@
 
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <ChessUtilities/Board/Piece.hpp>
-#include <Common/Container/AlbaValueRange.hpp>
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 
 #include <algorithm>
+#include <functional>
 #include <sstream>
 
 using namespace alba::mathHelper;
@@ -32,6 +32,12 @@ Board::Board(Orientation const& orientation)
 Board::Board(Orientation const& orientation, InitializerList const& initializerList)
     : m_orientation(orientation), m_pieceMatrix(8U, 8U, initializerList) {}
 
+bool Board::operator==(Board const& other) const {
+    return m_orientation == other.m_orientation && m_pieceMatrix == other.m_pieceMatrix;
+}
+
+bool Board::operator!=(Board const& other) const { return !operator==(other); }
+
 bool Board::isEmptyAt(Coordinate const& coordinate) const { return getPieceAt(coordinate).isEmpty(); }
 
 bool Board::isACaptureMove(Move const& move) const { return !isEmptyAt(move.second); }
@@ -49,10 +55,10 @@ bool Board::isACastlingMove(Move const& move) const {
 bool Board::isAPossibleMove(Move const& move) const { return isPossibleMoveBasedFromPieceType(move); }
 
 bool Board::canBeCaptured(Coordinate const& destination) const {
-    Piece piece(getPieceAt(destination));
+    Piece pieceAtDestination(getPieceAt(destination));
     bool result(false);
-    if (!piece.isEmpty()) {
-        PieceColor oppositeColor(getOppositeColor(piece.getColor()));
+    if (!pieceAtDestination.isEmpty()) {
+        PieceColor oppositeColor(getOppositeColor(pieceAtDestination.getColor()));
         result = getDiagonalMovesPossibleToThisDestination(destination, oppositeColor, 1) >= 1 ||
                  getStraightMovesPossibleToThisDestination(destination, oppositeColor, 1) >= 1 ||
                  getKnightMovesPossibleToThisDestination(destination, oppositeColor, 1) >= 1 ||
@@ -63,23 +69,24 @@ bool Board::canBeCaptured(Coordinate const& destination) const {
 }
 
 bool Board::areAnyMovesPossibleToThisDestination(Coordinate const& destination, PieceColor const& color) const {
-    Piece piece(getPieceAt(destination));
+    Piece pieceAtDestination(getPieceAt(destination));
     return getDiagonalMovesPossibleToThisDestination(destination, color, 1) >= 1 ||
            getStraightMovesPossibleToThisDestination(destination, color, 1) >= 1 ||
            getKnightMovesPossibleToThisDestination(destination, color, 1) >= 1 ||
            getKingMovesPossibleToThisDestination(destination, color, 1) >= 1 ||
-           (piece.isEmpty() && getPawnReverseMovesPossibleToThisDestination(destination, color, 1) >= 1) ||
-           (!piece.isEmpty() && getPawnReverseCapturesPossibleToThisDestination(destination, color, 1) >= 1);
+           (pieceAtDestination.isEmpty() && getPawnReverseMovesPossibleToThisDestination(destination, color, 1) >= 1) ||
+           (!pieceAtDestination.isEmpty() &&
+            getPawnReverseCapturesPossibleToThisDestination(destination, color, 1) >= 1);
 }
 
 bool Board::hasOnlyOneMovePossibleToThisDestination(Coordinate const& destination, PieceColor const& color) const {
-    Piece piece(getPieceAt(destination));
+    Piece pieceAtDestination(getPieceAt(destination));
     int numberOfMoves(0);
     numberOfMoves += getDiagonalMovesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
     numberOfMoves += getStraightMovesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
     numberOfMoves += getKnightMovesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
     numberOfMoves += getKingMovesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
-    if (piece.isEmpty()) {
+    if (pieceAtDestination.isEmpty()) {
         numberOfMoves += getPawnReverseMovesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
     } else {
         numberOfMoves += getPawnReverseCapturesPossibleToThisDestination(destination, color, 2 - numberOfMoves);
@@ -150,19 +157,26 @@ string Board::getReadableStringForMove(Move const& move) const {
     return ss.str();
 }
 
-string Board::getFenString() const {
+string Board::getNotationPartOfFenString() const {
     stringstream resultStream;
     CoordinateDataType start = (Orientation::BlackUpWhiteDown == m_orientation)   ? 0
                                : (Orientation::WhiteUpBlackDown == m_orientation) ? 7
                                                                                   : 0;
-    CoordinateDataType end = (Orientation::BlackUpWhiteDown == m_orientation)   ? 7
-                             : (Orientation::WhiteUpBlackDown == m_orientation) ? 0
+    CoordinateDataType end = (Orientation::WhiteUpBlackDown == m_orientation)   ? 0
+                             : (Orientation::BlackUpWhiteDown == m_orientation) ? 7
                                                                                 : 0;
-    AlbaValueRange<CoordinateDataType> yRange(start, end, 1);
-    yRange.traverse([&](CoordinateDataType const y) {
+
+    auto loopCondition =
+        start <= end ? [](CoordinateDataType const current,
+                          CoordinateDataType const last) { return less_equal<CoordinateDataType>{}(current, last); }
+                     : [](CoordinateDataType const current, CoordinateDataType const last) {
+                           return greater_equal<CoordinateDataType>{}(current, last);
+                       };
+
+    CoordinateDataType interval = start <= end ? 1 : -1;
+    for (CoordinateDataType y = start; loopCondition(y, end); y += interval) {
         unsigned int emptyCellsInRank = 0;
-        AlbaValueRange<CoordinateDataType> xRange(start, end, 1);
-        xRange.traverse([&](CoordinateDataType const x) {
+        for (CoordinateDataType x = start; loopCondition(x, end); x += interval) {
             Coordinate coordinate(x, y);
             Piece piece(getPieceAt(coordinate));
             if (piece.isEmpty()) {
@@ -174,18 +188,18 @@ string Board::getFenString() const {
                 resultStream << piece.getCharacter();
                 emptyCellsInRank = 0;
             }
-        });
+        }
         if (emptyCellsInRank != 0) {
             resultStream << emptyCellsInRank;
         }
         if (y != end) {
             resultStream << "/";
         }
-    });
+    }
     return resultStream.str();
 }
 
-string Board::getCastlingFenString() const {
+string Board::getCastlingPartOfFenString() const {
     string result;
     if (Board::Orientation::BlackUpWhiteDown == m_orientation) {
         Piece pieceAtWhiteKing(getPieceAt(Coordinate(4, 7)));

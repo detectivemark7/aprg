@@ -14,7 +14,7 @@ namespace chess {
 
 class ChessEngineControllerWithUci {
 public:
-    enum class ControllerState { Initializing, WaitingForUciOkay, Calculating, Idle };
+    enum class ControllerState { Initializing, WaitingForUciOkay, Calculating, Idle, Quitted };
 
     enum class CommandType {
         Uci,
@@ -34,7 +34,10 @@ public:
     ChessEngineControllerWithUci(
         ChessEngineHandler& engineHandler, stringHelper::StringPairs const& uciOptionNamesAndValuePairs = {});
 
-    void initializeController();
+    void initialize();
+    void quit();
+    void resetEngine();
+
     void resetToNewGame();
     void setupStartPosition();
     void setupMoves(std::string const& moves);
@@ -50,10 +53,8 @@ public:
     void setLogFile(std::string const& logFilePath);
 
 private:
-    void resetEngine();
-
     // clear functions
-    void clearData();
+    void resetData();
     void clearCalculationDetails();
 
     // state functions
@@ -65,14 +66,15 @@ private:
     void log(std::string const& logString);
 
     // send functions
-    void forceSend(std::string const& commandString);
-    void sendStopIfCalculating();
-    void sendUciAndUciOptions();
     void sendUci();
+    void sendQuit();
     void sendStop();
+    void sendUciAndUciOptions();
     void sendUciOptions();
+    void sendStopIfCalculating();
     void send(CommandType const& commandType, std::string const& commandString);
     void send(Command const& command);
+    void forceSend(std::string const& commandString);
 
     // process functions
     void processAStringFromEngine(std::string const& stringFromEngine);

@@ -28,7 +28,16 @@ ChessEngineControllerWithUci::ChessEngineControllerWithUci(
     putStringProcessingFunctionAsCallBack();
 }
 
-void ChessEngineControllerWithUci::initializeController() { sendUciAndUciOptions(); }
+void ChessEngineControllerWithUci::initialize() { sendUciAndUciOptions(); }
+
+void ChessEngineControllerWithUci::quit() { sendQuit(); }
+
+void ChessEngineControllerWithUci::resetEngine() {
+    log("Resetting engine");
+    resetData();
+    m_engineHandler.reset();
+    sendUciAndUciOptions();
+}
 
 void ChessEngineControllerWithUci::resetToNewGame() {
     log("Resetting to a new game");
@@ -125,14 +134,7 @@ void ChessEngineControllerWithUci::setLogFile(string const& logFilePath) {
     }
 }
 
-void ChessEngineControllerWithUci::resetEngine() {
-    log("Resetting engine");
-    clearData();
-    m_engineHandler.reset();
-    sendUciAndUciOptions();
-}
-
-void ChessEngineControllerWithUci::clearData() {
+void ChessEngineControllerWithUci::resetData() {
     changeState(ControllerState::Initializing);
     m_waitingForReadyOkay = false;
     m_currentCalculationDetails = {};
@@ -171,28 +173,29 @@ void ChessEngineControllerWithUci::log(string const& logString) {
     }
 }
 
-void ChessEngineControllerWithUci::forceSend(string const& commandString) {
-    m_engineHandler.sendStringToEngine(commandString);
+void ChessEngineControllerWithUci::sendUci() { send(CommandType::Uci, "uci"); }
+
+void ChessEngineControllerWithUci::sendQuit() {
+    forceSend("quit");
+    changeState(ControllerState::Quitted);
 }
 
-void ChessEngineControllerWithUci::sendStopIfCalculating() {
-    if (ControllerState::Calculating == m_state) {
-        sendStop();
-    }
-}
+void ChessEngineControllerWithUci::sendStop() { send(CommandType::Stop, "stop"); }
 
 void ChessEngineControllerWithUci::sendUciAndUciOptions() {
     sendUci();
     sendUciOptions();
 }
 
-void ChessEngineControllerWithUci::sendUci() { send(CommandType::Uci, "uci"); }
-
-void ChessEngineControllerWithUci::sendStop() { send(CommandType::Stop, "stop"); }
-
 void ChessEngineControllerWithUci::sendUciOptions() {
     for (StringPair const& namesAndValuePair : m_uciOptionNamesAndValuePairs) {
         send(CommandType::UciOption, constructUciOptionCommand(namesAndValuePair.first, namesAndValuePair.second));
+    }
+}
+
+void ChessEngineControllerWithUci::sendStopIfCalculating() {
+    if (ControllerState::Calculating == m_state) {
+        sendStop();
     }
 }
 
@@ -238,7 +241,15 @@ void ChessEngineControllerWithUci::send(Command const& command) {
             m_engineHandler.sendStringToEngine(command.commandString);
             break;
         }
+        case ControllerState::Quitted: {
+            // ignore
+            break;
+        }
     }
+}
+
+void ChessEngineControllerWithUci::forceSend(string const& commandString) {
+    m_engineHandler.sendStringToEngine(commandString);
 }
 
 void ChessEngineControllerWithUci::processAStringFromEngine(string const& stringFromEngine) {

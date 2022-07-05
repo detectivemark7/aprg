@@ -36,12 +36,21 @@ DWORD WINAPI engineMonitoringCallbackFunction(LPVOID lpParam) {
 }
 }  // namespace
 
-ChessEngineHandler::ChessEngineHandler(string const& enginePath) : m_enginePath(enginePath) { initializeEngine(); }
-
-ChessEngineHandler::~ChessEngineHandler() {
-    shutdownEngine();
-    shutdownLogging();
+ChessEngineHandler::ChessEngineHandler(string const& enginePath)
+    : m_enginePath(enginePath),
+      m_readMutex(),
+      m_startupInfo{},
+      m_processInfo{},
+      m_engineMonitoringThread{},
+      m_threadId{},
+      m_inputStreamOnEngineThread{},
+      m_outputStreamOnEngineThread{},
+      m_inputStreamOnHandler{},
+      m_outputStreamOnHandler{} {
+    initializeEngine();
 }
+
+ChessEngineHandler::~ChessEngineHandler() { shutdownEngine(); }
 
 void ChessEngineHandler::reset() {
     log(LogType::HandlerStatus, "Resetting engine");
@@ -82,7 +91,7 @@ void ChessEngineHandler::startMonitoringEngineOutput() {
     unsigned long bytesAvailable;  // bytes available
     char buffer[MAX_BUFFER_SIZE];
     string stringBuffer;
-    while (1) {
+    while (true) {
         PeekNamedPipe(m_outputStreamOnHandler, buffer, MAX_BUFFER_SIZE, NULL, &bytesAvailable, NULL);
         if (bytesAvailable > 0) {
             ReadFile(m_outputStreamOnHandler, buffer, MAX_BUFFER_SIZE, &bytesRead, NULL);
@@ -169,7 +178,7 @@ void ChessEngineHandler::initializeEngine() {
 }
 
 void ChessEngineHandler::shutdownEngine() {
-    sendStringToEngine("quit\n");
+    sendStringToEngine("quit");
     WaitForSingleObject(m_engineMonitoringThread, 1);
     CloseHandle(m_engineMonitoringThread);
     TerminateProcess(m_processInfo.hProcess, 0);
@@ -177,12 +186,6 @@ void ChessEngineHandler::shutdownEngine() {
     CloseHandle(m_outputStreamOnEngineThread);
     CloseHandle(m_inputStreamOnHandler);
     CloseHandle(m_outputStreamOnHandler);
-}
-
-void ChessEngineHandler::shutdownLogging() {
-    if (m_logFileStreamOptional) {
-        m_logFileStreamOptional->close();
-    }
 }
 
 void ChessEngineHandler::log(LogType const logtype, string const& logString) {

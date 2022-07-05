@@ -12,8 +12,8 @@ TEST(BoardUtilitiesTest, IsCoordinateOnBoardWorks) {
     Coordinate inBoardCoordinate{4, 4};
     Coordinate outBoardCoordinate{-1, 8};
 
-    EXPECT_TRUE(isCoordinateOnBoard(inBoardCoordinate));
-    EXPECT_FALSE(isCoordinateOnBoard(outBoardCoordinate));
+    EXPECT_TRUE(isCoordinateWithinTheBoard(inBoardCoordinate));
+    EXPECT_FALSE(isCoordinateWithinTheBoard(outBoardCoordinate));
 }
 
 TEST(BoardUtilitiesTest, ConstructFenStringWorks) {

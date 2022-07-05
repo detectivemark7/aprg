@@ -32,7 +32,6 @@ public:
 private:
     void initializeEngine();
     void shutdownEngine();
-    void shutdownLogging();
     void log(LogType const logtype, std::string const& logString);
     std::string getLogHeader(LogType const logtype) const;
     std::string m_enginePath;
