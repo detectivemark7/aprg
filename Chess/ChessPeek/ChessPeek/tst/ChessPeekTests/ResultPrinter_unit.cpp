@@ -13,7 +13,7 @@ namespace chess {
 namespace ChessPeek {
 
 TEST(ResultPrinterTest, PrintWorks) {
-    DetailsOnTheEngine detailsOnTheEngine(PieceColor::White, Board(Board::Orientation::BlackUpWhiteDown));
+    BoardWithContext boardWithContext(PieceColor::White, Board(Board::Orientation::BlackUpWhiteDown));
     CalculationDetails calculationDetails{};
     calculationDetails.depthInPlies = 21;
     calculationDetails.searchingMoveAndScorePairs = {{"d2d4", 39},   {"e2e4", 44},   {"c2c4", 39},  {"g2g3", 35},
@@ -25,7 +25,7 @@ TEST(ResultPrinterTest, PrintWorks) {
                                                      "c4d5", "f6d5", "e2e4", "d5c3", "b2c3", "c7c5", "c1e3", "d8a5",
                                                      "e3d2", "e8g8", "f1e2", "c8g4", "e1g1", "f8d8", "d1c2", "g4f3"};
     calculationDetails.bestMove = "d2d4";
-    ResultPrinter printHelper(detailsOnTheEngine, calculationDetails);
+    ResultPrinter printHelper(boardWithContext, calculationDetails);
 
     printHelper.print();
 }

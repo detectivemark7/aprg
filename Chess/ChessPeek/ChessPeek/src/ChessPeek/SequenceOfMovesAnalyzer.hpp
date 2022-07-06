@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ChessUtilities/Board/Board.hpp>
+#include <ChessPeek/BoardWithContext.hpp>
 
 namespace alba {
 
@@ -10,27 +10,32 @@ namespace ChessPeek {
 
 class SequenceOfMovesAnalyzer {
 public:
-    struct AnalyzerData {
-        Board savedBoard;
-        Move savedMove;
-        Board previousBoard;
-        Move previousMove;
+    enum class State { NoMove, AnalyzingMove, Moved };
+
+    struct StepDetails {
+        BoardWithContext boardWithContext;
+        Move move;
     };
 
-    SequenceOfMovesAnalyzer(Board const& board);
+    SequenceOfMovesAnalyzer(BoardWithContext const& boardWithContext);
 
-    void checkMove(Move const& halfMove);
+    void analyzeMove(Move const& halfMove);
     void commitMove();
 
     bool canPreMove() const;
-    Piece getPieceFromMove() const;
+    State getState() const;
     Board const& getCurrentBoard() const;
+    PieceColor getCurrentMoveColor() const;
 
 private:
+    bool isPreviousColorOpposite() const;
     bool canPreMoveBecauseOfRecapture() const;
+    bool canPreMoveBecauseOfCheck() const;
     bool didPreviousMoveHadOnlyOneWayToCapture() const;
     bool isARecapture() const;
-    AnalyzerData m_data;
+    State m_state;
+    StepDetails m_current;
+    StepDetails m_previous;
 };
 
 }  // namespace ChessPeek

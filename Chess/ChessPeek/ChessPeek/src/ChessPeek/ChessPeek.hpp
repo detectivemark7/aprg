@@ -30,16 +30,16 @@ public:
     void calculationMonitoringCallBackForEngine(EngineCalculationDetails const& engineCalculationDetails);
 
 private:
-    bool shouldAnalyzeBoard() const;
-    bool didPlayerChange() const;
-    bool didBoardChange() const;
-
     void initialize();
     void saveCalculationDetails(EngineCalculationDetails const& engineCalculationDetails);
 
     void printCalculationDetailsWithFiltering();
     void printCalculationDetailsIfPending();
     void printCalculationDetails();
+
+    bool shouldAnalyzeBoard() const;
+    bool didPlayerChange() const;
+    bool didBoardChange() const;
 
     Configuration m_configuration;
     AlbaLocalScreenMonitoring m_screenMonitoring;

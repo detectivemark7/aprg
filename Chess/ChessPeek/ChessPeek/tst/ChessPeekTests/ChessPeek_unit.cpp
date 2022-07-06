@@ -12,7 +12,7 @@ namespace chess {
 
 namespace ChessPeek {
 
-TEST(ChessPeekTest, RunForeverWorks) {
+TEST(ChessPeekTest, DISABLED_RunForeverWorks) {
     ChessPeek chessPeek;
 
     chessPeek.runForever();

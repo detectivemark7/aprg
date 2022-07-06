@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ChessUtilities/Board/Board.hpp>
+#include <ChessPeek/BoardWithContext.hpp>
 
 namespace alba {
 
@@ -11,17 +11,13 @@ namespace ChessPeek {
 class DetailsOnTheEngine {
 public:
     DetailsOnTheEngine();
-    DetailsOnTheEngine(PieceColor const& playerColor, Board const& board);
 
-    PieceColor getPlayerColor() const;
-    Board const& getBoard() const;
-    std::string getFenString() const;
+    BoardWithContext const& getBoardWithContext() const;
 
-    void save(PieceColor const& playerColor, Board const& board);
+    void save(BoardWithContext const& boardWithContext);
 
 private:
-    PieceColor m_playerColor;
-    Board m_board;
+    BoardWithContext m_boardWithContext;
 };
 
 }  // namespace ChessPeek
