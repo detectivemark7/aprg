@@ -105,12 +105,15 @@ void ChessPeek::saveCalculationDetails(EngineCalculationDetails const& engineCal
     if (!engineCalculationDetails.bestMove.empty()) {
         m_calculationDetails.bestMove = engineCalculationDetails.bestMove;
     }
-    if (!engineCalculationDetails.searchingMoveAndScorePairs.empty()) {
-        m_calculationDetails.searchingMoveAndScorePairs = engineCalculationDetails.searchingMoveAndScorePairs;
+    if (!engineCalculationDetails.currentMovesAndScores.empty()) {
+        m_calculationDetails.currentMovesAndScores = engineCalculationDetails.currentMovesAndScores;
     }
-    m_calculationDetails.scoreInPvLine = engineCalculationDetails.scoreInPvLine;
-    if (!engineCalculationDetails.pvHalfMovesInMonitoredLine.empty()) {
-        m_calculationDetails.pvHalfMovesInMonitoredLine = engineCalculationDetails.pvHalfMovesInMonitoredLine;
+    m_calculationDetails.scoreInMonitoredVariation = engineCalculationDetails.scoreInMonitoredVariation;
+    if (!engineCalculationDetails.monitoredVariation.empty()) {
+        m_calculationDetails.monitoredVariation = engineCalculationDetails.monitoredVariation;
+    }
+    if (!engineCalculationDetails.commonMovesAndCountsOfEachStep.empty()) {
+        m_calculationDetails.commonMovesAndCountsOfEachStep = engineCalculationDetails.commonMovesAndCountsOfEachStep;
     }
 }
 
