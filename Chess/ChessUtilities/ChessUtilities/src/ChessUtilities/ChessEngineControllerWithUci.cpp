@@ -1,6 +1,6 @@
 #include "ChessEngineControllerWithUci.hpp"
 
-#include <ChessUtilities/Uci/UciUtilities.hpp>
+#include <ChessUtilities/Uci/UciInterpreter.hpp>
 #include <Common/Macros/AlbaMacros.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 #include <Common/Time/AlbaLocalTimeHelper.hpp>
@@ -23,7 +23,8 @@ ChessEngineControllerWithUci::ChessEngineControllerWithUci(
       m_logFileStreamOptional(),
       m_state(ControllerState::Initializing),
       m_waitingForReadyOkay(false),
-      m_currentCalculationDetails{},
+      m_calculationDetails{},
+      m_uciInterpreter(m_calculationDetails),
       m_pendingCommands() {
     putStringProcessingFunctionAsCallBack();
 }
@@ -137,11 +138,14 @@ void ChessEngineControllerWithUci::setLogFile(string const& logFilePath) {
 void ChessEngineControllerWithUci::resetData() {
     changeState(ControllerState::Initializing);
     m_waitingForReadyOkay = false;
-    m_currentCalculationDetails = {};
+    clearCalculationDetails();
     m_pendingCommands.clear();
 }
 
-void ChessEngineControllerWithUci::clearCalculationDetails() { m_currentCalculationDetails = CalculationDetails{}; }
+void ChessEngineControllerWithUci::clearCalculationDetails() {
+    m_calculationDetails = {};
+    m_uciInterpreter.clear();
+}
 
 void ChessEngineControllerWithUci::changeState(ControllerState const state) {
     if (m_logFileStreamOptional) {
@@ -282,14 +286,14 @@ void ChessEngineControllerWithUci::processInWaitingForUciOkay(string const& stri
 }
 
 void ChessEngineControllerWithUci::processInCalculating(string const& stringToProcess) {
-    retrieveCalculationDetailsOnStringFromEngine(m_currentCalculationDetails, stringToProcess);
+    m_uciInterpreter.updateCalculationDetails(stringToProcess);
 
-    if (!m_currentCalculationDetails.bestMove.empty()) {
+    if (!m_calculationDetails.bestMove.empty()) {
         proceedToIdleStateAndProcessPendingCommands();
     }
 
     if (m_additionalStepsInCalculationMonitoring) {
-        m_additionalStepsInCalculationMonitoring.value()(m_currentCalculationDetails);
+        m_additionalStepsInCalculationMonitoring.value()(m_calculationDetails);
     }
 }
 

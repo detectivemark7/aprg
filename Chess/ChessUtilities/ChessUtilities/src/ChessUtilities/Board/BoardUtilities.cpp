@@ -59,8 +59,13 @@ int getValueOfPieceType(PieceType const pieceType) {
     return result;
 }
 
+bool areOpposingColors(PieceColor const pieceColor1, PieceColor const pieceColor2) {
+    return (PieceColor::White == pieceColor1 && PieceColor::Black == pieceColor2) ||
+           (PieceColor::Black == pieceColor1 && PieceColor::White == pieceColor2);
+}
+
 PieceColor getOppositeColor(PieceColor const pieceColor) {
-    PieceColor result{};
+    PieceColor result(PieceColor::Unknown);
     if (PieceColor::White == pieceColor) {
         result = PieceColor::Black;
     } else if (PieceColor::Black == pieceColor) {
@@ -71,6 +76,7 @@ PieceColor getOppositeColor(PieceColor const pieceColor) {
 
 std::string getEnumString(PieceColor const pieceColor) {
     switch (pieceColor) {
+        ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColor::Unknown, "Unknown")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColor::White, "White")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColor::Black, "Black")
         default:

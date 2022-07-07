@@ -2,6 +2,7 @@
 
 #include <ChessUtilities/ChessEngineHandler.hpp>
 #include <ChessUtilities/Engine/CalculationDetails.hpp>
+#include <ChessUtilities/Uci/UciInterpreter.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 
 #include <deque>
@@ -90,7 +91,8 @@ private:
     std::optional<std::ofstream> m_logFileStreamOptional;
     ControllerState m_state;
     bool m_waitingForReadyOkay;
-    CalculationDetails m_currentCalculationDetails;
+    CalculationDetails m_calculationDetails;
+    UciInterpreter m_uciInterpreter;
     std::deque<Command> m_pendingCommands;
 };
 

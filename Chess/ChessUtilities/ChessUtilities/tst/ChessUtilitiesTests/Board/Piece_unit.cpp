@@ -9,9 +9,9 @@ namespace alba {
 namespace chess {
 
 TEST(PieceTest, ExtractColorWorks) {
-    EXPECT_EQ(PieceColor::White, Piece::extractColor(0U));
+    EXPECT_EQ(PieceColor::Unknown, Piece::extractColor(0U));
     EXPECT_EQ(PieceColor::White, Piece::extractColor(1U));
-    EXPECT_EQ(PieceColor::Black, Piece::extractColor(8U));
+    EXPECT_EQ(PieceColor::Unknown, Piece::extractColor(8U));
     EXPECT_EQ(PieceColor::Black, Piece::extractColor(9U));
 }
 
@@ -50,10 +50,12 @@ TEST(PieceTest, ExtractColorAndTypeWorks) {
 
 TEST(PieceTest, GetColorWorks) {
     Piece piece1(0U);
-    Piece piece2(13U);
+    Piece piece2(5U);
+    Piece piece3(13U);
 
-    EXPECT_EQ(PieceColor::White, piece1.getColor());
-    EXPECT_EQ(PieceColor::Black, piece2.getColor());
+    EXPECT_EQ(PieceColor::Unknown, piece1.getColor());
+    EXPECT_EQ(PieceColor::White, piece2.getColor());
+    EXPECT_EQ(PieceColor::Black, piece3.getColor());
 }
 
 TEST(PieceTest, GetTypeWorks) {
