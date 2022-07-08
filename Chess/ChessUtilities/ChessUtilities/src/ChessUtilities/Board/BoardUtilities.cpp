@@ -20,7 +20,7 @@ bool isInUpperHalf(Coordinate const& coordinate) { return coordinate.getY() <= 3
 
 bool isInLowerHalf(Coordinate const& coordinate) { return coordinate.getY() >= 4; }
 
-bool isMoveWithinTheBoard(Move const& move) {
+bool areCoordinatesValid(Move const& move) {
     return move.first != move.second && isCoordinateWithinTheBoard(move.first) &&
            isCoordinateWithinTheBoard(move.second);
 }

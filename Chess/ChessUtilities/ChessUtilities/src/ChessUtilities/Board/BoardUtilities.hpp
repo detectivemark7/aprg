@@ -12,7 +12,7 @@ namespace chess {
 bool isCoordinateWithinTheBoard(Coordinate const& coordinate);
 bool isInUpperHalf(Coordinate const& coordinate);
 bool isInLowerHalf(Coordinate const& coordinate);
-bool isMoveWithinTheBoard(Move const& move);
+bool areCoordinatesValid(Move const& move);
 
 int getValueOfPieceType(PieceType const pieceType);
 bool areOpposingColors(PieceColor const pieceColor1, PieceColor const pieceColor2);

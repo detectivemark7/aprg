@@ -8,7 +8,7 @@ namespace EngineConstants {
 
 constexpr unsigned int NUMBER_OF_THREADS = 4;  // Desktop computer at home has four threads
 
-constexpr unsigned int NUMBER_OF_VARIATIONS = 15;  // Fifteen chessboards fit in the screen
+constexpr unsigned int NUMBER_OF_VARIATIONS = 20;
 
 }  // namespace EngineConstants
 
