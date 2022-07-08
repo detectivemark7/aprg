@@ -302,7 +302,6 @@ public:
 
     template <typename AnyType>
     std::string convertToString(AnyType const& object) const {
-        std::string result;
         std::stringstream temporaryStream;
         if (m_precisionOptional) {
             temporaryStream.precision(m_precisionOptional.value());
@@ -314,11 +313,11 @@ public:
             temporaryStream << std::setw(m_fieldWidthOptional.value());
         }
         temporaryStream << object;
-        result = temporaryStream.str();
         if (m_maximumLengthOptional) {
-            result = result.substr(m_maximumLengthOptional.value());
+            return temporaryStream.str().substr(m_maximumLengthOptional.value());
+        } else {
+            return temporaryStream.str();
         }
-        return result;
     }
 
     void setPrecision(int const precision);
