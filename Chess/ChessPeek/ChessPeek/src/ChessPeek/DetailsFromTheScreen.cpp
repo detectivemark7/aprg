@@ -43,8 +43,8 @@ bool DetailsFromTheScreen::areKingsValid() const {
 Board DetailsFromTheScreen::getBoardAndSaveDetails() {
     Board board;
     m_countOfPieces = {};
-    for (unsigned int j = 0; j < 8; j++) {
-        for (unsigned int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 8; i++) {
             Coordinate coordinate(i, j);
             Piece piece(m_boardObserver.getPieceFromCell(i, j));
             board.setPieceAt(coordinate, piece);
@@ -59,7 +59,7 @@ Board DetailsFromTheScreen::getBoardAndSaveDetails() {
 void DetailsFromTheScreen::saveBoardDetails(Coordinate const& coordinate, Piece const& piece) {
     m_countOfPieces.pieceCount++;
     saveBoardKingDetails(coordinate, piece);
-    saveBoardUpperHalfLowerHalfDetails(coordinate, piece);
+    saveBoardUpperHalfAndLowerHalfDetails(coordinate, piece);
 }
 
 void DetailsFromTheScreen::saveBoardKingDetails(Coordinate const& coordinate, Piece const& piece) {
@@ -74,7 +74,7 @@ void DetailsFromTheScreen::saveBoardKingDetails(Coordinate const& coordinate, Pi
     }
 }
 
-void DetailsFromTheScreen::saveBoardUpperHalfLowerHalfDetails(Coordinate const& coordinate, Piece const& piece) {
+void DetailsFromTheScreen::saveBoardUpperHalfAndLowerHalfDetails(Coordinate const& coordinate, Piece const& piece) {
     if (coordinate.getY() <= 3) {
         if (PieceColor::White == piece.getColor()) {
             m_countOfPieces.whiteCountInUpperHalf++;

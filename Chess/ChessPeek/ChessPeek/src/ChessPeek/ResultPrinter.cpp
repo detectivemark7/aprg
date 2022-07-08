@@ -17,7 +17,7 @@ using namespace std;
 namespace {
 constexpr int MINIMUM_ACCEPTABLE_SCORE = -300;
 constexpr unsigned int MIN_NUMBER_OF_MOVES_IN_TEXT_REPORT = 5U;
-constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT = 15U;
+constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT = 10U;
 constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_GRID = 5U;
 constexpr unsigned int NEXT_OFFSET_OF_GRID = 9U;
 constexpr char SEPARATOR[] = "     ";
@@ -92,8 +92,6 @@ void ResultPrinter::printCurrentMovesGrid(CurrentMoveDetails const& currentMoveD
     printARowOfCurrentMoves(currentMoveDetails, 0);
     printScoresHeader(currentMoveDetails, 5);
     printARowOfCurrentMoves(currentMoveDetails, 5);
-    printScoresHeader(currentMoveDetails, 10);
-    printARowOfCurrentMoves(currentMoveDetails, 10);
 }
 
 void ResultPrinter::printARowOfCurrentMoves(
@@ -151,7 +149,7 @@ void ResultPrinter::setFutureMovesOnGrid(
     SequenceOfMovesAnalyzer analyzer(m_engineBoardWithContext);
     unsigned int movesDisplayed = 0U;
     unsigned int xOffset = 0U;
-    double preMoveThreshold = 0.60;
+    int preMoveThreshold = 5;
     bool isUnSurePreMove = false;
 
     for (FutureMoveDetail const& futureMoveDetail : futureMoveDetails) {
@@ -170,8 +168,7 @@ void ResultPrinter::setFutureMovesOnGrid(
                 break;
             }
         } else {
-            isUnSurePreMove = preMoveThreshold <= static_cast<double>(futureMoveDetail.commonalityCount) /
-                                                      m_calculationDetails.currentMovesAndScores.size();
+            isUnSurePreMove = preMoveThreshold <= futureMoveDetail.commonalityCount;
         }
         analyzer.commitMove();
     }
@@ -250,14 +247,17 @@ ResultPrinter::CurrentMoveDetails ResultPrinter::getCurrentMoveDetails() const {
         }
 
         Move move(engineBoard.getMoveFromTwoLetterNumberNotation(currentMoveAndScorePair.first));
-        if (isMoveWithinTheBoard(move) && engineBoard.isAPossibleMove(move)) {
+        if (engineBoard.isAPossibleMove(move)) {
             result.emplace_back(CurrentMoveDetail{move, currentMoveAndScorePair.second});
-            if (result.size() >= MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT) {
-                break;
-            }
         }
     }
-    sortSoThatMoreHumanMovesArePrioritized(result);
+
+    sortForMoreHumanMoves(result);
+    removeTooManyPawnMoves(result);
+
+    if (result.size() > MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT) {
+        result.resize(MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT);
+    }
     return result;
 }
 
@@ -269,7 +269,7 @@ ResultPrinter::FutureMoveDetails ResultPrinter::getFutureMoveDetails() const {
     int index = 0;
     for (string const& pvHalfMoveString : pvHalfMovesStrings) {
         Move move(updatedBoard.getMoveFromTwoLetterNumberNotation(pvHalfMoveString));
-        if (isMoveWithinTheBoard(move) && updatedBoard.isAPossibleMove(move)) {
+        if (updatedBoard.isAPossibleMove(move)) {
             Piece piece = updatedBoard.getPieceAt(move.first);
             if (index == 0 || areOpposingColors(previousColor, piece.getColor())) {
                 result.emplace_back(FutureMoveDetail{move, getCommonalityCount(move, updatedBoard, index)});
@@ -279,7 +279,7 @@ ResultPrinter::FutureMoveDetails ResultPrinter::getFutureMoveDetails() const {
                 updatedBoard.move(move);
                 previousColor = piece.getColor();
             } else {
-                break;
+                break;  // colors need to alternating
             }
         } else {
             break;  // retain only line with valid moves
@@ -289,45 +289,67 @@ ResultPrinter::FutureMoveDetails ResultPrinter::getFutureMoveDetails() const {
     return result;
 }
 
-void ResultPrinter::sortSoThatMoreHumanMovesArePrioritized(CurrentMoveDetails& currentMoveDetails) const {
+void ResultPrinter::sortForMoreHumanMoves(CurrentMoveDetails& currentMoveDetails) const {
     if (!currentMoveDetails.empty()) {
-        Board const& engineBoard(m_engineBoardWithContext.getBoard());
-        Coordinate opponentsKingCoordinate = m_engineBoardWithContext.getOpponentsKingCoordinate();
         stable_sort(
             currentMoveDetails.begin(), currentMoveDetails.end(),
             [&](CurrentMoveDetail const& detail1, CurrentMoveDetail const& detail2) {
-                int scoreLevel1 = getScoreLevel(detail1.score);
-                int scoreLevel2 = getScoreLevel(detail2.score);
-                if (scoreLevel1 == scoreLevel2) {
-                    Move const& move1(detail1.move);
-                    Move const& move2(detail2.move);
-                    int distanceToKing1 = getDistanceToOpponentsKing(move1, opponentsKingCoordinate);
-                    int distanceToKing2 = getDistanceToOpponentsKing(move2, opponentsKingCoordinate);
-                    if (distanceToKing1 == distanceToKing2) {
-                        int yForwardCount1 = getForwardCount(move1);
-                        int yForwardCount2 = getForwardCount(move2);
-                        if (yForwardCount1 == yForwardCount2) {
-                            return getPieceValue(move1, engineBoard) > getPieceValue(move2, engineBoard);
-                        }
-                        return yForwardCount1 > yForwardCount2;  // offensive moves are first
-                    }
-                    return distanceToKing1 < distanceToKing2;  // moves nearest to king are first
-                }
-                return scoreLevel1 > scoreLevel2;  // prioritize moves that make sense
+                return isAMoreHumanMove(detail1, detail2);
             });
     }
 }
 
+void ResultPrinter::removeTooManyPawnMoves(CurrentMoveDetails& currentMoveDetails) const {
+    constexpr int MAX_NUMBER_OF_PAWN_MOVES = 2;
+    int numberOfPawnMoves = 0;
+    Board const& engineBoard(m_engineBoardWithContext.getBoard());
+    auto pastEndIt = remove_if(
+        currentMoveDetails.begin(), currentMoveDetails.end(),
+        [&numberOfPawnMoves, &engineBoard](CurrentMoveDetail const& currentMoveDetail) {
+            Move const& move(currentMoveDetail.move);
+            if (PieceType::Pawn == engineBoard.getPieceAt(move.first).getType()) {
+                if (numberOfPawnMoves < MAX_NUMBER_OF_PAWN_MOVES) {
+                    numberOfPawnMoves++;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        });
+    currentMoveDetails.erase(pastEndIt, currentMoveDetails.cend());
+}
+
+bool ResultPrinter::isAMoreHumanMove(
+    CurrentMoveDetail const& currentMoveDetail1, CurrentMoveDetail const& currentMoveDetail2) const {
+    int scoreLevel1 = getScoreLevel(currentMoveDetail1.score);
+    int scoreLevel2 = getScoreLevel(currentMoveDetail2.score);
+    if (scoreLevel1 == scoreLevel2) {
+        Move const& move1(currentMoveDetail1.move);
+        Move const& move2(currentMoveDetail2.move);
+        int distanceToKing1 = getDistanceToOpponentsKing(move1);
+        int distanceToKing2 = getDistanceToOpponentsKing(move2);
+        if (distanceToKing1 == distanceToKing2) {
+            int yForwardCount1 = getForwardCount(move1);
+            int yForwardCount2 = getForwardCount(move2);
+            if (yForwardCount1 == yForwardCount2) {
+                return getPieceValueOfMove(move1) > getPieceValueOfMove(move2);
+            }
+            return yForwardCount1 > yForwardCount2;  // offensive moves are first
+        }
+        return distanceToKing1 < distanceToKing2;  // moves nearest to king are first
+    }
+    return scoreLevel1 > scoreLevel2;  // prioritize moves that make sense
+}
+
 int ResultPrinter::getScoreLevel(int const scoreInCentipawns) const {
-    int result{};
     if (scoreInCentipawns >= UciInterpreter::ARTIFICIAL_MATE_SCORE) {
-        result = 0;  // put mate as same level as best move (this is to be human and have an imperfect record on mates)
+        return 0;  // put mate as same level as best move (this is to be human and have an imperfect record on mates)
     } else if (scoreInCentipawns <= -UciInterpreter::ARTIFICIAL_MATE_SCORE) {
-        result = -UciInterpreter::ARTIFICIAL_MATE_SCORE;  // avoid to be mated as much as possible
+        return -UciInterpreter::ARTIFICIAL_MATE_SCORE;  // avoid to be mated as much as possible
     } else {
-        constexpr int ONE_PAWN_SCORE = 100;
+        constexpr int LEVEL_DISTANCE = 80;
         int positiveDeltaFromBestMove = m_calculationDetails.scoreInMonitoredVariation - scoreInCentipawns;
-        result = -1 * positiveDeltaFromBestMove / ONE_PAWN_SCORE;
+        return -1 * positiveDeltaFromBestMove / LEVEL_DISTANCE;
 
         // The formula works like this, for example we have this scores: 300 201 200 199 100 0 -100
         // The best one is 300.
@@ -342,26 +364,26 @@ int ResultPrinter::getScoreLevel(int const scoreInCentipawns) const {
         // Each level is one pawn distance from the best score (this is avoid "one pawn blunders" at each level).
         // Its negative so its reverse sorted.
     }
-    return result;
 }
 
-int ResultPrinter::getDistanceToOpponentsKing(Move const& move, Coordinate opponentsKingCoordinate) const {
-    Coordinate deltaToKing = opponentsKingCoordinate - move.second;
+int ResultPrinter::getDistanceToOpponentsKing(Move const& move) const {
+    Coordinate deltaToKing = m_engineBoardWithContext.getOpponentsKingCoordinate() - move.second;
     return static_cast<int>(
         round(pow(deltaToKing.getX() * deltaToKing.getX() + deltaToKing.getY() * deltaToKing.getY(), 0.5)));
 }
 
 int ResultPrinter::getForwardCount(Move const& move) const { return move.first.getY() - move.second.getY(); }
 
-int ResultPrinter::getPieceValue(Move const& move, Board const& engineBoard) const {
+int ResultPrinter::getPieceValueOfMove(Move const& move) const {
+    Board const& engineBoard(m_engineBoardWithContext.getBoard());
     return getValueOfPieceType(engineBoard.getPieceAt(move.first).getType());
 }
 
-int ResultPrinter::getCommonalityCount(Move const& move, Board const& board, int const index) const {
+int ResultPrinter::getCommonalityCount(Move const& move, Board const& engineBoard, int const index) const {
     int count{};
     if (index < static_cast<int>(m_calculationDetails.commonMovesAndCountsOfEachStep.size())) {
         StringAndIntPair commonMoveAndCount = m_calculationDetails.commonMovesAndCountsOfEachStep.at(index);
-        if (move == board.getMoveFromTwoLetterNumberNotation(commonMoveAndCount.first)) {
+        if (move == engineBoard.getMoveFromTwoLetterNumberNotation(commonMoveAndCount.first)) {
             count = commonMoveAndCount.second;
         }
     }

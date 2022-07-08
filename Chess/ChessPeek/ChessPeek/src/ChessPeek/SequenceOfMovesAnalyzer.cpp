@@ -15,7 +15,7 @@ SequenceOfMovesAnalyzer::SequenceOfMovesAnalyzer(BoardWithContext const& boardWi
     : m_state(State::NoMove), m_current{boardWithContext, {}}, m_previous{} {}
 
 void SequenceOfMovesAnalyzer::analyzeMove(Move const& halfMove) {
-    if (isMoveWithinTheBoard(halfMove)) {
+    if (areCoordinatesValid(halfMove)) {
         m_previous.move = m_current.move;
         m_current.move = halfMove;
         PieceColor moveColor = m_current.boardWithContext.getBoard().getPieceAt(m_current.move.first).getColor();

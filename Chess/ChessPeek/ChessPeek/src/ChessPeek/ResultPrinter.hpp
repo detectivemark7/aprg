@@ -59,13 +59,15 @@ private:
 
     CurrentMoveDetails getCurrentMoveDetails() const;
     FutureMoveDetails getFutureMoveDetails() const;
-    void sortSoThatMoreHumanMovesArePrioritized(CurrentMoveDetails& currentMoveDetails) const;
+    void sortForMoreHumanMoves(CurrentMoveDetails& currentMoveDetails) const;
+    void removeTooManyPawnMoves(CurrentMoveDetails& currentMoveDetails) const;
 
+    bool isAMoreHumanMove(CurrentMoveDetail const& detail1, CurrentMoveDetail const& detail2) const;
     int getScoreLevel(int const scoreInCentipawns) const;
-    int getDistanceToOpponentsKing(Move const& move, Coordinate opponentsKingCoordinate) const;
+    int getDistanceToOpponentsKing(Move const& move) const;
     int getForwardCount(Move const& move) const;
-    int getPieceValue(Move const& move, Board const& engineBoard) const;
-    int getCommonalityCount(Move const& move, Board const& board, int const index) const;
+    int getPieceValueOfMove(Move const& move) const;
+    int getCommonalityCount(Move const& move, Board const& engineBoard, int const index) const;
     std::string getCellForDisplay(
         Piece const& piece, unsigned int const moveNumber, std::optional<char> const& firstChar) const;
     std::optional<char> getFirstCharOfCell(bool const isCertainPreMove, bool isPossiblePreMove) const;
