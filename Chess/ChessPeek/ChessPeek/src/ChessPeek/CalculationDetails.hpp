@@ -10,12 +10,9 @@ namespace ChessPeek {
 
 struct CalculationDetails {
     unsigned int depthInPlies;
-    int mateScore;
+    Variations variations;
     std::string bestMove;
-    StringAndIntPairs currentMovesAndScores;
-    int scoreInMonitoredVariation;
-    stringHelper::strings monitoredVariation;
-    StringAndIntPairs commonMovesAndCountsOfEachStep;
+    std::string responseMoveToPonder;
 
     bool operator==(CalculationDetails const& other) const;
     bool operator!=(CalculationDetails const& other) const;
