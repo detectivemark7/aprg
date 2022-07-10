@@ -14,9 +14,10 @@ bool isInUpperHalf(Coordinate const& coordinate);
 bool isInLowerHalf(Coordinate const& coordinate);
 bool areCoordinatesValid(Move const& move);
 
-int getValueOfPieceType(PieceType const pieceType);
 bool areOpposingColors(PieceColor const pieceColor1, PieceColor const pieceColor2);
 PieceColor getOppositeColor(PieceColor const pieceColor);
+
+int getValueOfPieceType(PieceType const pieceType);
 
 std::string getEnumString(PieceColor const pieceColor);
 std::string getEnumString(PieceType const pieceType);

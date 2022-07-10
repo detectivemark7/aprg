@@ -25,6 +25,21 @@ bool areCoordinatesValid(Move const& move) {
            isCoordinateWithinTheBoard(move.second);
 }
 
+bool areOpposingColors(PieceColor const pieceColor1, PieceColor const pieceColor2) {
+    return (PieceColor::White == pieceColor1 && PieceColor::Black == pieceColor2) ||
+           (PieceColor::Black == pieceColor1 && PieceColor::White == pieceColor2);
+}
+
+PieceColor getOppositeColor(PieceColor const pieceColor) {
+    PieceColor result(PieceColor::Unknown);
+    if (PieceColor::White == pieceColor) {
+        result = PieceColor::Black;
+    } else if (PieceColor::Black == pieceColor) {
+        result = PieceColor::White;
+    }
+    return result;
+}
+
 int getValueOfPieceType(PieceType const pieceType) {
     int result{};
     switch (pieceType) {
@@ -55,21 +70,6 @@ int getValueOfPieceType(PieceType const pieceType) {
         default: {
             break;
         }
-    }
-    return result;
-}
-
-bool areOpposingColors(PieceColor const pieceColor1, PieceColor const pieceColor2) {
-    return (PieceColor::White == pieceColor1 && PieceColor::Black == pieceColor2) ||
-           (PieceColor::Black == pieceColor1 && PieceColor::White == pieceColor2);
-}
-
-PieceColor getOppositeColor(PieceColor const pieceColor) {
-    PieceColor result(PieceColor::Unknown);
-    if (PieceColor::White == pieceColor) {
-        result = PieceColor::Black;
-    } else if (PieceColor::Black == pieceColor) {
-        result = PieceColor::White;
     }
     return result;
 }

@@ -142,10 +142,7 @@ void ChessEngineControllerWithUci::resetData() {
     m_pendingCommands.clear();
 }
 
-void ChessEngineControllerWithUci::clearCalculationDetails() {
-    m_calculationDetails = {};
-    m_uciInterpreter.clear();
-}
+void ChessEngineControllerWithUci::clearCalculationDetails() { m_calculationDetails = {}; }
 
 void ChessEngineControllerWithUci::changeState(ControllerState const state) {
     if (m_logFileStreamOptional) {
