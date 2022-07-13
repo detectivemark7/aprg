@@ -13,8 +13,6 @@ using namespace alba::stringHelper;
 using namespace std;
 
 namespace {
-constexpr int MINIMUM_ACCEPTABLE_SCORE = -300;
-constexpr unsigned int MIN_NUMBER_OF_MOVES_IN_TEXT_REPORT = 5U;
 constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_TEXT_REPORT = 10U;
 constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_GRID = 5U;
 constexpr unsigned int NEXT_OFFSET_OF_GRID = 9U;
@@ -61,7 +59,7 @@ void ResultPrinter::printCalculationDetails(
          << "\n";
     cout << "Current moves: ";
     for (CurrentMoveDetail const& moveDetail : currentMoveDetails) {
-        cout << engineBoard.getReadableStringForMove(moveDetail.move) << " ["
+        cout << engineBoard.getReadableStringOfMove(moveDetail.move) << " ["
              << getDisplayedScore(moveDetail.engineScore, moveDetail.mateValue) << "], ";
     }
     cout << "\n";
@@ -70,7 +68,7 @@ void ResultPrinter::printCalculationDetails(
     cout << "Monitored variation: ";
     for (FutureMoveDetail const& moveDetail : futureMoveDetails) {
         Piece piece = updatedBoard.getPieceAt(moveDetail.halfMove.first);
-        cout << updatedBoard.getReadableStringForMove(moveDetail.halfMove);
+        cout << updatedBoard.getReadableStringOfMove(moveDetail.halfMove);
         cout << " by " << piece.getColor() << ", ";
         updatedBoard.move(moveDetail.halfMove);
     }
@@ -78,8 +76,8 @@ void ResultPrinter::printCalculationDetails(
 
     if (!m_calculationDetails.bestMove.empty()) {
         cout << "Best move: "
-             << engineBoard.getReadableStringForMove(
-                    engineBoard.getMoveFromTwoLetterNumberNotation(m_calculationDetails.bestMove))
+             << engineBoard.getReadableStringOfMove(
+                    engineBoard.getMoveUsingUciNotation(m_calculationDetails.bestMove))
              << "\n";
     }
     cout << "\n";
@@ -247,12 +245,8 @@ ResultPrinter::CurrentMoveDetails ResultPrinter::getCurrentMoveDetails() const {
     HumanScoreGenerator scorer(m_engineBoardWithContext, m_bestScore, m_worstScore);
     Board const& engineBoard(m_engineBoardWithContext.getBoard());
     for (Variation const& variation : m_calculationDetails.variations) {
-        if (result.size() >= MIN_NUMBER_OF_MOVES_IN_TEXT_REPORT &&
-            variation.scoreInCentipawns <= MINIMUM_ACCEPTABLE_SCORE) {
-            break;
-        }
         if (!variation.halfMoves.empty()) {
-            Move move(engineBoard.getMoveFromTwoLetterNumberNotation(variation.halfMoves.front()));
+            Move move(engineBoard.getMoveUsingUciNotation(variation.halfMoves.front()));
             if (engineBoard.isAPossibleMove(move)) {
                 CurrentMoveDetail moveDetail{
                     move, variation.scoreInCentipawns, variation.mateValue,
@@ -281,7 +275,7 @@ ResultPrinter::FutureMoveDetails ResultPrinter::getFutureMoveDetails() const {
             PieceColor previousColor{};
             int index = 0;
             for (string const& bestHalfMove : bestHalfMoves) {
-                Move move(updatedBoard.getMoveFromTwoLetterNumberNotation(bestHalfMove));
+                Move move(updatedBoard.getMoveUsingUciNotation(bestHalfMove));
                 if (updatedBoard.isAPossibleMove(move)) {
                     Piece piece = updatedBoard.getPieceAt(move.first);
                     if (index == 0 || areOpposingColors(previousColor, piece.getColor())) {
