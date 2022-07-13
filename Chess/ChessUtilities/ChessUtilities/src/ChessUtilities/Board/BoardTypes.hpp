@@ -10,6 +10,8 @@ namespace alba {
 
 namespace chess {
 
+enum class BoardOrientation { Unknown, BlackUpWhiteDown, WhiteUpBlackDown };
+
 using PieceTypes = std::vector<PieceType>;
 using CoordinateDataType = int32_t;
 using Coordinate = AlbaXY<CoordinateDataType>;

@@ -9,6 +9,8 @@ namespace alba {
 
 namespace chess {
 
+bool isAToH(char const c);
+bool is1To8(char const c);
 bool isCoordinateWithinTheBoard(Coordinate const& coordinate);
 bool isInUpperHalf(Coordinate const& coordinate);
 bool isInLowerHalf(Coordinate const& coordinate);

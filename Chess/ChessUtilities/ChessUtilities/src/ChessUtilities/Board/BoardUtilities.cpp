@@ -10,6 +10,10 @@ namespace alba {
 
 namespace chess {
 
+bool isAToH(char const c) { return 'a' <= c && c <= 'h'; }
+
+bool is1To8(char const c) { return '1' <= c && c <= '8'; }
+
 bool isCoordinateWithinTheBoard(Coordinate const& coordinate) {
     auto x(coordinate.getX());
     auto y(coordinate.getY());
