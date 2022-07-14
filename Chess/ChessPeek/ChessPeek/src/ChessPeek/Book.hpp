@@ -16,7 +16,7 @@ namespace ChessPeek {
 class Book {
 public:
     struct MoveDetail {
-        Move move;
+        std::string move;
         int numberOfGames;
         int whiteWinPercentage;
         int drawPercentage;
@@ -27,10 +27,13 @@ public:
 
     struct LineDetail {
         std::string nameOfLine;
+        PieceColor colorToMove;
+        int totalNumberOfGames;
         MoveDetails nextMoves;
     };
     using LineDetailOptional = std::optional<LineDetail>;
 
+    size_t getSize() const;
     LineDetailOptional getLine(Board const& board) const;
     void saveDatabaseTo(std::string const& path) const;
 

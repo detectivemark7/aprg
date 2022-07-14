@@ -2,6 +2,7 @@
 
 #include <ChessPeek/BoardObserver.hpp>
 #include <ChessPeek/BoardWithContext.hpp>
+#include <ScreenMonitoring/AlbaLocalScreenMonitoring.hpp>
 
 namespace alba {
 
@@ -11,7 +12,7 @@ namespace ChessPeek {
 
 class DetailsFromTheScreen {
 public:
-    DetailsFromTheScreen(Configuration const& configuration, AlbaLocalScreenMonitoring const& screenMonitoring);
+    DetailsFromTheScreen(Configuration const& configuration);
 
     struct CountOfPieces {
         unsigned int pieceCount;
@@ -47,7 +48,7 @@ private:
     void saveOrientation(BoardOrientation const orientation);
 
     Configuration const& m_configuration;
-    AlbaLocalScreenMonitoring const& m_screenMonitoring;
+    AlbaLocalScreenMonitoring m_screenMonitoring;
     BoardObserver m_boardObserver;
     BoardWithContext m_boardWithContext;
     PieceColor m_savedPlayerColor;

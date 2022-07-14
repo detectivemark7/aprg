@@ -11,7 +11,7 @@ namespace ChessPeek {
 
 class Configuration {
 public:
-    enum class Type { ChessDotComVersus, ChessDotComPuzzle, LichessVersus, LichessStream };
+    enum class Type { ChessDotComVersus, ChessDotComPuzzle, ChessDotComExplorer, LichessVersus, LichessStream };
 
     Configuration() = delete;
     Configuration(Type const type);
@@ -31,6 +31,7 @@ private:
     void initializeSpecificParameters();
     void initializeChessDotComVersus();
     void initializeChessDotComPuzzle();
+    void initializeChessDotComExplorer();
     void initializeLichessVersus();
     void initializeLichessStream();
 

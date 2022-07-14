@@ -28,11 +28,11 @@ void trackKeyPress() {
 
 ChessPeek::ChessPeek()
     : m_configuration(Configuration::Type::ChessDotComVersus),
-      m_screenMonitoring(),
       m_engineHandler(m_configuration.getChessEnginePath()),
       m_engineController(m_engineHandler, m_configuration.getUciOptionNamesAndValuePairs()),
-      m_detailsFromTheScreen(m_configuration, m_screenMonitoring),
+      m_detailsFromTheScreen(m_configuration),
       m_detailsOnTheEngine(),
+      m_book(),
       m_calculationDetails{},
       m_engineWasJustReset(true),
       m_hasPendingPrintAction(false) {
@@ -57,10 +57,7 @@ void ChessPeek::runOneIteration() {
     }
 }
 
-void ChessPeek::checkScreenAndSaveDetails() {
-    m_screenMonitoring.capturePixelsFromScreen();
-    m_detailsFromTheScreen.saveDetailsFromTheScreen();
-}
+void ChessPeek::checkScreenAndSaveDetails() { m_detailsFromTheScreen.saveDetailsFromTheScreen(); }
 
 void ChessPeek::startEngineAnalysisWithBoardFromScreen() {
     if (didPlayerChange()) {
@@ -90,6 +87,7 @@ void ChessPeek::initialize() {
     // m_engineHandler.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineHandler.log)");  // for debugging
     // m_engineController.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineController.log)");  // for debugging
 
+    m_book.loadDatabaseFrom(APRG_DIR R"(\Chess\ChessPeek\Database\ChessDotComBookDatabase.txt)");
     m_engineController.setAdditionalStepsInCalculationMonitoring(
         [&](EngineCalculationDetails const& engineCalculationDetails) {
             calculationMonitoringCallBackForEngine(engineCalculationDetails);
@@ -129,7 +127,7 @@ void ChessPeek::printCalculationDetails() {
     if (!currentlyPrinting) {
         m_hasPendingPrintAction = false;
         currentlyPrinting = true;
-        ResultPrinter(m_detailsOnTheEngine.getBoardWithContext(), m_calculationDetails).print();
+        ResultPrinter(m_calculationDetails, m_detailsOnTheEngine.getBoardWithContext(), m_book).print();
         currentlyPrinting = false;
     } else {
         m_hasPendingPrintAction = true;
