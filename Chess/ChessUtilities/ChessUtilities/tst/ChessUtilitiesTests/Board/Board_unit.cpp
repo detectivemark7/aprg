@@ -613,6 +613,19 @@ TEST(BoardTest, GetMoveUsingAlgebraicNotationWorksAndItsNotCapturingTheSameColor
     ASSERT_EQ(Move({0, 0}, {0, 0}), board.getMoveUsingAlgebraicNotation("Nf3", PieceColor::White));
 }
 
+TEST(BoardTest, GetMoveUsingAlgebraicNotationWorksAndItsWorkingWithCheck) {
+    // Source test values: https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#PGN
+    Board board(BoardOrientation::BlackUpWhiteDown);
+
+    ASSERT_EQ(Move({4, 6}, {4, 4}), board.getMoveUsingAlgebraicNotation("e4", PieceColor::White));
+    board.move({{4, 6}, {4, 4}});
+    ASSERT_EQ(Move({4, 1}, {4, 3}), board.getMoveUsingAlgebraicNotation("e5", PieceColor::Black));
+    board.move({{4, 1}, {4, 3}});
+    ASSERT_EQ(Move({5, 6}, {5, 4}), board.getMoveUsingAlgebraicNotation("f4", PieceColor::White));
+    board.move({{5, 6}, {5, 4}});
+    ASSERT_EQ(Move({3, 0}, {7, 4}), board.getMoveUsingAlgebraicNotation("Qh4+", PieceColor::Black));
+}
+
 TEST(BoardTest, GetPieceAtWorks) {
     Board boardWithBW(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWB(BoardOrientation::WhiteUpBlackDown);

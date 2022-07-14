@@ -690,9 +690,9 @@ Board::NotationDetailsOfMove Board::determineNotationDetailsOfMove(string const&
             case State::LastY: {
                 if (is1To8(c)) {
                     result.lastY = getYInCorrectOrientation(c - '1');
-                    it++;
+                    state = State::LastX;
                 }
-                state = State::LastX;
+                it++;
                 break;
             }
             case State::LastX: {
