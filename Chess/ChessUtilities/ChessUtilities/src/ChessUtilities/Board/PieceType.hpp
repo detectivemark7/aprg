@@ -1,7 +1,5 @@
 #pragma once
 
-#include <ostream>
-
 namespace alba {
 
 namespace chess {
@@ -15,8 +13,6 @@ enum class PieceType {
     Queen = 5,
     King = 6,
 };
-
-std::ostream& operator<<(std::ostream& out, PieceType const pieceType);
 
 }  // namespace chess
 

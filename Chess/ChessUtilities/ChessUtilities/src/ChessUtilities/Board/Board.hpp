@@ -2,26 +2,21 @@
 
 #include <ChessUtilities/Board/BoardTypes.hpp>
 #include <ChessUtilities/Board/Piece.hpp>
-#include <Common/Math/Matrix/AlbaMatrix.hpp>
 
+#include <array>
 #include <cstdint>
 #include <functional>
 #include <optional>
 
 namespace alba {
 
-namespace matrix {
-template <>
-bool isEqualForMathMatrixDataType(chess::Piece const& value1, chess::Piece const& value2);
-}
-
 namespace chess {
 
 struct Board {
 public:
-    using PieceValue = uint16_t;
-    using InitializerList = std::initializer_list<Piece>;
-    using PieceMatrix = matrix::AlbaMatrix<Piece>;
+    static constexpr int CHESS_SIDE_SIZE = 8;
+    static constexpr int MAX_NUMBER_OF_MOVES = std::numeric_limits<int>::max();
+    using PieceGrid = std::array<Piece, CHESS_SIDE_SIZE * CHESS_SIDE_SIZE>;
     using CoordinateCondition = std::function<bool(Coordinate const&)>;
 
     enum class CastleType { NotACastle, KingSideCastle, QueenSideCastle };
@@ -33,20 +28,18 @@ public:
 
     struct NotationDetailsOfMove {
         PieceType pieceType;
-        std::optional<CoordinateDataType> firstX, firstY, secondX, secondY;
+        std::optional<CoordinateDataType> firstX, firstY, lastX, lastY;
     };
-
-    static constexpr int MAX_NUMBER_OF_MOVES = std::numeric_limits<int>::max();
 
     Board();
     Board(BoardOrientation const& orientation);
-    Board(BoardOrientation const& orientation, InitializerList const& initializerList);
+    Board(BoardOrientation const& orientation, PieceGrid const& pieceGrid);
 
     bool operator==(Board const& other) const;
     bool operator!=(Board const& other) const;
 
     BoardOrientation getOrientation() const;
-    PieceMatrix const& getPieceMatrix() const;
+    PieceGrid const& getPieceGrid() const;
 
     Moves getMovesFromThis(Coordinate const& startpoint, int const maxSize = MAX_NUMBER_OF_MOVES) const;
     Moves getMovesToThis(
@@ -80,7 +73,7 @@ public:
     void move(Move const& move);
 
 private:
-    PieceMatrix::MatrixData getInitialValues(BoardOrientation const& inputType) const;
+    PieceGrid getInitialValues(BoardOrientation const& inputType) const;
 
     void retrieveMovesFromThis(Moves& result, Coordinate const& startpoint, int const maxSize) const;
     void retrievePawnMovesFromThis(Moves& result, Coordinate const& startpoint, int const maxSize) const;
@@ -99,15 +92,12 @@ private:
     void retrieveMovesFromThisByIncrementingDelta(
         Moves& result, Coordinate const& startpoint, Coordinate const& delta, int const maxSize) const;
 
-    Moves getPossibleMovesForNotation(
-        Coordinate const& endpoint, PieceColor const moveColor, PieceType const pieceType) const;
+    Moves getCandidatesMoves(Coordinate const& endpoint, PieceColor const moveColor, PieceType const pieceType) const;
     void retrieveMovesToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrieveAttacksToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrieveAttacksToThisWithNoKingMoves(
-        Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
-    void retrievePawnReverseMovesToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrievePawnReverseNonCapturesToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
@@ -148,10 +138,13 @@ private:
     CoordinateDataType getOneIncrement(CoordinateDataType const coordinateDataType) const;
     CastleType getCastleTypeUsingAlgebraicNotation(std::string const& text) const;
 
+    int getGridIndex(int const x, int const y) const;
     int getNumberOfWaysToBlockPath(
         Coordinate const& startpoint, Coordinate const& endpoint, PieceColor const blockingPieceColor,
         int const maxSize) const;
 
+    bool isPieceEmptyOrHasOpposingColors(Piece const& piece, PieceColor const color) const;
+    bool isPieceNonEmptyAndHasOpposingColors(Piece const& piece, PieceColor const color) const;
     bool isPossibleMoveBasedFromPieceType(Move const& move) const;
     bool isPossiblePawnMove(Move const& move) const;
     bool isPossibleKnightMove(Move const& move) const;
@@ -174,10 +167,10 @@ private:
     bool doesAllCellsInBetweenSatisfyTheCondition(
         Coordinate const& startpoint, Coordinate const& endpoint, CoordinateCondition const& condition) const;
 
-    void changePieceMatrixWithMove(Move const& move);
+    void changePieceGridWithMove(Move const& move);
 
     BoardOrientation m_orientation;
-    PieceMatrix m_pieceMatrix;
+    PieceGrid m_pieceGrid;
 };
 
 }  // namespace chess

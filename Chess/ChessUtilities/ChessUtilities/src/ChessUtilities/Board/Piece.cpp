@@ -1,5 +1,6 @@
 #include "Piece.hpp"
 
+#include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <Common/String/AlbaStringHelper.hpp>
 
 using namespace std;
@@ -30,46 +31,6 @@ uint8_t Piece::getValueFromColorAndType(PieceColor const color, PieceType const 
     return ((static_cast<uint8_t>(color) & 0B1) << 3) | (static_cast<uint8_t>(type) & 0B111);
 }
 
-char Piece::convertToCharacter(uint8_t const value) {
-    char result{};
-    PieceType pieceType(extractType(value));
-    switch (pieceType) {
-        case PieceType::Empty: {
-            result = ' ';
-            break;
-        }
-        case PieceType::Pawn: {
-            result = 'p';
-            break;
-        }
-        case PieceType::Knight: {
-            result = 'n';
-            break;
-        }
-        case PieceType::Bishop: {
-            result = 'b';
-            break;
-        }
-        case PieceType::Rook: {
-            result = 'r';
-            break;
-        }
-        case PieceType::Queen: {
-            result = 'q';
-            break;
-        }
-        case PieceType::King: {
-            result = 'k';
-            break;
-        }
-        default: {
-            break;
-        }
-    }
-    result = (PieceColor::White == extractColor(value)) ? toupper(result) : result;
-    return result;
-}
-
 Piece::Piece() : m_underlyingValue(0U) {}
 
 Piece::Piece(uint8_t const underlyingValue) : m_underlyingValue(underlyingValue) {}
@@ -92,11 +53,8 @@ PieceColorAndType Piece::getColorAndType() const { return extractColorAndType(m_
 
 uint8_t Piece::getUnderlyingValue() const { return m_underlyingValue; }
 
-char Piece::getCharacter() const { return convertToCharacter(m_underlyingValue); }
-
-ostream& operator<<(ostream& out, Piece const& piece) {
-    out << piece.getCharacter();
-    return out;
+char Piece::getFenCharacter() const {
+    return convertToFenCharacter(extractType(m_underlyingValue), extractColor(m_underlyingValue));
 }
 
 }  // namespace chess
