@@ -2,6 +2,7 @@
 
 #include <Common/Types/AlbaTypeHelper.hpp>
 
+#include <optional>
 #include <ostream>
 #include <string>
 #include <tuple>
@@ -15,6 +16,8 @@ void printParameter(std::ostream& outputStream, char const* const parameter);
 
 template <typename ParameterType>
 void printParameter(std::ostream& outputStream, ParameterType const& parameter);
+template <typename ParameterType>
+void printParameter(std::ostream& outputStream, std::optional<ParameterType> const& parameter);
 template <typename... UnderlyingTypes>
 void printParameter(std::ostream& outputStream, std::pair<UnderlyingTypes...> const& parameter);
 template <typename... UnderlyingTypes>
@@ -92,6 +95,15 @@ typename Adapter::container_type const& getUnderlyingContainerForPrinting(
 template <typename ParameterType>
 void printParameter(std::ostream& outputStream, ParameterType const& parameter) {
     outputStream << parameter;
+}
+
+template <typename ParameterType>
+void printParameter(std::ostream& outputStream, std::optional<ParameterType> const& parameter) {
+    if (parameter) {
+        outputStream << parameter.value();
+    } else {
+        outputStream << "empty";
+    }
 }
 
 template <typename... UnderlyingTypes>

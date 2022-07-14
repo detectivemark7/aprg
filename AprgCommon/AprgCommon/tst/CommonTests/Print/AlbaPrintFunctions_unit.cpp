@@ -4,6 +4,7 @@
 
 #include <deque>
 #include <forward_list>
+#include <optional>
 #include <queue>
 #include <sstream>
 #include <stack>
@@ -16,7 +17,7 @@ namespace alba {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithItemsThatCanPrint) {
     stringstream ssToVerify;
-    unsigned int integerToTest = 500U;
+    int integerToTest = 500;
 
     printParameterWithName(ssToVerify, "name", integerToTest);
 
@@ -25,7 +26,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithItemsThatCanPrint) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithPointer) {
     stringstream ssToVerify;
-    unsigned int integerToTest = 500U;
+    int integerToTest = 500;
 
     printParameterWithName(ssToVerify, "name", &integerToTest);
 
@@ -42,7 +43,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithCharacterLiteral) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUniquePointer) {
     stringstream ssToVerify;
-    unique_ptr<unsigned int> pointerToTest(make_unique<unsigned int>(500U));
+    unique_ptr<int> pointerToTest(make_unique<int>(500));
 
     printParameterWithName(ssToVerify, "name", pointerToTest);
 
@@ -51,7 +52,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUniquePointer) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithSharedPointer) {
     stringstream ssToVerify;
-    shared_ptr<unsigned int> pointerToTest(make_shared<unsigned int>(500U));
+    shared_ptr<int> pointerToTest(make_shared<int>(500));
 
     printParameterWithName(ssToVerify, "name", pointerToTest);
 
@@ -60,17 +61,29 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithSharedPointer) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithWeakPointer) {
     stringstream ssToVerify;
-    shared_ptr<unsigned int> sharedPointer(make_shared<unsigned int>(500U));
-    weak_ptr<unsigned int> pointerToTest(sharedPointer);
+    shared_ptr<int> sharedPointer(make_shared<int>(500));
+    weak_ptr<int> pointerToTest(sharedPointer);
 
     printParameterWithName(ssToVerify, "name", pointerToTest);
 
     EXPECT_EQ("name has use count: [1]", ssToVerify.str());
 }
 
+TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithOptional) {
+    stringstream ssToVerify;
+    optional<int> emptyOptional;
+    optional<int> nonEmptyOptional(300);
+
+    printParameterWithName(ssToVerify, "name1", emptyOptional);
+    ssToVerify << ", ";
+    printParameterWithName(ssToVerify, "name2", nonEmptyOptional);
+
+    EXPECT_EQ("name1 : [empty], name2 : [300]", ssToVerify.str());
+}
+
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithPair) {
     stringstream ssToVerify;
-    pair<unsigned int, char> pairToTest{300, 'A'};
+    pair<int, char> pairToTest{300, 'A'};
 
     printParameterWithName(ssToVerify, "name", pairToTest);
 
@@ -79,7 +92,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithPair) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithTuple) {
     stringstream ssToVerify;
-    tuple<unsigned int, string, char> pairToTest{300, "hello", 'A'};
+    tuple<int, string, char> pairToTest{300, "hello", 'A'};
 
     printParameterWithName(ssToVerify, "name", pairToTest);
 
@@ -88,7 +101,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithTuple) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithArray) {
     stringstream ssToVerify;
-    array<unsigned int, 5> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    array<int, 5> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -97,7 +110,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithArray) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithVector) {
     stringstream ssToVerify;
-    vector<unsigned int> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    vector<int> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -106,7 +119,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithVector) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithDeque) {
     stringstream ssToVerify;
-    deque<unsigned int> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    deque<int> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -115,7 +128,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithDeque) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithSet) {
     stringstream ssToVerify;
-    set<unsigned int> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    set<int> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -124,7 +137,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithSet) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithMap) {
     stringstream ssToVerify;
-    map<unsigned int, char> vectorToTest{{500U, 'A'}, {501U, 'B'}, {502U, 'C'}, {503U, 'D'}, {504U, 'E'}};
+    map<int, char> vectorToTest{{500, 'A'}, {501, 'B'}, {502, 'C'}, {503, 'D'}, {504, 'E'}};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -133,7 +146,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithMap) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUnorderedSet) {
     stringstream ssToVerify;
-    unordered_set<unsigned int> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    unordered_set<int> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -142,7 +155,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUnorderedSet) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUnorderedMap) {
     stringstream ssToVerify;
-    unordered_map<unsigned int, char> vectorToTest{{500U, 'A'}, {501U, 'B'}, {502U, 'C'}, {503U, 'D'}, {504U, 'E'}};
+    unordered_map<int, char> vectorToTest{{500, 'A'}, {501, 'B'}, {502, 'C'}, {503, 'D'}, {504, 'E'}};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 
@@ -151,7 +164,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithUnorderedMap) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithStack) {
     stringstream ssToVerify;
-    stack<unsigned int> adapter({1U, 2U, 3U});
+    stack<int> adapter({1, 2, 3});
 
     printParameterWithName(ssToVerify, "name", adapter);
 
@@ -160,7 +173,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithStack) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithQueue) {
     stringstream ssToVerify;
-    queue<unsigned int> adapter({1U, 2U, 3U});
+    queue<int> adapter({1, 2, 3});
 
     printParameterWithName(ssToVerify, "name", adapter);
 
@@ -169,7 +182,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithQueue) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithPriorityQueue) {
     stringstream ssToVerify;
-    priority_queue<unsigned int> adapter;
+    priority_queue<int> adapter;
     adapter.push(1U);
     adapter.push(2U);
     adapter.push(3U);
@@ -181,7 +194,7 @@ TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithPriorityQueue) {
 
 TEST(AlbaPrintFunctionsTest, PrintParameterWithNameWorksWithForwardList) {
     stringstream ssToVerify;
-    forward_list<unsigned int> vectorToTest{500U, 501U, 502U, 503U, 504U};
+    forward_list<int> vectorToTest{500, 501, 502, 503, 504};
 
     printParameterWithName(ssToVerify, "name", vectorToTest);
 

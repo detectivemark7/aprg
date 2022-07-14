@@ -46,6 +46,23 @@ void AlbaFileReader::saveDataToMemoryBuffer(AlbaMemoryBuffer& buffer, size_t num
     m_stream.read(writer, static_cast<streamsize>(numberOfBytesToRead));
 }
 
+void AlbaFileReader::skipLine() {
+    if (!m_stream.eof()) {
+        m_stream.clear();
+        m_stream.getline(getCharacterBufferPointer(), static_cast<streamsize>(m_characterBuffer.size()));
+    }
+}
+
+string AlbaFileReader::getLine() {
+    string result;
+    if (!m_stream.eof()) {
+        m_stream.clear();
+        m_stream.getline(getCharacterBufferPointer(), static_cast<streamsize>(m_characterBuffer.size()));
+        result = string(getCharacterBufferPointer());
+    }
+    return result;
+}
+
 string AlbaFileReader::getLineAndIgnoreWhiteSpaces() {
     string result;
     while (!m_stream.eof()) {
@@ -56,16 +73,6 @@ string AlbaFileReader::getLineAndIgnoreWhiteSpaces() {
         if (!result.empty()) {
             break;
         }
-    }
-    return result;
-}
-
-string AlbaFileReader::getLine() {
-    string result;
-    if (!m_stream.eof()) {
-        m_stream.clear();
-        m_stream.getline(getCharacterBufferPointer(), static_cast<streamsize>(m_characterBuffer.size()));
-        result = string(getCharacterBufferPointer());
     }
     return result;
 }
