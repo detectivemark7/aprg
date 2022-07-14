@@ -13,16 +13,18 @@ using namespace std;
 
 namespace alba {
 
-bool AlbaWindowsUserAutomation::isLetterPressed(char const letter) const {
+bool AlbaWindowsUserAutomation::isKeyPressed(int const key) const {
     // https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-getasynckeystate
     // If the function succeeds, the return value specifies whether the key was pressed since the last call to
     // GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is
     // down. If the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState.
     // However, you should not rely on this last behavior; for more information, see the Remarks.
 
-    USHORT status = GetAsyncKeyState(::toupper(letter));
+    USHORT status = GetAsyncKeyState(key);
     return (status & 0x8000) >> 15 == 1;  // || (status & 1) == 1;
 }
+
+bool AlbaWindowsUserAutomation::isLetterPressed(char const letter) const { return isKeyPressed(::toupper(letter)); }
 
 MousePosition AlbaWindowsUserAutomation::getMousePosition() const {
     MousePosition position;
@@ -42,6 +44,20 @@ void AlbaWindowsUserAutomation::setMousePosition(MousePosition const& position) 
         input.mi.dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE;
         input.mi.dx = (long)ratioInX;
         input.mi.dy = (long)ratioInY;
+    });
+}
+
+void AlbaWindowsUserAutomation::pressLeftButtonOnMouse() const {
+    doOperation([](INPUT& input) {
+        input.type = INPUT_MOUSE;
+        input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+    });
+}
+
+void AlbaWindowsUserAutomation::releaseLeftButtonOnMouse() const {
+    doOperation([](INPUT& input) {
+        input.type = INPUT_MOUSE;
+        input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
     });
 }
 
@@ -86,9 +102,18 @@ void AlbaWindowsUserAutomation::doDoubleLeftClickAt(MousePosition const& positio
     doDoubleLeftClick();
 }
 
-void AlbaWindowsUserAutomation::doRightClickAt(MousePosition const& position) const {
-    setMousePosition(position);
-    doRightClick();
+void AlbaWindowsUserAutomation::pressRightButtonOnMouse() const {
+    doOperation([](INPUT& input) {
+        input.type = INPUT_MOUSE;
+        input.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
+    });
+}
+
+void AlbaWindowsUserAutomation::releaseRightButtonOnMouse() const {
+    doOperation([](INPUT& input) {
+        input.type = INPUT_MOUSE;
+        input.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
+    });
 }
 
 void AlbaWindowsUserAutomation::doRightClick() const {
@@ -102,7 +127,12 @@ void AlbaWindowsUserAutomation::doRightClick() const {
     });
 }
 
-void AlbaWindowsUserAutomation::pressDownKey(unsigned int const key) const {
+void AlbaWindowsUserAutomation::doRightClickAt(MousePosition const& position) const {
+    setMousePosition(position);
+    doRightClick();
+}
+
+void AlbaWindowsUserAutomation::pressKey(unsigned int const key) const {
     doOperation([&](INPUT& input) {
         input.type = INPUT_KEYBOARD;
         input.ki.wScan = 0;
@@ -113,7 +143,7 @@ void AlbaWindowsUserAutomation::pressDownKey(unsigned int const key) const {
     });
 }
 
-void AlbaWindowsUserAutomation::pressUpKey(unsigned int const key) const {
+void AlbaWindowsUserAutomation::releaseKey(unsigned int const key) const {
     doOperation([&](INPUT& input) {
         input.type = INPUT_KEYBOARD;
         input.ki.wScan = 0;
@@ -169,11 +199,11 @@ void AlbaWindowsUserAutomation::typeString(string const& stringToType) const {
 }
 
 void AlbaWindowsUserAutomation::typeControlAndLetterSimultaneously(unsigned int const letter) const {
-    pressDownKey(VK_CONTROL);
-    pressDownKey(letter);
+    pressKey(VK_CONTROL);
+    pressKey(letter);
     sleepWithRealisticDelay();
-    pressUpKey(letter);
-    pressUpKey(VK_CONTROL);
+    releaseKey(letter);
+    releaseKey(VK_CONTROL);
 }
 
 string AlbaWindowsUserAutomation::getClassNameOfForegroundWindow() const {
