@@ -78,7 +78,7 @@ int getValueOfPieceType(PieceType const pieceType) {
     return result;
 }
 
-std::string getEnumString(PieceColor const pieceColor) {
+string getEnumString(PieceColor const pieceColor) {
     switch (pieceColor) {
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColor::Unknown, "Unknown")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColor::White, "White")
@@ -88,7 +88,7 @@ std::string getEnumString(PieceColor const pieceColor) {
     }
 }
 
-std::string getEnumString(PieceType const pieceType) {
+string getEnumString(PieceType const pieceType) {
     switch (pieceType) {
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceType::Empty, "Empty")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceType::Pawn, "Pawn")
@@ -101,7 +101,8 @@ std::string getEnumString(PieceType const pieceType) {
             return "default";
     }
 }
-std::string getEnumString(PieceColorAndType const pieceColorAndType) {
+
+string getEnumString(PieceColorAndType const pieceColorAndType) {
     switch (pieceColorAndType) {
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColorAndType::Empty, "Empty")
         ALBA_MACROS_CASE_ENUM_SHORT_STRING(PieceColorAndType::WhitePawn, "WhitePawn")
