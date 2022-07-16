@@ -9,8 +9,10 @@
 using namespace std;
 
 namespace {
+static atomic_bool currentlyCopying = false;
+static atomic_bool currentlyPrinting = false;
 bool shouldStillRun = true;  // USE ESCAPE KEY TO CLEANLY SHUTDOWN
-}
+}  // namespace
 
 namespace alba {
 
@@ -27,7 +29,7 @@ void trackKeyPress() {
 }
 
 ChessPeek::ChessPeek()
-    : m_configuration(Configuration::Type::ChessDotComVersus),
+    : m_configuration(Configuration::Type::LichessVersus),
       m_engineHandler(m_configuration.getChessEnginePath()),
       m_engineController(m_engineHandler, m_configuration.getUciOptionNamesAndValuePairs()),
       m_detailsFromTheScreen(m_configuration),
@@ -96,12 +98,19 @@ void ChessPeek::initialize() {
 }
 
 void ChessPeek::saveCalculationDetails(EngineCalculationDetails const& engineCalculationDetails) {
-    m_calculationDetails.depthInPlies = engineCalculationDetails.depthInPlies;
-    if (!engineCalculationDetails.variations.empty()) {
-        m_calculationDetails.variations = engineCalculationDetails.variations;
-    }
-    if (!engineCalculationDetails.bestMove.empty()) {
-        m_calculationDetails.bestMove = engineCalculationDetails.bestMove;
+    if (!currentlyCopying) {
+        currentlyCopying = true;
+        m_calculationDetails.depthInPlies = engineCalculationDetails.depthInPlies;
+        if (!engineCalculationDetails.variations.empty()) {
+            m_calculationDetails.variations = engineCalculationDetails.variations;
+        }
+        if (!engineCalculationDetails.bestMove.empty()) {
+            m_calculationDetails.bestMove = engineCalculationDetails.bestMove;
+        }
+        if (!currentlyPrinting) {
+            m_printCalculationDetails = m_calculationDetails;
+        }
+        currentlyCopying = false;
     }
 }
 
@@ -123,11 +132,10 @@ void ChessPeek::printCalculationDetailsIfPending() {
 }
 
 void ChessPeek::printCalculationDetails() {
-    static std::atomic_bool currentlyPrinting = false;
-    if (!currentlyPrinting) {
+    if (!currentlyPrinting && !currentlyCopying) {
         m_hasPendingPrintAction = false;
         currentlyPrinting = true;
-        ResultPrinter(m_calculationDetails, m_detailsOnTheEngine.getBoardWithContext(), m_book).print();
+        ResultPrinter(m_printCalculationDetails, m_detailsOnTheEngine.getBoardWithContext(), m_book).print();
         currentlyPrinting = false;
     } else {
         m_hasPendingPrintAction = true;

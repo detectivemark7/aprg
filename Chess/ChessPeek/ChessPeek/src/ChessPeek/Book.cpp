@@ -34,10 +34,7 @@ void Book::saveDatabaseTo(std::string const& path) const {
         outStream << pairValue.second.nextMoves.size() << "\n";
         for (auto const& moveDetails : pairValue.second.nextMoves) {
             outStream << moveDetails.move << "\n";
-            outStream << moveDetails.numberOfGames << "\n";
-            outStream << moveDetails.whiteWinPercentage << "\n";
-            outStream << moveDetails.drawPercentage << "\n";
-            outStream << moveDetails.blackWinPercentage << "\n";
+            outStream << moveDetails.winPercentage << "\n";
         }
     }
 }
@@ -74,10 +71,7 @@ void Book::loadDatabaseFrom(std::string const& path) {
         for (int i = 0; i < moveSize; i++) {
             MoveDetail moveDetail;
             moveDetail.move = fileReader.getLineAndIgnoreWhiteSpaces();
-            inStream >> moveDetail.numberOfGames;
-            inStream >> moveDetail.whiteWinPercentage;
-            inStream >> moveDetail.drawPercentage;
-            inStream >> moveDetail.blackWinPercentage;
+            inStream >> moveDetail.winPercentage;
             lineDetail.nextMoves.emplace_back(moveDetail);
         }
         if (!boardValue.isZero()) {

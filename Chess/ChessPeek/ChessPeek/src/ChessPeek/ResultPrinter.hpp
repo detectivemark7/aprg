@@ -94,9 +94,6 @@ private:
     std::optional<char> getFirstCharOfCell(bool const isCertainPreMove, bool isPossiblePreMove) const;
     unsigned int getNumberOfColumnsOfGrid(unsigned int const numberOfBoards) const;
 
-    void saveNameOfLine(std::string const& nameOfLine);
-
-    static std::string s_nameOfLine;
     CalculationDetails const& m_calculationDetails;
     BoardWithContext const& m_engineBoardWithContext;
     Book const& m_book;

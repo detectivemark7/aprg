@@ -18,6 +18,15 @@ constexpr unsigned int MAX_NUMBER_OF_MOVES_IN_GRID = 5U;
 constexpr unsigned int NEXT_OFFSET_OF_GRID = 9U;
 constexpr unsigned int DESIRED_HEADER_LENGTH = 31;
 constexpr char SEPARATOR[] = "     ";
+
+static string s_nameOfLine;
+
+void saveNameOfLine(string const& nameOfLine) {
+    if (!nameOfLine.empty()) {
+        s_nameOfLine = nameOfLine;
+    }
+}
+
 }  // namespace
 
 namespace alba {
@@ -25,8 +34,6 @@ namespace alba {
 namespace chess {
 
 namespace ChessPeek {
-
-string ResultPrinter::s_nameOfLine;
 
 ResultPrinter::ResultPrinter(
     CalculationDetails const& calculationDetails, BoardWithContext const& engineBoard, Book const& book)
@@ -77,6 +84,7 @@ void ResultPrinter::includeBookMoves(BookMoves& bookMoves) const {
     auto lineDetailOptional = m_book.getLine(m_engineBoardWithContext.getBoard());
     if (lineDetailOptional && lineDetailOptional.value().colorToMove == m_engineBoardWithContext.getPlayerColor()) {
         Book::LineDetail const& lineDetail(lineDetailOptional.value());
+        saveNameOfLine(lineDetail.nameOfLine);
         Board const& engineBoard(m_engineBoardWithContext.getBoard());
         for (Book::MoveDetail const& bookMoveDetail : lineDetail.nextMoves) {
             Move move(engineBoard.getMoveUsingAlgebraicNotation(
@@ -91,11 +99,7 @@ void ResultPrinter::includeBookMoves(BookMoves& bookMoves) const {
 
 ResultPrinter::BookMove ResultPrinter::createBookMove(
     Move const& move, Book::LineDetail const& lineDetail, Book::MoveDetail const& bookMoveDetail) const {
-    PieceColor playerColor = m_engineBoardWithContext.getPlayerColor();
-    int winningPercentage = PieceColor::White == playerColor   ? bookMoveDetail.whiteWinPercentage
-                            : PieceColor::Black == playerColor ? bookMoveDetail.blackWinPercentage
-                                                               : 0;
-    return BookMove{move, getNameOfBookMove(move, lineDetail), winningPercentage};
+    return BookMove{move, getNameOfBookMove(move, lineDetail), bookMoveDetail.winPercentage};
 }
 
 string ResultPrinter::getNameOfBookMove(Move const& move, Book::LineDetail const& lineDetail) const {
@@ -418,7 +422,7 @@ void ResultPrinter::setMoveOnGrid(
 string ResultPrinter::getDisplayableString(NextMove const& nextMove, int const desiredLength) const {
     stringstream ss;
     if (nextMove.mateValue == 0) {
-        // ss << hex << uppercase << nextMove.humanScore << dec; // for debugging
+        // ss << hex << uppercase << nextMove.humanScore << dec;  // for debugging
         ss << static_cast<double>(nextMove.engineScore) / 100;
     } else {
         ss << "Mate: " << nextMove.mateValue;
@@ -471,12 +475,6 @@ optional<char> ResultPrinter::getFirstCharOfCell(bool const isSurePreMove, bool 
 
 unsigned int ResultPrinter::getNumberOfColumnsOfGrid(unsigned int const numberOfBoards) const {
     return numberOfBoards == 0 ? 0U : numberOfBoards * 8U + numberOfBoards - 1;
-}
-
-void ResultPrinter::saveNameOfLine(string const& nameOfLine) {
-    if (!nameOfLine.empty()) {
-        s_nameOfLine = nameOfLine;
-    }
 }
 
 }  // namespace ChessPeek

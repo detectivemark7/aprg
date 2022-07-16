@@ -16,8 +16,12 @@ public:
         int mate;
     };
 
-    static constexpr int SCORE_LEVEL_DISTANCE = 90;  // reached 2200
-    // static constexpr int SCORE_LEVEL_DISTANCE = 190; // one pawn blunders keep happening
+    // static constexpr int SCORE_LEVEL_DISTANCE = 90;   // reached 2300
+    static constexpr int SCORE_LEVEL_DISTANCE_WHEN_WINNING = 90;
+    static constexpr int SCORE_LEVEL_DISTANCE_WHEN_SLIGHTLY_BETTER = 190;
+    static constexpr int SCORE_LEVEL_DISTANCE_WHEN_EQUAL = 290;
+    static constexpr int SCORE_LEVEL_DISTANCE_WHEN_SLIGHTLY_WORSE = 140;
+    static constexpr int SCORE_LEVEL_DISTANCE_WHEN_LOSING = 40;
 
     HumanScoreGenerator(BoardWithContext const& boardWithContext, int const bestScore, int const worstScore);
 
@@ -25,13 +29,16 @@ public:
 
 private:
     uint32_t getScoreLevelPart(MoveDetail const& moveDetail) const;
+    uint32_t getHangingPieceValuePart(Move const& move) const;
     uint32_t getMoveTypePart(Move const& move) const;
     uint32_t getDistanceToKingPart(Move const& move) const;
     uint32_t getPiecePart(Move const& move) const;
     uint32_t getHumanScoreOfPiece(PieceType const pieceType) const;
 
-    bool isSameValueExchange(Piece const pieceAtStart, Piece const pieceAtEnd, Move const& move) const;
-    bool isExchangeSacrifice(Piece const pieceAtStart, Piece const pieceAtEnd, Move const& move) const;
+    int getScoreLevelDistance() const;
+
+    bool isACaptureMove(Piece const pieceAtStart, Piece const pieceAtEnd) const;
+    bool isSameValueExchange(Piece const pieceAtStart, Piece const pieceAtEnd) const;
     bool isDevelopingMove(Piece const pieceAtStart, Move const& move) const;
     bool isCheck(Piece const pieceAtEnd) const;
 

@@ -52,12 +52,13 @@ TEST(DatabaseForBooksTest, DISABLED_SavingChessDotComDatabaseWorks) {
                 getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "NumberOfGames: [", "]"));
             int whiteWinPercentage = convertStringToNumber<int>(
                 getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "WhiteWinPercentage: [", "]"));
-            int drawPercentage = convertStringToNumber<int>(
-                getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "DrawPercentage: [", "]"));
+            fileReader.skipLine();  // DrawPercentage;
             int blackWinPercentage = convertStringToNumber<int>(
                 getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "BlackWinPercentage: [", "]"));
-            Book::MoveDetail moveDetail{
-                nextMove, numberOfGames, whiteWinPercentage, drawPercentage, blackWinPercentage};
+            int winPercentageForColor = (PieceColor::White == playerColor)   ? whiteWinPercentage
+                                        : (PieceColor::Black == playerColor) ? blackWinPercentage
+                                                                             : 0;
+            Book::MoveDetail moveDetail{nextMove, winPercentageForColor};
             if (nextMove.empty()) {
                 cout << "The numberOfNextMoves is in correct on site details. Please check." << endl;
                 cout << "line: " << line << endl;
@@ -68,12 +69,14 @@ TEST(DatabaseForBooksTest, DISABLED_SavingChessDotComDatabaseWorks) {
             totalNumberOfGames += numberOfGames;
         }
         lineDetail.totalNumberOfGames = totalNumberOfGames;
-        if (!nameOfLine.empty() && numberOfNextMoves != 0 && numberOfNextMoves > MIN_NUMBER_OF_GAMES) {
+        if (!nameOfLine.empty() && numberOfNextMoves != 0 && totalNumberOfGames > MIN_NUMBER_OF_GAMES) {
             book.addLine(board, lineDetail);
         }
     }
 
-    ASSERT_EQ(1704U, book.getSize());  // update this before writing to database
+    // NOTE: Adjust MIN_NUMBER_OF_GAMES to keep the book size (under 10000 maybe?)
+    // Also, the LoadingDatabaseWorks tests below needs to be under 100 ms.
+    ASSERT_EQ(2046U, book.getSize());  // update this before writing to database
     book.saveDatabaseTo(chessDotComBookDatabase.getFullPath());
 }
 

@@ -34,7 +34,7 @@ void trackKeyPressForDownloadMovesFromChessDotCom() {
     AlbaLocalUserAutomation userAutomation;
     while (shouldStillRun) {
         shouldStillRun = !userAutomation.isKeyPressed(VK_NUMLOCK);
-        Sleep(100);
+        userAutomation.sleep(100);
     }
 }
 
@@ -104,7 +104,7 @@ void gotoWebPage(string const& url) {
     userAutomation.sleepWithRealisticDelay();
 
     userAutomation.typeKey(VK_RETURN);
-    userAutomation.sleep(1000);
+    userAutomation.sleep(500);
 }
 
 bool performMovesAndReturnIfValid(strings const& line) {
@@ -131,11 +131,11 @@ bool performMovesAndReturnIfValid(strings const& line) {
 
             userAutomation.setMousePosition(MousePosition(startX, startY));
             userAutomation.pressLeftButtonOnMouse();
-            userAutomation.sleep(500);
+            userAutomation.sleep(200);
             userAutomation.setMousePosition(MousePosition(endX, endY));
-            userAutomation.sleep(500);
+            userAutomation.sleep(200);
             userAutomation.releaseLeftButtonOnMouse();
-            userAutomation.sleep(1000);
+            userAutomation.sleep(600);
 
             updatedBoard.move(move);
             currentColor = getOppositeColor(currentColor);
@@ -187,7 +187,7 @@ void saveWebPage(string const& htmlFile) {
     userAutomation.sleepWithRealisticDelay();
 
     userAutomation.setStringToClipboard(htmlFile);
-    userAutomation.sleep(1000);
+    userAutomation.sleep(500);
 
     userAutomation.pressKey(VK_CONTROL);
     userAutomation.pressKey('V');
@@ -214,7 +214,7 @@ void saveWebPageUntilItsDeleted(string const& htmlFile) {
         saveWebPage(htmlFile);
         clickWindow();
         typeEnter();
-        Sleep(1000);
+        Sleep(500);
         htmlFileHandler.reInput();
         if (!htmlFileHandler.isFoundInLocalSystem()) {
             cout << "File still doesnt exist. Saving web page again. File: [" << htmlFile << "]" << endl;
@@ -465,7 +465,7 @@ void doAllPagesRecursively(Paths const& paths) {
     trackKeyPressForDownloadMovesFromChessDotComThread.join();
 }
 
-TEST(DownloadMovesFromChessDotComTest, DISABLED_DoAllPagesRecursivelyWorks) {
+TEST(DownloadMovesFromChessDotComTest, DoAllPagesRecursivelyWorks) {
     // To reinitialize:
     // ChessDotComMoves should be deleted or empty
     // ChessDotComLines should be deleted or empty

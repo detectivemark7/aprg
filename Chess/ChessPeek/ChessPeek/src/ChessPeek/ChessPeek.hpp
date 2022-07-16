@@ -50,6 +50,7 @@ private:
     DetailsOnTheEngine m_detailsOnTheEngine;
     Book m_book;
     CalculationDetails m_calculationDetails;
+    CalculationDetails m_printCalculationDetails;
     bool m_engineWasJustReset;
     bool m_hasPendingPrintAction;
 };

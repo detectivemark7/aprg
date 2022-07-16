@@ -17,10 +17,7 @@ class Book {
 public:
     struct MoveDetail {
         std::string move;
-        int numberOfGames;
-        int whiteWinPercentage;
-        int drawPercentage;
-        int blackWinPercentage;
+        int winPercentage;
     };
 
     using MoveDetails = std::vector<MoveDetail>;
