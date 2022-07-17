@@ -1,4 +1,5 @@
 #include <ChessPeek/Book.hpp>
+#include <ChessPeek/DatabaseDefinitions.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
 #include <ChessUtilities/Board/StreamOperators.hpp>
 #include <Common/File/AlbaFileReader.hpp>
@@ -16,9 +17,6 @@ namespace chess {
 
 namespace ChessPeek {
 
-#define CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE R"(\Chess\ChessPeek\Database\ChessDotComBookDatabase.txt)"
-#define CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE R"(\Chess\ChessPeek\Database\ChessDotComDataFromSite.txt)"
-
 TEST(DatabaseForBooksTest, DISABLED_SavingChessDotComDatabaseWorks) {
     constexpr int MIN_NUMBER_OF_GAMES = 0;  // put a restriction if the database gets too large
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
@@ -33,6 +31,7 @@ TEST(DatabaseForBooksTest, DISABLED_SavingChessDotComDatabaseWorks) {
         splitToStrings<SplitStringType::WithoutDelimeters>(initialMoveStrings, line, ",");
         string nameOfLine =
             getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "NameOfLine: [", "]");
+        transformReplaceStringIfFound(nameOfLine, "é", "e");  // for Reti
         int numberOfNextMoves = convertStringToNumber<int>(
             getStringInBetweenTwoStrings(fileReader.getLineAndIgnoreWhiteSpaces(), "NumberOfNextMoves: [", "]"));
 
@@ -76,14 +75,14 @@ TEST(DatabaseForBooksTest, DISABLED_SavingChessDotComDatabaseWorks) {
 
     // NOTE: Adjust MIN_NUMBER_OF_GAMES to keep the book size (under 10000 maybe?)
     // Also, the LoadingDatabaseWorks tests below needs to be under 100 ms.
-    ASSERT_EQ(2046U, book.getSize());  // update this before writing to database
+    ASSERT_EQ(3716U, book.getSize());  // update this before writing to database
     book.saveDatabaseTo(chessDotComBookDatabase.getFullPath());
 }
 
 TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithStartingPosition) {
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
-    AlbaLocalPathHandler chessDotComDataFromSite(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE);
     Book book;
+    book.loadDatabaseFrom(chessDotComBookDatabase.getFullPath());
     Board boardWithBUWD(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWUBD(BoardOrientation::WhiteUpBlackDown);
 
@@ -106,7 +105,6 @@ TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithStartingPosition) {
 
 TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithE4) {
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
-    AlbaLocalPathHandler chessDotComDataFromSite(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE);
     Book book;
     Board boardWithBUWD(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWUBD(BoardOrientation::WhiteUpBlackDown);
@@ -132,7 +130,6 @@ TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithE4) {
 
 TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithD4) {
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
-    AlbaLocalPathHandler chessDotComDataFromSite(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE);
     Book book;
     Board boardWithBUWD(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWUBD(BoardOrientation::WhiteUpBlackDown);
@@ -158,7 +155,6 @@ TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithD4) {
 
 TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithC4) {
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
-    AlbaLocalPathHandler chessDotComDataFromSite(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE);
     Book book;
     Board boardWithBUWD(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWUBD(BoardOrientation::WhiteUpBlackDown);
@@ -184,7 +180,6 @@ TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithC4) {
 
 TEST(DatabaseForBooksTest, LoadingDatabaseWorksWithSicilianDefense) {
     AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
-    AlbaLocalPathHandler chessDotComDataFromSite(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_DATA_FROM_SITE);
     Book book;
     Board boardWithBUWD(BoardOrientation::BlackUpWhiteDown);
     Board boardWithWUBD(BoardOrientation::WhiteUpBlackDown);

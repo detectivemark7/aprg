@@ -1,5 +1,6 @@
 #include "ChessPeek.hpp"
 
+#include <ChessPeek/DatabaseDefinitions.hpp>
 #include <ChessPeek/ResultPrinter.hpp>
 #include <UserAutomation/AlbaLocalUserAutomation.hpp>
 
@@ -9,9 +10,11 @@
 using namespace std;
 
 namespace {
+
 static atomic_bool currentlyCopying = false;
 static atomic_bool currentlyPrinting = false;
 bool shouldStillRun = true;  // USE ESCAPE KEY TO CLEANLY SHUTDOWN
+
 }  // namespace
 
 namespace alba {
@@ -29,7 +32,7 @@ void trackKeyPress() {
 }
 
 ChessPeek::ChessPeek()
-    : m_configuration(Configuration::Type::LichessVersus),
+    : m_configuration(Configuration::Type::ChessDotComVersus),
       m_engineHandler(m_configuration.getChessEnginePath()),
       m_engineController(m_engineHandler, m_configuration.getUciOptionNamesAndValuePairs()),
       m_detailsFromTheScreen(m_configuration),
@@ -89,7 +92,7 @@ void ChessPeek::initialize() {
     // m_engineHandler.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineHandler.log)");  // for debugging
     // m_engineController.setLogFile(APRG_DIR R"(\Chess\ChessPeek\Files\EngineController.log)");  // for debugging
 
-    m_book.loadDatabaseFrom(APRG_DIR R"(\Chess\ChessPeek\Database\ChessDotComBookDatabase.txt)");
+    m_book.loadDatabaseFrom(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
     m_engineController.setAdditionalStepsInCalculationMonitoring(
         [&](EngineCalculationDetails const& engineCalculationDetails) {
             calculationMonitoringCallBackForEngine(engineCalculationDetails);
