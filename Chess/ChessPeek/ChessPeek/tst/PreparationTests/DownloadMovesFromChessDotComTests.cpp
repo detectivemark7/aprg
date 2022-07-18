@@ -1,3 +1,5 @@
+#include <ChessPeek/Book.hpp>
+#include <ChessPeek/DatabaseDefinitions.hpp>
 #include <ChessPeek/DetailsFromTheScreen.hpp>
 #include <ChessUtilities/Board/Board.hpp>
 #include <ChessUtilities/Board/BoardUtilities.hpp>
@@ -345,7 +347,7 @@ bool readHtmlFileIfValid(WebPageInfo& pageInfo, string const& htmlFile) {
     return result;
 }
 
-void savePageInfoToDataFile(strings const& currentLine, WebPageInfo const& pageInfo, string const& dataFile) {
+void savePageInfoToDataFile(strings const& currentLine, string const& dataFile, WebPageInfo const& pageInfo) {
     ofstream outStream(dataFile, ofstream::app);
     outStream << "Line: [";
     for (string const& move : currentLine) {
@@ -399,18 +401,66 @@ strings getLineOfMoves(string const& lineFile, int const lineNumber) {
     return result;
 }
 
-void saveNewLinesOfMoves(strings const& currentLine, WebPageInfo const& pageInfo, string const& lineFile) {
+void saveLine(ofstream& outStream, strings const& line) {
+    ostream_iterator<string> outputIterator(outStream, ",");
+    copy(line.cbegin(), line.cend(), outputIterator);
+    outStream << "\n";
+}
+
+void saveNewLinesInPageInfoToLineFile(strings const& currentLine, string const& lineFile, WebPageInfo const& pageInfo) {
     ofstream outStream(lineFile, ofstream::app);
-    strings lineOfMoves(currentLine);
+    strings newLine(currentLine);
     for (MoveInfo const& moveInfo : pageInfo.moveInfos) {
-        lineOfMoves.emplace_back(moveInfo.nextMove);
+        newLine.emplace_back(moveInfo.nextMove);
 
-        ostream_iterator<string> outputIterator(outStream, ",");
-        copy(lineOfMoves.cbegin(), lineOfMoves.cend(), outputIterator);
-        outStream << "\n";
+        saveLine(outStream, newLine);
 
-        lineOfMoves.pop_back();
+        newLine.pop_back();
     }
+}
+
+void saveSkippedLineAtTheEndOfLineFile(strings const& skippedLine, string const& lineFile) {
+    ofstream outStream(lineFile, ofstream::app);
+    saveLine(outStream, skippedLine);
+}
+
+bool shouldIncludeLine(strings const& currentLine, Book const& book) {
+    // uncomment this once 4 moves are done
+    /*bool result(false);
+    constexpr int MIN_NUMBER_OF_GAMES = 10000;
+
+    Board updatedBoard(BoardOrientation::BlackUpWhiteDown);
+    PieceColor currentColor = PieceColor::White;
+    int size = currentLine.size();
+    int index{};
+    for (string const& moveString : currentLine) {
+        if (index != size - 1) {
+            Move move = updatedBoard.getMoveUsingAlgebraicNotation(moveString, currentColor);
+            if (areCoordinatesValid(move)) {
+                updatedBoard.move(move);
+                currentColor = getOppositeColor(currentColor);
+            } else {
+                cout << "Logic error. Not a valid move in [shouldIncludeLine()]. Move: [" << moveString;
+                cout << "] translated to: [" << move << "]" << endl;
+                cout << "Exiting." << endl;
+                exit(0);
+            }
+        }
+        index++;
+    }
+    auto lineDetailOptional = book.getLine(updatedBoard);
+    if (lineDetailOptional) {
+        auto const& lineDetail(lineDetailOptional.value());
+        if (lineDetail.totalNumberOfGames > MIN_NUMBER_OF_GAMES) {
+            result = true;
+        } else {
+            cout << "Skip this line because the number of games(" << lineDetail.totalNumberOfGames;
+            cout << ") is less than the minimum(" << MIN_NUMBER_OF_GAMES << ")" << endl;
+        }
+    }
+    return result;*/
+
+    return true;
 }
 
 void doOnePage(strings const& currentLine, Paths const& paths) {
@@ -437,26 +487,32 @@ void doOnePage(strings const& currentLine, Paths const& paths) {
         }
     }
 
-    savePageInfoToDataFile(currentLine, pageInfo, paths.dataFile);
-    saveNewLinesOfMoves(currentLine, pageInfo, paths.linesFile);
+    savePageInfoToDataFile(currentLine, paths.dataFile, pageInfo);
+    saveNewLinesInPageInfoToLineFile(currentLine, paths.linesFile, pageInfo);
 }
 
 void doAllPagesRecursively(Paths const& paths) {
     thread trackKeyPressForDownloadMovesFromChessDotComThread(trackKeyPressForDownloadMovesFromChessDotCom);
+    AlbaLocalPathHandler chessDotComBookDatabase(APRG_DIR CHESS_PEEK_CHESS_DOT_COM_BOOK_DATABASE);
+    Book book;
+    book.loadDatabaseFrom(chessDotComBookDatabase.getFullPath());
 
     clickWindow();
     gotoWebPage(paths.url);
 
     int lineNumber = getLineNumber(paths.lineNumberFile);
     strings currentLine = getLineOfMoves(paths.linesFile, lineNumber);
-    bool isFirst(true);
-    while (shouldStillRun && (isFirst || !currentLine.empty())) {
+    while (shouldStillRun && !currentLine.empty()) {
         cout << "lineNumber: [" << lineNumber << "] currentLine:[";
         printParameter(cout, currentLine);
         cout << "]" << endl;
 
-        isFirst = false;
-        doOnePage(currentLine, paths);
+        if (shouldIncludeLine(currentLine, book)) {
+            doOnePage(currentLine, paths);
+        } else {
+            cout << "Skipping line." << endl;
+            saveSkippedLineAtTheEndOfLineFile(currentLine, paths.linesFile);
+        }
         lineNumber++;
         setLineNumber(paths.lineNumberFile, lineNumber);
         currentLine = getLineOfMoves(paths.linesFile, lineNumber);
@@ -465,7 +521,7 @@ void doAllPagesRecursively(Paths const& paths) {
     trackKeyPressForDownloadMovesFromChessDotComThread.join();
 }
 
-TEST(DownloadMovesFromChessDotComTest, DoAllPagesRecursivelyWorks) {
+TEST(DownloadMovesFromChessDotComTest, DISABLED_DoAllPagesRecursivelyWorks) {
     // To reinitialize:
     // ChessDotComMoves should be deleted or empty
     // ChessDotComLines should be deleted or empty
