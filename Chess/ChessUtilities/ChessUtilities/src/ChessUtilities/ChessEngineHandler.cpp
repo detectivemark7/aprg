@@ -193,9 +193,6 @@ void ChessEngineHandler::log(LogType const logtype, string const& logString) {
         m_logFileStreamOptional.value() << getLogHeader(logtype) << logString << "\n";
         m_logFileStreamOptional.value().flush();
     }
-    if (LogType::FromEngine == logtype) {
-        cout << logString << "\n";
-    }
 }
 
 string ChessEngineHandler::getLogHeader(LogType const logtype) const {
