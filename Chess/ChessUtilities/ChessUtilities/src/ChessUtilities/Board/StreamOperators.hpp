@@ -12,6 +12,8 @@ std::ostream& operator<<(std::ostream& out, PieceType const pieceType);
 std::ostream& operator<<(std::ostream& out, PieceColorAndType const pieceType);
 std::ostream& operator<<(std::ostream& out, Piece const& piece);
 
+std::ostream& operator<<(std::ostream& out, Exchange const& exchange);
+
 std::ostream& operator<<(std::ostream& out, Move const& move);
 std::istream& operator>>(std::istream& in, Move& move);
 

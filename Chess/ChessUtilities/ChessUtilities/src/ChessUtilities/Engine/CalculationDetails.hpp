@@ -7,8 +7,8 @@ namespace alba {
 namespace chess {
 
 struct Variation {
-    int scoreInCentipawns;
     int mateValue;  // number of mate moves, can be negative if player is about to be mated
+    int scoreInCentipawns;
     stringHelper::strings halfMoves;
 };
 
