@@ -190,7 +190,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_COMMON_FLAGS} ${APRG_COM
 # -> This is the GCC flag for static analysis.
 # -> This option enables an static analysis of program flow which looks for “interesting” interprocedural paths through the code, and issues warnings for problems found on them.
 # -> This analysis is much more expensive than other GCC warnings.
-# -> Enabling this option effectively enables the following warnings: 
+# -> NOTE: This is only available for versions above GCC-10
 
 # Peformance Optimization Flags
 # Flag: "-O0"
