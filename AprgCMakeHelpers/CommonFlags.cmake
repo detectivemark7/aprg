@@ -185,6 +185,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_COMMON_FLAGS} ${APRG_COM
 # Flag: "-DNDEBUG"
 # -> disable assertions
 
+# Static Analysis
+# Flag: "-fanalyzer"
+# -> This is the GCC flag for static analysis.
+# -> This option enables an static analysis of program flow which looks for “interesting” interprocedural paths through the code, and issues warnings for problems found on them.
+# -> This analysis is much more expensive than other GCC warnings.
+# -> Enabling this option effectively enables the following warnings: 
+
 # Peformance Optimization Flags
 # Flag: "-O0"
 # -> Optimization Level 0 (No optimization, default)
@@ -219,7 +226,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_COMMON_FLAGS} ${APRG_COM
 # ---> gcc -c -O2 -flto foo.c
 # ---> gcc -c -O2 -flto bar.c
 # ---> gcc -o myprog -flto -O2 foo.o bar.o
-
 
 # Flag: "-fstack-protector"
 # -> Emit extra code to check for buffer overflows, such as stack smashing attacks.
@@ -431,6 +437,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_COMMON_FLAGS} ${APRG_COM
 
 
 #Sanitizers (from https://github.com/google/sanitizers)
+
+# NOTE: Sanitizers are not static analysis, there are dynamic analysis tools because they are using compiler instrumentation to run the program.
 
 # Using AddressSanitizer
 # In order to use AddressSanitizer you will need to COMPILE and LINK your program using clang with the -fsanitize=address switch.
