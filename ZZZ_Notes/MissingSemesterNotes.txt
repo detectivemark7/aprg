@@ -75,9 +75,9 @@ Shell and scripting
 
 -> Common shortcuts:
 ---> CTRL+L - lets you clear your screen
----> CTRL+R - autocomplete based on bash history
 ---> CTRL+A - jumps to the start of the current line
 ---> CTRL+E - jumps to the end of the current line
+---> CTRL+R - autocomplete based on bash history
 ---> CTRL+R - backwards search for previous command (just keep hitting CTRL-R till you find the what your looking for)
 
 -> Common commands
@@ -121,6 +121,7 @@ Shell and scripting
 ---> tree - similar to ls but graphical output
 ---> broot - similar to ls but graphical output has interactive search as well
 ---> nnn - similar to windows explorer but in terminal
+-----> Press q repetitively to quit
 ---> fd - similar to find but can use regex
 ---> locate - similar to find but builds an index so it can be faster
 -----> use updatedb to update the index
@@ -535,6 +536,7 @@ Command line environment
 -----> much more poweful than SIGINT(CTRL+C)
 ---> SIGSTOP is CTRL+Z
 -----> program is just suspended
+-----> CTRL+Z stops the current process and put in the background
 
 -> Job Control
 ---> Useful for running things on the background
@@ -1130,6 +1132,14 @@ Machine Introspection
 ---> top
 -----> This command shows you the processes running on the machine
 -----> It show how much memory and cpu the processes are using.
+-----> Here is a command to gather logs repetitively: 
+-------> top -b -H -n 1000 -d 5 -w 200 > Output.txt
+---------> Explanation of the parameters (from: http://man7.org/linux/man-pages/man1/top.1.html):
+-----------> -b :Batch-mode operation
+-----------> -H :Threads-mode operation
+-----------> -n :Number-of-iterations limit as:  -n number
+-----------> -d :Delay-time interval as:  -d ss.t (secs.tenths)
+-----------> -w :Output-width-override as:  -w [ number ]
 
 ---> htop 
 -----> This is better than top because it has a nicer output
@@ -1207,6 +1217,9 @@ Machine Introspection
 -----> This benchmarks fd vs find:
 -------> hyperfine --warmup 3 'fd -e jpg' 'find . -iname "*.jpg"'
 
+---> wireshark/wireshark logs
+-----> wireshark
+
 ---> log show
 -----> Used in macOS, 
 -----> Similar to journalctl
@@ -1224,7 +1237,6 @@ Machine Introspection
 ---> you can also use less
 -----> less +F [LOG_COMMAND]
 -------> Example: less +F Xorg.0.log
-
 
 -> Configuration
 
@@ -1286,6 +1298,7 @@ Machine Introspection
 
 
 -> Searching
+
 ---> find
 -----> find -iname [STRING]
 ---> mlocate is a package that is installed on most systems
@@ -1350,6 +1363,35 @@ Program introspectation
 -> Use Log levels on print debugging
 ---> Info, Warning, Error, Critical
 ---> Use filtering on different log levels (so you can check only error message for example)
+
+
+-> Investigate the details of the file/program
+---> file
+-----> check if its unstripped or stripped (with or without debug symbols)
+---> objdump
+-----> objdump -t [BINARY] > Symbols.txt.
+-----> objdump -d [BINARY] > Disassembled.txt
+-------> NOTE: In objdump, the option "-t" retrieves the symbol table (.symtab) and the option "-T" retrieves the dynamic symbol table (.dynsym). 
+---------> The dynsym is a smaller version of the symtab. 
+---------> The dynsym only contains global symbols. 
+---------> The information found in the dynsym is therefore also found in the symtab, while the reverse is not necessarily true.
+-------> NOTE: To map this symbols to the actual code, please check this wiki about Name Mangling: https://en.wikipedia.org/wiki/Name_mangling. 
+---------> Here are some important information:
+-----------> All mangled symbols begin with "_Z" (note that an underscore followed by a capital is a reserved identifier in C, so conflict with user identifiers is avoided); 
+-----------> for nested names (including both namespaces and classes), 
+-----------> this is followed by "N", then a series of <length, id> pairs (the length being the length of the next identifier), and finally "E".
+-----------> For functions, this is then followed by the type information. For a void function, this is simply "v"
+
+-> Stack trace investigation
+---> If you have a stack trace here are some few tips.
+-----> You can use the addr2line tool to translate addresses into file names/line numbers/functions. 
+-------> Run this command with the "–functions" option and the "–demangle" option in the terminal. 
+-------> An example is shown below:
+---------> addr2line --functions --demangle --exe=[BINARY] 0x08a0c623 0x08a0c623 0x08a0e284 0x08a1212b 0x08a1195b 0x08a119d9 0x08a1024f
+-----> Typically, the order of function calls are from bottom to top.
+-----> If the reason of investigation is because of a crash/exception, keep the reason of the crash/exception in mind to find the problematic line in the code.
+-----> The objdump tool also has "-d" option to disassemble the build. 
+-------> Using this, you can find the actual trace address in the assembly code and cross reference it to the actual code to have some idea regarding the scenario.
 
 -> Debuggers
 
@@ -1474,10 +1516,21 @@ Program introspectation
 -----------> Note that in the  output these figures include the User and Sys time of all child processes (and their descendants) as well when they could have been collected, 
 -----------> e.g. by wait(2) or waitpid(2), although the underlying system calls return the statistics for the process and its children separately.
 
----> python profilers
------> python -m cProfile -s tottime grep.py 1000 '^(import|s*def)[^,]'
------> kernprof -l -v urls.py
------> python -m memory_profiler mem.py
+---> valgrind
+-----> The Valgrind tool suite provides a number of debugging and profiling tools that help you make your programs faster and more correct. 
+-----> The most popular of these tools is called Memcheck. 
+-----> It can detect many memory-related errors that are common in C and C++ programs and that can lead to crashes and unpredictable behaviour.
+-----> If you normally run your program like this:
+-------> myprog arg1 arg2
+-----> Use this command line:
+-------> valgrind --leak-check=yes myprog arg1 arg2
+-------> https://valgrind.org/docs/manual/quick-start.html#quick-start.prepare
+-----> valgrind with callgrind
+-------> The collected data consists of the number of instructions executed on a run, their relationship to source lines, and call relationship among functions together with call counts.
+-------> valgrind --tool=callgrind [callgrind options] your-program [program options]
+-------> https://valgrind.org/docs/manual/cl-manual.html
+-----> User manual for more information: https://valgrind.org/docs/manual/manual.html
+
 
 ---> perf
 -----> See PerformanceNotes.txt(on notes) or Chandler Carruths lecture as well
@@ -1503,10 +1556,23 @@ Program introspectation
 ---------> list all commands on perf
 ---------> check for command for cache
 
-
 ---> flamegraphs
------> Link: http://www.brandangregg.com/FlameGraphs/cpu-bash-flamegraph.svg
+-----> Link: https://www.brendangregg.com/flamegraphs.html
+-----> Flamegraph tool: https://github.com/brendangregg/FlameGraph
+-------> CPU: https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html
+-------> Memory: https://www.brendangregg.com/FlameGraphs/memoryflamegraphs.html
+-------> Off-CPU: https://www.brendangregg.com/FlameGraphs/offcpuflamegraphs.html
+-------> Hot Cold: https://www.brendangregg.com/FlameGraphs/hotcoldflamegraphs.html
+-------> Differential: https://www.brendangregg.com/blog/2014-11-09/differential-flame-graphs.html
 -----> Its a really nice profiling graphs.
+-----> NOTE: This guide might need eBPF: 
+-------> eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in an operating system kernel. 
+---------> It is used to safely and efficiently extend the capabilities of the kernel without requiring to change kernel source code or load kernel modules.
+
+---> python profilers
+-----> python -m cProfile -s tottime grep.py 1000 '^(import|s*def)[^,]'
+-----> kernprof -l -v urls.py
+-----> python -m memory_profiler mem.py
 
 
 
@@ -1959,7 +2025,84 @@ Program introspectation
 
 
 
--> 
+
+
+
+-> Q&A (check the lecture as well)
+
+---> Any recommendations on learning operating system related topics like processes, virtual memory, interrupts, memory management etc?
+-----> Not really needed on day to day jobs (unless your working at low level near the kernel)
+-----> Try to create your own OS (theres a class on MIT)
+-----> Book: Modern Operating Systems by Andrew S. Tanenbaum 
+
+---> What are some of the tool you'd prioritize learning first?
+-----> Git because of collaboration (and you need to know the basics to prevent accidents)
+-----> Editor because you will editing a lot of file in your time.
+
+---> When do I use Python versus a Bash script versus some other language?
+-----> Bash script for automating a bunch of commands (short scripts). You dont want any business logic in bash scripts.
+-----> Bash is really hard to get right on all cases, it might work now on your particular use case but it might be problematic on the future (white space problems for example)
+
+---> What is the difference between 'source script.sh' and './script.sh'?
+-----> Both will execute the lines on the script.
+-----> They differ because source runs the script on your current bash session where as running the script executes it by starting a new bash session.
+-----> This matters for example the script has a code that changes directories (it will not persist if you are just running it).
+
+---> What are places where various packages and tools are stored and how does referencing them work? What even is /bin or /lib?
+-----> The conventions are:
+-------> /bin for essential system utilities
+-------> /usr/bin are for user programs
+-------> /usr/local/bin are for user compiled programs
+-------> /tmp holds temporary file (might be deleted on reboot)
+-------> /var holds that varies through time (lockfiles and log files etc)
+-------> /dev are for devices
+-------> /opt are for third party companies to store their files in it
+-----> /bin has binaries on it
+-----> /lib has libaries on it
+
+---> Should I apt-get install a python-whatever package or pip install whatever package?
+-----> Pip might be more update to date that system package manager.
+-----> It might be worthwhile to use the system package manager when your working on a system that pip might have the correct packages for it (raspberry pie for example).
+
+---> Whats the easiest and best profiling tools to use to improve performance of my code?
+-----> valgrind with callgrind
+-------> The collected data consists of the number of instructions executed on a run, their relationship to source lines, and call relationship among functions together with call counts.
+-----> perf 
+-------> This has interesting statistics as well.
+-----> Its pretty language specific, findout the profiling tools on your language.
+
+---> What browser plugins do you use?
+-----> ublockorigin
+-----> stylus
+-----> password manager
+
+---> What are other useful data wrangling tools?
+-----> curl 
+-----> perl
+-----> jq
+-----> pup
+-----> vim macros
+-----> python
+-----> pandoc
+-----> R for analysing data
+
+---> What are the advantages of each OS and how can we choose between them (e.g. choosing the best linux distribution for our purposes)?
+-----> Its really not that important. 
+-----> You might want to look at the update schedule.
+-------> ARCH-LINUX for example updates more frequently so they are prone to breaking
+-------> Debian/Ubuntu (especially LTS/Long term service) updates more conservatively so the are less prone to breaking
+-----> Debian/Ubuntu might be good for first timers because they are minimalist and much more friendly to new users.
+
+---> Any tips or tricks for Machine Learning application?
+-----> Have a json file for the configuration.
+
+---> Any more Vim tips?
+-----> Check vim plugins (check our dotfiles)
+-----> Use marks for easier jumping
+-----> CTRL+O and CTRL+I
+-----> Search command is a noun so you can combine it with delete (you delete until the next match of the search)
+-----> Specify undo directory on your vim configuration (to enable undo even after vim is closed)
+-----> Specify undo directory on your vim configuration (to enable undo even after vim is closed)
 
 
 
