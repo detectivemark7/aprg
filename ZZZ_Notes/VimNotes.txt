@@ -108,8 +108,9 @@ Editors
 -------> Keystrokes (with mnemonic names) are commands, and these commands compose. 
 -------> This enables efficient movement and edits, especially once the commands become muscle memory.
 
----> Format of a command in normal mode is:
------> [number] command object or command number [object]
+---> Format of a command in normal mode are:
+-----> [number] command object
+-----> command number [object]
 
 ---> Movement
 -----> You should spend most of your time in Normal mode, using movement commands to navigate the buffer. 

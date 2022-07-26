@@ -1,6 +1,8 @@
 
 Shortcut Guides
 
+
+
 Terminal Keyboard Shortcuts
 
 Autocomplete text - Press TAB to have the system guess at completing the text already entered. Also does commands.
