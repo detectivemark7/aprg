@@ -425,8 +425,7 @@ void saveSkippedLineAtTheEndOfLineFile(strings const& skippedLine, string const&
 }
 
 bool shouldIncludeLine(strings const& currentLine, Book const& book) {
-    // uncomment this once 4 moves are done
-    /*bool result(false);
+    bool result(false);
     constexpr int MIN_NUMBER_OF_GAMES = 10000;
 
     Board updatedBoard(BoardOrientation::BlackUpWhiteDown);
@@ -458,9 +457,7 @@ bool shouldIncludeLine(strings const& currentLine, Book const& book) {
             cout << ") is less than the minimum(" << MIN_NUMBER_OF_GAMES << ")" << endl;
         }
     }
-    return result;*/
-
-    return true;
+    return result;
 }
 
 void doOnePage(strings const& currentLine, Paths const& paths) {

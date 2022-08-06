@@ -13,7 +13,7 @@ using namespace std;
 
 namespace {
 constexpr int MAX_NUMBER_OF_MOVES_FOR_PRINTING = 10;
-constexpr int MAX_NUMBER_OF_BOARDS_IN_A_ROW = 3;  // make it 2 if bullet (for less boards and quicker responses)
+constexpr int MAX_NUMBER_OF_BOARDS_IN_A_ROW = 5;  // make it 2 if bullet (for less boards and quicker responses)
 constexpr int NEXT_OFFSET_OF_GRID = 9;
 constexpr int DESIRED_HEADER_LENGTH = 31;
 constexpr char SEPARATOR[] = "     ";
@@ -97,14 +97,19 @@ void ResultPrinter::printCalculationDetails(MovesToPrint const& movesToPrint) co
 }
 
 void ResultPrinter::printMovesGrids(MovesToPrint const& movesToPrint) const {
-    if (!movesToPrint.mostHumanLine.halfMoves.empty()) {
-        printHeadersForMostHumanLine(movesToPrint.mostHumanLine);
-        printARowOfMovesSequence(movesToPrint.mostHumanLine);
+    if (!movesToPrint.mostHumanMoves.empty()) {
+        strings suffixHeaders{
+            " -> 1st most human move", " -> 2nd most human move", " -> 3rd most human move", " -> 4th most human move",
+            " -> 5th most human move"};
+        printHeadersForNextMoves(movesToPrint.mostHumanMoves, 0, suffixHeaders);
+        printARowOfNextMoves(movesToPrint.mostHumanMoves, 0);
     }
 
     if (!movesToPrint.mostHumanMoves.empty()) {
-        printHeadersFor2ndTo6thMostHumanMoves(movesToPrint.mostHumanMoves);
-        printARowOfNextMoves(movesToPrint.mostHumanMoves, 1);
+        strings suffixHeaders{
+            " -> 4th best move", " -> 5th best move", " -> 6th best move", " -> 7th best move", " -> 8th best move"};
+        printHeadersForNextMoves(movesToPrint.calculatedMoves, 3, suffixHeaders);
+        printARowOfNextMoves(movesToPrint.calculatedMoves, 3);
     }
 
     if (!movesToPrint.bookMoves.empty()) {
@@ -112,7 +117,9 @@ void ResultPrinter::printMovesGrids(MovesToPrint const& movesToPrint) const {
         printARowOfNextMoves(movesToPrint.bookMoves, 0);
         printHorizontalBorder();
     } else if (!movesToPrint.bestLine.halfMoves.empty()) {
-        printHeadersForBestLine(movesToPrint.bestLine);
+        strings suffixHeaders{
+            " -> best line move 1", "best line move 2", "best line move 3", "best line move 4", "best line move 5"};
+        printHeadersForBestLine(movesToPrint.bestLine, suffixHeaders);
         printARowOfMovesSequence(movesToPrint.bestLine);
         printHorizontalBorder();
     }
@@ -188,75 +195,36 @@ void ResultPrinter::setMovesSequenceOnGrid(
     }
 }
 
-void ResultPrinter::printHeadersFor2ndTo6thMostHumanMoves(NextMoves const& nextMoves) const {
-    int rowSize = getRowSizeForFullMoves(static_cast<int>(nextMoves.size()) - 1);
-    if (rowSize > 0) {
-        strings prefixes = getNextMovesString(nextMoves, 1);
-        strings suffixes{
-            " -> 2nd most human move", " -> 3rd most human move", " -> 4th most human move", " -> 5th most human move",
-            " -> 6th most human move"};
-        prefixes.resize(min(static_cast<int>(prefixes.size()), rowSize));
-        suffixes.resize(min(static_cast<int>(suffixes.size()), rowSize));
-        printHorizontalBorder();
-        printHeaders(prefixes, suffixes);
-        printHorizontalBorder();
-    }
-}
-
-void ResultPrinter::printHeadersFor4thTo8thBestMoves(NextMoves const& nextMoves, int const startIndex) const {
+void ResultPrinter::printHeadersForNextMoves(
+    NextMoves const& nextMoves, int const startIndex, strings const& suffixHeaders) const {
     int rowSize = getRowSizeForFullMoves(static_cast<int>(nextMoves.size()) - startIndex);
     if (rowSize > 0) {
-        strings prefixes = getNextMovesString(nextMoves, startIndex);
-        strings suffixes{
-            " -> 4th best move", " -> 5th best move", " -> 6th best move", " -> 7th best move", " -> 8th best move"};
-        prefixes.resize(min(static_cast<int>(prefixes.size()), rowSize));
-        suffixes.resize(min(static_cast<int>(suffixes.size()), rowSize));
+        strings prefixHeaders = getNextMovesString(nextMoves, startIndex);
         printHorizontalBorder();
-        printHeaders(prefixes, suffixes);
+        printHeaders(prefixHeaders, suffixHeaders, rowSize);
         printHorizontalBorder();
     }
 }
 
 void ResultPrinter::printHeadersForBookMoves(BookMoves const& bookMoves) const {
-    strings prefixes = getBookMovesString(bookMoves);
-    strings suffixes;
+    strings prefixHeaders = getBookMovesString(bookMoves);
     printHorizontalBorder();
-    printHeaders(prefixes, suffixes);
+    printHeaders(prefixHeaders, strings(), prefixHeaders.size());
     printHorizontalBorder();
 }
 
-void ResultPrinter::printHeadersForBestLine(MovesSequence const& movesSequence) const {
+void ResultPrinter::printHeadersForBestLine(MovesSequence const& movesSequence, strings const& suffixHeaders) const {
     int rowSize = getRowSizeForHalfMoves(movesSequence.halfMoves.size());
     if (rowSize > 0) {
-        strings prefixes{getDisplayableString(movesSequence)};
-        strings suffixes{
-            " -> best line move 1", "best line move 2", "best line move 3", "best line move 4", "best line move 5"};
-        prefixes.resize(min(static_cast<int>(prefixes.size()), rowSize));
-        suffixes.resize(min(static_cast<int>(suffixes.size()), rowSize));
+        strings prefixHeaders{getDisplayableString(movesSequence)};
         printHorizontalBorder();
-        printHeaders(prefixes, suffixes);
+        printHeaders(prefixHeaders, suffixHeaders, rowSize);
         printHorizontalBorder();
     }
 }
 
-void ResultPrinter::printHeadersForMostHumanLine(MovesSequence const& movesSequence) const {
-    int rowSize = getRowSizeForHalfMoves(movesSequence.halfMoves.size());
-    if (rowSize > 0) {
-        strings prefixes{getDisplayableString(movesSequence)};
-        strings suffixes{
-            " -> most human line move 1", "most human line move 2", "most human line move 3", "most human line move 4",
-            "most human line move 5"};
-        prefixes.resize(min(static_cast<int>(prefixes.size()), rowSize));
-        suffixes.resize(min(static_cast<int>(suffixes.size()), rowSize));
-        printHorizontalBorder();
-        printHeaders(prefixes, suffixes);
-        printHorizontalBorder();
-    }
-}
-
-void ResultPrinter::printHeaders(strings const& prefixes, strings const& suffixes) const {
-    if (!prefixes.empty() || !suffixes.empty()) {
-        int rowSize = static_cast<int>(max(prefixes.size(), suffixes.size()));
+void ResultPrinter::printHeaders(strings const& prefixHeaders, strings const& suffixHeaders, int const rowSize) const {
+    if (!prefixHeaders.empty() || !suffixHeaders.empty()) {
         bool isFirst = true;
         for (int i = 0; i < rowSize; i++) {
             if (isFirst) {
@@ -265,11 +233,11 @@ void ResultPrinter::printHeaders(strings const& prefixes, strings const& suffixe
                 cout << SEPARATOR;
             }
             string headerString;
-            if (i < static_cast<int>(prefixes.size())) {
-                headerString += prefixes.at(i);
+            if (i < static_cast<int>(prefixHeaders.size())) {
+                headerString += prefixHeaders.at(i);
             }
-            if (i < static_cast<int>(suffixes.size())) {
-                headerString += suffixes.at(i);
+            if (i < static_cast<int>(suffixHeaders.size())) {
+                headerString += suffixHeaders.at(i);
             }
             cout << "|" << formatToHeaderString(headerString) << "|";
         }
@@ -321,6 +289,7 @@ void ResultPrinter::fillMovesFromBook(BookMoves& bookMoves) const {
         if (!lineDetail.nameOfLine.empty()) {
             s_nameOfLine = lineDetail.nameOfLine;
             Board const& engineBoard(m_engineBoardWithContext.getBoard());
+            bookMoves.reserve(MAX_NUMBER_OF_BOARDS_IN_A_ROW);
             for (Book::MoveDetail const& bookMoveDetail : lineDetail.nextMoves) {
                 Move move(engineBoard.getMoveUsingAlgebraicNotation(
                     bookMoveDetail.move, m_engineBoardWithContext.getPlayerColor()));
@@ -360,6 +329,7 @@ ResultPrinter::NextMoves ResultPrinter::getNextMovesFromCalculation() const {
 
 void ResultPrinter::fillNextMovesFromCalculation(NextMoves& nextMoves) const {
     Board const& engineBoard(m_engineBoardWithContext.getBoard());
+    nextMoves.reserve(MAX_NUMBER_OF_BOARDS_IN_A_ROW);
     for (Variation const& variation : m_calculationDetails.variations) {
         if (!variation.halfMoves.empty()) {
             Move move(engineBoard.getMoveUsingUciNotation(variation.halfMoves.front()));
@@ -457,6 +427,7 @@ strings ResultPrinter::getNextMovesString(NextMoves const& nextMoves, int const 
     strings result;
     if (startIndex < static_cast<int>(nextMoves.size())) {
         int rowSize = min(MAX_NUMBER_OF_BOARDS_IN_A_ROW, static_cast<int>(nextMoves.size() - startIndex));
+        result.reserve(rowSize);
         for (int moveIndex = 0; moveIndex < rowSize; moveIndex++) {
             auto const& nextMove(nextMoves.at(startIndex + moveIndex));
             result.emplace_back(formatToHeaderString(getDisplayableString(nextMove)));
@@ -468,6 +439,7 @@ strings ResultPrinter::getNextMovesString(NextMoves const& nextMoves, int const 
 strings ResultPrinter::getBookMovesString(BookMoves const& bookMoves) const {
     strings result;
     int rowSize = min(MAX_NUMBER_OF_BOARDS_IN_A_ROW, static_cast<int>(bookMoves.size()));
+    result.reserve(rowSize);
     for (int moveIndex = 0; moveIndex < rowSize; moveIndex++) {
         auto const& bookMove(bookMoves.at(moveIndex));
         result.emplace_back(formatToHeaderString(getDisplayableString(bookMove)));
