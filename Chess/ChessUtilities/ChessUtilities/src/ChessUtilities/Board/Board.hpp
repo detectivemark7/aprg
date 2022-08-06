@@ -112,6 +112,8 @@ private:
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrievePawnReverseCapturesToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
+    void retrievePawnEnPassantReverseToThis(
+        Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrieveAllNonPawnMovesToThis(
         Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const;
     void retrieveKnightMovesToThis(
@@ -172,6 +174,7 @@ private:
     bool isPossibleKingCastlingMove(Move const& kingMove) const;
     bool isAPawnNonCaptureMove(Move const& move) const;
     bool isAPawnCapture(Move const& move) const;
+    bool isAPawnEnPassantMove(Move const& move) const;
     bool isADiagonalMove(Move const& move) const;
     bool isAStraightMove(Move const& move) const;
     bool isAnLMove(Move const& move) const;

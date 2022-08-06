@@ -359,11 +359,16 @@ void Board::setPieceAt(Coordinate const& coordinate, Piece const& piece) {
 
 void Board::move(Move const& move) {
     // if (isAPossibleMove(move)) // dont check if its valid to be quicker
+
     MovePair kingAndRookCastlingMovePair(getMatchingCastlingKingAndRookMovePair(move));
     if (kingAndRookCastlingMovePair.first == move) {
         changePieceGridWithMove(kingAndRookCastlingMovePair.first);
         changePieceGridWithMove(kingAndRookCastlingMovePair.second);
     } else {
+        if (isAPawnEnPassantMove(move)) {
+            Coordinate opponentPawnLocation{move.second.getX(), move.first.getY()};
+            setPieceAt(opponentPawnLocation, Piece());
+        }
         changePieceGridWithMove(move);
     }
 }
@@ -564,8 +569,9 @@ Moves Board::getCandidatesMoves(
     Piece pieceAtEnd(getPieceAt(endpoint));
     switch (pieceType) {
         case PieceType::Pawn: {
-            if (pieceAtEnd.isEmpty()) {  // non capture only
+            if (pieceAtEnd.isEmpty()) {
                 retrievePawnReverseNonCapturesToThis(result, endpoint, moveColor, MAX_NUMBER_OF_MOVES);
+                retrievePawnEnPassantReverseToThis(result, endpoint, moveColor, MAX_NUMBER_OF_MOVES);
             } else if (areOpposingColors(moveColor, pieceAtEnd.getColor())) {  // capture only
                 retrievePawnReverseCapturesToThis(result, endpoint, moveColor, MAX_NUMBER_OF_MOVES);
             }
@@ -615,6 +621,7 @@ void Board::retrieveMovesToThis(
     Piece pieceAtEnd(getPieceAt(endpoint));
     if (pieceAtEnd.isEmpty()) {  // non capture only
         retrievePawnReverseNonCapturesToThis(result, endpoint, moveColor, maxSize);
+        retrievePawnEnPassantReverseToThis(result, endpoint, moveColor, maxSize);
     } else if (areOpposingColors(moveColor, pieceAtEnd.getColor())) {  // capture only
         retrievePawnReverseCapturesToThis(result, endpoint, moveColor, maxSize);
     }
@@ -671,6 +678,68 @@ void Board::retrievePawnReverseCapturesToThis(
         if (moveColor == pieceAtStart.getColor() && PieceType::Pawn == pieceAtStart.getType()) {
             result.emplace_back(startpoint, endpoint);
             CHESS_UTILITIES_BOARD_QUICK_BREAK_IN_LOOP_IF_MAX_SIZE_IS_REACHED
+        }
+    }
+}
+
+void Board::retrievePawnEnPassantReverseToThis(
+    Moves& result, Coordinate const& endpoint, PieceColor const moveColor, int const maxSize) const {
+    CHESS_UTILITIES_BOARD_QUICK_RETURN_IF_MAX_SIZE_IS_REACHED
+    if (BoardOrientation::BlackUpWhiteDown == m_orientation) {
+        if (PieceColor::White == moveColor) {
+            if (endpoint.getY() == 2) {
+                for (Coordinate const& delta : getPawnReverseCapturesDeltaCoordinates(moveColor)) {
+                    Coordinate startpoint = endpoint + delta;
+                    Piece pieceAtStart(getPieceAt(startpoint));
+                    Piece opponentPawn(getPieceAt({endpoint.getX(), startpoint.getY()}));
+                    if (PieceColorAndType::WhitePawn == pieceAtStart.getColorAndType() &&
+                        PieceColorAndType::BlackPawn == opponentPawn.getColorAndType()) {
+                        result.emplace_back(startpoint, endpoint);
+                        CHESS_UTILITIES_BOARD_QUICK_BREAK_IN_LOOP_IF_MAX_SIZE_IS_REACHED
+                    }
+                }
+            }
+        } else if (PieceColor::Black == moveColor) {
+            if (endpoint.getY() == 5) {
+                for (Coordinate const& delta : getPawnReverseCapturesDeltaCoordinates(moveColor)) {
+                    Coordinate startpoint = endpoint + delta;
+                    Piece pieceAtStart(getPieceAt(startpoint));
+                    Piece opponentPawn(getPieceAt({endpoint.getX(), startpoint.getY()}));
+                    if (PieceColorAndType::BlackPawn == pieceAtStart.getColorAndType() &&
+                        PieceColorAndType::WhitePawn == opponentPawn.getColorAndType()) {
+                        result.emplace_back(startpoint, endpoint);
+                        CHESS_UTILITIES_BOARD_QUICK_BREAK_IN_LOOP_IF_MAX_SIZE_IS_REACHED
+                    }
+                }
+            }
+        }
+    } else if (BoardOrientation::WhiteUpBlackDown == m_orientation) {
+        if (PieceColor::Black == moveColor) {
+            if (endpoint.getY() == 2) {
+                for (Coordinate const& delta : getPawnReverseCapturesDeltaCoordinates(moveColor)) {
+                    Coordinate startpoint = endpoint + delta;
+                    Piece pieceAtStart(getPieceAt(startpoint));
+                    Piece opponentPawn(getPieceAt({endpoint.getX(), startpoint.getY()}));
+                    if (PieceColorAndType::BlackPawn == pieceAtStart.getColorAndType() &&
+                        PieceColorAndType::WhitePawn == opponentPawn.getColorAndType()) {
+                        result.emplace_back(startpoint, endpoint);
+                        CHESS_UTILITIES_BOARD_QUICK_BREAK_IN_LOOP_IF_MAX_SIZE_IS_REACHED
+                    }
+                }
+            }
+        } else if (PieceColor::White == moveColor) {
+            if (endpoint.getY() == 5) {
+                for (Coordinate const& delta : getPawnReverseCapturesDeltaCoordinates(moveColor)) {
+                    Coordinate startpoint = endpoint + delta;
+                    Piece pieceAtStart(getPieceAt(startpoint));
+                    Piece opponentPawn(getPieceAt({endpoint.getX(), startpoint.getY()}));
+                    if (PieceColorAndType::WhitePawn == pieceAtStart.getColorAndType() &&
+                        PieceColorAndType::BlackPawn == opponentPawn.getColorAndType()) {
+                        result.emplace_back(startpoint, endpoint);
+                        CHESS_UTILITIES_BOARD_QUICK_BREAK_IN_LOOP_IF_MAX_SIZE_IS_REACHED
+                    }
+                }
+            }
         }
     }
 }
@@ -1296,11 +1365,7 @@ bool Board::isPossibleMoveBasedFromPieceType(Move const& move) const {
 }
 
 bool Board::isPossiblePawnMove(Move const& move) const {
-    Piece pieceAtStart(getPieceAt(move.first));
-    Piece pieceAtEnd(getPieceAt(move.second));
-    return (pieceAtEnd.isEmpty() && isAPawnNonCaptureMove(move) && isThereNoPieceInBetween(move)) ||
-           (!pieceAtEnd.isEmpty() && areOpposingColors(pieceAtStart.getColor(), pieceAtEnd.getColor()) &&
-            isAPawnCapture(move));
+    return isAPawnNonCaptureMove(move) || isAPawnCapture(move) || isAPawnEnPassantMove(move);
 }
 
 bool Board::isPossibleKnightMove(Move const& move) const {
@@ -1338,13 +1403,16 @@ bool Board::isPossibleKingCastlingMove(Move const& move) const {
 bool Board::isAPawnNonCaptureMove(Move const& move) const {
     bool result(false);
     if (move.first.getX() == move.second.getX()) {
-        Piece piece(getPieceAt(move.first));
-        Coordinate moveDelta = move.second - move.first;
-        DeltaRange range = getPawnNonCaptureDeltaRange(move.first, piece.getColor());
-        for (CoordinateDataType deltaY = range.interval; deltaY != range.invalidDelta; deltaY += range.interval) {
-            if (deltaY == moveDelta.getY()) {
-                result = true;
-                break;
+        Piece pieceAtStart(getPieceAt(move.first));
+        Piece pieceAtEnd(getPieceAt(move.second));
+        if (pieceAtEnd.isEmpty() && isThereNoPieceInBetween(move)) {
+            Coordinate moveDelta = move.second - move.first;
+            DeltaRange range = getPawnNonCaptureDeltaRange(move.first, pieceAtStart.getColor());
+            for (CoordinateDataType deltaY = range.interval; deltaY != range.invalidDelta; deltaY += range.interval) {
+                if (deltaY == moveDelta.getY()) {
+                    result = true;
+                    break;
+                }
             }
         }
     }
@@ -1352,12 +1420,51 @@ bool Board::isAPawnNonCaptureMove(Move const& move) const {
 }
 
 bool Board::isAPawnCapture(Move const& move) const {
-    Piece piece(getPieceAt(move.first));
+    bool result(false);
+    Piece pieceAtStart(getPieceAt(move.first));
+    Piece pieceAtEnd(getPieceAt(move.second));
     Coordinate moveDelta = move.second - move.first;
-    Coordinates pawnCaptureDeltas(getPawnCapturesDeltaCoordinates(piece.getColor()));
-    return any_of(pawnCaptureDeltas.cbegin(), pawnCaptureDeltas.cend(), [&moveDelta](Coordinate const& pawnDelta) {
-        return moveDelta == pawnDelta;
-    });
+    if (!pieceAtEnd.isEmpty() && areOpposingColors(pieceAtStart.getColor(), pieceAtEnd.getColor())) {
+        Coordinates pawnCaptureDeltas(getPawnCapturesDeltaCoordinates(pieceAtStart.getColor()));
+        result = any_of(
+            pawnCaptureDeltas.cbegin(), pawnCaptureDeltas.cend(),
+            [&moveDelta](Coordinate const& pawnDelta) { return moveDelta == pawnDelta; });
+    }
+    return result;
+}
+
+bool Board::isAPawnEnPassantMove(Move const& move) const {
+    bool result(false);
+    Piece pieceAtStart(getPieceAt(move.first));
+    Piece pieceAtEnd(getPieceAt(move.second));
+    if (pieceAtEnd.isEmpty() && getPositiveDelta(move.first.getX(), move.second.getX()) == 1) {
+        if (BoardOrientation::BlackUpWhiteDown == m_orientation) {
+            if (PieceColor::White == pieceAtStart.getColor()) {
+                if (move.first.getY() == 3 && move.first.getY() - move.second.getY() == 1) {
+                    Piece opponentPawn(getPieceAt({move.second.getX(), move.first.getY()}));
+                    result = opponentPawn.getColorAndType() == PieceColorAndType::BlackPawn;
+                }
+            } else if (PieceColor::Black == pieceAtStart.getColor()) {
+                if (move.first.getY() == 4 && move.second.getY() - move.first.getY() == 1) {
+                    Piece opponentPawn(getPieceAt({move.second.getX(), move.first.getY()}));
+                    result = opponentPawn.getColorAndType() == PieceColorAndType::WhitePawn;
+                }
+            }
+        } else if (BoardOrientation::WhiteUpBlackDown == m_orientation) {
+            if (PieceColor::Black == pieceAtStart.getColor()) {
+                if (move.first.getY() == 3 && move.first.getY() - move.second.getY() == 1) {
+                    Piece opponentPawn(getPieceAt({move.second.getX(), move.first.getY()}));
+                    result = opponentPawn.getColorAndType() == PieceColorAndType::WhitePawn;
+                }
+            } else if (PieceColor::White == pieceAtStart.getColor()) {
+                if (move.first.getY() == 4 && move.second.getY() - move.first.getY() == 1) {
+                    Piece opponentPawn(getPieceAt({move.second.getX(), move.first.getY()}));
+                    result = opponentPawn.getColorAndType() == PieceColorAndType::BlackPawn;
+                }
+            }
+        }
+    }
+    return result;
 }
 
 bool Board::isADiagonalMove(Move const& move) const {
