@@ -71,7 +71,7 @@ TEST(AlbaFileReaderTest, SkipLineWorksUsingVariousCharacters) {
     ASSERT_TRUE(inputTestFile.good());
     ASSERT_FALSE(inputTestFile.eof());
     EXPECT_TRUE(fileReader.isNotFinished());
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 21; i++) {
         fileReader.skipLine();
         EXPECT_TRUE(fileReader.isNotFinished());
     }
