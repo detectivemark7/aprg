@@ -129,7 +129,17 @@ protected:
     Paths m_savedPaths;
 };
 
-// No efficient method is known for testing if a graph contains a Hamiltonian path, and the problem is NP-hard.
+// The Hamiltonian path problem and the Hamiltonian cycle problem are problems of determining whether a Hamiltonian path
+// (a path in an undirected or directed graph that visits each vertex exactly once)
+// for a Hamiltonian cycle exists in a given graph (whether directed or undirected).
+// Both problems are NP-complete.
+
+// The Hamiltonian cycle problem is a special case of the travelling salesman problem,
+// obtained by setting the distance between two cities to one if they are adjacent and two otherwise,
+// and verifying that the total distance travelled is equal to n (if so, the route is a Hamiltonian circuit;
+// if there is no Hamiltonian circuit then the shortest route will be longer).
+
+// No efficient method is known for testing if a graph contains a Hamiltonian path.
 // Still, in some special cases, we can be certain that a graph contains a Hamiltonian path.
 // A simple observation is that if the graph is complete, i.e., there is an edge between all pairs of nodes, it also
 // contains a Hamiltonian path.

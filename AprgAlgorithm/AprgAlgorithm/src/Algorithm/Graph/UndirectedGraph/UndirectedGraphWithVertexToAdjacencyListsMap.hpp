@@ -21,7 +21,7 @@ public:
 
     UndirectedGraphWithVertexToAdjacencyListsMap() : m_numberOfEdges(0U) {}
 
-    bool isEmpty() const { return m_adjacencyLists.empty(); }
+    bool isEmpty() const override { return m_adjacencyLists.empty(); }
 
     bool hasAnyConnection(Vertex const& vertex) const override {
         bool result(false);

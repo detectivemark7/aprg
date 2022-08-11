@@ -37,15 +37,15 @@ private:
         unsigned int numberOfVertices(b_graph.getNumberOfVertices());
         unsigned int numberOfVerticesProcessed(0U);
         enqueue(b_startVertex);
-        while (!m_queueOfVertices.empty() && !m_hasPositiveOrNegativeCycle) {
+        while (!m_verticesToProcess.empty() && !m_hasPositiveOrNegativeCycle) {
             // Repeat V times: Relax each edge
             bool isNewWeightFound(false);
-            Vertex vertexAtQueue(dequeue());
+            Vertex vertexToProcess(dequeue());
             this->relaxAt(
-                vertexAtQueue,
+                vertexToProcess,
                 [&](Vertex const&, Vertex const& destinationVertex, Weight const&) {
                     isNewWeightFound = true;
-                    if (m_verticesInQueue.isNotFound(destinationVertex)) {
+                    if (m_checkableVerticesToProcess.isNotFound(destinationVertex)) {
                         enqueue(destinationVertex);
                     }
                 },
@@ -61,18 +61,17 @@ private:
         }
     }
 
-    void searchForPathUsingOriginalBellmanFord()  // manually positive or negative cycle
-    {
+    void searchForPathUsingOriginalBellmanFord() {  // manually check for positive or negative cycle
         unsigned int numberOfVertices(b_graph.getNumberOfVertices());
         unsigned int numberOfVerticesProcessed(0U);
         enqueue(b_startVertex);
-        while (!m_queueOfVertices.empty() && !m_hasPositiveOrNegativeCycle) {
+        while (!m_verticesToProcess.empty() && !m_hasPositiveOrNegativeCycle) {
             // Repeat V times: Relax each edge
-            Vertex vertexAtQueue(dequeue());
+            Vertex vertexToProcess(dequeue());
             this->relaxAt(
-                vertexAtQueue,
+                vertexToProcess,
                 [&](Vertex const&, Vertex const& destinationVertex, Weight const&) {
-                    if (m_verticesInQueue.isNotFound(destinationVertex)) {
+                    if (m_checkableVerticesToProcess.isNotFound(destinationVertex)) {
                         enqueue(destinationVertex);
                     }
                 },
@@ -87,16 +86,16 @@ private:
     }
 
     void enqueue(Vertex const& vertex) {
-        m_queueOfVertices.emplace_back(vertex);
-        m_verticesInQueue.putVertex(vertex);
+        m_verticesToProcess.emplace_back(vertex);
+        m_checkableVerticesToProcess.putVertex(vertex);
     }
 
     Vertex dequeue() {
         Vertex result{};
-        if (!m_queueOfVertices.empty()) {
-            result = m_queueOfVertices.front();
-            m_queueOfVertices.pop_front();
-            m_verticesInQueue.removeVertex(result);
+        if (!m_verticesToProcess.empty()) {
+            result = m_verticesToProcess.front();
+            m_verticesToProcess.pop_front();
+            m_checkableVerticesToProcess.removeVertex(result);
         }
         return result;
     }
@@ -123,8 +122,8 @@ private:
     Vertex const& b_startVertex;
     VertexToEdgeOrderedByWeightMap& b_vertexToEdgeWithBestWeightMap;
     bool m_hasPositiveOrNegativeCycle;
-    DequeOfVertices m_queueOfVertices;  // SPFA improvement
-    CheckableVertices<Vertex> m_verticesInQueue;
+    DequeOfVertices m_verticesToProcess;  // SPFA ("Shortest Path Faster Algorithm") improvement
+    CheckableVertices<Vertex> m_checkableVerticesToProcess;
 };
 
 }  // namespace algorithm

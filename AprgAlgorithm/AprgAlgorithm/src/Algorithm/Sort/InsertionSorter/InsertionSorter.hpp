@@ -20,20 +20,35 @@ public:
             auto insertIt = valuesToSort.begin();
             insertIt++;
             for (; insertIt != valuesToSort.end(); insertIt++) {
-                continuouslySwapDownIfStillOutOfOrder(valuesToSort, insertIt);
+                // continuouslySwapIfStillOutOfOrder(valuesToSort, insertIt);  // swap implementation
+                continuouslyCopyBackIfStillOutOfOrder(valuesToSort, insertIt);  // copy implementation
             }
         }
     }
 
 private:
-    void continuouslySwapDownIfStillOutOfOrder(Values& valuesToSort, Iterator const insertIt) const {
-        auto itHigh = std::make_reverse_iterator(
-            insertIt);  // make_reverse_iterator advances it by one (so there is decrement after)
-        auto itLow = itHigh;
-        itHigh--;
+    void continuouslySwapBackIfStillOutOfOrder(Values& valuesToSort, Iterator const insertIt) const {
+        auto itLow = std::make_reverse_iterator(insertIt);  // make_reverse_iterator moves it by one
+        auto itHigh = itLow;
+        itHigh--;  // move it back to original place (same as insert It)
+        // so final the stiuation here is itLow < itHigh and insertIt
         for (; itLow != valuesToSort.rend() && *itLow > *itHigh; itLow++, itHigh++) {
             std::swap(*itLow, *itHigh);
         }
+    }
+
+    void continuouslyCopyBackIfStillOutOfOrder(Values& valuesToSort, Iterator const insertIt) const {
+        // reserve a copy instead of continuously swapping down
+        // this is another implementation (from CLS book)
+        auto insertItem = *insertIt;
+        auto itLow = std::make_reverse_iterator(insertIt);  // make_reverse_iterator moves it by one
+        auto itHigh = itLow;
+        itHigh--;  // move it back to original place (same as insert It)
+        // so final the stiuation here is itLow < itHigh and insertIt
+        for (; itLow != valuesToSort.rend() && *itLow > insertItem; itLow++, itHigh++) {
+            *itHigh = *itLow;  // move
+        }
+        *itHigh = insertItem;
     }
 };
 
@@ -92,3 +107,8 @@ private:
 // 2) Traverse the given list, do following for every node.
 // -> 2.a) Insert current node in sorted way in sorted/result list.
 // 3) Change head of given linked list to head of sorted (or result) list.
+
+// There is also an implementation of insertion sort that does not involve swapping (check the CLS book for it).
+// It basically copies the "key" (item on the position of insert index)
+// and moves the values down before the insert index until the current item larger than the key (maintaining the order)
+// But I think swap implementation is much better on things benefits on swapping (instead of copying).
