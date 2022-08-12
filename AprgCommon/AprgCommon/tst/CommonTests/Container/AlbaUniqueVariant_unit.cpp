@@ -9,7 +9,7 @@ TEST(AlbaUniqueVariantTest, AcquiringVariantTypeInvokesDefaultConstructor) {
     struct ExampleStructure1 : public VariantDataType {
         ExampleStructure1() : unsignedField(0), floatField(0.F) {}
 
-        unsigned unsignedField;
+        uint8_t unsignedField;
         float floatField;
     };
 

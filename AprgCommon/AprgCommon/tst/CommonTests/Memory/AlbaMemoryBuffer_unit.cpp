@@ -128,8 +128,8 @@ TEST(AlbaMemoryBufferTest, ClearAndSetNewDataWorks) {
 
 TEST(AlbaMemoryBufferTest, ResizeWithAdditionalSizeAndReturnBeginOfAdditionalDataWorks) {
     AlbaMemoryBuffer buffer;
-    unsigned char inputBuffer1[] = {0x12, 0x34, 0x56, 0x78};
-    unsigned char inputBuffer2[] = {0x87, 0x65, 0x43, 0x21};
+    uint8_t inputBuffer1[] = {0x12, 0x34, 0x56, 0x78};
+    uint8_t inputBuffer2[] = {0x87, 0x65, 0x43, 0x21};
 
     memcpy(buffer.resizeWithAdditionalSizeAndReturnBeginOfAdditionalData(4), inputBuffer1, 4);
     memcpy(buffer.resizeWithAdditionalSizeAndReturnBeginOfAdditionalData(4), inputBuffer2, 4);
@@ -137,7 +137,7 @@ TEST(AlbaMemoryBufferTest, ResizeWithAdditionalSizeAndReturnBeginOfAdditionalDat
     EXPECT_TRUE(buffer);
     EXPECT_TRUE(buffer.hasContent());
     EXPECT_EQ(8U, buffer.getSize());
-    unsigned char* reader = reinterpret_cast<unsigned char*>(buffer.getBufferPointer());
+    uint8_t* reader = reinterpret_cast<uint8_t*>(buffer.getBufferPointer());
     EXPECT_EQ(0x12U, reader[0]);
     EXPECT_EQ(0x34U, reader[1]);
     EXPECT_EQ(0x56U, reader[2]);

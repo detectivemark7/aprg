@@ -26,11 +26,11 @@ TEST(AlbaOldRandomizerTest, GetRandomIntegerInUniformDistributionWorks_AsUniform
     int numberOfRandomValues(maximumValue - minimumValue + 1);
     int const iterations(1000);
     int const allowedDeviation(iterations / 10);
-    vector<int> hitsForEachValue(static_cast<unsigned long>(numberOfRandomValues), 0);
+    vector<int> hitsForEachValue(numberOfRandomValues, 0);
 
     for (int i = 0; i < iterations; i++) {
         int random(randomizer.getRandomIntegerInUniformDistribution(minimumValue, maximumValue));
-        hitsForEachValue[static_cast<unsigned long>(random)]++;
+        hitsForEachValue[random]++;
     }
 
     ASSERT_FALSE(hitsForEachValue.empty());

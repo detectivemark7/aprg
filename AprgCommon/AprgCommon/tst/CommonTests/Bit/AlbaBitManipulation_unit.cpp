@@ -86,8 +86,8 @@ TEST(AlbaBitManipulationTest, RotateBitToTheRightWithShiftValueWorks) {
 
 TEST(AlbaBitManipulationTest, ConcatenationBytesWorksWithArgumentsSizeLessThanResult) {
     // Given
-    const unsigned char byte1 = 0xA1;
-    const unsigned char byte2 = 0xBA;
+    const uint8_t byte1 = 0xA1;
+    const uint8_t byte2 = 0xBA;
 
     // When
     uint32_t result = AlbaBitManipulation<uint32_t>::concatenateBytes(byte1, byte2);
@@ -98,8 +98,8 @@ TEST(AlbaBitManipulationTest, ConcatenationBytesWorksWithArgumentsSizeLessThanRe
 
 TEST(AlbaBitManipulationTest, ConcatenationBytesWorksWithArgumentsSameSizeAsResult) {
     // Given
-    const unsigned char byte1 = 0xA1;
-    const unsigned char byte2 = 0xBA;
+    const uint8_t byte1 = 0xA1;
+    const uint8_t byte2 = 0xBA;
 
     // When
     uint32_t result = AlbaBitManipulation<uint32_t>::concatenateBytes(byte1, byte2, byte1, byte2);
@@ -110,8 +110,8 @@ TEST(AlbaBitManipulationTest, ConcatenationBytesWorksWithArgumentsSameSizeAsResu
 
 TEST(AlbaBitManipulationTest, ConcatenationNibblesWorksWithArgumentsSizeLessThanResult) {
     // Given
-    const unsigned char byte1 = 0xA1;
-    const unsigned char byte2 = 0xBA;
+    const uint8_t byte1 = 0xA1;
+    const uint8_t byte2 = 0xBA;
 
     // When
     uint32_t result = AlbaBitManipulation<uint32_t>::concatenateNibbles(byte1, byte2);
@@ -122,8 +122,8 @@ TEST(AlbaBitManipulationTest, ConcatenationNibblesWorksWithArgumentsSizeLessThan
 
 TEST(AlbaBitManipulationTest, ConcatenationNibblesWorksWithArgumentsSameSizeAsResult) {
     // Given
-    const unsigned char byte1 = 0xA1;
-    const unsigned char byte2 = 0xBA;
+    const uint8_t byte1 = 0xA1;
+    const uint8_t byte2 = 0xBA;
 
     // When
     uint32_t result =

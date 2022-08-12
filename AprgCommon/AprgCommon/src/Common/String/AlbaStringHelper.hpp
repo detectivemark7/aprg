@@ -22,10 +22,7 @@ inline bool isWhiteSpace(char const c) { return (' ' == c || '\t' == c || '\n' =
 
 inline bool isNewline(char const c) { return ('\n' == c || '\r' == c); }
 
-inline bool isNotNpos(int const index) {
-    // ToDo: is npos really unsigned? if its then convert to unsigned, do this to all npos functions
-    return static_cast<int>(std::string::npos) != index;
-}
+inline bool isNotNpos(int const index) { return static_cast<int>(std::string::npos) != index; }
 
 inline bool isNpos(int const index) { return static_cast<int>(std::string::npos) == index; }
 

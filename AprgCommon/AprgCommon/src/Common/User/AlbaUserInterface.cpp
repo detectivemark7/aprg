@@ -53,8 +53,6 @@ NumberType AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(
 }
 template int AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(
     string_view question, Choices<int> const& choices);
-template unsigned int AlbaUserInterface::displayQuestionAndChoicesAndGetNumberAnswer(
-    string_view question, Choices<unsigned int> const& choices);
 
 string AlbaUserInterface::displayQuestionAndChoicesAndGetStringAnswerInAllCapitals(
     string_view question, Choices<string> const& choices) {

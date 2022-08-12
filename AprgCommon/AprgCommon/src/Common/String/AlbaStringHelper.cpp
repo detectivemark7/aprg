@@ -521,7 +521,7 @@ string getHexNumberAfterThisString(string_view mainString, string_view stringToS
 string getHexEquivalentOfCharacters(string_view stringToCheck) {
     stringstream ss;
     for (unsigned char const c : stringToCheck) {
-        ss << hex << uppercase << setfill('0') << setw(2) << static_cast<unsigned int>(c);
+        ss << hex << uppercase << setfill('0') << setw(2) << static_cast<unsigned long long>(c);
     }
     return ss.str();
 }
