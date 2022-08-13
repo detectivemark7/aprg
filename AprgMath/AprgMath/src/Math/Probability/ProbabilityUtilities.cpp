@@ -52,8 +52,8 @@ AlbaNumber getProbability(UnsignedInteger const numberOfDesiredOutcome, Unsigned
     // If an event is certain to happen, its probability is 1, and if an event is impossible, its probability is 0.
     // The probability of an event is denoted P(...) where the three dots describe the event.
 
-    return getCorrectProbability(AlbaNumber::createFraction(
-        static_cast<int>(numberOfDesiredOutcome), static_cast<unsigned int>(totalNumberOfOutcomes)));
+    return getCorrectProbability(
+        AlbaNumber::createFraction(static_cast<int>(numberOfDesiredOutcome), static_cast<int>(totalNumberOfOutcomes)));
 }
 
 AlbaNumber getProbabilityOnBinomialDistribution(
@@ -65,10 +65,10 @@ AlbaNumber getProbabilityOnBinomialDistribution(
     // where p^x and (1-p)^(n-x) correspond to successful and unsuccessful attempts, and nx
     // combinations of (n, x)is the number of ways we can choose the order of the attempts.
 
-    AlbaNumber probabilityOfSuccessfulAttempts = probabilityOfASingleAttempt ^ static_cast<unsigned int>(xTargetTries);
+    AlbaNumber probabilityOfSuccessfulAttempts = probabilityOfASingleAttempt ^ static_cast<int>(xTargetTries);
     AlbaNumber probabilityOfUnsuccessfulAttempts =
-        (AlbaNumber(1) - probabilityOfASingleAttempt) ^ static_cast<unsigned int>(nTries - xTargetTries);
-    unsigned int numberOfCombinations = static_cast<unsigned int>(getNumberOfCombinations(nTries, xTargetTries));
+        (AlbaNumber(1) - probabilityOfASingleAttempt) ^ static_cast<int>(nTries - xTargetTries);
+    int numberOfCombinations = static_cast<int>(getNumberOfCombinations(nTries, xTargetTries));
     return getCorrectProbability(
         probabilityOfSuccessfulAttempts * probabilityOfUnsuccessfulAttempts * numberOfCombinations);
 }
@@ -83,7 +83,7 @@ AlbaNumber getProbabilityOnGeometricDistribution(
     // where (1-p)^(x-1) corresponds to the unsuccessful attempts and p corresponds to the first successful attempt.
 
     AlbaNumber probabilityOfUnsuccessfulAttempts =
-        (AlbaNumber(1) - probabilityOfASingleAttempt) ^ static_cast<unsigned int>(xTargetTries - 1);
+        (AlbaNumber(1) - probabilityOfASingleAttempt) ^ static_cast<int>(xTargetTries - 1);
     AlbaNumber probabilityOfFirstSuccessfulAttempt = probabilityOfASingleAttempt;
     return getCorrectProbability(probabilityOfUnsuccessfulAttempts * probabilityOfFirstSuccessfulAttempt);
 }
@@ -172,7 +172,7 @@ AlbaNumber getExpectedValueInBinomialDistribution(
     // The expected value of X in a binomial distribution is E[X] = p*n.
     // Equation: E[X] = p*n
 
-    return probabilityOfASingleAttempt * AlbaNumber(static_cast<unsigned int>(nTries));
+    return probabilityOfASingleAttempt * AlbaNumber(static_cast<int>(nTries));
 }
 
 AlbaNumber getExpectedValueInGeometricDistribution(AlbaNumber const& probability) {

@@ -20,7 +20,7 @@ public:
     using GrundyNumberEntry = int;
     using GrundyNumberMatrix = matrix::AlbaMatrix<GrundyNumberEntry>;
     using BooleanMatrix = matrix::AlbaMatrix<bool>;
-    using Coordinate = std::pair<unsigned int, unsigned int>;
+    using Coordinate = std::pair<int, int>;
     using Coordinates = std::vector<Coordinate>;
     static constexpr GrundyNumberEntry INVALID_GRUNDY_NUMBER = -1;
 

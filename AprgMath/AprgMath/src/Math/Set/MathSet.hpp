@@ -62,7 +62,7 @@ public:
 
     std::string getGeneratedRosterString(GenerateFunction const& generateFunction) const {
         std::stringstream descriptionStream;
-        unsigned int index = 0;
+        int index = 0;
         generateFunction([&](ElementType const& element) {
             if (contains(element)) {
                 enumerateElement(descriptionStream, element, index);
@@ -159,7 +159,7 @@ private:
 
     std::string getDescriptionForRosterList(RosterList const& rosterList) const {
         std::stringstream descriptionStream;
-        unsigned int index = 0;
+        int index = 0;
         for (ElementType const& elementInRoster : rosterList) {
             enumerateElement(descriptionStream, elementInRoster, index);
             index++;
@@ -168,7 +168,7 @@ private:
     }
 
     void enumerateElement(
-        std::stringstream& descriptionStream, ElementType const& elementInRoster, unsigned int const index) const {
+        std::stringstream& descriptionStream, ElementType const& elementInRoster, int const index) const {
         if (index == 0) {
             descriptionStream << elementInRoster;
         } else {
