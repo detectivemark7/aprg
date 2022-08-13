@@ -2791,7 +2791,6 @@
 ----------->     m2 = r − (r−l)/3
 -----------> Run time order
 ----------->     T ( n ) = T ( 2 n / 3 ) + 1 = Θ ( log ⁡ n )
------------> 
 -----------> Recursive algorithm
 -----------> 
 -----------> def ternary_search(f, left, right, absolute_precision) -> float:
