@@ -33,7 +33,7 @@ TEST(RealAutomationTest, DISABLED_TraverseTalonRoShops)  // DISABLED_
 
     userAutomation.sleep(3000);
 
-    for (unsigned int page = 1; page <= 1000; page++) {
+    for (int page = 1; page <= 1000; page++) {
         userAutomation.typeControlAndLetterSimultaneously('S');
         userAutomation.sleep(2000);
 
@@ -80,7 +80,7 @@ TEST(RealAutomationTest, DISABLED_TraverseDatabaseOnRms) {
     AlbaLocalPathHandler itemDatabaseFolder(R"(C:\Users\detectivemark7\Desktop\RO\RMS\MonsterDatabaseTraversal\)");
 
     for (char letter = 'a'; letter <= 'z'; letter++) {
-        for (unsigned int pageNumber = 1; pageNumber <= 100; pageNumber++) {
+        for (int pageNumber = 1; pageNumber <= 100; pageNumber++) {
             userAutomation.doLeftClickAt(MousePosition(2368, 52));
 
             stringstream rmsPath;
