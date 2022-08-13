@@ -28,7 +28,7 @@ public:
 
     Vertices getAdjacentVerticesAt(Vertex const& vertex) const override {
         Vertices result;
-        int numberOfRows(m_adjacencyMatrix.getNumberOfRows());
+        Vertex numberOfRows(m_adjacencyMatrix.getNumberOfRows());
         for (Vertex possibleAdjacentVertex = 0; possibleAdjacentVertex < numberOfRows; possibleAdjacentVertex++) {
             if (isDirectlyConnected(vertex, possibleAdjacentVertex)) {
                 result.emplace_back(possibleAdjacentVertex);
@@ -40,8 +40,8 @@ public:
     Vertices getVertices() const override {
         std::array<bool, MAX_VERTEX_VALUE> isVertexIncluded{};
 
-        int numberOfColumns(m_adjacencyMatrix.getNumberOfColumns());
-        int numberOfRows(m_adjacencyMatrix.getNumberOfRows());
+        Vertex numberOfColumns(m_adjacencyMatrix.getNumberOfColumns());
+        Vertex numberOfRows(m_adjacencyMatrix.getNumberOfRows());
         for (Vertex vertex1 = 0; vertex1 < numberOfColumns; vertex1++) {
             for (Vertex vertex2 = 0; vertex2 < numberOfRows; vertex2++) {
                 if (isDirectlyConnected(vertex1, vertex2)) {
@@ -62,8 +62,8 @@ public:
 
     Edges getEdges() const override {
         Edges result;
-        int numberOfColumns(m_adjacencyMatrix.getNumberOfColumns());
-        int numberOfRows(m_adjacencyMatrix.getNumberOfRows());
+        Vertex numberOfColumns(m_adjacencyMatrix.getNumberOfColumns());
+        Vertex numberOfRows(m_adjacencyMatrix.getNumberOfRows());
         for (Vertex vertex1 = 0; vertex1 < numberOfColumns; vertex1++) {
             for (Vertex vertex2 = 0; vertex2 < numberOfRows; vertex2++) {
                 if (isDirectlyConnected(vertex1, vertex2)) {
