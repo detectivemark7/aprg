@@ -16,7 +16,8 @@ enum class ParabolaOrientation {
 
 template <ParabolaOrientation orientation>
 struct ParabolaOrientationTraits {
-    static_assert(sizeof(orientation) == -1, "Parabola orientation traits are not defined");
+    // causes compilation error
+    // static_assert(sizeof(orientation) == -1, "Parabola orientation traits are not defined");
 };
 
 template <>
