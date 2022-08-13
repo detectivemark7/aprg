@@ -45,7 +45,7 @@ double AnimizeColor::getNewSaturation(double const originalValue) const {
 void AnimizeColor::gatherStatistics(string const& bitmapPath) {
     Bitmap bitmap(bitmapPath);
     BitmapSnippet canvas(bitmap.getSnippetReadFromFileWholeBitmap());
-    canvas.traverse([&](BitmapXY const&, unsigned int const color) {
+    canvas.traverse([&](BitmapXY const&, int const color) {
         HueSaturationLightnessData hslData(convertColorToHueSaturationLightnessData(color));
         addCountToValue(m_lightnessData, hslData.lightnessDecimal);
         addCountToValue(m_saturationData, hslData.saturationLightnessDecimal);
@@ -63,7 +63,7 @@ void AnimizeColor::saveColorData(string const& path) {
     colorDataFileStream << "lightness, newLightness\n";
     for (ValueAndColorDataPair const lightnessCountPair : m_lightnessData) {
         colorDataFileStream << lightnessCountPair.first << ", " << lightnessCountPair.second.newValue << "\n";
-        /*for(unsigned int i=0; i<lightnessCountPair.second.count; i++)
+        /*for(int i=0; i<lightnessCountPair.second.count; i++)
         {
             colorDataFileStream << lightnessCountPair.first
                                 << ", " << lightnessCountPair.second.newLightness
@@ -89,14 +89,14 @@ void AnimizeColor::addCountToValue(ColorDataMap& colorDataMap, double const valu
 }
 
 void AnimizeColor::calculateNewValues(ColorDataMap& colorDataMap) {
-    unsigned int totalCount = 0;
+    int totalCount = 0;
     for (auto const& colorDataPair : colorDataMap) {
         totalCount += colorDataPair.second.count;
     }
-    unsigned int partialCount = 0;
+    int partialCount = 0;
     double diffOfHighestAndLowestValue = m_highestIncludedValue - m_lowestIncludedValue;
     for (auto& colorDataPair : colorDataMap) {
-        unsigned int currentCount = colorDataPair.second.count;
+        int currentCount = colorDataPair.second.count;
         colorDataPair.second.newValue =
             (((static_cast<double>(currentCount) / 2) + partialCount) / totalCount * diffOfHighestAndLowestValue) +
             m_lowestIncludedValue;

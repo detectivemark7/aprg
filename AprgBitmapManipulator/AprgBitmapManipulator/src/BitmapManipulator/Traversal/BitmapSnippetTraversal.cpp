@@ -25,10 +25,10 @@ void BitmapSnippetTraversal::traverseQuadrilateralArea(
 }
 
 void BitmapSnippetTraversal::traverseCoordinatesCombinations(
-    BitmapXY const& centerPoint, unsigned int const coordinate1, unsigned int const coordinate2,
+    BitmapXY const& centerPoint, int const coordinate1, int const coordinate2,
     TraverseOperation const& traverseOperation) const {
-    unsigned int i = coordinate1;
-    unsigned int j = coordinate2;
+    int i = coordinate1;
+    int j = coordinate2;
     if (i == 0 && j == 0) {
         checkPointBeforeDoingTraverseOperation(centerPoint, traverseOperation);
     } else if (i == 0) {

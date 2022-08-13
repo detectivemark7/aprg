@@ -13,7 +13,7 @@ class AnimizeColor {
 public:
     AnimizeColor();
     struct ColorDetails {
-        unsigned int count;
+        int count;
         double newValue;
     };
     using ColorDataMap = std::map<double, ColorDetails>;

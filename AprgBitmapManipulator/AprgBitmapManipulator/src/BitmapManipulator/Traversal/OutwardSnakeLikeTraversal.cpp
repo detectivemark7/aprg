@@ -10,8 +10,8 @@ namespace alba {
 namespace AprgBitmap {
 
 OutwardSnakeLikeTraversal::OutwardSnakeLikeTraversal(
-    BitmapXY const& currentPoint, Direction const direction, unsigned int const lowestLeft,
-    unsigned int const highestRight, unsigned int const lowestTop, unsigned int const highestBottom)
+    BitmapXY const& currentPoint, Direction const direction, int const lowestLeft,
+    int const highestRight, int const lowestTop, int const highestBottom)
     : m_currentPoint(),
       m_direction(direction),
       m_lowestLeft(lowestLeft),
@@ -77,7 +77,7 @@ void OutwardSnakeLikeTraversal::move() {
 }
 
 void OutwardSnakeLikeTraversal::moveLeft() {
-    unsigned int x = m_currentPoint.getX();
+    int x = m_currentPoint.getX();
     if (m_lowestLeft < x) {
         x = x - 1;
         m_currentPoint.setX(x);
@@ -96,7 +96,7 @@ void OutwardSnakeLikeTraversal::moveLeft() {
 }
 
 void OutwardSnakeLikeTraversal::moveRight() {
-    unsigned int x = m_currentPoint.getX();
+    int x = m_currentPoint.getX();
     if (x < m_highestRight) {
         x = x + 1;
         m_currentPoint.setX(x);
@@ -115,7 +115,7 @@ void OutwardSnakeLikeTraversal::moveRight() {
 }
 
 void OutwardSnakeLikeTraversal::moveUp() {
-    unsigned int y = m_currentPoint.getY();
+    int y = m_currentPoint.getY();
     if (m_lowestTop < y) {
         y = y - 1;
         m_currentPoint.setY(y);
@@ -134,7 +134,7 @@ void OutwardSnakeLikeTraversal::moveUp() {
 }
 
 void OutwardSnakeLikeTraversal::moveDown() {
-    unsigned int y = m_currentPoint.getY();
+    int y = m_currentPoint.getY();
     if (y < m_highestRight) {
         y = y + 1;
         m_currentPoint.setY(y);

@@ -19,7 +19,7 @@ namespace alba {
 
 namespace AprgBitmap {
 
-constexpr unsigned int MAX_PEN_CIRCLE_RADIUS_COORDINATE = 5;
+constexpr int MAX_PEN_CIRCLE_RADIUS_COORDINATE = 5;
 
 BitmapFilters::BitmapFilters(string const& path) : m_backgroundColor(0xFFFFFF), m_bitmap(path) {}
 
@@ -50,8 +50,8 @@ optional<Circle> BitmapFilters::getPossiblePenCircle(
     double const acceptablePenPercentage) {
     optional<Circle> result;
     uint32_t const centerColor(inputSnippet.getColorAt(centerPoint));
-    unsigned int similarPixelsCount(0);
-    unsigned int totalPixelCount(0);
+    int similarPixelsCount(0);
+    int totalPixelCount(0);
     BitmapSnippetTraversal snippetTraversal(inputSnippet);
     OutwardCircleTraversal outwardTraversal(MAX_PEN_CIRCLE_RADIUS_COORDINATE);
     OutwardCircleTraversal::RadiusToCoordinates const& radiusToCoordinates(outwardTraversal.getRadiusToCoordinates());
@@ -121,10 +121,10 @@ void BitmapFilters::determinePenCirclesFromPenPoints(
 }
 
 void BitmapFilters::determineConnectedComponentsByOneComponentAtATime(BitmapSnippet const& inputSnippet) {
-    unsigned int currentLabel = 1;
+    int currentLabel = 1;
     deque<BitmapXY> pointsInDeque;
     inputSnippet.traverse([&](BitmapXY const& currentPoint, uint32_t const currentPointColor) {
-        unsigned int pixelLabel = m_labelForPixels.getLabel(currentPoint);
+        int pixelLabel = m_labelForPixels.getLabel(currentPoint);
         if (isNotBackgroundColor(currentPointColor) && isInitialLabel(pixelLabel)) {
             m_labelForPixels.setLabel(currentPoint, currentLabel);
             pointsInDeque.push_front(currentPoint);
@@ -201,10 +201,10 @@ void BitmapFilters::drawPenCirclesOnly(PenCircles const& penCircles, BitmapSnipp
 }
 
 void BitmapFilters::drawWithBlurringDisimilarColors(
-    BitmapSnippet& snippet, unsigned int const numberOfPasses, uint32_t const similarityColorLimit) {
+    BitmapSnippet& snippet, int const numberOfPasses, uint32_t const similarityColorLimit) {
     PointToColorMap disimilarPointsToNewColors;
 
-    for (unsigned int i = 0; i < numberOfPasses; i++) {
+    for (int i = 0; i < numberOfPasses; i++) {
         disimilarPointsToNewColors.clear();
         collectDisimilarPointsToNewColors(disimilarPointsToNewColors, snippet, similarityColorLimit);
         for (auto const& disimilarPointAndNewColorPair : disimilarPointsToNewColors) {
@@ -256,8 +256,8 @@ void BitmapFilters::drawToFillGapsUsingBlur(BitmapSnippet& snippet, double const
             backgroundPoints.emplace_back(bitmapPoint);
         }
     });
-    unsigned int previousNumberOfPoints = 0;
-    while (previousNumberOfPoints != backgroundPoints.size() && !backgroundPoints.empty()) {
+    int previousNumberOfPoints = 0;
+    while (previousNumberOfPoints != static_cast<int>(backgroundPoints.size()) && !backgroundPoints.empty()) {
         previousNumberOfPoints = backgroundPoints.size();
         BitmapXYs newBackgroundPoints;
         BitmapSnippet tempSnippet(snippet);
@@ -286,7 +286,7 @@ void BitmapFilters::drawAnimeColor(BitmapSnippet& snippet, AnimizeColor const& a
 
 void BitmapFilters::drawNewColorForLabels(BitmapSnippet& snippet) {
     snippet.traverse([&](BitmapXY const& bitmapPoint, uint32_t const) {
-        unsigned int pixelLabel = m_labelForPixels.getLabel(bitmapPoint);
+        int pixelLabel = m_labelForPixels.getLabel(bitmapPoint);
         if (!isInitialOrInvalidLabel(pixelLabel)) {
             snippet.setPixelAt(bitmapPoint, getLabelColor(pixelLabel));
         }
@@ -324,8 +324,8 @@ void BitmapFilters::collectDisimilarPointsToNewColors(
         double redTotal(0);
         double greenTotal(0);
         double blueTotal(0);
-        unsigned int neighborCount(0);
-        unsigned int disimilarNeighborCount(0);
+        int neighborCount(0);
+        int disimilarNeighborCount(0);
         snippetTraversal.traverse8WayConnectivity(point, [&](BitmapXY const& neighborPoint) {
             uint32_t neighborPointColor = inputSnippet.getColorAt(neighborPoint);
             redTotal += extractRed(neighborPointColor);
@@ -347,16 +347,14 @@ void BitmapFilters::collectDisimilarPointsToNewColors(
     });
 }
 
-unsigned int BitmapFilters::analyzeFourConnectivityNeighborPointsForConnectedComponentsTwoPassAndReturnSmallestLabel(
+int BitmapFilters::analyzeFourConnectivityNeighborPointsForConnectedComponentsTwoPassAndReturnSmallestLabel(
     BitmapSnippet const& inputSnippet, UnionFindForLabels& unionFindForLabels, BitmapXY const& neighborPoint) {
     // 4-connectivity
-    unsigned int smallestLabel = INVALID_LABEL_VALUE;
+    int smallestLabel = INVALID_LABEL_VALUE;
     BitmapXY neighbor1(neighborPoint.getX() - 1, neighborPoint.getY());
     BitmapXY neighbor2(neighborPoint.getX(), neighborPoint.getY() - 1);
-    unsigned int neighbor1Label =
-        analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(inputSnippet, neighbor1);
-    unsigned int neighbor2Label =
-        analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(inputSnippet, neighbor2);
+    int neighbor1Label = analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(inputSnippet, neighbor1);
+    int neighbor2Label = analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(inputSnippet, neighbor2);
     smallestLabel = min(smallestLabel, neighbor1Label);
     smallestLabel = min(smallestLabel, neighbor2Label);
     updateUnionFindForLabels(unionFindForLabels, smallestLabel, neighbor1Label, neighbor2Label);
@@ -365,7 +363,7 @@ unsigned int BitmapFilters::analyzeFourConnectivityNeighborPointsForConnectedCom
 
 void BitmapFilters::analyzeFourConnectivityNeighborPointsForConnectedComponentsOneComponentAtATime(
     BitmapSnippet const& inputSnippet, deque<BitmapXY>& pointsInDeque, BitmapXY const& poppedPoint,
-    unsigned int const currentLabel) {
+    int const currentLabel) {
     // 4-connectivity
     BitmapXY neighbor1(poppedPoint.getX() - 1, poppedPoint.getY());
     BitmapXY neighbor2(poppedPoint.getX(), poppedPoint.getY() - 1);
@@ -377,12 +375,12 @@ void BitmapFilters::analyzeFourConnectivityNeighborPointsForConnectedComponentsO
     analyzeNeighborPointForConnectedComponentsOneComponentAtATime(inputSnippet, pointsInDeque, neighbor4, currentLabel);
 }
 
-unsigned int BitmapFilters::analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(
+int BitmapFilters::analyzeNeighborPointForConnectedComponentsTwoPassAneReturnLabel(
     BitmapSnippet const& inputSnippet, BitmapXY const& neighborPoint) {
-    unsigned int labelResult = INVALID_LABEL_VALUE;
+    int labelResult = INVALID_LABEL_VALUE;
     if (inputSnippet.isPositionInsideTheSnippet(neighborPoint)) {
         uint32_t neighborPointColor = inputSnippet.getColorAt(neighborPoint);
-        unsigned int neighborPointLabel = m_labelForPixels.getLabel(neighborPoint);
+        int neighborPointLabel = m_labelForPixels.getLabel(neighborPoint);
         if (isNotBackgroundColor(neighborPointColor) && !isInitialLabel(neighborPointLabel)) {
             labelResult = neighborPointLabel;
         }
@@ -392,10 +390,10 @@ unsigned int BitmapFilters::analyzeNeighborPointForConnectedComponentsTwoPassAne
 
 void BitmapFilters::analyzeNeighborPointForConnectedComponentsOneComponentAtATime(
     BitmapSnippet const& inputSnippet, deque<BitmapXY>& pointsInDeque, BitmapXY const& neighborPoint,
-    unsigned int const currentLabel) {
+    int const currentLabel) {
     if (inputSnippet.isPositionInsideTheSnippet(neighborPoint)) {
         uint32_t neighborPointColor = inputSnippet.getColorAt(neighborPoint);
-        unsigned int neighborPointLabel = m_labelForPixels.getLabel(neighborPoint);
+        int neighborPointLabel = m_labelForPixels.getLabel(neighborPoint);
         if (isNotBackgroundColor(neighborPointColor) && isInitialLabel(neighborPointLabel)) {
             m_labelForPixels.setLabel(neighborPoint, currentLabel);
             pointsInDeque.push_front(neighborPoint);
@@ -405,10 +403,10 @@ void BitmapFilters::analyzeNeighborPointForConnectedComponentsOneComponentAtATim
 
 void BitmapFilters::determineConnectedComponentsUsingTwoPassInFirstPass(
     BitmapSnippet const& inputSnippet, UnionFindForLabels& unionFindForLabels) {
-    unsigned int currentLabel = 1;
+    int currentLabel = 1;
     inputSnippet.traverse([&](BitmapXY const& currentPoint, uint32_t const currentPointColor) {
         if (isNotBackgroundColor(currentPointColor)) {
-            unsigned int smallestNeighborLabel =
+            int smallestNeighborLabel =
                 analyzeFourConnectivityNeighborPointsForConnectedComponentsTwoPassAndReturnSmallestLabel(
                     inputSnippet, unionFindForLabels, currentPoint);
             if (!isInvalidLabel(smallestNeighborLabel)) {
@@ -424,9 +422,9 @@ void BitmapFilters::determineConnectedComponentsUsingTwoPassInFirstPass(
 void BitmapFilters::determineConnectedComponentsUsingTwoPassInSecondPass(
     BitmapSnippet const& inputSnippet, UnionFindForLabels const& unionFindForLabels) {
     inputSnippet.traverse([&](BitmapXY const& currentPoint, uint32_t const currentPointColor) {
-        unsigned int pixelLabel = m_labelForPixels.getLabel(currentPoint);
+        int pixelLabel = m_labelForPixels.getLabel(currentPoint);
         if (isNotBackgroundColor(currentPointColor) && !isInitialLabel(pixelLabel)) {
-            unsigned int smallestLabel = unionFindForLabels.getRoot(pixelLabel);
+            int smallestLabel = unionFindForLabels.getRoot(pixelLabel);
             m_labelForPixels.setLabel(currentPoint, smallestLabel);
         }
     });
@@ -478,8 +476,8 @@ void BitmapFilters::drawToBlurForNonCenterPoint(
 }
 
 void BitmapFilters::updateUnionFindForLabels(
-    UnionFindForLabels& unionFindForLabels, unsigned int const smallestLabel, unsigned int const neighbor1Label,
-    unsigned int const neighbor2Label) const {
+    UnionFindForLabels& unionFindForLabels, int const smallestLabel, int const neighbor1Label,
+    int const neighbor2Label) const {
     if (!isInvalidLabel(smallestLabel) && !isInvalidLabel(neighbor1Label)) {
         unionFindForLabels.connect(smallestLabel, neighbor1Label);
     }
