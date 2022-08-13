@@ -132,7 +132,7 @@ void DetailsFromTheScreen::savePlayerColorIfLichessStream() {
 }
 
 void DetailsFromTheScreen::savePlayerColorAndOrientationFromBoardDetails() {
-    constexpr unsigned int MIN_PIECE_COUNT_TO_CONSIDER = 12U;
+    constexpr int MIN_PIECE_COUNT_TO_CONSIDER = 12;
     if (m_countOfPieces.pieceCount >= MIN_PIECE_COUNT_TO_CONSIDER) {
         PieceColor lowerHalfColor{};
         if (m_countOfPieces.whiteCountInLowerHalf > m_countOfPieces.blackCountInLowerHalf &&

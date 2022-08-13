@@ -28,7 +28,7 @@ public:
         WhiteOrBlack condition;
     };
     using BitSet64 = std::bitset<64>;
-    using Count = unsigned int;
+    using Count = int;
     using PieceToChessCellBitValueMap = std::map<PieceColorAndType, uint64_t>;
     using BitValueUtilities = AlbaBitValueUtilities<uint64_t>;
     using PieceColorAndTypes = std::vector<PieceColorAndType>;
