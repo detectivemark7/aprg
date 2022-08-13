@@ -88,7 +88,7 @@ typedef struct DATA2BIT {
     int yhigh;
     int xSizeBytesAllocated;
     int ySizeBytesAllocated;
-    unsigned char* buf;
+    uint8_t* buf;
 } DataDigital;
 
 typedef struct BMPIMAGE2BIT {
@@ -338,9 +338,9 @@ void assignMidCircleCriterion(CircleCriterion* circ, CircleCriterion* c1, Circle
 }
 
 long getImageInfo(FILE* inputFile, long offset, int numberOfChars) {
-    unsigned char* ptrC;
+    uint8_t* ptrC;
     long value = 0L;
-    unsigned char dummy;
+    uint8_t dummy;
     int i;
 
     dummy = '0';
@@ -463,7 +463,7 @@ int getDataFromBmp(BmpImage* inBmpImage, DataDigital* indata) {
     if (indata->status != 2) {
         return 1;
     }
-    unsigned char* ptrC;
+    uint8_t* ptrC;
     int x, xsizebytes = indata->xSizeBytesAllocated;
     int y, ylow = indata->ylow, yhigh = indata->yhigh;
     int ysize = inBmpImage->ySize, nbor = inBmpImage->numBytesOneRow;
@@ -514,7 +514,7 @@ int allocData(DataDigital* indata) {
     }
     indata->xSizeBytesAllocated = (indata->xhigh - indata->xlow + 1) / 8;
     indata->ySizeBytesAllocated = (indata->yhigh - indata->ylow) + 1;
-    indata->buf = (unsigned char*)malloc((indata->xSizeBytesAllocated) * (indata->ySizeBytesAllocated) * sizeof(char));
+    indata->buf = (uint8_t*)malloc((indata->xSizeBytesAllocated) * (indata->ySizeBytesAllocated) * sizeof(char));
     if (indata->buf == NULL) {
         return 1;
     }
@@ -554,7 +554,7 @@ void printDataDigitalBuffer(DataDigital* indata) {
         return;
     }
     int x, y, m;
-    unsigned char tbuf;
+    uint8_t tbuf;
     for (y = 0; y < indata->ySizeBytesAllocated; y++) {
         for (x = 0; x < indata->xSizeBytesAllocated; x++) {
             tbuf = indata->buf[(y * indata->xSizeBytesAllocated) + x];
@@ -892,9 +892,9 @@ int followLineGetLengthX(DataDigital* indata, PairXY start, PairXY p1) {
 }
 
 int findLineImageFromLeft(
-    PairXY* in_line, int numsamplesize, unsigned char* in_buf, int xsizebytesallocated, PairXY inStart, PairXY inEnd) {
+    PairXY* in_line, int numsamplesize, uint8_t* in_buf, int xsizebytesallocated, PairXY inStart, PairXY inEnd) {
     int xt, yt, lt, mt, pt, ptwhite, lt_success;
-    unsigned char dummy, mask;
+    uint8_t dummy, mask;
     lt_success = 0;
     DBGPRINT(
         "  FUNC:findLineImageFromLeft(startx=%d|starty=%d|endx=%d|endy=%d)\n", inStart._x + gddx, inStart._y + gddy,
@@ -957,9 +957,9 @@ int findLineImageFromLeft(
 }
 
 int findLineImageFromRight(
-    PairXY* in_line, int numsamplesize, unsigned char* in_buf, int xsizebytesallocated, PairXY inStart, PairXY inEnd) {
+    PairXY* in_line, int numsamplesize, uint8_t* in_buf, int xsizebytesallocated, PairXY inStart, PairXY inEnd) {
     int xt, yt, lt, mt, pt, ptwhite, lt_success;
-    unsigned char dummy, mask;
+    uint8_t dummy, mask;
     lt_success = 0;
     DBGPRINT(
         "  FUNC:findLineImageFromRight(startx=%d|starty=%d|endx=%d|endy=%d)\n", inStart._x + gddx, inStart._y + gddy,
@@ -1025,7 +1025,7 @@ int findLineImageFromTop(DataDigital* indata, PairXY* in_line, int numsamplesize
     int xsizebytesallocated, ysizebytesallocated;
     xsizebytesallocated = indata->xSizeBytesAllocated;
     ysizebytesallocated = indata->ySizeBytesAllocated;
-    unsigned char dummy, mask;
+    uint8_t dummy, mask;
     lt_success = 0;
     DBGPRINT(
         "  FUNC:findLineImageFromTop(startx=%d|starty=%d|endx=%d|endy=%d)\n", inStart._x + gddx, inStart._y + gddy,
@@ -1086,7 +1086,7 @@ int findLineImageFromBottom(DataDigital* indata, PairXY* in_line, int numsamples
     int xsizebytesallocated, ysizebytesallocated;
     xsizebytesallocated = indata->xSizeBytesAllocated;
     ysizebytesallocated = indata->ySizeBytesAllocated;
-    unsigned char dummy, mask;
+    uint8_t dummy, mask;
     lt_success = 0;
     DBGPRINT(
         "  FUNC:findLineImageFromBottom(startx=%d|starty=%d|endx=%d|endy=%d)\n", inStart._x + gddx, inStart._y + gddy,

@@ -28,7 +28,7 @@ void UserInterface::askUserForMainDetails() {
     double discharge(m_userInterface.getNumberFromInput<double>());
 
     cout << "Enter minimum satisfactory score (inclusive):\n";
-    unsigned int minimumSatisfactoryScore(m_userInterface.getNumberFromInput<unsigned int>());
+    int minimumSatisfactoryScore(m_userInterface.getNumberFromInput<int>());
 
     m_savedConfiguration.setMainParameters(area, period, discharge, minimumSatisfactoryScore);
 }
@@ -44,8 +44,8 @@ string UserInterface::askUserForPathOfFormDetailToRead(string const& formDetails
 
     set<string> listOfFiles;
     set<string> listOfDirectories;
-    AlbaUserInterface::Choices<unsigned int> choices;
-    unsigned int choice(0);
+    AlbaUserInterface::Choices<int> choices;
+    int choice(0);
 
     formDetailsPathHandler.findFilesAndDirectoriesUnlimitedDepth("*.*", listOfFiles, listOfDirectories);
 
@@ -65,7 +65,7 @@ void UserInterface::saveFormDetailsFromFormDetailPath(string const& formDetailsF
 
     m_savedConfiguration.setFormDetailsTitle(fileReader.getLineAndIgnoreWhiteSpaces());
 
-    unsigned int columnNumber = 0;
+    int columnNumber = 0;
     while (fileReader.isNotFinished()) {
         string line(fileReader.getLineAndIgnoreWhiteSpaces());
         if (!line.empty()) {
