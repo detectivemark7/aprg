@@ -11,15 +11,15 @@ public:
     // A De Bruijn sequence is a string that contains every string of length n exactly once as a substring, for a fixed
     // alphabet of k characters. The length of such a string is k^n + n - 1 characters.
 
-    DeBruijnSequences(unsigned int const substringSize, std::string const& alphabet);
+    DeBruijnSequences(int const substringSize, std::string const& alphabet);
 
     std::string getDeBruijnString() const;
 
 private:
     void initialize();
     void addAllSubstringsAsVertex();
-    void addSubstringAsVertex(unsigned int const depth, std::string const& substring);
-    unsigned int const m_substringSize;
+    void addSubstringAsVertex(int const depth, std::string const& substring);
+    int const m_substringSize;
     std::string const m_alphabet;
     algorithm::DirectedGraphWithListOfEdges<std::string> m_graph;
 };

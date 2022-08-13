@@ -11,7 +11,7 @@ namespace alba {
 AllPartialSumsInKnapsack::AllPartialSumsInKnapsack(Values const& values) : m_inputValues(values) {}
 
 AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartialSums() const {
-    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0U));
+    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0));
     Booleans isPartialSumPossible(sum + 1, false);  // zero index is for zero value, sum index is for the sum
     isPartialSumPossible[0] = true;
     for (Value const& inputValue : m_inputValues) {
@@ -27,7 +27,7 @@ AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartial
 }
 
 AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartialSumsBySettingFutureValues() const {
-    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0U));
+    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0));
     Booleans isPartialSumPossible(sum + 1, false);  // zero index is for zero value, sum index is for the sum
     isPartialSumPossible[0] = true;
     for (Value const& inputValue : m_inputValues) {
@@ -61,15 +61,14 @@ AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartial
     // the sum k can be formed and 0 otherwise. To process a group of weights, we scan the array from left to right and
     // record the new sums of weights that can be formed using this group and the previous groups.
 
-    map<Value, unsigned int>
-        inputValueToCount;  // divide into groups of distinct weights and count number of same weights
+    map<Value, int> inputValueToCount;  // divide into groups of distinct weights and count number of same weights
     for (Value const inputValue : m_inputValues)  // n*log(n)
     {
-        inputValueToCount.emplace(inputValue, 0U);
+        inputValueToCount.emplace(inputValue, 0);
         inputValueToCount[inputValue]++;
     }
 
-    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0U));
+    Value sum(accumulate(m_inputValues.cbegin(), m_inputValues.cend(), 0));
     Booleans isPartialSumPossible(sum + 1, false);  // zero index is for zero value, sum index is for the sum
     isPartialSumPossible[0] = true;
 
@@ -79,7 +78,7 @@ AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartial
         for (int partialSumIndex = sum; partialSumIndex >= 0; partialSumIndex--)  // O(n) or linear time
         {
             if (isPartialSumPossible.at(partialSumIndex)) {
-                for (unsigned int i = 1; i <= inputValueAndCountPair.second; i++)  // near constant time
+                for (int i = 1; i <= inputValueAndCountPair.second; i++)  // near constant time
                 {
                     isPartialSumPossible[static_cast<Value>(partialSumIndex) + (i * inputValueAndCountPair.first)] =
                         true;
@@ -93,7 +92,7 @@ AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartial
 AllPartialSumsInKnapsack::Values AllPartialSumsInKnapsack::getAllPossiblePartialSums(
     Booleans const& isPartialSumPossible) const {
     Values result;
-    for (unsigned int partialSumIndex = 0; partialSumIndex < isPartialSumPossible.size();
+    for (int partialSumIndex = 0; partialSumIndex < static_cast<int>(isPartialSumPossible.size());
          partialSumIndex++)  // O(n) or linear time
     {
         if (isPartialSumPossible.at(partialSumIndex)) {

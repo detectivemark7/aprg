@@ -8,7 +8,7 @@ namespace alba {
 
 class EggDroppingPuzzle {
 public:
-    using Count = unsigned int;
+    using Count = int;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
     static constexpr Count MAX_COUNT = std::numeric_limits<Count>::max();

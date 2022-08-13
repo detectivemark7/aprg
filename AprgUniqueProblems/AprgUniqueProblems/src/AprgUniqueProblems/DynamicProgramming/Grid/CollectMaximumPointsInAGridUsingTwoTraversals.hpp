@@ -6,8 +6,8 @@ namespace alba {
 
 class CollectMaximumPointsInAGridUsingTwoTraversals {
 public:
-    using Index = unsigned int;
-    using Value = unsigned int;
+    using Index = int;
+    using Value = int;
     using ValueGrid = matrix::AlbaMatrix<Value>;
     using ValueGrids = std::vector<ValueGrid>;
     static constexpr Value INVALID_COUNT = std::numeric_limits<Value>::max();

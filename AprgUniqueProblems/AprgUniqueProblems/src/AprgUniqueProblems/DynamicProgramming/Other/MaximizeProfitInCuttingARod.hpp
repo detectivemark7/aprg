@@ -8,10 +8,10 @@ namespace alba {
 
 class MaximizeProfitInCuttingARod {
 public:
-    using Index = unsigned int;
-    using Length = unsigned int;
-    using Profit = unsigned int;
-    using RodIndex = unsigned int;
+    using Index = int;
+    using Length = int;
+    using Profit = int;
+    using RodIndex = int;
     using Rod = std::pair<Length, Profit>;
     using Profits = std::vector<Profit>;
     using Rods = std::vector<Rod>;

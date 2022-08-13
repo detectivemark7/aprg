@@ -22,7 +22,7 @@ LongestBitonicSubsequence::Index LongestBitonicSubsequence::getLongestLength() c
         computeIncreasingPartialLengths(increasingPartialLengths);
         computeDecreasingPartialLengths(decreasingPartialLengths);
 
-        for (Index index(0); index < m_sequence.size(); index++) {
+        for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
             result = max(result, increasingPartialLengths.at(index) + decreasingPartialLengths.at(index) - 1);
         }
     }
@@ -53,7 +53,7 @@ LongestBitonicSubsequence::Values LongestBitonicSubsequence::getLongestSubsequen
 }
 
 void LongestBitonicSubsequence::computeIncreasingPartialLengths(IndexToIndex& increasingPartialLengths) const {
-    for (Index index(0); index < m_sequence.size(); index++) {
+    for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
         Value& subIncreasingLength(increasingPartialLengths[index]);
         for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
             if (m_sequence.at(lowerIndex) < m_sequence.at(index)) {
@@ -66,7 +66,7 @@ void LongestBitonicSubsequence::computeIncreasingPartialLengths(IndexToIndex& in
 void LongestBitonicSubsequence::computeDecreasingPartialLengths(IndexToIndex& decreasingPartialLengths) const {
     for (int index = m_sequence.size() - 1; index >= 0; index--) {
         Value& decreasingPartialLength(decreasingPartialLengths[index]);
-        for (Index higherIndex = index + 1; higherIndex < m_sequence.size(); higherIndex++) {
+        for (Index higherIndex = index + 1; higherIndex < static_cast<Index>(m_sequence.size()); higherIndex++) {
             if (m_sequence.at(index) > m_sequence.at(higherIndex)) {
                 decreasingPartialLength = max(decreasingPartialLength, decreasingPartialLengths.at(higherIndex) + 1);
             }
@@ -76,7 +76,7 @@ void LongestBitonicSubsequence::computeDecreasingPartialLengths(IndexToIndex& de
 
 void LongestBitonicSubsequence::computeIncreasingPartialLengths(
     IndexToIndex& increasingPartialLengths, IndexToIndex& indexToIncreasingPreviousIndex) const {
-    for (Index index(0); index < m_sequence.size(); index++) {
+    for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
         Value& subIncreasingLength(increasingPartialLengths[index]);
         Value& previousIndex(indexToIncreasingPreviousIndex[index]);
         for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
@@ -94,7 +94,7 @@ void LongestBitonicSubsequence::computeDecreasingPartialLengths(
     for (int index = m_sequence.size() - 1; index >= 0; index--) {
         Value& decreasingPartialLength(decreasingPartialLengths[index]);
         Value& previousIndex(indexToDecreasingPreviousIndex[index]);
-        for (Index higherIndex = index + 1; higherIndex < m_sequence.size(); higherIndex++) {
+        for (Index higherIndex = index + 1; higherIndex < static_cast<Index>(m_sequence.size()); higherIndex++) {
             if (m_sequence.at(index) > m_sequence.at(higherIndex) &&
                 decreasingPartialLength < decreasingPartialLengths.at(higherIndex) + 1) {
                 decreasingPartialLength = decreasingPartialLengths.at(higherIndex) + 1;
@@ -109,7 +109,7 @@ LongestBitonicSubsequence::Values LongestBitonicSubsequence::getLongestSubsequen
     IndexToIndex& indexToIncreasingPreviousIndex, IndexToIndex& indexToDecreasingPreviousIndex) const {
     Value maxLength(0);
     Index indexOfLongestLength(0);
-    for (Index index(0); index < m_sequence.size(); index++) {
+    for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
         Value lengthAtIndex(increasingPartialLengths.at(index) + decreasingPartialLengths.at(index) - 1);
         if (maxLength < lengthAtIndex) {
             maxLength = lengthAtIndex;

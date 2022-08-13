@@ -31,7 +31,7 @@ TotalNumberOfNonDecreasingNumbersWithNDigits::getCountUsingMemoizationDP() const
 
     Count result(0);
     if (m_numberOfDigits > 0) {
-        CountMatrix countMatrix(10U, m_numberOfDigits, UNUSED_COUNT);
+        CountMatrix countMatrix(10, m_numberOfDigits, UNUSED_COUNT);
         for (Value digitValue = 0; digitValue <= 9; digitValue++) {
             result += getCountUsingMemoizationDP(countMatrix, digitValue, m_numberOfDigits - 1);
         }
@@ -74,7 +74,7 @@ TotalNumberOfNonDecreasingNumbersWithNDigits::getCountUsingIterativeDPAndSpaceEf
 
     Count result(0);
     if (m_numberOfDigits > 0) {
-        Counts digitValueToCount(10, 1U);
+        Counts digitValueToCount(10, 1);
         for (Count digitIndex = 1; digitIndex < m_numberOfDigits; digitIndex++) {
             for (int digitValue = 9; digitValue >= 0; digitValue--) {
                 Count entryResult(0);
@@ -86,7 +86,7 @@ TotalNumberOfNonDecreasingNumbersWithNDigits::getCountUsingIterativeDPAndSpaceEf
             }
         }
 
-        result = accumulate(digitValueToCount.cbegin(), digitValueToCount.cend(), 0U);
+        result = accumulate(digitValueToCount.cbegin(), digitValueToCount.cend(), 0);
     }
     return result;
 }

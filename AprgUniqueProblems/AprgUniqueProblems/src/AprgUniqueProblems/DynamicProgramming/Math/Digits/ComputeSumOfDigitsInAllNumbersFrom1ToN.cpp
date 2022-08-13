@@ -62,7 +62,7 @@ ComputeSumOfDigitsInAllNumbersFrom1ToN::Value ComputeSumOfDigitsInAllNumbersFrom
     if (number < 10) {
         result = getSummationFrom1ToN(number);
     } else {
-        Value numberOfDigitsMinus1 = getLogarithmForIntegers(10U, number);
+        Value numberOfDigitsMinus1 = getLogarithmForIntegers(10, number);
 
         Values sumAtDigitIndex(numberOfDigitsMinus1 + 1);
         // sumAtDigitIndex[0]=0;
@@ -74,10 +74,10 @@ ComputeSumOfDigitsInAllNumbersFrom1ToN::Value ComputeSumOfDigitsInAllNumbersFrom
         sumAtDigitIndex[1] = 45;
         for (Value digitIndex = 2; digitIndex <= numberOfDigitsMinus1; digitIndex++) {
             sumAtDigitIndex[digitIndex] =
-                10 * sumAtDigitIndex.at(digitIndex - 1) + 45 * getRaiseToPowerForIntegers(10U, digitIndex - 1);
+                10 * sumAtDigitIndex.at(digitIndex - 1) + 45 * getRaiseToPowerForIntegers(10, digitIndex - 1);
         }
 
-        Value highestPowerOf10 = getRaiseToPowerForIntegers(10U, numberOfDigitsMinus1);
+        Value highestPowerOf10 = getRaiseToPowerForIntegers(10, numberOfDigitsMinus1);
         Value mostSignificantDigit = number / highestPowerOf10;
         Value remainingDigits = number % highestPowerOf10;
 

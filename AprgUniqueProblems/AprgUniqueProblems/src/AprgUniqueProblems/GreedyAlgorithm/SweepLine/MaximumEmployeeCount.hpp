@@ -12,14 +12,13 @@ public:
     enum class EventType { StartOfDayOfEmployee = 1, EndOfDayOfEmployee = 2 };
 
     struct Event {
-        unsigned int time;
+        int time;
         EventType eventType;
         bool operator<(Event const& event) const;
     };
 
-    unsigned int getMaximumCountOfEmployeesAtATime() const;
-    void addEmployeeSchedule(
-        unsigned int const startTime, unsigned int const endTime);  // assumption is every entry is unique
+    int getMaximumCountOfEmployeesAtATime() const;
+    void addEmployeeSchedule(int const startTime, int const endTime);  // assumption is every entry is unique
 
 private:
     std::multiset<Event> m_sortedEvents;

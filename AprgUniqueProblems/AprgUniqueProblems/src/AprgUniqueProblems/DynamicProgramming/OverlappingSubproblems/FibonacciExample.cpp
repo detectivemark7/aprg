@@ -36,8 +36,8 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingMemoizationDP(Num
     // If the precomputed value is there then we return that value,
     // otherwise, we calculate the value and put the result in the lookup table so that it can be reused later.
 
-    Number size = max(number + 1, 2U);
-    Numbers memoizationData(size, static_cast<unsigned int>(UNUSED_VALUE));
+    Number size = max(number + 1, 2);
+    Numbers memoizationData(size, static_cast<int>(UNUSED_VALUE));
     memoizationData[0] = 0;
     memoizationData[1] = 1;
     return getNthFibonacciUsingMemoizationDP(memoizationData, number);
@@ -52,7 +52,7 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingIterativeDP(Numbe
     // table. For example, for the same Fibonacci number, we first calculate fib(0) then fib(1) then fib(2) then fib(3)
     // and so on. So literally, we are building the solutions of subproblems bottom-up.
 
-    Number size = max(number + 1, 2U);
+    Number size = max(number + 1, 2);
     Numbers tabulationData(size);
     tabulationData[0] = 0;
     tabulationData[1] = 1;
@@ -118,7 +118,7 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingMatrixMultiplicat
         for (Number i = 2; i < number; i++) {
             fibonacciMatrix *= formulaicTransform;
         }
-        return fibonacciMatrix.getEntry(1U, 1U);
+        return fibonacciMatrix.getEntry(1, 1);
     }
 }
 
@@ -138,7 +138,7 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingMatrixPowerWithLo
         NumberMatrix formulaicTransform(2, 2, {0, 1, 1, 1});
 
         NumberMatrix fibonacciMatrix(getMatrixRaiseToScalarPower(formulaicTransform, number - 1));  // logarithmic
-        return fibonacciMatrix.getEntry(1U, 1U);
+        return fibonacciMatrix.getEntry(1, 1);
     }
 }
 
@@ -146,8 +146,8 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingLogarithmicMemoiz
     // Time Complexity: O(log(n))
     // Extra Space: O(n)
 
-    Number size = max(number + 1, 2U);
-    Numbers memoizationData(size, static_cast<unsigned int>(UNUSED_VALUE));
+    Number size = max(number + 1, 2);
+    Numbers memoizationData(size, static_cast<int>(UNUSED_VALUE));
     memoizationData[0] = 0;
     memoizationData[1] = 1;
     return getNthFibonacciUsingMemoizationDP(memoizationData, number);
@@ -158,7 +158,7 @@ FibonacciExample::Number FibonacciExample::getNthFibonacciUsingLogarithmicIterat
 
     Number result(number);
     if (result > 1) {
-        Number size = max(number + 1, 2U);
+        Number size = max(number + 1, 2);
         Numbers iterativeData(size);
         iterativeData[0] = 0;
         iterativeData[1] = 1;

@@ -17,16 +17,16 @@ StringConstruction::StringConstruction(string const& stringToConstruct, stringHe
     initialize();
 }
 
-unsigned int StringConstruction::getCount() {
-    unsigned int result(0);
+int StringConstruction::getCount() {
+    int result(0);
     if (!m_stringToConstruct.empty()) {
         result = getCount(m_stringToConstruct.length());
     }
     return result;
 }
 
-unsigned int StringConstruction::getCountSquareRootAlgorithm() {
-    unsigned int result(0);
+int StringConstruction::getCountSquareRootAlgorithm() {
+    int result(0);
     if (!m_stringToConstruct.empty()) {
         result = getCountSquareRootAlgorithm(m_stringToConstruct.length());
     }
@@ -59,40 +59,40 @@ void StringConstruction::saveHashOfAllSubstrings() {
     }
 }
 
-unsigned int StringConstruction::getCount(unsigned int const prefixLength) {
+int StringConstruction::getCount(int const prefixLength) {
     if (UNUSED_VALUE == m_prefixLengthToCount.at(prefixLength)) {
         m_prefixLengthToCount[prefixLength] = count(prefixLength);
     }
     return m_prefixLengthToCount.at(prefixLength);
 }
 
-unsigned int StringConstruction::getCountSquareRootAlgorithm(unsigned int const prefixLength) {
+int StringConstruction::getCountSquareRootAlgorithm(int const prefixLength) {
     if (UNUSED_VALUE == m_prefixLengthToCount.at(prefixLength)) {
         m_prefixLengthToCount[prefixLength] = countSquareRootAlgorithm(prefixLength);
     }
     return m_prefixLengthToCount.at(prefixLength);
 }
 
-unsigned int StringConstruction::count(unsigned int const prefixLength) {
+int StringConstruction::count(int const prefixLength) {
     // We can solve the problem using dynamic programming:
     // Let count(k) denote the number of ways to construct the prefix s[0...k] using the strings in D.
     // Now count(n-1) gives the answer to the problem, and we can solve the problem in O(n2) time using a trie
     // structure.
 
-    unsigned int result(0U);
+    int result(0);
     for (string const& subString : m_subStrings) {
-        unsigned int subStringLength = subString.length();
+        int subStringLength = subString.length();
         if (subStringLength < prefixLength &&
             subString == m_stringToConstruct.substr(prefixLength - subStringLength, subStringLength)) {
             result += getCount(prefixLength - subStringLength);
-        } else if (subStringLength == prefixLength && subString == m_stringToConstruct.substr(0U, prefixLength)) {
+        } else if (subStringLength == prefixLength && subString == m_stringToConstruct.substr(0, prefixLength)) {
             result++;
         }
     }
     return result;
 }
 
-unsigned int StringConstruction::countSquareRootAlgorithm(unsigned int const prefixLength) {
+int StringConstruction::countSquareRootAlgorithm(int const prefixLength) {
     // However, we can solve the problem more efficiently by using string hashing
     // and the fact that there are at most O(sqrt(m)) distinct string lengths in D.
     // First, we construct a set H that contains all hash values of the strings in D.
@@ -103,10 +103,10 @@ unsigned int StringConstruction::countSquareRootAlgorithm(unsigned int const pre
 
     HornerHashFunctionForSubstrings<HashValue> mainHashFunction(RADIX, A_LARGE_PRIME, m_stringToConstruct);
 
-    unsigned int result(0U);
-    unsigned int limit = min(m_subStrings.size(), m_subStringHash.size());
-    for (unsigned int i = 0; i < limit; i++) {
-        unsigned int subStringLength = m_subStrings.at(i).length();
+    int result(0);
+    int limit = min(m_subStrings.size(), m_subStringHash.size());
+    for (int i = 0; i < limit; i++) {
+        int subStringLength = m_subStrings.at(i).length();
         HashValue subStringHash = m_subStringHash.at(i);
 
         // Note that getHashCodeOfSubstring is on constant time.
@@ -115,7 +115,7 @@ unsigned int StringConstruction::countSquareRootAlgorithm(unsigned int const pre
             result += getCountSquareRootAlgorithm(prefixLength - subStringLength);
         } else if (
             subStringLength == prefixLength &&
-            subStringHash == mainHashFunction.getHashCodeOfSubstring(0U, prefixLength - 1)) {
+            subStringHash == mainHashFunction.getHashCodeOfSubstring(0, prefixLength - 1)) {
             result++;
         }
     }

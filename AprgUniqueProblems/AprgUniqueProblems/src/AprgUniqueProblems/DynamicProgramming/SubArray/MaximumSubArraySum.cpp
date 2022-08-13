@@ -22,8 +22,8 @@ MaximumSubArraySum::Value MaximumSubArraySum::getMaximumSubArraySum() const {
 }
 
 MaximumSubArraySum::SubArrayDetails MaximumSubArraySum::getMaximumSubArraySumWithDetails() const {
-    SubArrayDetails currentSubArray{}, bestSubArray{0U, 0U, MIN_VALUE};
-    unsigned int index(0);
+    SubArrayDetails currentSubArray{}, bestSubArray{0, 0, MIN_VALUE};
+    int index(0);
     for (Value const& value : m_values) {
         if (value > currentSubArray.sum + value)  // new sub array contains only value
         {

@@ -10,8 +10,8 @@ CountingTilings::CountingTilings(Count const numberOfColumns, Count const number
     : m_numberOfColumns(numberOfColumns),
       m_numberOfRows(numberOfRows),
       m_numberOfCells(m_numberOfColumns * m_numberOfRows),
-      m_numberFilledCells(0U),
-      m_numberOfSolutions(0U),
+      m_numberFilledCells(0),
+      m_numberOfSolutions(0),
       m_grid()  // just initialize this when searching
 {}
 
@@ -24,7 +24,7 @@ CountingTilings::Count CountingTilings::getNumberOfSolutionsUsingDynamicProgramm
     m_numberOfSolutions = 0;
 
     Row currentRow(getEmptyRow(m_numberOfColumns));
-    searchNextRow(0U, currentRow);
+    searchNextRow(0, currentRow);
 
     return m_numberOfSolutions;
 }
@@ -78,11 +78,10 @@ CountingTilings::Rows CountingTilings::calculateNextRows(Row const& currentRow) 
         Row nextRow(nextDetail.nextRow);
         Count nextIndex(nextDetail.nextIndex);
         possibleNextDetails.pop();
-        if (nextIndex >= currentRow.length())  // if at the end
-        {
+        if (nextIndex >= static_cast<Count>(currentRow.length())) {
             result.emplace_back(nextRow);
         } else if (currentRow.at(nextIndex) == ' ') {
-            if (nextIndex + 1 < currentRow.length() && currentRow.at(nextIndex + 1) == ' ') {
+            if (nextIndex + 1 < static_cast<Count>(currentRow.length()) && currentRow.at(nextIndex + 1) == ' ') {
                 possibleNextDetails.emplace(NextDetail{nextRow, nextIndex + 2});
             }
             nextRow[nextIndex] = 'V';
@@ -101,7 +100,7 @@ void CountingTilings::startCompleteSearch() {
     m_numberFilledCells = 0;
     m_grid.clearAndResize(m_numberOfColumns, m_numberOfRows);
 
-    doCompleteSearchAt(0U);
+    doCompleteSearchAt(0);
 }
 
 void CountingTilings::doCompleteSearchAt(Count const gridIndex) {
@@ -110,8 +109,7 @@ void CountingTilings::doCompleteSearchAt(Count const gridIndex) {
     if (m_numberFilledCells == m_numberOfCells) {
         m_numberOfSolutions++;
     } else if (gridIndex < m_numberOfCells) {
-        Count x;
-        Count y;
+        size_t x, y;
         m_grid.retrieveXAndYFromIndex(x, y, gridIndex);
         if (m_grid.getEntry(x, y) == '\0') {
             if (m_grid.isInside(x + 1, y) && m_grid.getEntry(x + 1, y) == '\0') {

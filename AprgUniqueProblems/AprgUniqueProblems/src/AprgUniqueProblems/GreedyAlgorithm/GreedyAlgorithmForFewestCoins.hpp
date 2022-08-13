@@ -6,13 +6,13 @@ namespace alba {
 
 class GreedyAlgorithmForFewestCoins {
 public:
-    using Coin = unsigned int;
+    using Coin = int;
     using Coins = std::vector<Coin>;
-    using Value = unsigned int;
+    using Value = int;
 
     GreedyAlgorithmForFewestCoins(Coins const& availableCoins);
 
-    unsigned int getFewestNumberOfCoins(Value const value) const;
+    int getFewestNumberOfCoins(Value const value) const;
 
 private:
     void initialize();

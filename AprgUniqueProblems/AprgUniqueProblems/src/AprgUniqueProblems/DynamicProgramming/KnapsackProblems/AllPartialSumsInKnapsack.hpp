@@ -6,7 +6,7 @@ namespace alba {
 
 class AllPartialSumsInKnapsack {
 public:
-    using Value = unsigned int;
+    using Value = int;
     using Values = std::vector<Value>;
     using Booleans = std::vector<bool>;
 

@@ -25,7 +25,7 @@ NearestEqualCells::CoordinatePair NearestEqualCells::getNearestEqualPair(Value c
     // the algorithm is only O(n*sqrt(n)).
 
     Coordinates coordinatesWithValue(getCoordinatesWithThisValue(value));
-    if (coordinatesWithValue.size() <= static_cast<unsigned int>(sqrt(m_valueMatrix.getNumberOfCells()))) {
+    if (static_cast<int>(coordinatesWithValue.size()) <= static_cast<int>(sqrt(m_valueMatrix.getNumberOfCells()))) {
         return getNearestEqualPairByCheckingAllPairs(value);
     } else {
         return getNearestEqualPairUsingBfs(value);
@@ -39,18 +39,18 @@ NearestEqualCells::CoordinatePair NearestEqualCells::getNearestEqualPairByChecki
     CoordinatePair result{};
     Coordinates coordinates(getCoordinatesWithThisValue(value));
     auto twoCoordinatesCombinations(
-        CombinationsGeneration<Coordinates>::generateCombinationsWithLength(coordinates, 2U));
+        CombinationsGeneration<Coordinates>::generateCombinationsWithLength(coordinates, 2));
 
     bool isFirst(true);
-    unsigned int minimumDistance{};
+    int minimumDistance{};
     for (auto const& twoCoordinates : twoCoordinatesCombinations) {
-        if (twoCoordinates.size() >= 2U) {
+        if (twoCoordinates.size() >= 2) {
             if (isFirst) {
                 minimumDistance = getDistance(twoCoordinates.at(0), twoCoordinates.at(1));
                 result = {twoCoordinates.at(0), twoCoordinates.at(1)};
                 isFirst = false;
             } else {
-                unsigned int distance = getDistance(twoCoordinates.at(0), twoCoordinates.at(1));
+                int distance = getDistance(twoCoordinates.at(0), twoCoordinates.at(1));
                 if (distance < minimumDistance) {
                     minimumDistance = distance;
                     result = {twoCoordinates.at(0), twoCoordinates.at(1)};
@@ -70,7 +70,7 @@ NearestEqualCells::CoordinatePair NearestEqualCells::getNearestEqualPairUsingBfs
 }
 
 void NearestEqualCells::initializeGraph() {
-    m_valueMatrix.iterateAllThroughYAndThenX([&](unsigned int const x, unsigned int const y) {
+    m_valueMatrix.iterateAllThroughYAndThenX([&](int const x, int const y) {
         if (m_valueMatrix.isInside(x + 1, y)) {
             m_coordinateGraph.connect(Coordinate(x, y), Coordinate(x + 1, y));
         }
@@ -82,7 +82,7 @@ void NearestEqualCells::initializeGraph() {
 
 NearestEqualCells::Coordinates NearestEqualCells::getCoordinatesWithThisValue(Value const value) const {
     Coordinates result;
-    m_valueMatrix.iterateAllThroughYAndThenX([&](unsigned int const x, unsigned int const y) {
+    m_valueMatrix.iterateAllThroughYAndThenX([&](int const x, int const y) {
         if (m_valueMatrix.getEntry(x, y) == value) {
             result.emplace_back(x, y);
         }
@@ -107,10 +107,10 @@ NearestEqualCells::Coordinate NearestEqualCells::getCoordinateUsingBfs(
     Value const value, Coordinate const& firstCoordinate, Bfs& bfs) const {
     Coordinate result{};
     bool isFirst(true);
-    unsigned int minimumDistance{};
+    int minimumDistance{};
     for (auto const& vertexDistancePair : bfs.getEndVertexToDistanceCountMap()) {
         Coordinate const& coordinate(vertexDistancePair.first);
-        unsigned int distance(vertexDistancePair.second);
+        int distance(vertexDistancePair.second);
         if (value == m_valueMatrix.getEntry(coordinate.first, coordinate.second) && firstCoordinate != coordinate) {
             if (isFirst) {
                 minimumDistance = distance;
@@ -125,7 +125,7 @@ NearestEqualCells::Coordinate NearestEqualCells::getCoordinateUsingBfs(
     return result;
 }
 
-unsigned int NearestEqualCells::getDistance(Coordinate const& coordinate1, Coordinate const& coordinate2) const {
+int NearestEqualCells::getDistance(Coordinate const& coordinate1, Coordinate const& coordinate2) const {
     return getPositiveDelta(coordinate1.first, coordinate2.first) +
            getPositiveDelta(coordinate1.second, coordinate2.second);
 }

@@ -47,7 +47,7 @@ OptimalBinarySearchTree::Cost OptimalBinarySearchTree::getMinimumCostUsingIterat
         }
         for (Index length = 2; length <= numberOfPairs; length++)  // length >= 2
         {
-            for (Index left = 0; left + length <= costMatrix.getNumberOfColumns(); left++) {
+            for (Index left = 0; left + length <= static_cast<Index>(costMatrix.getNumberOfColumns()); left++) {
                 Index right = left + length - 1;
                 Cost entryResult(MAX_COUNT);
                 Cost offsetCost(

@@ -6,9 +6,9 @@ namespace alba {
 
 class BuildingBridges {
 public:
-    using Index = unsigned int;
-    using Value = unsigned int;
-    using Bridge = std::pair<unsigned int, unsigned int>;
+    using Index = int;
+    using Value = int;
+    using Bridge = std::pair<int, int>;
     using Bridges = std::vector<Bridge>;
     using IndexToIndex = std::vector<Index>;
     using IndexToValue = std::vector<Value>;

@@ -9,10 +9,10 @@ namespace alba {
 
 class ProductDayProblem {
 public:
-    using Price = unsigned int;
-    using Product = unsigned int;
-    using Day = unsigned int;
-    using ProductBits = unsigned int;
+    using Price = int;
+    using Product = int;
+    using Day = int;
+    using ProductBits = int;
     using PriceMatrix = matrix::AlbaMatrix<Price>;
     using ProductAndDayPair = std::pair<Product, Day>;
     using ProductAndDayPairs = std::vector<ProductAndDayPair>;

@@ -108,17 +108,17 @@ PathSumInGridInRightOrDownTraversal::Value PathSumInGridInRightOrDownTraversal::
 PathSumInGridInRightOrDownTraversal::Grid PathSumInGridInRightOrDownTraversal::getPartialSumGridUsingIterativeDP()
     const {
     Grid result(m_inputGrid);
-    for (Index x = 1; x < result.getNumberOfColumns(); x++)  // first row has only left neighbors
-    {
+    // first row has only left neighbor
+    for (Index x = 1; x < static_cast<Index>(result.getNumberOfColumns()); x++) {
         result.getEntryReference(x, 0) += result.getEntry(x - 1, 0);
     }
-    for (Index y = 1; y < result.getNumberOfRows(); y++)  // first column has only up neighbors
-    {
+    // first column has only up neighbors
+    for (Index y = 1; y < static_cast<Index>(result.getNumberOfRows()); y++) {
         result.getEntryReference(0, y) += result.getEntry(0, y - 1);
     }
-    for (Index x = 1; x < result.getNumberOfColumns(); x++)  // the rest of the matrix
-    {
-        for (Index y = 1; y < result.getNumberOfRows(); y++) {
+    // the rest of the matrix
+    for (Index x = 1; x < static_cast<Index>(result.getNumberOfColumns()); x++) {
+        for (Index y = 1; y < static_cast<Index>(result.getNumberOfRows()); y++) {
             result.getEntryReference(x, y) += m_minMaxFunction(result.getEntry(x - 1, y), result.getEntry(x, y - 1));
         }
     }

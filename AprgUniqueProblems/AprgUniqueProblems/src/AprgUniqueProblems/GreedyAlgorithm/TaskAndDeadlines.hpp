@@ -15,8 +15,8 @@ public:
 
     struct Task {
         std::string taskName;
-        unsigned int duration;
-        unsigned int deadline;
+        int duration;
+        int deadline;
     };
 
     using Tasks = std::deque<Task>;
@@ -24,7 +24,7 @@ public:
 
     TaskNames getTasksOrderWithMaximumScore() const;
 
-    void addTask(std::string const& taskName, unsigned int const duration, unsigned int const deadline);
+    void addTask(std::string const& taskName, int const duration, int const deadline);
 
 private:
     Tasks m_tasks;

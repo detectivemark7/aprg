@@ -43,7 +43,7 @@ public:
                 checkValue += forwardSkip;
             }
         }
-        if (checkValue + 1U < endValue && !m_boolFunction(checkValue))  // if last value is false, move one
+        if (checkValue + 1 < endValue && !m_boolFunction(checkValue))  // if last value is false, move one
         {
             checkValue++;
         }

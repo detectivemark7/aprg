@@ -27,7 +27,7 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
 
     Count result(0);
     if (!m_inputValues.empty()) {
-        CountMatrices countMatrices(2U, CountMatrix(m_inputValues.size(), m_inputValues.size(), UNUSED_COUNT));
+        CountMatrices countMatrices(2, CountMatrix(m_inputValues.size(), m_inputValues.size(), UNUSED_COUNT));
         result = getNumberOfWaysUsingMemoizationDP(countMatrices, true, 0, m_inputValues.size() - 1);
     }
     return result;
@@ -42,13 +42,14 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
         CountMatrix countsForFalse(m_inputValues.size(), m_inputValues.size());
         CountMatrix countsForTrue(m_inputValues.size(), m_inputValues.size());
 
-        for (Index index = 0; index < m_inputValues.size(); index++)  // for length 1
-        {
+        for (Index index = 0; index < static_cast<Index>(m_inputValues.size()); index++) {
+            // for length 1
             countsForFalse.setEntry(index, index, convertBoolToCount(!m_inputValues.at(index)));
             countsForTrue.setEntry(index, index, convertBoolToCount(m_inputValues.at(index)));
         }
-        for (Index length = 2; length <= m_inputValues.size(); length++) {
-            for (Index leftParenthesis = 0; leftParenthesis + length <= m_inputValues.size(); leftParenthesis++) {
+        for (Index length = 2; length <= static_cast<Index>(m_inputValues.size()); length++) {
+            for (Index leftParenthesis = 0; leftParenthesis + length <= static_cast<Index>(m_inputValues.size());
+                 leftParenthesis++) {
                 Index rightParenthesis = leftParenthesis + length - 1;
                 Count currentCountForFalse(0);
                 Count currentCountForTrue(0);
@@ -163,7 +164,7 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
 
 inline BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::convertBoolToCount(
     bool const booleanValue) const {
-    return booleanValue ? 1U : 0U;
+    return booleanValue ? 1 : 0;
 }
 
 bool BooleanParenthesizationProblem::areSizesCorrect() const { return m_operators.size() + 1 == m_inputValues.size(); }

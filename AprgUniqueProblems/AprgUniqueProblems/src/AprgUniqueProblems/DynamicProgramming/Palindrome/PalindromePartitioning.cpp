@@ -39,7 +39,7 @@ PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsin
         CountMatrix countMatrix(stringLength, stringLength, 0);
 
         for (Index length = 1; length <= stringLength; length++) {
-            for (Index left = 0; left + length <= countMatrix.getNumberOfColumns(); left++) {
+            for (Index left = 0; left + length <= static_cast<Index>(countMatrix.getNumberOfColumns()); left++) {
                 Index right = left + length - 1;
                 Count entryResult(0);
                 if (!isPalindrome(left, right)) {
@@ -108,7 +108,7 @@ bool PalindromePartitioning::isPalindrome(Index const left, Index const right) c
     bool result(false);
     if (!m_string.empty()) {
         result = true;
-        unsigned int traverseLeft(left), traverseRight(right);
+        int traverseLeft(left), traverseRight(right);
         while (traverseLeft < traverseRight) {
             if (m_string.at(traverseLeft++) != m_string.at(traverseRight--)) {
                 result = false;

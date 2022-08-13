@@ -9,9 +9,9 @@ namespace alba {
 
 class MatrixMultiplicationOrder {
 public:
-    using Count = unsigned int;
-    using Index = unsigned int;
-    using Dimension = unsigned int;
+    using Count = int;
+    using Index = int;
+    using Dimension = int;
     using Dimensions = std::vector<Dimension>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
     static constexpr Count MAX_COUNT = std::numeric_limits<Count>::max();

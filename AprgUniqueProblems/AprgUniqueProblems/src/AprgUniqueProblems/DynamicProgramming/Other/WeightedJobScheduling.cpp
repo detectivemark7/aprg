@@ -38,7 +38,7 @@ WeightedJobScheduling::Profit WeightedJobScheduling::getMaxProfitByMonitoringTim
         sort(timeStamps.begin(), timeStamps.end());
         timeStamps.erase(unique(timeStamps.begin(), timeStamps.end()));
 
-        Profits maxProfitsAtTime(timeStamps.size(), 0U);
+        Profits maxProfitsAtTime(timeStamps.size(), 0);
 
         Jobs jobsSortedByEndTime(m_jobs);
         sort(jobsSortedByEndTime.begin(), jobsSortedByEndTime.end(), endTimeJobComparator);
@@ -52,7 +52,8 @@ WeightedJobScheduling::Profit WeightedJobScheduling::getMaxProfitByMonitoringTim
             Profit profitAfterJob = maxProfitsAtTime.at(timeIndexAfterJob);
             Profit profitIfJobIsDone = profitBeforeJob + job.profit;
             Profit maxProfitForJob = max(profitIfJobIsDone, profitAfterJob);
-            for (Index timeToUpdate = timeIndexAfterJob; timeToUpdate < timeStamps.size(); timeToUpdate++) {
+            for (Index timeToUpdate = timeIndexAfterJob; timeToUpdate < static_cast<Index>(timeStamps.size());
+                 timeToUpdate++) {
                 maxProfitsAtTime[timeToUpdate] = max(maxProfitsAtTime.at(timeToUpdate), maxProfitForJob);
             }
         }
@@ -70,10 +71,10 @@ WeightedJobScheduling::Profit WeightedJobScheduling::getMaxProfitByMonitoringJob
         Jobs jobsSortedByEndTime(m_jobs);
         sort(jobsSortedByEndTime.begin(), jobsSortedByEndTime.end(), endTimeJobComparator);
 
-        Profits maxProfitsAtJob(m_jobs.size(), 0U);
+        Profits maxProfitsAtJob(m_jobs.size(), 0);
         maxProfitsAtJob.front() = jobsSortedByEndTime.front().profit;
 
-        for (Index jobIndex = 1; jobIndex < jobsSortedByEndTime.size(); jobIndex++) {
+        for (Index jobIndex = 1; jobIndex < static_cast<Index>(jobsSortedByEndTime.size()); jobIndex++) {
             Job const& currentJob(jobsSortedByEndTime.at(jobIndex));
             Profit currentProfit = currentJob.profit;
             auto itLatestNonConflictingJob = lower_bound(

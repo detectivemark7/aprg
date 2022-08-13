@@ -8,10 +8,10 @@ namespace alba {
 
 class BoxStackingProblem {
 public:
-    using Index = unsigned int;
-    using Value = unsigned int;
+    using Index = int;
+    using Value = int;
     using Values = std::vector<Value>;
-    using Box = AlbaXYZ<unsigned int>;
+    using Box = AlbaXYZ<int>;
     using Boxes = std::vector<Box>;
     using IndexToIndex = std::vector<Index>;
     using IndexToValue = std::vector<Value>;

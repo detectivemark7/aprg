@@ -13,7 +13,7 @@ public:
     // also known as the 2SUM problem: given an array of n numbers and a target sum x,
     // find two array values such that their sum is x, or report that no such values exist.
 
-    using Index = unsigned int;
+    using Index = int;
     using Value = typename Values::value_type;
     using ValuePair = std::pair<Value, Value>;
 
@@ -22,8 +22,8 @@ public:
     ValuePair getValuePairWithPositiveDelta(Value const& targetPositiveDelta) const {
         ValuePair result{};
         if (!m_sortedValues.empty()) {
-            Index lowerIndex(0U), higherIndex(1U);
-            while (lowerIndex < higherIndex && higherIndex < m_sortedValues.size()) {
+            Index lowerIndex(0), higherIndex(1);
+            while (lowerIndex < higherIndex && higherIndex < static_cast<Index>(m_sortedValues.size())) {
                 Value currentPositiveDelta = m_sortedValues.at(higherIndex) - m_sortedValues.at(lowerIndex);
                 if (currentPositiveDelta == targetPositiveDelta) {
                     result = {m_sortedValues.at(lowerIndex), m_sortedValues.at(higherIndex)};

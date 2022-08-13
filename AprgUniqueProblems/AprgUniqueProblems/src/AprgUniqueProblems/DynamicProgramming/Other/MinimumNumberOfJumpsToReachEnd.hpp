@@ -9,8 +9,8 @@ namespace alba {
 
 class MinimumNumberOfJumpsToReachEnd {
 public:
-    using Index = unsigned int;
-    using Count = unsigned int;
+    using Index = int;
+    using Count = int;
     using Indices = std::vector<Index>;
     using IndexToIndex = std::vector<Index>;
     using Counts = std::vector<Count>;

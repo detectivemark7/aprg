@@ -9,7 +9,7 @@ namespace alba {
 
 class LongestPalindromicSubstring {
 public:
-    using Index = unsigned int;
+    using Index = int;
     using Indices = std::vector<Index>;
     using IndexMatrix = matrix::AlbaMatrix<Index>;
     using BoolMatrix = matrix::AlbaMatrix<bool>;

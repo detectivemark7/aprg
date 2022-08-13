@@ -11,8 +11,8 @@ class JobWithProfitAndDeadlines {
 public:
     struct Job {
         std::string jobName;
-        unsigned int profit;
-        unsigned int deadline;
+        int profit;
+        int deadline;
     };
 
     using Jobs = std::deque<Job>;
@@ -20,10 +20,10 @@ public:
 
     JobNames getJobsOrderWithMaximumProfit() const;
 
-    void addJob(std::string const& jobName, unsigned int const profit, unsigned int const deadline);
+    void addJob(std::string const& jobName, int const profit, int const deadline);
 
 private:
-    unsigned int getMaximumDeadline() const;
+    int getMaximumDeadline() const;
     Jobs m_jobs;
 };
 

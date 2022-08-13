@@ -11,7 +11,7 @@ namespace alba {
 class MinimumCostPolygonTriangulation {
 public:
     using Cost = double;
-    using Index = unsigned int;
+    using Index = int;
     using CostMatrix = matrix::AlbaMatrix<Cost>;
     static constexpr Cost MAX_COUNT = std::numeric_limits<Cost>::max();
 

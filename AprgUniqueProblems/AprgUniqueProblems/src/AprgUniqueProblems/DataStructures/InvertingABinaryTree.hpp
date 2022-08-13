@@ -7,7 +7,7 @@ namespace alba {
 namespace InvertingABinaryTree {
 
 struct Node {
-    unsigned int value;
+    int value;
     std::unique_ptr<Node> leftPointer;
     std::unique_ptr<Node> rightPointer;
     // ~Node(); blows up the stack

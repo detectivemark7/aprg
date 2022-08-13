@@ -7,7 +7,7 @@ namespace alba {
 
 class ComputeSumOfDigitsInAllNumbersFrom1ToN {
 public:
-    using Value = unsigned int;
+    using Value = int;
     using Values = std::vector<Value>;
     static constexpr Value UNUSED_COUNT = std::numeric_limits<Value>::max();
 

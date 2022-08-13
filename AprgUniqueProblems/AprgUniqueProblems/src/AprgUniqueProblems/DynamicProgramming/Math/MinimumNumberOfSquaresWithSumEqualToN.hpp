@@ -7,7 +7,7 @@ namespace alba {
 
 class MinimumNumberOfSquaresWithSumEqualToN {
 public:
-    using Count = unsigned int;
+    using Count = int;
     using Counts = std::vector<Count>;
     static constexpr Count MAX_COUNT = std::numeric_limits<Count>::max();
 

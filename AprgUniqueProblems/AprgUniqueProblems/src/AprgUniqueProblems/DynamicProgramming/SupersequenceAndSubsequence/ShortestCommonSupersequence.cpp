@@ -21,10 +21,10 @@ ShortestCommonSupersequence::Count ShortestCommonSupersequence::getShortestLengt
     CountMatrix lengthMatrix(m_sequence1.size() + 1, m_sequence2.size() + 1, static_cast<Count>(UNUSED_COUNT));
 
     lengthMatrix.setEntry(0, 0, 0);
-    for (Index index1 = 1; index1 < lengthMatrix.getNumberOfColumns(); index1++) {
+    for (Index index1 = 1; index1 < static_cast<Index>(lengthMatrix.getNumberOfColumns()); index1++) {
         lengthMatrix.setEntry(index1, 0, index1);
     }
-    for (Index index2 = 1; index2 < lengthMatrix.getNumberOfRows(); index2++) {
+    for (Index index2 = 1; index2 < static_cast<Index>(lengthMatrix.getNumberOfRows()); index2++) {
         lengthMatrix.setEntry(0, index2, index2);
     }
     return getShortestLengthUsingMemoizationDP(lengthMatrix, m_sequence1.size(), m_sequence2.size());
@@ -36,14 +36,14 @@ ShortestCommonSupersequence::Count ShortestCommonSupersequence::getShortestLengt
 
     CountMatrix lengthMatrix(m_sequence1.size() + 1, m_sequence2.size() + 1, 0);
 
-    for (Index index1 = 1; index1 < lengthMatrix.getNumberOfColumns(); index1++) {
+    for (Index index1 = 1; index1 < static_cast<Index>(lengthMatrix.getNumberOfColumns()); index1++) {
         lengthMatrix.setEntry(index1, 0, index1);
     }
-    for (Index index2 = 1; index2 < lengthMatrix.getNumberOfRows(); index2++) {
+    for (Index index2 = 1; index2 < static_cast<Index>(lengthMatrix.getNumberOfRows()); index2++) {
         lengthMatrix.setEntry(0, index2, index2);
     }
-    for (Index index1 = 1; index1 < lengthMatrix.getNumberOfColumns(); index1++) {
-        for (Index index2 = 1; index2 < lengthMatrix.getNumberOfRows(); index2++) {
+    for (Index index1 = 1; index1 < static_cast<Index>(lengthMatrix.getNumberOfColumns()); index1++) {
+        for (Index index2 = 1; index2 < static_cast<Index>(lengthMatrix.getNumberOfRows()); index2++) {
             Count entryResult(0);
             if (m_sequence1.at(index1 - 1) == m_sequence2.at(index2 - 1)) {
                 entryResult = 1 + lengthMatrix.getEntry(index1 - 1, index2 - 1);
@@ -71,16 +71,16 @@ ShortestCommonSupersequence::Count ShortestCommonSupersequence::getShortestLengt
 
     {
         Counts& currentCounts(previousAndCurrentCounts[1]);
-        for (Index index1 = 0; index1 <= m_sequence1.size(); index1++) {
+        for (Index index1 = 0; index1 <= static_cast<Index>(m_sequence1.size()); index1++) {
             currentCounts[index1] = index1;
         }
     }
-    for (Index index2 = 1; index2 <= m_sequence2.size(); index2++) {
+    for (Index index2 = 1; index2 <= static_cast<Index>(m_sequence2.size()); index2++) {
         Counts& previousCounts(previousAndCurrentCounts[index2 % 2]);
         Counts& currentCounts(previousAndCurrentCounts[(index2 + 1) % 2]);
 
         currentCounts[0] = index2;
-        for (Index index1 = 1; index1 <= m_sequence1.size(); index1++) {
+        for (Index index1 = 1; index1 <= static_cast<Index>(m_sequence1.size()); index1++) {
             if (m_sequence1.at(index1 - 1) == m_sequence2.at(index2 - 1)) {
                 currentCounts[index1] = 1 + previousCounts.at(index1 - 1);
             } else {

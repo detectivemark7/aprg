@@ -8,10 +8,10 @@ namespace alba {
 
 TEST(JobWithProfitAndDeadlinesTest, GetJobsAsPossibleWorksOnExample1) {
     JobWithProfitAndDeadlines taskAndDeadlines;
-    taskAndDeadlines.addJob("A", 20U, 4U);
-    taskAndDeadlines.addJob("B", 10U, 1U);
-    taskAndDeadlines.addJob("C", 40U, 1U);
-    taskAndDeadlines.addJob("D", 30U, 1U);
+    taskAndDeadlines.addJob("A", 20, 4);
+    taskAndDeadlines.addJob("B", 10, 1);
+    taskAndDeadlines.addJob("C", 40, 1);
+    taskAndDeadlines.addJob("D", 30, 1);
 
     JobWithProfitAndDeadlines::JobNames actualNames(taskAndDeadlines.getJobsOrderWithMaximumProfit());
 
@@ -21,11 +21,11 @@ TEST(JobWithProfitAndDeadlinesTest, GetJobsAsPossibleWorksOnExample1) {
 
 TEST(JobWithProfitAndDeadlinesTest, GetJobsAsPossibleWorksOnExample2) {
     JobWithProfitAndDeadlines taskAndDeadlines;
-    taskAndDeadlines.addJob("A", 100U, 2U);
-    taskAndDeadlines.addJob("B", 19U, 1U);
-    taskAndDeadlines.addJob("C", 27U, 2U);
-    taskAndDeadlines.addJob("D", 25U, 1U);
-    taskAndDeadlines.addJob("E", 15U, 3U);
+    taskAndDeadlines.addJob("A", 100, 2);
+    taskAndDeadlines.addJob("B", 19, 1);
+    taskAndDeadlines.addJob("C", 27, 2);
+    taskAndDeadlines.addJob("D", 25, 1);
+    taskAndDeadlines.addJob("E", 15, 3);
 
     JobWithProfitAndDeadlines::JobNames actualNames(taskAndDeadlines.getJobsOrderWithMaximumProfit());
 

@@ -13,8 +13,8 @@ namespace algorithm {
 template <typename Values>
 class FindTheMissingNumber {
 public:
-    using Count = unsigned int;
-    using Index = unsigned int;
+    using Count = int;
+    using Index = int;
     using Value = typename Values::value_type;
 
     FindTheMissingNumber() = default;

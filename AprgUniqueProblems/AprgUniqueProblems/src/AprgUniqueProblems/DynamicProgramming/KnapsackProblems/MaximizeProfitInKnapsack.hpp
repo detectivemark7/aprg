@@ -8,10 +8,10 @@ namespace alba {
 
 class MaximizeProfitInKnapsack {
 public:
-    using Index = unsigned int;
-    using Weight = unsigned int;
-    using Profit = unsigned int;
-    using ItemIndex = unsigned int;
+    using Index = int;
+    using Weight = int;
+    using Profit = int;
+    using ItemIndex = int;
     using Item = std::pair<Weight, Profit>;
     using Profits = std::vector<Profit>;
     using Items = std::vector<Item>;

@@ -16,7 +16,7 @@ WordWrapProblemWithoutLineWidth::Cost WordWrapProblemWithoutLineWidth::getOptimi
     if (!m_words.empty()) {
         Index firstWordLength = m_words.front().length();
         RecursionDetails recursionDetails{firstWordLength, Indices{firstWordLength}};
-        result = getOptimizedCostUsingNaiveRecursion(recursionDetails, 1U);
+        result = getOptimizedCostUsingNaiveRecursion(recursionDetails, 1);
     }
     return result;
 }
@@ -59,7 +59,7 @@ WordWrapProblemWithoutLineWidth::Cost WordWrapProblemWithoutLineWidth::getOptimi
 WordWrapProblemWithoutLineWidth::Cost WordWrapProblemWithoutLineWidth::getOptimizedCostUsingNaiveRecursion(
     RecursionDetails const& recursionDetails, Index const wordIndex) const {
     Cost result(0);
-    if (wordIndex < m_words.size()) {
+    if (wordIndex < static_cast<Index>(m_words.size())) {
         result = MAX_COST;
         Index wordLength(m_words.at(wordIndex).length());
         {

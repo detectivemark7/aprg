@@ -2,6 +2,7 @@
 
 #include <Common/String/AlbaStringHelper.hpp>
 
+#include <cstdint>
 #include <limits>
 #include <vector>
 
@@ -17,32 +18,32 @@ public:
     // -> A + B + AB
     // -> AB + AB
 
-    using HashValue = unsigned long long;
+    using HashValue = uint64_t;
     using HashValues = std::vector<HashValue>;
 
-    static constexpr HashValue RADIX = 256U;
-    static constexpr HashValue A_LARGE_PRIME = 1229952067U;
-    static constexpr HashValue UNUSED_VALUE = std::numeric_limits<unsigned int>::max();
+    static constexpr HashValue RADIX = 256;
+    static constexpr HashValue A_LARGE_PRIME = 1229952067;
+    static constexpr HashValue UNUSED_VALUE = std::numeric_limits<int>::max();
 
     StringConstruction(std::string const& stringToConstruct, stringHelper::strings const& subStrings);
 
-    unsigned int getCount();
-    unsigned int getCountSquareRootAlgorithm();
+    int getCount();
+    int getCountSquareRootAlgorithm();
 
 private:
     void initialize();
     void removeEmptySubstrings();
     void removeDuplicateSubstrings();
     void saveHashOfAllSubstrings();
-    unsigned int getCount(unsigned int const prefixLength);
-    unsigned int getCountSquareRootAlgorithm(unsigned int const prefixLength);
-    unsigned int count(unsigned int const prefixLength);
-    unsigned int countSquareRootAlgorithm(unsigned int const prefixLength);
+    int getCount(int const prefixLength);
+    int getCountSquareRootAlgorithm(int const prefixLength);
+    int count(int const prefixLength);
+    int countSquareRootAlgorithm(int const prefixLength);
 
     std::string m_stringToConstruct;
     stringHelper::strings m_subStrings;
     HashValues m_subStringHash;
-    std::vector<unsigned int> m_prefixLengthToCount;  // dynamic programming using memoization
+    std::vector<int> m_prefixLengthToCount;  // dynamic programming using memoization
 };
 
 }  // namespace alba

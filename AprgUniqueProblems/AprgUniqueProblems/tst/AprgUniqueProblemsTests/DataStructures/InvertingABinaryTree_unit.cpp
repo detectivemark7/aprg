@@ -17,9 +17,9 @@ TEST(InvertingABinaryTreeTest, ThreeNodes) {
 
     std::unique_ptr<Node> result = invertABinaryTree(move(node2));
 
-    EXPECT_EQ(2U, result->value);
-    EXPECT_EQ(3U, result->leftPointer->value);
-    EXPECT_EQ(1U, result->rightPointer->value);
+    EXPECT_EQ(2, result->value);
+    EXPECT_EQ(3, result->leftPointer->value);
+    EXPECT_EQ(1, result->rightPointer->value);
     EXPECT_FALSE(result->leftPointer->leftPointer);
     EXPECT_FALSE(result->leftPointer->rightPointer);
     EXPECT_FALSE(result->rightPointer->leftPointer);
@@ -43,13 +43,13 @@ TEST(InvertingABinaryTreeTest, SevenNodes) {
 
     std::unique_ptr<Node> result = invertABinaryTree(move(node4));
 
-    EXPECT_EQ(4U, result->value);
-    EXPECT_EQ(6U, result->leftPointer->value);
-    EXPECT_EQ(2U, result->rightPointer->value);
-    EXPECT_EQ(7U, result->leftPointer->leftPointer->value);
-    EXPECT_EQ(5U, result->leftPointer->rightPointer->value);
-    EXPECT_EQ(3U, result->rightPointer->leftPointer->value);
-    EXPECT_EQ(1U, result->rightPointer->rightPointer->value);
+    EXPECT_EQ(4, result->value);
+    EXPECT_EQ(6, result->leftPointer->value);
+    EXPECT_EQ(2, result->rightPointer->value);
+    EXPECT_EQ(7, result->leftPointer->leftPointer->value);
+    EXPECT_EQ(5, result->leftPointer->rightPointer->value);
+    EXPECT_EQ(3, result->rightPointer->leftPointer->value);
+    EXPECT_EQ(1, result->rightPointer->rightPointer->value);
 }
 
 }  // namespace InvertingABinaryTree

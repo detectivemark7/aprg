@@ -8,9 +8,9 @@ namespace alba {
 
 class WeightedJobScheduling {
 public:
-    using Index = unsigned int;
-    using Time = unsigned int;
-    using Profit = unsigned int;
+    using Index = int;
+    using Time = int;
+    using Profit = int;
 
     struct Job {
         Time startTime;

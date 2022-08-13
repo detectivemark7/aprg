@@ -8,8 +8,8 @@ namespace alba {
 
 class MobileNumericKeypadProblem {
 public:
-    using NumpadValue = unsigned int;
-    using Count = unsigned int;
+    using NumpadValue = int;
+    using Count = int;
     using NumpadValues = std::vector<NumpadValue>;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;

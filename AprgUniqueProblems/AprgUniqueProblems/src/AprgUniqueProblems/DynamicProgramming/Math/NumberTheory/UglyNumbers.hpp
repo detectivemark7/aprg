@@ -7,8 +7,8 @@ namespace alba {
 
 class UglyNumbers {
 public:
-    using Index = unsigned int;
-    using Number = unsigned int;
+    using Index = int;
+    using Number = int;
     using Numbers = std::vector<Number>;
     using Booleans = std::vector<bool>;
     static constexpr Number MAX_NUMBER = std::numeric_limits<Number>::max();

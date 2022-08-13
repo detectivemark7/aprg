@@ -46,7 +46,7 @@ MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimum
     if (!m_sequence.empty()) {
         Counts indexToCountOfJumps(m_sequence.size(), static_cast<Count>(MAX_COUNT));
         indexToCountOfJumps[0] = 0;
-        for (Index startOfJumpIndex(0); startOfJumpIndex < m_sequence.size(); startOfJumpIndex++) {
+        for (Index startOfJumpIndex(0); startOfJumpIndex < static_cast<Index>(m_sequence.size()); startOfJumpIndex++) {
             Count countOfJumps = indexToCountOfJumps.at(startOfJumpIndex) + 1;
             Index maxPossibleJumpIndex =
                 min(startOfJumpIndex + m_sequence.at(startOfJumpIndex), static_cast<Index>(m_sequence.size() - 1));
@@ -131,7 +131,7 @@ MinimumNumberOfJumpsToReachEnd::Indices MinimumNumberOfJumpsToReachEnd::getPathO
 MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimumNumberOfJumpsUsingNaiveRecursion(
     Index const startOfJumpIndex) const {
     Count result(0);
-    if (startOfJumpIndex + 1 < m_sequence.size()) {
+    if (startOfJumpIndex + 1 < static_cast<Index>(m_sequence.size())) {
         result = MAX_COUNT;
         Index maxPossibleJumpIndex =
             min(startOfJumpIndex + m_sequence.at(startOfJumpIndex), static_cast<Index>(m_sequence.size() - 1));
@@ -147,7 +147,7 @@ MinimumNumberOfJumpsToReachEnd::Count MinimumNumberOfJumpsToReachEnd::getMinimum
     Counts& indexToCountOfJumps, Index const startOfJumpIndex) const {
     Count result(indexToCountOfJumps.at(startOfJumpIndex));
     if (MAX_COUNT == result) {
-        if (startOfJumpIndex + 1 < m_sequence.size()) {
+        if (startOfJumpIndex + 1 < static_cast<Index>(m_sequence.size())) {
             // result is already MAX_COUNT
             Index maxPossibleJumpIndex =
                 min(startOfJumpIndex + m_sequence.at(startOfJumpIndex), static_cast<Index>(m_sequence.size() - 1));

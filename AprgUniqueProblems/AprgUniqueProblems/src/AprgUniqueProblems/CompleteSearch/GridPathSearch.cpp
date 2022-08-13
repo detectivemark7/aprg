@@ -2,28 +2,28 @@
 
 namespace alba {
 
-GridPathSearch::GridPathSearch(unsigned int const gridSide)
+GridPathSearch::GridPathSearch(int const gridSide)
     : m_gridSide(gridSide),
       m_numberOfCells(gridSide * gridSide),
-      m_numberTraversedCells(0U),
-      m_numberOfCompletePaths(0U),
+      m_numberTraversedCells(0),
+      m_numberOfCompletePaths(0),
       m_grid()  // just initialize this when searching
 {}
 
-unsigned int GridPathSearch::countPaths() {
+int GridPathSearch::countPaths() {
     startSearch();
     return m_numberOfCompletePaths;
 }
 
-bool GridPathSearch::isLowerRightCorner(unsigned int const x, unsigned int const y) {
-    return x == m_grid.getNumberOfColumns() - 1 && y == m_grid.getNumberOfRows() - 1;  // lower-right corner
+bool GridPathSearch::isLowerRightCorner(int const x, int const y) {
+    // lower-right corner
+    return x == static_cast<int>(m_grid.getNumberOfColumns()) - 1 &&
+           y == static_cast<int>(m_grid.getNumberOfRows()) - 1;
 }
 
-bool GridPathSearch::canTraverse(unsigned int const x, unsigned int const y) {
-    return m_grid.isInside(x, y) && !m_grid.getEntry(x, y);
-}
+bool GridPathSearch::canTraverse(int const x, int const y) { return m_grid.isInside(x, y) && !m_grid.getEntry(x, y); }
 
-bool GridPathSearch::shouldStop(unsigned int const x, unsigned int const y, Movement const previousMovement) {
+bool GridPathSearch::shouldStop(int const x, int const y, Movement const previousMovement) {
     // Optimization 3: If the path touches a wall and can turn either left or right, the grid splits into two parts that
     // contain unvisited squares. Optimization 4: The idea of Optimization 3 can be generalized: if the path cannot
     // continue forward but can turn either left or right, the grid splits into two parts that both contain unvisited
@@ -58,15 +58,15 @@ void GridPathSearch::startSearch() {
     m_numberOfCompletePaths = 0;
     m_numberTraversedCells = 2;
     m_grid.clearAndResize(m_gridSide, m_gridSide);
-    m_grid.setEntry(0U, 0U, true);
-    m_grid.setEntry(1U, 0U, true);  // lets pick right
+    m_grid.setEntry(0, 0, true);
+    m_grid.setEntry(1, 0, true);  // lets pick right
 
-    search(1U, 0U, Movement::Right);
+    search(1, 0, Movement::Right);
 
     m_numberOfCompletePaths *= 2;  // multiply by 2 (optimization 1)
 }
 
-void GridPathSearch::search(unsigned int const x, unsigned int const y, Movement const previousMovement) {
+void GridPathSearch::search(int const x, int const y, Movement const previousMovement) {
     if (m_numberTraversedCells == m_numberOfCells) {
         if (isLowerRightCorner(x, y))  // lower-right corner
         {
@@ -85,7 +85,7 @@ void GridPathSearch::search(unsigned int const x, unsigned int const y, Movement
     }
 }
 
-void GridPathSearch::searchNextCoordinate(unsigned int const x, unsigned int const y, Movement const movement) {
+void GridPathSearch::searchNextCoordinate(int const x, int const y, Movement const movement) {
     if (canTraverse(x, y)) {
         m_numberTraversedCells++;
         m_grid.setEntry(x, y, true);

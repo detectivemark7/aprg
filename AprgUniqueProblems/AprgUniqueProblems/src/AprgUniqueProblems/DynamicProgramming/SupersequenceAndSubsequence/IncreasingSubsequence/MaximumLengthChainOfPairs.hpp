@@ -7,8 +7,8 @@ namespace alba {
 
 class MaximumLengthChainOfPairs {
 public:
-    using Index = unsigned int;
-    using Pair = std::pair<unsigned int, unsigned int>;
+    using Index = int;
+    using Pair = std::pair<int, int>;
     using Pairs = std::vector<Pair>;
     using IndexToIndex = std::vector<Index>;
 

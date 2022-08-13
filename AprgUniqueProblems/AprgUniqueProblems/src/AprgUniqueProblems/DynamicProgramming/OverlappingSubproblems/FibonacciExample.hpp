@@ -9,7 +9,7 @@ namespace alba {
 
 class FibonacciExample {
 public:
-    using Number = unsigned int;
+    using Number = int;
     using Numbers = std::vector<Number>;
     using NumberSet = std::set<Number>;
     using NumberMatrix = matrix::AlbaMatrix<Number>;

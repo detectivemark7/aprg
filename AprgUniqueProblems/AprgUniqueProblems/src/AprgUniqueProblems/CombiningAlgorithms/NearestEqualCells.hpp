@@ -15,9 +15,9 @@ public:
     // Each cell is assigned a letter, and our task is to find two cells with the same letter whose distance is minimum,
     // where the distance between cells (x1, y1) and (x2, y2) is |x1-x2|+|y1-y2|.
 
-    using Value = unsigned int;
+    using Value = int;
     using ValueMatrix = matrix::AlbaMatrix<Value>;
-    using Coordinate = std::pair<unsigned int, unsigned int>;
+    using Coordinate = std::pair<int, int>;
     using CoordinatePair = std::pair<Coordinate, Coordinate>;
     using Coordinates = std::vector<Coordinate>;
     using Graph = algorithm::UndirectedGraphWithListOfEdges<Coordinate>;
@@ -35,7 +35,7 @@ private:
     Coordinate getFirstCoordinateUsingBfs(Value const value) const;
     Coordinate getSecondCoordinateUsingBfs(Value const value, Coordinate const& firstCoordinate) const;
     Coordinate getCoordinateUsingBfs(Value const value, Coordinate const& firstCoordinate, Bfs& bfs) const;
-    unsigned int getDistance(Coordinate const& coordinate1, Coordinate const& coordinate2) const;
+    int getDistance(Coordinate const& coordinate1, Coordinate const& coordinate2) const;
     ValueMatrix const& m_valueMatrix;
     Graph m_coordinateGraph;
 };

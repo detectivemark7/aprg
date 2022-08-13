@@ -6,9 +6,9 @@ namespace alba {
 
 class FindLengthOfTheLongestConsecutivePath {
 public:
-    using Index = unsigned int;
+    using Index = int;
     using Value = char;
-    using Count = unsigned int;
+    using Count = int;
     using ValueGrid = matrix::AlbaMatrix<Value>;
     using CountGrid = matrix::AlbaMatrix<Count>;
     static constexpr Count UNUSED_COUNT = std::numeric_limits<Count>::max();

@@ -19,7 +19,7 @@ MaximumLengthChainOfPairs::Index MaximumLengthChainOfPairs::getLongestLength() c
     Index result(0);
     if (!m_sequence.empty()) {
         IndexToIndex subLengths(m_sequence.size(), 1);
-        for (Index index(0); index < m_sequence.size(); index++) {
+        for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
             Index& subLength(subLengths[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
                 if (m_sequence.at(lowerIndex).second < m_sequence.at(index).first) {
@@ -42,7 +42,7 @@ MaximumLengthChainOfPairs::Pairs MaximumLengthChainOfPairs::getLongestSubsequenc
         IndexToIndex indexToPreviousIndex(m_sequence.size());
         iota(indexToPreviousIndex.begin(), indexToPreviousIndex.end(), 0);
 
-        for (Index index(0); index < m_sequence.size(); index++) {
+        for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
             Index& subLength(subLengths[index]);
             Index& previousIndex(indexToPreviousIndex[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {

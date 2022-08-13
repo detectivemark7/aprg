@@ -10,8 +10,8 @@ namespace alba {
 class PathSumInGridInRightOrDownWithDiagonalTraversal {
 public:
     enum class Type { MinimumSum, MaximumSum };
-    using Index = unsigned int;
-    using Value = unsigned int;
+    using Index = int;
+    using Value = int;
     using Grid = matrix::AlbaMatrix<Value>;
     using Path = std::vector<Value>;
     using CompareFunction = std::function<bool(Value const&, Value const&)>;

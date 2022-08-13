@@ -28,7 +28,7 @@ EggDroppingPuzzle::Count EggDroppingPuzzle::getMinimumNumberOfTrialsUsingIterati
     // each egg Auxiliary Space: O(n*k).
     // -> As a 2-D array of size ‘n*k’ is used for storing elements.
 
-    CountMatrix countMatrix(m_numberOfEggs + 1, m_numberOfFloors + 1, 0U);
+    CountMatrix countMatrix(m_numberOfEggs + 1, m_numberOfFloors + 1, 0);
     for (Count remainingEggs = 1; remainingEggs <= m_numberOfEggs; remainingEggs++) {
         countMatrix.setEntry(remainingEggs, 1, 1);
     }
@@ -38,7 +38,7 @@ EggDroppingPuzzle::Count EggDroppingPuzzle::getMinimumNumberOfTrialsUsingIterati
     for (Count remainingEggs = 2; remainingEggs <= m_numberOfEggs; remainingEggs++) {
         for (Count floorIndexPlusOne = 2; floorIndexPlusOne <= m_numberOfFloors; floorIndexPlusOne++) {
             Count minimumCount(MAX_COUNT);
-            for (unsigned int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
+            for (int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
                 Count countForFloor =
                     max(countMatrix.getEntry(remainingEggs - 1, currentFloor - 1),
                         countMatrix.getEntry(remainingEggs, floorIndexPlusOne - currentFloor));
@@ -61,7 +61,7 @@ EggDroppingPuzzle::Count EggDroppingPuzzle::getMinimumNumberOfTrialsUsingNaiveRe
     } else {
         // Consider all droppings from 1st floor to kth floor and return the minimum of these values plus 1.
         Count minimumCount(MAX_COUNT);
-        for (unsigned int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
+        for (int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
             Count countForFloor =
                 max(getMinimumNumberOfTrialsUsingNaiveRecursion(remainingEggs - 1, currentFloor - 1),
                     getMinimumNumberOfTrialsUsingNaiveRecursion(remainingEggs, floorIndexPlusOne - currentFloor));
@@ -79,7 +79,7 @@ EggDroppingPuzzle::Count EggDroppingPuzzle::getMinimumNumberOfTrialsUsingMemoiza
             result = floorIndexPlusOne;
         } else {
             // result is already MAX_COUNT
-            for (unsigned int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
+            for (int currentFloor = 1; currentFloor <= floorIndexPlusOne; currentFloor++) {
                 Count countForFloor =
                     max(getMinimumNumberOfTrialsUsingMemoizationDP(countMatrix, remainingEggs - 1, currentFloor - 1),
                         getMinimumNumberOfTrialsUsingMemoizationDP(

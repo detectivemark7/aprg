@@ -15,8 +15,8 @@ public:
 
     struct Event {
         std::string eventName;
-        unsigned int startTime;
-        unsigned int endTime;
+        int startTime;
+        int endTime;
     };
 
     using Events = std::deque<Event>;
@@ -24,7 +24,7 @@ public:
 
     EventNames getAsMuchEventsAsPossible() const;
 
-    void addEvent(std::string const& eventName, unsigned int const startTime, unsigned int const endTime);
+    void addEvent(std::string const& eventName, int const startTime, int const endTime);
 
 private:
     Events m_events;

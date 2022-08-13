@@ -7,7 +7,7 @@ using namespace std;
 namespace alba {
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample1) {
-    IsPartialSumPossibleInKnapsack queryForTest(9U, {{3U, 34U, 4U, 12U, 5U, 2U}});
+    IsPartialSumPossibleInKnapsack queryForTest(9, {{3, 34, 4, 12, 5, 2}});
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
@@ -16,7 +16,7 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample1) {
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample2) {
-    IsPartialSumPossibleInKnapsack queryForTest(30U, {{3U, 34U, 4U, 12U, 5U, 2U}});
+    IsPartialSumPossibleInKnapsack queryForTest(30, {{3, 34, 4, 12, 5, 2}});
 
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
@@ -25,7 +25,7 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample2) {
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample3) {
-    IsPartialSumPossibleInKnapsack queryForTest(11U, {{1U, 5U, 5U, 8U}});
+    IsPartialSumPossibleInKnapsack queryForTest(11, {{1, 5, 5, 8}});
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
@@ -34,7 +34,7 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample3) {
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample4) {
-    IsPartialSumPossibleInKnapsack queryForTest(2U, {{1U, 5U, 8U}});
+    IsPartialSumPossibleInKnapsack queryForTest(2, {{1, 5, 8}});
 
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_FALSE(queryForTest.isPartialSumPossibleUsingMemoizationDP());
@@ -43,7 +43,7 @@ TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample4) {
 }
 
 TEST(IsPartialSumPossibleInKnapsackTest, GetBestProfitWorksOnExample5) {
-    IsPartialSumPossibleInKnapsack queryForTest(9U, {{1U, 5U, 8U}});
+    IsPartialSumPossibleInKnapsack queryForTest(9, {{1, 5, 8}});
 
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingNaiveRecursion());
     EXPECT_TRUE(queryForTest.isPartialSumPossibleUsingMemoizationDP());

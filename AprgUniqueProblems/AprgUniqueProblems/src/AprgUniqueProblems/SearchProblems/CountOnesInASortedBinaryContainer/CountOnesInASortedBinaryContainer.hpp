@@ -7,16 +7,16 @@ namespace algorithm {
 template <typename Values>
 class CountOnesInASortedBinaryContainer {
 public:
-    using Count = unsigned int;
-    using Index = unsigned int;
+    using Count = int;
+    using Index = int;
     using Value = typename Values::value_type;
 
     CountOnesInASortedBinaryContainer() = default;
 
     Count getNumberOfOnesInASortedBinaryContainer(Values const& sortedBinaryValues) {
-        Count result(0U);
+        Count result(0);
         if (!sortedBinaryValues.empty()) {
-            Index lowerIndex(0U), higherIndex(sortedBinaryValues.size() - 1);
+            Index lowerIndex(0), higherIndex(sortedBinaryValues.size() - 1);
             while (lowerIndex < higherIndex) {
                 Index middleIndex = (lowerIndex + higherIndex) / 2;
                 if (sortedBinaryValues.at(middleIndex)) {
@@ -36,14 +36,14 @@ public:
     //    Implementation using FindSmallestValueWithTrue
     //    Index getNumberOfOnesInASortedBinaryContainer(Values const& sortedBinaryValues)
     //    {
-    //        Index result(0U);
+    //        Index result(0);
     //        if(!sortedBinaryValues.empty())
     //        {
     //            FindSmallestValueWithTrue<Index> query([&](Index const index) -> bool // this is binary search
     //            {
     //                return sortedBinaryValues.at(index);
     //            });
-    //            Index smallestOneIndex = query.getSmallestValueWithTrue(0U, sortedBinaryValues.size()-1U);
+    //            Index smallestOneIndex = query.getSmallestValueWithTrue(0, sortedBinaryValues.size()-1);
     //            if(sortedBinaryValues.at(smallestOneIndex))
     //            {
     //                result = sortedBinaryValues.size() - smallestOneIndex;

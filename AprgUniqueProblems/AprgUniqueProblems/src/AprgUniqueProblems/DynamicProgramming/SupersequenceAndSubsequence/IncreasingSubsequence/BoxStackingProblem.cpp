@@ -19,7 +19,7 @@ BoxStackingProblem::Index BoxStackingProblem::getMaximumStackedHeight() const {
     if (!m_boxes.empty()) {
         Boxes possibleBoxes(getAllPossibleBoxes());
         Values partialHeights(possibleBoxes.size(), 0);
-        for (Index index(0); index < possibleBoxes.size(); index++) {
+        for (Index index(0); index < static_cast<Index>(possibleBoxes.size()); index++) {
             Box const& rightBox(possibleBoxes.at(index));
             Value& partialHeight(partialHeights[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
@@ -47,7 +47,7 @@ BoxStackingProblem::Boxes BoxStackingProblem::getBoxesWithMaximumStackedHeight()
 
         iota(indexToPreviousIndex.begin(), indexToPreviousIndex.end(), 0);
 
-        for (Index index(0); index < possibleBoxes.size(); index++) {
+        for (Index index(0); index < static_cast<Index>(possibleBoxes.size()); index++) {
             Box const& rightBox(possibleBoxes.at(index));
             Value& partialHeight(partialHeights[index]);
             Value& previousIndex(indexToPreviousIndex[index]);

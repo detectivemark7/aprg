@@ -10,7 +10,7 @@ namespace alba {
 
 class CountingTilings {
 public:
-    using Count = unsigned int;
+    using Count = int;
     using Grid = matrix::AlbaMatrix<char>;
     using Row = std::string;
     using Rows = std::vector<Row>;

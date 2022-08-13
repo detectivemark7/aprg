@@ -9,8 +9,8 @@ namespace alba {
 
 class BooleanParenthesizationProblem {
 public:
-    using Count = unsigned int;
-    using Index = unsigned int;
+    using Count = int;
+    using Index = int;
     using Operator = char;
     using Booleans = std::vector<bool>;
     using Operators = std::vector<char>;

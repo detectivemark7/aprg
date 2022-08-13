@@ -82,7 +82,7 @@ PrintMaximumNumberOfAs::Count PrintMaximumNumberOfAs::getMaxCountOfAOnScreenUsin
         return m_numberOfPresses;
     } else {
         Counts countsOnScreen(m_numberOfPresses, 0);
-        for (Count remainingNumberOfPresses = 1; remainingNumberOfPresses <= 6U; remainingNumberOfPresses++) {
+        for (Count remainingNumberOfPresses = 1; remainingNumberOfPresses <= 6; remainingNumberOfPresses++) {
             countsOnScreen[remainingNumberOfPresses - 1] = remainingNumberOfPresses;
         }
         for (Count remainingNumberOfPresses = 7; remainingNumberOfPresses <= m_numberOfPresses;

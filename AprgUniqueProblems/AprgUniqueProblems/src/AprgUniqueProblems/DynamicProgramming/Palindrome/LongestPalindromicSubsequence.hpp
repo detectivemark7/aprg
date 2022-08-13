@@ -9,9 +9,9 @@ namespace alba {
 
 class LongestPalindromicSubsequence {
 public:
-    using Index = unsigned int;
-    using Count = unsigned int;
-    using Value = unsigned int;
+    using Index = int;
+    using Count = int;
+    using Value = int;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;
     static constexpr Count UNUSED_COUNT = std::numeric_limits<Count>::max();

@@ -9,8 +9,8 @@ namespace alba {
 
 class WordWrapProblemWithLineWidth {
 public:
-    using Index = unsigned int;
-    using Cost = unsigned int;
+    using Index = int;
+    using Cost = int;
     using Indices = std::vector<Index>;
     using Costs = std::vector<Cost>;
     struct RecursionDetails {

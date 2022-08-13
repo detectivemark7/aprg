@@ -9,9 +9,9 @@ namespace alba {
 
 class ShortestCommonSupersequence {
 public:
-    using Index = unsigned int;
-    using Count = unsigned int;
-    using Value = unsigned int;
+    using Index = int;
+    using Count = int;
+    using Value = int;
     using Values = std::vector<Value>;
     using Counts = std::vector<Count>;
     using CountMatrix = matrix::AlbaMatrix<Count>;

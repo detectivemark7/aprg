@@ -29,7 +29,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingMemoizationDP() co
     bool result(false);
     if (!m_inputValues.empty()) {
         StateMatrix stateMatrix(m_targetSum + 1, m_inputValues.size() + 1, State::Unused);
-        for (Index valueIndex = 0; valueIndex < stateMatrix.getNumberOfRows(); valueIndex++) {
+        for (Index valueIndex = 0; valueIndex < static_cast<Index>(stateMatrix.getNumberOfRows()); valueIndex++) {
             stateMatrix.setEntry(0, valueIndex, State::True);
         }
         result = isPartialSumPossibleUsingMemoizationDP(stateMatrix, m_targetSum, 0);
@@ -44,11 +44,11 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingIterativeDP() cons
     bool result(false);
     if (!m_inputValues.empty()) {
         BooleanMatrix isPossibleMatrix(m_targetSum + 1, m_inputValues.size() + 1, false);
-        for (Index valueIndex = 0; valueIndex < isPossibleMatrix.getNumberOfRows(); valueIndex++) {
+        for (Index valueIndex = 0; valueIndex < static_cast<Index>(isPossibleMatrix.getNumberOfRows()); valueIndex++) {
             isPossibleMatrix.setEntry(0, valueIndex, true);
         }
         for (Value partialSum = 1; partialSum <= m_targetSum; partialSum++) {
-            for (Index valueIndex = 1; valueIndex <= m_inputValues.size(); valueIndex++) {
+            for (Index valueIndex = 1; valueIndex <= static_cast<Index>(m_inputValues.size()); valueIndex++) {
                 Value previousValue(m_inputValues.at(valueIndex - 1));
                 bool isPossible(isPossibleMatrix.getEntry(partialSum, valueIndex - 1));  // get previous entry result
                 if (!isPossible && partialSum >= previousValue) {
@@ -90,7 +90,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingIterativeDPAndSpac
 bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingNaiveRecursion(
     Value const partialSum, Index const valueIndex) const {
     bool result(false);
-    if (valueIndex < m_inputValues.size()) {
+    if (valueIndex < static_cast<Index>(m_inputValues.size())) {
         Value currentValue(m_inputValues.at(valueIndex));
         if (partialSum == currentValue) {
             result = true;
@@ -111,7 +111,7 @@ bool IsPartialSumPossibleInKnapsack::isPartialSumPossibleUsingMemoizationDP(
     State resultState = stateMatrix.getEntry(partialSum, valueIndex);
     if (State::Unused == resultState) {
         bool result(false);
-        if (valueIndex < m_inputValues.size()) {
+        if (valueIndex < static_cast<Index>(m_inputValues.size())) {
             Value currentValue(m_inputValues.at(valueIndex));
             if (partialSum >= currentValue) {
                 result = isPartialSumPossibleUsingMemoizationDP(stateMatrix, partialSum, valueIndex + 1)  // skip value
