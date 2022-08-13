@@ -46,7 +46,7 @@ public:
     // -> the array is divided into sqrt(n) blocks, each of which contains sqrt(n) elements.
     // So all operations take O(sqrt(n)) time.
 
-    using Index = unsigned int;
+    using Index = int;
     using Value = typename Values::value_type;
     using BlockValue = typename BlockValues::value_type;
     using Output = BlockValue;
@@ -58,7 +58,7 @@ public:
         Values const& valuesToCheck, Index const suggestedNumberOfBlocks, ValuesFunction const& valuesFunction,
         BlockValuesFunction const& blockValuesFunction)
         : m_values(valuesToCheck),
-          m_blockSize(0U),
+          m_blockSize(0),
           m_blocks(),
           m_valuesFunction(valuesFunction),
           m_blockValuesFunction(blockValuesFunction) {
@@ -109,7 +109,7 @@ public:
             m_values[index] = newValue;
 
             Index start = getMultipleThatIsLesserOrEqual(m_blockSize, index);
-            Index end = std::min(start + m_blockSize, static_cast<unsigned int>(m_values.size()));
+            Index end = std::min(start + m_blockSize, static_cast<int>(m_values.size()));
             m_blocks[start / m_blockSize] = m_valuesFunction(m_values.cbegin() + start, m_values.cbegin() + end);
         }
     }
@@ -117,12 +117,12 @@ public:
 protected:
     void initialize(Values const& valuesToCheck, Index const suggestedNumberOfBlocks) {
         if (!valuesToCheck.empty()) {
-            m_blockSize = std::max(static_cast<unsigned int>(valuesToCheck.size() / suggestedNumberOfBlocks), 1U);
+            m_blockSize = std::max(static_cast<int>(valuesToCheck.size() / suggestedNumberOfBlocks), 1);
             Index numberOfBlocks =
-                getMultipleThatIsGreaterOrEqual(static_cast<unsigned int>(valuesToCheck.size()), m_blockSize);
+                getMultipleThatIsGreaterOrEqual(static_cast<int>(valuesToCheck.size()), m_blockSize);
             m_blocks.reserve(numberOfBlocks);
             for (Index start = 0; start < m_values.size(); start += m_blockSize) {
-                Index end = std::min(start + m_blockSize, static_cast<unsigned int>(m_values.size()));
+                Index end = std::min(start + m_blockSize, static_cast<int>(m_values.size()));
                 m_blocks.emplace_back(m_valuesFunction(m_values.cbegin() + start, m_values.cbegin() + end));
             }
             m_blocks.shrink_to_fit();
@@ -163,7 +163,7 @@ RangeQuery::ValuesFunction xorARangeOfValues = [](Values::const_iterator itStart
         itStart + 1, itEnd, *itStart, [](Value const value1, Value const value2) { return value1 ^ value2; });
 };
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     int numberOfValues, numberOfModifications;
     my_cin >> numberOfValues >> numberOfModifications;
     Values values(numberOfValues);
@@ -197,9 +197,9 @@ void runTestCase(unsigned int const testCaseNumber) {
 }
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

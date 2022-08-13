@@ -92,7 +92,7 @@ int calc(int s, ll ban, int a, int b, int who) {
     }
 }
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     int s, ra, pa, rb, pb, c;
     my_cin >> s >> ra >> pa >> rb >> pb >> c;
     ra--, pa--, rb--, pb--;
@@ -132,9 +132,9 @@ void runTestCase(unsigned int const testCaseNumber) {
 }
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

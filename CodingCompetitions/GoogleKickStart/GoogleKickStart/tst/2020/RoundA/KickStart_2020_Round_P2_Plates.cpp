@@ -29,7 +29,7 @@ namespace KickStart_2020_Round_P2_Plates {
 int n, k, p, a[50][30];
 int dp[51][1501];
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     my_cin >> n >> k >> p;
     memset(dp, 0xc0, sizeof(dp));
     dp[0][0] = 0;
@@ -46,9 +46,9 @@ void runTestCase(unsigned int const testCaseNumber) {
 }
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

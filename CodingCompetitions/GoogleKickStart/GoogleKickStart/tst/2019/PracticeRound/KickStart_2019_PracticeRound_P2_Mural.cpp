@@ -27,7 +27,7 @@ namespace KickStart_2019_PracticeRound_P2_Mural {
 #define my_cin cin
 #endif
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     int numberOfSections;
     my_cin >> numberOfSections;
     string scoresString;
@@ -56,7 +56,7 @@ void runTestCase(unsigned int const testCaseNumber) {
 
 /*
 Implementation of top scorer:
-void runTestCase(unsigned int const testCaseNumber)
+void runTestCase(int const testCaseNumber)
 {
     int N;
     my_cin >> N;
@@ -72,9 +72,9 @@ void runTestCase(unsigned int const testCaseNumber)
 }*/
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

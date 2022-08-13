@@ -27,7 +27,7 @@ namespace KickStart_2019_RoundA_P1_Training {
 #define my_cin cin
 #endif
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     int numberOfStudents, numberOfStudentsPerTeam;
     my_cin >> numberOfStudents >> numberOfStudentsPerTeam;
     vector<int> skillsOfStudents(numberOfStudents);
@@ -59,9 +59,9 @@ void runTestCase(unsigned int const testCaseNumber) {
 }
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

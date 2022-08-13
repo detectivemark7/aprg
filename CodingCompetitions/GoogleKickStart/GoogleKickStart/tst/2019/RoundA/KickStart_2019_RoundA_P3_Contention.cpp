@@ -79,7 +79,7 @@ int getMinimumSeatsFromRightToLeft(Intervals& bookings) {
     return getMinimumSeats(bookings);
 }
 
-void runTestCase(unsigned int const testCaseNumber) {
+void runTestCase(int const testCaseNumber) {
     int numberOfSeats, numberOfBookings;
     my_cin >> numberOfSeats >> numberOfBookings;
     Intervals bookings;
@@ -188,7 +188,7 @@ bool isWithinTheLimit(int minimumSeatsLimit)
     return ret;
 }
 
-void runTestCase(unsigned int const testCaseNumber)
+void runTestCase(int const testCaseNumber)
 {
     my_cin >> numberOfSeats >> numberOfBookings;
     bookings.resize(numberOfBookings);
@@ -214,9 +214,9 @@ void runTestCase(unsigned int const testCaseNumber)
 */
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }

@@ -25,7 +25,7 @@ namespace KickStart_2019_PracticeRound_P1_NumberGuessing {
 #define my_cin cin
 #endif
 
-void runTestCase(unsigned int const) {
+void runTestCase(int const) {
     long long minimumValue, maximumValue;
     my_cin >> minimumValue >> maximumValue;
     int numberOfTries;
@@ -46,9 +46,9 @@ void runTestCase(unsigned int const) {
 }
 
 void runAllTestCases() {
-    unsigned int numberOfTestCases;
+    int numberOfTestCases;
     my_cin >> numberOfTestCases;
-    for (unsigned int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
+    for (int testCaseNumber = 1; testCaseNumber <= numberOfTestCases; testCaseNumber++) {
         runTestCase(testCaseNumber);
     }
 }
