@@ -9,7 +9,7 @@ namespace alba {
 namespace algorithm {
 
 namespace {
-using AlphabetForTest = Alphabet<unsigned char>;
+using AlphabetForTest = Alphabet<uint8_t>;
 }
 
 TEST(AlphabetsTest, ContainsWorks) {
