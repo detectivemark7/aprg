@@ -59,7 +59,7 @@ void ChessEngineHandler::reset() {
 }
 
 void ChessEngineHandler::sendStringToEngine(string const& stringToEngine) {
-    unsigned long bytesWritten(0U);
+    DWORD bytesWritten(0U);
     string stringToWrite(stringToEngine);
     stringToWrite += "\n";
     long remainingLength = stringToWrite.length();
@@ -87,8 +87,8 @@ void ChessEngineHandler::processStringFromEngine(string const& stringFromEngine)
 
 void ChessEngineHandler::startMonitoringEngineOutput() {
     std::lock_guard<std::mutex> const lockGuard(m_readMutex);
-    unsigned long bytesRead;       // bytes read
-    unsigned long bytesAvailable;  // bytes available
+    DWORD bytesRead;       // bytes read
+    DWORD bytesAvailable;  // bytes available
     char buffer[MAX_BUFFER_SIZE];
     string stringBuffer;
     while (true) {
@@ -98,11 +98,11 @@ void ChessEngineHandler::startMonitoringEngineOutput() {
             stringBuffer.reserve(stringBuffer.size() + bytesRead);
             copy(begin(buffer), begin(buffer) + bytesRead, back_inserter(stringBuffer));
 
-            unsigned int currentIndex(0U);
+            int currentIndex(0U);
             bool shouldContinue(true);
             while (shouldContinue) {
-                unsigned int startIndex = currentIndex;
-                unsigned int newLineIndex = stringBuffer.find_first_of("\r\n", startIndex);
+                int startIndex = currentIndex;
+                int newLineIndex = stringBuffer.find_first_of("\r\n", startIndex);
                 if (isNotNpos(static_cast<int>(newLineIndex))) {
                     string oneLine(stringBuffer.substr(startIndex, newLineIndex - startIndex));
                     if (!oneLine.empty()) {

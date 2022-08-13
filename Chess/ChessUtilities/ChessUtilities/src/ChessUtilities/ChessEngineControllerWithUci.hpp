@@ -45,7 +45,7 @@ public:
     void setupFenString(std::string const& fenString);
     void go();
     void goWithPonder();
-    void goWithDepth(unsigned int const depth);
+    void goWithDepth(int const depth);
     void goInfinite();
     bool waitTillReadyAndReturnIfResetWasPerformed();
     void stop();

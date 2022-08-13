@@ -6,9 +6,9 @@ namespace chess {
 
 namespace EngineConstants {
 
-constexpr unsigned int NUMBER_OF_THREADS = 4;  // Desktop computer at home has four threads
+constexpr int NUMBER_OF_THREADS = 4;  // Desktop computer at home has four threads
 
-constexpr unsigned int NUMBER_OF_VARIATIONS = 20;
+constexpr int NUMBER_OF_VARIATIONS = 20;
 
 }  // namespace EngineConstants
 

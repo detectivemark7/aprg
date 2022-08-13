@@ -19,8 +19,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithMultiPvWithScore) {
 
     Variation expectedVariation{0, -69, {"e8f7", "e5e6", "f7e6"}};
     Variations expectedVariations{expectedVariation};
-    EXPECT_EQ(3U, actualDetails.depthInPlies);
-    EXPECT_EQ(3U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(3, actualDetails.depthInPlies);
+    EXPECT_EQ(3, actualDetails.selectiveDepthInPlies);
     EXPECT_EQ(expectedVariations, actualDetails.variations);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -35,8 +35,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithMultiPvWithMate) {
 
     Variation expectedVariation{-3, 0, {"b2d2"}};
     Variations expectedVariations{expectedVariation};
-    EXPECT_EQ(179U, actualDetails.depthInPlies);
-    EXPECT_EQ(2U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(179, actualDetails.depthInPlies);
+    EXPECT_EQ(2, actualDetails.selectiveDepthInPlies);
     EXPECT_EQ(expectedVariations, actualDetails.variations);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -53,8 +53,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithOverwritingVariationIf
 
     Variation expectedVariation{0, 98, {"g1e2", "c7c5", "d2e4"}};
     Variations expectedVariations{expectedVariation};
-    EXPECT_EQ(10U, actualDetails.depthInPlies);
-    EXPECT_EQ(12U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(10, actualDetails.depthInPlies);
+    EXPECT_EQ(12, actualDetails.selectiveDepthInPlies);
     EXPECT_EQ(expectedVariations, actualDetails.variations);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -72,8 +72,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithExpandingVariationsByO
     Variation expectedVariation1{0, 14, {"f6e4", "b1d2", "d8f6"}};
     Variation expectedVariation2{0, 98, {"g1e2", "c7c5", "d2e4"}};
     Variations expectedVariations{expectedVariation1, expectedVariation2};
-    EXPECT_EQ(10U, actualDetails.depthInPlies);
-    EXPECT_EQ(12U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(10, actualDetails.depthInPlies);
+    EXPECT_EQ(12, actualDetails.selectiveDepthInPlies);
     EXPECT_EQ(expectedVariations, actualDetails.variations);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -91,8 +91,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithExpandingVariationsMor
     Variation expectedVariation1{0, 14, {"f6e4", "b1d2", "d8f6"}};
     Variation expectedVariation2{0, 98, {"g1e2", "c7c5", "d2e4"}};
     Variations expectedVariations{expectedVariation1, {}, {}, {}, expectedVariation2};
-    EXPECT_EQ(10U, actualDetails.depthInPlies);
-    EXPECT_EQ(12U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(10, actualDetails.depthInPlies);
+    EXPECT_EQ(12, actualDetails.selectiveDepthInPlies);
     EXPECT_EQ(expectedVariations, actualDetails.variations);
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -107,8 +107,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksOnInfoExample4) {
     interpreter.updateCalculationDetails("info depth 23 currmove d7d6 currmovenumber 3");
 
     Variations expectedVariations;
-    EXPECT_EQ(0U, actualDetails.depthInPlies);
-    EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(0, actualDetails.depthInPlies);
+    EXPECT_EQ(0, actualDetails.selectiveDepthInPlies);
     EXPECT_TRUE(actualDetails.variations.empty());
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());
@@ -120,8 +120,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksOnBestMoveExample1) {
 
     interpreter.updateCalculationDetails("bestmove b4c2 ponder e1d1");
 
-    EXPECT_EQ(0U, actualDetails.depthInPlies);
-    EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(0, actualDetails.depthInPlies);
+    EXPECT_EQ(0, actualDetails.selectiveDepthInPlies);
     EXPECT_TRUE(actualDetails.variations.empty());
     EXPECT_EQ("b4c2", actualDetails.bestMove);
     EXPECT_EQ("e1d1", actualDetails.responseMoveToPonder);
@@ -137,8 +137,8 @@ TEST(UciInterpreterTest, UpdateCalculationDetailsWorksWithIgnoringStringsWithInv
     interpreter.updateCalculationDetails("INVALIDSTART bestmove b4c2 ponder e1d1");
 
     // unchanged
-    EXPECT_EQ(0U, actualDetails.depthInPlies);
-    EXPECT_EQ(0U, actualDetails.selectiveDepthInPlies);
+    EXPECT_EQ(0, actualDetails.depthInPlies);
+    EXPECT_EQ(0, actualDetails.selectiveDepthInPlies);
     EXPECT_TRUE(actualDetails.variations.empty());
     EXPECT_TRUE(actualDetails.bestMove.empty());
     EXPECT_TRUE(actualDetails.responseMoveToPonder.empty());

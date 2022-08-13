@@ -55,7 +55,7 @@ UciInterpreter::InfoDetails UciInterpreter::createInfoDetailsFromInfoTokens(stri
         } else if (isACommonParameter(token)) {
             infoDetails.commonParameterNameAndValue.emplace_back(token, tokens.at(++i));
         } else if ("multipv" == token) {
-            infoDetails.multipv = convertStringToNumber<unsigned int>(tokens.at(++i));
+            infoDetails.multipv = convertStringToNumber<int>(tokens.at(++i));
         } else if ("cp" == token) {
             infoDetails.scoreInCentipawns = convertStringToNumber<int>(tokens.at(++i));
         } else if ("mate" == token) {
@@ -73,9 +73,9 @@ UciInterpreter::InfoDetails UciInterpreter::createInfoDetailsFromInfoTokens(stri
 void UciInterpreter::saveCommonParametersOfBestLine(InfoDetails const& infoDetails) {
     for (StringPair const& nameAndValuePair : infoDetails.commonParameterNameAndValue) {
         if (nameAndValuePair.first == "depth") {
-            m_calculationDetails.depthInPlies = convertStringToNumber<unsigned int>(nameAndValuePair.second);
+            m_calculationDetails.depthInPlies = convertStringToNumber<int>(nameAndValuePair.second);
         } else if (nameAndValuePair.first == "seldepth") {
-            m_calculationDetails.selectiveDepthInPlies = convertStringToNumber<unsigned int>(nameAndValuePair.second);
+            m_calculationDetails.selectiveDepthInPlies = convertStringToNumber<int>(nameAndValuePair.second);
         }
     }
 }
@@ -86,9 +86,9 @@ void UciInterpreter::saveVariation(InfoDetails const& infoDetails) {
         auto possibleNewSize = infoDetails.multipv;
         auto index = infoDetails.multipv - 1;
         Variation variation{infoDetails.mateValue, infoDetails.scoreInCentipawns, infoDetails.pvHalfMoves};
-        if (possibleNewSize <= size) {
+        if (possibleNewSize <= static_cast<int>(size)) {
             m_calculationDetails.variations[index] = variation;
-        } else if (possibleNewSize == size + 1) {
+        } else if (possibleNewSize == static_cast<int>(size) + 1) {
             m_calculationDetails.variations.emplace_back(variation);
         } else {
             m_calculationDetails.variations.resize(possibleNewSize);
