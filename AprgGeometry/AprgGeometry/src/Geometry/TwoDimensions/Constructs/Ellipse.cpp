@@ -72,12 +72,12 @@ double Ellipse::getSemiLatusRectum() const {
 
 double Ellipse::getArea() const { return getPi() * m_aValue * m_bValue; }
 
-/*double Ellipse::getCircumference(unsigned int depthOfCalculation) const
+/*double Ellipse::getCircumference(int depthOfCalculation) const
 {
     double h = pow(m_aValue-m_bValue, 2)/pow(m_aValue+m_bValue, 2);
     double totalFactor = 0;
     double currentFactor = 1;
-    for(unsigned int i = 0; i<depthOfCalculation; i++)
+    for(int i = 0; i<depthOfCalculation; i++)
     {
         totalFactor += currentFactor;
         currentFactor = currentFactor*h;
@@ -140,7 +140,7 @@ Points Ellipse::getMinorVertices() const {
 Line Ellipse::getMajorAxis() const {
     Line result;
     Points vertices(getMajorVertices());
-    if (2U == vertices.size()) {
+    if (2 == vertices.size()) {
         result = Line(vertices.at(0), vertices.at(1));
     }
     return result;
@@ -149,7 +149,7 @@ Line Ellipse::getMajorAxis() const {
 Line Ellipse::getMinorAxis() const {
     Line result;
     Points vertices(getMinorVertices());
-    if (2U == vertices.size()) {
+    if (2 == vertices.size()) {
         result = Line(vertices.at(0), vertices.at(1));
     }
     return result;

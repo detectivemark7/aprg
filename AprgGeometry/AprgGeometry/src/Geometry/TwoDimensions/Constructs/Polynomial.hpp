@@ -10,14 +10,14 @@ namespace alba {
 
 namespace TwoDimensions {
 
-template <unsigned int numberOfCoefficients>
+template <int numberOfCoefficients>
 class Polynomial {
 public:
     Polynomial() {}
 
     Polynomial(std::initializer_list<double> const& coefficients) {
         static_assert(numberOfCoefficients > 0, "The numberOfCoefficients is not more than 0. Its not a polynomial");
-        unsigned int limit = std::min(numberOfCoefficients, static_cast<unsigned int>(coefficients.size()));
+        int limit = std::min(numberOfCoefficients, static_cast<int>(coefficients.size()));
         std::copy(coefficients.begin(), coefficients.begin() + limit, m_coefficients.rbegin());
         saveFirstDerivativeCoefficients();
     }
@@ -44,7 +44,7 @@ public:
 
 protected:
     void saveFirstDerivativeCoefficients() {
-        for (unsigned int i = 1; i < numberOfCoefficients; i++) {
+        for (int i = 1; i < numberOfCoefficients; i++) {
             m_coefficientsOfFirstDerivative[i - 1] = i * m_coefficients.at(i);
         }
     }

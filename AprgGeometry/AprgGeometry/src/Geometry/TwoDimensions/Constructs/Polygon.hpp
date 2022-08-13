@@ -11,7 +11,7 @@ namespace alba {
 
 namespace TwoDimensions {
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 class Polygon {
 public:
     using Distances = std::array<double, numberOfVertices>;
@@ -32,7 +32,7 @@ public:
 
     Points getPoints(double const interval) const;
     void getPointsFromVerticesWithoutLastPoint(
-        Points& points, double const interval, unsigned int vertexIndex1, unsigned int vertexIndex2) const;
+        Points& points, double const interval, int vertexIndex1, int vertexIndex2) const;
 
 protected:
     std::array<Point, numberOfVertices> m_vertices;

@@ -10,17 +10,17 @@ namespace alba {
 
 namespace TwoDimensions {
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 Polygon<numberOfVertices>::Polygon() {}
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 Polygon<numberOfVertices>::Polygon(initializer_list<Point> const& vertices) {
     static_assert(numberOfVertices > 2, "The numberOfVertices is less than 2. Its not a polygon by definition.");
-    unsigned int limit = min(numberOfVertices, static_cast<unsigned int>(vertices.size()));
+    int limit = min(numberOfVertices, static_cast<int>(vertices.size()));
     copy(vertices.begin(), vertices.begin() + limit, m_vertices.begin());
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 bool Polygon<numberOfVertices>::isEquilateral() const {
     Distances lengthOfSides(getLengthOfSides());
     return adjacent_find(lengthOfSides.cbegin(), lengthOfSides.cend(), [](double const length1, double const length2) {
@@ -28,7 +28,7 @@ bool Polygon<numberOfVertices>::isEquilateral() const {
            }) == lengthOfSides.cend();
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 bool Polygon<numberOfVertices>::isEquiangular() const {
     AlbaAngles anglesAtVertices(getAnglesAtVertices());
     return adjacent_find(
@@ -38,12 +38,12 @@ bool Polygon<numberOfVertices>::isEquiangular() const {
                }) == anglesAtVertices.cend();
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 bool Polygon<numberOfVertices>::isRegular() const {
     return isEquilateral() && isEquiangular();
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 Lines Polygon<numberOfVertices>::getLines() const {
     Lines lines;
     int sizeMinusOne = static_cast<int>(m_vertices.size()) - 1;
@@ -54,7 +54,7 @@ Lines Polygon<numberOfVertices>::getLines() const {
     return lines;  // RVO
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 LineSegments Polygon<numberOfVertices>::getLineSegments() const {
     LineSegments lineSegments;
     int sizeMinusOne = static_cast<int>(m_vertices.size()) - 1;
@@ -65,7 +65,7 @@ LineSegments Polygon<numberOfVertices>::getLineSegments() const {
     return lineSegments;  // RVO
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 typename Polygon<numberOfVertices>::Distances Polygon<numberOfVertices>::getLengthOfSides() const {
     Distances lengthOfSides;
     int sizeMinusOne = static_cast<int>(m_vertices.size()) - 1;
@@ -76,12 +76,12 @@ typename Polygon<numberOfVertices>::Distances Polygon<numberOfVertices>::getLeng
     return lengthOfSides;  // RVO
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 Points Polygon<numberOfVertices>::getVertices() const {
     return Points(cbegin(m_vertices), cend(m_vertices));
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 AlbaAngles Polygon<numberOfVertices>::getAnglesAtVertices() const {
     AlbaAngles anglesAtVertices;
     int sizeMinusOne = static_cast<int>(m_vertices.size()) - 1;
@@ -96,12 +96,12 @@ AlbaAngles Polygon<numberOfVertices>::getAnglesAtVertices() const {
     return anglesAtVertices;  // RVO
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 AlbaAngle Polygon<numberOfVertices>::getSumOfAngles() const {
     return AlbaAngle(AngleUnitType::Degrees, (numberOfVertices - 2) * 180);
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 Points Polygon<numberOfVertices>::getPoints(double const interval) const {
     Points points;
     int sizeMinusOne = static_cast<int>(m_vertices.size()) - 1;
@@ -112,9 +112,9 @@ Points Polygon<numberOfVertices>::getPoints(double const interval) const {
     return points;  // RVO
 }
 
-template <unsigned int numberOfVertices>
+template <int numberOfVertices>
 void Polygon<numberOfVertices>::getPointsFromVerticesWithoutLastPoint(
-    Points& points, double const interval, unsigned int vertexIndex1, unsigned int vertexIndex2) const {
+    Points& points, double const interval, int vertexIndex1, int vertexIndex2) const {
     Point const& firstPoint(m_vertices[vertexIndex1]);
     Point const& secondPoint(m_vertices[vertexIndex2]);
     Line line(firstPoint, secondPoint);

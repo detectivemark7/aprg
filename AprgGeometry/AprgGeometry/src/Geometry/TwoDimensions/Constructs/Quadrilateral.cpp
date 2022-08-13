@@ -34,7 +34,7 @@ Quadrilateral::GroupOfPoints Quadrilateral::getGroupOfPointsBasedOnYValue() cons
     Points vertices(m_vertices.begin(), m_vertices.end());
     if (!vertices.empty()) {
         sortPointsInYAndThenX(vertices);
-        unsigned int groupOfPointsIndex(0);
+        int groupOfPointsIndex(0);
         Point previousPoint(vertices.front());
         result.emplace_back();
         result[groupOfPointsIndex].emplace_back(vertices.front());
@@ -59,7 +59,7 @@ Quadrilateral::GroupOfPoints Quadrilateral::getGroupOfPointsBasedOnYValue() cons
 Quadrilateral::ListOfStartEndOfXAndY Quadrilateral::getStartEndForXs(
     Quadrilateral::GroupOfPoints const& groupOfPointsBasedOnYValue, double const interval) const {
     ListOfStartEndOfXAndY result;
-    unsigned int groupSize = groupOfPointsBasedOnYValue.size();
+    int groupSize = groupOfPointsBasedOnYValue.size();
     if (groupSize == 1) {
         Points points(groupOfPointsBasedOnYValue.at(0));
         result = getStartEndForXsFor1Points(points);
@@ -93,8 +93,8 @@ Quadrilateral::ListOfStartEndOfXAndY Quadrilateral::getStartEndForXsFor1Points(P
 Quadrilateral::ListOfStartEndOfXAndY Quadrilateral::getStartEndForXsFor2Points(
     Points const& points1, Points const& points2, double const interval) const {
     ListOfStartEndOfXAndY result;
-    unsigned int points1Size = points1.size();
-    unsigned int points2Size = points2.size();
+    int points1Size = points1.size();
+    int points2Size = points2.size();
     if (points1Size == 1 && points2Size == 3) {
         Point point1(points1.at(0));
         Point point21(points2.at(0));
@@ -133,9 +133,9 @@ Quadrilateral::ListOfStartEndOfXAndY Quadrilateral::getStartEndForXsFor2Points(
 Quadrilateral::ListOfStartEndOfXAndY Quadrilateral::getStartEndForXsFor3Points(
     Points const& points1, Points const& points2, Points const& points3, double const interval) const {
     ListOfStartEndOfXAndY result;
-    unsigned int points1Size = points1.size();
-    unsigned int points2Size = points2.size();
-    unsigned int points3Size = points3.size();
+    int points1Size = points1.size();
+    int points2Size = points2.size();
+    int points3Size = points3.size();
     if (points1Size == 1 && points2Size == 1 && points3Size == 2) {
         Point point1(points1.at(0));
         Point point2(points2.at(0));
