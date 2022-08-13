@@ -7,7 +7,7 @@
 
 namespace alba {
 
-template <unsigned int DIMENSIONS>
+template <int DIMENSIONS>
 class DataStatisticsUtilities {
 public:
     using Sample = DataSample<DIMENSIONS>;

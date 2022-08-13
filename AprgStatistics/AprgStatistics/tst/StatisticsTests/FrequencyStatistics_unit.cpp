@@ -12,10 +12,10 @@ TEST(FrequencyStatisticsTest, SamplesAreEmpty) {
     FrequencyStatistics::FrequencySamples samples;
 
     FrequencyStatistics::MultipleValues modes(FrequencyStatistics::calculateMode(samples));
-    EXPECT_EQ(0U, FrequencyStatistics::calculateNumberOfSamples(samples));
-    EXPECT_EQ(0U, FrequencyStatistics::calculateSum(samples));
-    EXPECT_EQ(0U, FrequencyStatistics::calculateMean(samples));
-    EXPECT_EQ(0U, FrequencyStatistics::calculateMedian(samples));
+    EXPECT_EQ(0, FrequencyStatistics::calculateNumberOfSamples(samples));
+    EXPECT_EQ(0, FrequencyStatistics::calculateSum(samples));
+    EXPECT_EQ(0, FrequencyStatistics::calculateMean(samples));
+    EXPECT_EQ(0, FrequencyStatistics::calculateMedian(samples));
     ASSERT_EQ(0U, modes.size());
 }
 
@@ -32,10 +32,10 @@ TEST(FrequencyStatisticsTest, SingleSamplePerValueWithOddNumberOfValues) {
     samples[9] = 1;
 
     FrequencyStatistics::MultipleValues modes(FrequencyStatistics::calculateMode(samples));
-    EXPECT_EQ(9U, FrequencyStatistics::calculateNumberOfSamples(samples));
-    EXPECT_EQ(45U, FrequencyStatistics::calculateSum(samples));
-    EXPECT_EQ(5U, FrequencyStatistics::calculateMean(samples));
-    EXPECT_EQ(5U, FrequencyStatistics::calculateMedian(samples));
+    EXPECT_EQ(9, FrequencyStatistics::calculateNumberOfSamples(samples));
+    EXPECT_EQ(45, FrequencyStatistics::calculateSum(samples));
+    EXPECT_EQ(5, FrequencyStatistics::calculateMean(samples));
+    EXPECT_EQ(5, FrequencyStatistics::calculateMedian(samples));
     ASSERT_EQ(9U, modes.size());
     EXPECT_EQ(1, modes[0]);
     EXPECT_EQ(2, modes[1]);
@@ -62,8 +62,8 @@ TEST(FrequencyStatisticsTest, SingleSamplePerValueWithEvenNumberOfValues) {
     samples[10] = 1;
 
     FrequencyStatistics::MultipleValues modes(FrequencyStatistics::calculateMode(samples));
-    EXPECT_EQ(10U, FrequencyStatistics::calculateNumberOfSamples(samples));
-    EXPECT_EQ(55U, FrequencyStatistics::calculateSum(samples));
+    EXPECT_EQ(10, FrequencyStatistics::calculateNumberOfSamples(samples));
+    EXPECT_EQ(55, FrequencyStatistics::calculateSum(samples));
     EXPECT_EQ(5.5, FrequencyStatistics::calculateMean(samples));
     EXPECT_EQ(5.5, FrequencyStatistics::calculateMedian(samples));
     ASSERT_EQ(10U, modes.size());
@@ -88,8 +88,8 @@ TEST(FrequencyStatisticsTest, MulipleSamplesPerValue) {
     samples[5] = 5;
 
     FrequencyStatistics::MultipleValues modes(FrequencyStatistics::calculateMode(samples));
-    EXPECT_EQ(30U, FrequencyStatistics::calculateNumberOfSamples(samples));
-    EXPECT_EQ(96U, FrequencyStatistics::calculateSum(samples));
+    EXPECT_EQ(30, FrequencyStatistics::calculateNumberOfSamples(samples));
+    EXPECT_EQ(96, FrequencyStatistics::calculateSum(samples));
     EXPECT_EQ(3.2, FrequencyStatistics::calculateMean(samples));
     EXPECT_EQ(4U, FrequencyStatistics::calculateMedian(samples));
     ASSERT_EQ(1U, modes.size());
@@ -112,10 +112,10 @@ TEST(FrequencyStatisticsTest, MulipleSamplesWithEmptyValues) {
     samples[54] = 0;
 
     FrequencyStatistics::MultipleValues modes(FrequencyStatistics::calculateMode(samples));
-    EXPECT_EQ(30U, FrequencyStatistics::calculateNumberOfSamples(samples));
-    EXPECT_EQ(840U, FrequencyStatistics::calculateSum(samples));
-    EXPECT_EQ(28U, FrequencyStatistics::calculateMean(samples));
-    EXPECT_EQ(25U, FrequencyStatistics::calculateMedian(samples));
+    EXPECT_EQ(30, FrequencyStatistics::calculateNumberOfSamples(samples));
+    EXPECT_EQ(840, FrequencyStatistics::calculateSum(samples));
+    EXPECT_EQ(28, FrequencyStatistics::calculateMean(samples));
+    EXPECT_EQ(25, FrequencyStatistics::calculateMedian(samples));
     ASSERT_EQ(1U, modes.size());
     EXPECT_EQ(20, modes[0]);
 }

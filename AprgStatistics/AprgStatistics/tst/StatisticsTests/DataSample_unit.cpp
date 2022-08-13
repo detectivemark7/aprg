@@ -81,7 +81,7 @@ TEST(DataSampleTest, DataSamplesCanBeAddedTogether) {
 
 TEST(DataSampleTest, DataSamplesCanBeAddedWithSingleValue) {
     DataSample<5> dataSample1{10, 20, 30, 40, 50};
-    unsigned int singleValue = 1;
+    int singleValue = 1;
     DataSample<5> actualResult = dataSample1 + singleValue;
     EXPECT_EQ(11U, actualResult.getValueAt(0));
     EXPECT_EQ(21U, actualResult.getValueAt(1));

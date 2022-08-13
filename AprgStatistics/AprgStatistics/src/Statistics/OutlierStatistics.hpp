@@ -5,7 +5,7 @@
 
 namespace alba {
 
-template <unsigned int DIMENSIONS>
+template <int DIMENSIONS>
 class OutlierStatistics : public DataStatistics<DIMENSIONS> {
 public:
     using Sample = DataSample<DIMENSIONS>;
@@ -22,7 +22,7 @@ public:
         Sample deviation(Sample(sample - LocalStatistics::m_mean.value()).calculateAbsoluteValue());
         Sample deviationOverStandardDeviation(deviation / LocalStatistics::m_sampleStandardDeviation.value());
         bool isAnOutlier(false);
-        for (unsigned int i = 0; i < deviationOverStandardDeviation.getSize(); i++) {
+        for (int i = 0; i < deviationOverStandardDeviation.getSize(); i++) {
             if (deviationOverStandardDeviation.getValueAt(i) > acceptableDeviation) {
                 isAnOutlier = true;
                 break;
@@ -31,7 +31,7 @@ public:
         return isAnOutlier;
     }
 
-    double calculateAcceptableDeviationBasedOnChauvenetCriterion(unsigned int const sampleSize) {
+    double calculateAcceptableDeviationBasedOnChauvenetCriterion(int const sampleSize) {
         return mathHelper::getAbsoluteValue(
             mathHelper::getInverseCumulativeStandardDistributionApproximation(1 / ((double)4 * sampleSize), 20));
     }

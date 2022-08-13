@@ -8,7 +8,7 @@
 
 namespace alba {
 
-template <unsigned int DIMENSIONS>
+template <int DIMENSIONS>
 class DataStatistics {
 public:
     using Sample = DataSample<DIMENSIONS>;
@@ -78,7 +78,7 @@ protected:
     void calculateMeanIfNeeded() {
         if (!m_mean) {
             calculateSumIfNeeded();
-            unsigned int sampleSize(m_samples.empty() ? 1 : m_samples.size());
+            int sampleSize(m_samples.empty() ? 1 : m_samples.size());
             m_mean = m_sum.value() / sampleSize;
         }
     }
@@ -95,7 +95,7 @@ protected:
         calculateStandardDeviationIfNeeded(m_populationStandardDeviation, m_populationVariance, m_samples.size());
     }
 
-    void calculateVarianceIfNeeded(SampleOptional& variance, unsigned int sampleSize) {
+    void calculateVarianceIfNeeded(SampleOptional& variance, int sampleSize) {
         if (!variance) {
             if (!m_samples.empty()) {
                 Samples varianceCalculationTemp(m_samples);
@@ -112,7 +112,7 @@ protected:
     }
 
     void calculateStandardDeviationIfNeeded(
-        SampleOptional& standardDeviation, SampleOptional& variance, unsigned int sampleSize) {
+        SampleOptional& standardDeviation, SampleOptional& variance, int sampleSize) {
         if (!standardDeviation) {
             calculateVarianceIfNeeded(variance, sampleSize);
             Sample standardDeviationTemp(variance.value());

@@ -12,7 +12,7 @@ public:
     DataType getTheCountForMinimum() const { return m_theCountForMinimum; }
     DataType getTheCountForMaximum() const { return m_theCountForMaximum; }
     DataType getSum() const { return m_sum; }
-    unsigned int getCount() const { return m_count; }
+    int getCount() const { return m_count; }
     DataType getAverage() const { return (m_count == 0) ? 0 : m_sum / m_count; }
     double getAverageWithDoubleFormat() const { return (double)m_sum / m_count; }
     void addData(DataType const& dataValue) {
@@ -45,7 +45,7 @@ private:
     DataType m_theCountForMinimum;
     DataType m_theCountForMaximum;
     DataType m_sum;
-    unsigned int m_count;
+    int m_count;
 };
 
 }  // namespace alba

@@ -8,11 +8,11 @@ using namespace std;
 
 namespace alba {
 
-unsigned int FrequencyStatistics::calculateNumberOfSamples(FrequencySamples const& samples) {
+int FrequencyStatistics::calculateNumberOfSamples(FrequencySamples const& samples) {
     return accumulate(
-        samples.begin(), samples.end(), (unsigned int)0,
-        [](unsigned int partialResult, FrequencyPair const& frequencyPair) {
-            return partialResult + ((unsigned int)frequencyPair.second);
+        samples.begin(), samples.end(), (int)0,
+        [](int partialResult, FrequencyPair const& frequencyPair) {
+            return partialResult + ((int)frequencyPair.second);
         });
 }
 
@@ -25,7 +25,7 @@ double FrequencyStatistics::calculateSum(FrequencySamples const& samples) {
 
 double FrequencyStatistics::calculateMean(FrequencySamples const& samples) {
     double result(0);
-    unsigned int numberOfSamples = calculateNumberOfSamples(samples);
+    int numberOfSamples = calculateNumberOfSamples(samples);
     if (numberOfSamples > 0) {
         result = calculateSum(samples) / numberOfSamples;
     }
@@ -33,14 +33,14 @@ double FrequencyStatistics::calculateMean(FrequencySamples const& samples) {
 }
 
 double FrequencyStatistics::calculateMedian(FrequencySamples const& samples) {
-    unsigned int numberOfSamples = calculateNumberOfSamples(samples);
+    int numberOfSamples = calculateNumberOfSamples(samples);
     double medianLocation = ((double)numberOfSamples + 1) / 2;
-    unsigned int rangeOffsetForCurrentValue = 0;
-    unsigned int previousMinimumValue = 0;
+    int rangeOffsetForCurrentValue = 0;
+    int previousMinimumValue = 0;
     double previousValue = 0;
     double result(0);
     for (auto const& frequencyPair : samples) {
-        unsigned int minimumValueOffset = (frequencyPair.second > 0) ? 1 : 0;
+        int minimumValueOffset = (frequencyPair.second > 0) ? 1 : 0;
         if (rangeOffsetForCurrentValue + minimumValueOffset <= medianLocation &&
             medianLocation <= rangeOffsetForCurrentValue + frequencyPair.second) {
             result = frequencyPair.first;
@@ -66,7 +66,7 @@ FrequencyStatistics::MultipleValues FrequencyStatistics::calculateMode(Frequency
         samples.begin(), samples.end(), [](FrequencyPair const& frequencyPair1, FrequencyPair const& frequencyPair2) {
             return frequencyPair1.second < frequencyPair2.second;
         });
-    unsigned int maxFrequency = iteratorForMaxFrequency->second;
+    int maxFrequency = iteratorForMaxFrequency->second;
 
     for_each(samples.begin(), samples.end(), [&](FrequencyPair const& frequencyPair) {
         if (maxFrequency == frequencyPair.second) {
