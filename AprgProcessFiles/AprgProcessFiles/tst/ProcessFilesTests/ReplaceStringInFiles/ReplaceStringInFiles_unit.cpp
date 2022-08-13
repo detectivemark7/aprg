@@ -8,7 +8,7 @@ namespace alba {
 
 TEST(AlbaReplaceStringInFileTest, ReplaceCStylePrintWithCPlusPlusStylePrint) {
     ReplaceStringInFiles replacer;
-    string result(replacer.gethCPlusPlusStylePrintFromC(
+    string result(replacer.getCPlusPlusStylePrintFromC(
         R"(TLH_DEBUG_PRINT("Creating new licence entry in DB for featureCode: %d.", featureCode);)"));
     EXPECT_EQ(
         R"(debug() << "Creating new licence entry in DB for featureCode: " << featureCode << "." << flush();)", result);
@@ -16,7 +16,7 @@ TEST(AlbaReplaceStringInFileTest, ReplaceCStylePrintWithCPlusPlusStylePrint) {
 
 TEST(AlbaReplaceStringInFileTest, ReplaceCStylePrintWithCPlusPlusStylePrintWithPercentWithNumber) {
     ReplaceStringInFiles replacer;
-    string result(replacer.gethCPlusPlusStylePrintFromC(
+    string result(replacer.getCPlusPlusStylePrintFromC(
         R"(TLH_DEBUG_PRINT("Received LMS_FEATURE_NOTIFICATION_RESP_MSG (0x%04x), featureCode: %u, successCode: %s", LMS_FEATURE_NOTIFICATION_RESP_MSG, featureCode, (successCode == EBoolean_True ? "Success" : "Fail"));)"));
     EXPECT_EQ(
         R"(debug() << "Received LMS_FEATURE_NOTIFICATION_RESP_MSG (0x" << LMS_FEATURE_NOTIFICATION_RESP_MSG << "), featureCode: " << featureCode << ", successCode: " << (successCode == EBoolean_True ? "Success" : "Fail") << flush();)",
@@ -25,7 +25,7 @@ TEST(AlbaReplaceStringInFileTest, ReplaceCStylePrintWithCPlusPlusStylePrintWithP
 
 TEST(AlbaReplaceStringInFileTest, ReplaceCStylePrintWithCPlusPlusStylePrintWithNoParameters) {
     ReplaceStringInFiles replacer;
-    string result(replacer.gethCPlusPlusStylePrintFromC(R"(TLH_DEBUG_PRINT("TLH::reset() ");)"));
+    string result(replacer.getCPlusPlusStylePrintFromC(R"(TLH_DEBUG_PRINT("TLH::reset() ");)"));
     EXPECT_EQ("debug() << \"TLH::reset()\" << flush();", result);
 }
 

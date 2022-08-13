@@ -211,7 +211,7 @@ void CPlusPlusFileFixer::notifyIfCAssertHeaderExistInProductionCode(string const
 }
 
 void CPlusPlusFileFixer::notifyIfMoreThanLoopsAreCascaded(string const& path) const {
-    set<unsigned int> indentionsOfLoops;
+    set<int> indentionsOfLoops;
     for (string const& line : m_linesAfterTheHeader) {
         if (isLineWithALoopStart(line)) {
             indentionsOfLoops.emplace(getStringThatContainsWhiteSpaceIndention(line).size());

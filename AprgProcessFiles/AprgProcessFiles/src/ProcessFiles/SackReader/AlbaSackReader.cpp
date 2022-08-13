@@ -100,16 +100,17 @@ void AlbaSackReader::tokenize(stringHelper::strings& tokens, string const& line)
 }
 
 void AlbaSackReader::combineWords(stringHelper::strings& tokens) {
-    vector<string> tokensToCombine = {"unsigned char",   "signed char",        "unsigned int",     "signed int",
-                                      "short int",       "unsigned short int", "signed short int", "long int",
-                                      "signed long int", "unsigned long int",  "long double"};
+    vector<string> tokensToCombine = {"unsigned char",     "signed char", "int",
+                                      "signed int",        "short int",   "unsigned short int",
+                                      "signed short int",  "long int",    "signed long int",
+                                      "unsigned long int", "long double"};
 
     struct TokenAndIndex {
-        unsigned int index;
+        int index;
         string token;
     };
     vector<TokenAndIndex> recentWords;
-    for (unsigned int i = 0; i < tokens.size(); i++) {
+    for (int i = 0; i < static_cast<int>(tokens.size()); i++) {
         string token(tokens[i]);
         if (stringHelper::isIdentifier(token)) {
             TokenAndIndex tokenAndIndex{};
@@ -150,10 +151,10 @@ void AlbaSackReader::combineWords(stringHelper::strings& tokens) {
 }
 
 void AlbaSackReader::combineArrayOperators(stringHelper::strings& tokens) {
-    unsigned int state = 0;
-    unsigned int nonWhiteSpaceIndex = 0;
-    unsigned int closingBracketIndex = 0;
-    for (unsigned int i = 0; i < tokens.size(); i++) {
+    int state = 0;
+    int nonWhiteSpaceIndex = 0;
+    int closingBracketIndex = 0;
+    for (int i = 0; i < static_cast<int>(tokens.size()); i++) {
         string token(tokens[i]);
         if (0 == state) {
             if ('[' == token[0]) {

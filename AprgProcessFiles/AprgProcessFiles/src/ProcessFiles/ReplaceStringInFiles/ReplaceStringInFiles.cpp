@@ -175,12 +175,12 @@ string ReplaceStringInFiles::constructCPlusPlusPrint(
     string result(newPrintStream);
     bool isPercentEncountered(false);
     bool isOnStringLiteral(false);
-    unsigned int printParameterIndex = 0;
+    int printParameterIndex = 0;
     for (char c : printString) {
         bool isParameterAppended(false);
         if (isPercentEncountered) {
             if (isLetter(c)) {
-                if (printParameterIndex < printParameters.size()) {
+                if (printParameterIndex < static_cast<int>(printParameters.size())) {
                     appendParameterToResult(result, isOnStringLiteral, printParameters[printParameterIndex++]);
                     isParameterAppended = true;
                 }

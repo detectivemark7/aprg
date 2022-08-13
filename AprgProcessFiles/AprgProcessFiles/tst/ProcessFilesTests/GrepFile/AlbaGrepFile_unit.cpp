@@ -25,7 +25,7 @@ TEST(AlbaGrepFileTest, GrepUpdatesWorks) {
     AlbaLocalPathHandler file2ToReadPathHandler(APRG_PROCESS_FILES_TEST_FILE2_TO_READ);
     ofstream testFile(file1ToReadPathHandler.getFullPath());
     ASSERT_TRUE(testFile.is_open());
-    for (unsigned int i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++) {
         testFile << i << "\n";
     }
     testFile.close();
