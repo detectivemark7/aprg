@@ -10,7 +10,7 @@ namespace alba {
 namespace AprgBitmap {
 
 using BitmapSignedXY = AlbaXY<int>;
-using BitmapXY = AlbaXY<unsigned int>;
+using BitmapXY = AlbaXY<int>;
 using BitmapDoubleXY = AlbaXY<double>;
 using BitmapXYs = std::vector<BitmapXY>;
 using BitmapSignedXYs = std::vector<BitmapSignedXY>;

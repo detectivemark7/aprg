@@ -40,7 +40,7 @@ TEST(BitmapReadTest, TestForMonochromeBitmap) {
     EXPECT_EQ(BitmapXY(103, 99), snippet.getBottomRightCorner());
 
     PixelData pixels(snippet.getPixelDataReference());
-    unsigned char* reader = reinterpret_cast<unsigned char*>(pixels.getBufferPointer());
+    uint8_t* reader = reinterpret_cast<uint8_t*>(pixels.getBufferPointer());
     ASSERT_EQ(3U, pixels.getSize());
     EXPECT_EQ(0x8F, reader[0]);
     EXPECT_EQ(0xF3, reader[1]);
@@ -57,35 +57,35 @@ TEST(BitmapReadTest, TestForMonochromeBitmap) {
     EXPECT_EQ(0x01U, snippet.getPixelAt(BitmapXY(101, 99)));
 
     BitmapSnippet snippet1(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(0, 0), 3));
-    ASSERT_EQ(3U, snippet1.getPixelDataSize());
+    ASSERT_EQ(3, snippet1.getPixelDataSize());
     EXPECT_EQ(0x01U, snippet1.getPixelAt(BitmapXY(0, 0)));
     EXPECT_EQ(0xFFFFFFU, snippet1.getColorAt(BitmapXY(0, 0)));
     EXPECT_EQ(BitmapXY(0, 0), snippet1.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(7, 2), snippet1.getBottomRightCorner());
 
     BitmapSnippet snippet2(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(152, 101), 3));
-    ASSERT_EQ(3U, snippet2.getPixelDataSize());
+    ASSERT_EQ(3, snippet2.getPixelDataSize());
     EXPECT_EQ(0x01U, snippet2.getPixelAt(BitmapXY(152, 101)));
     EXPECT_EQ(0xFFFFFFU, snippet2.getColorAt(BitmapXY(152, 101)));
     EXPECT_EQ(BitmapXY(152, 100), snippet2.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(159, 102), snippet2.getBottomRightCorner());
 
     BitmapSnippet snippet3(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(17, 114), 3));
-    ASSERT_EQ(3U, snippet3.getPixelDataSize());
+    ASSERT_EQ(3, snippet3.getPixelDataSize());
     EXPECT_EQ(0x01U, snippet3.getPixelAt(BitmapXY(17, 114)));
     EXPECT_EQ(0xFFFFFFU, snippet3.getColorAt(BitmapXY(17, 114)));
     EXPECT_EQ(BitmapXY(16, 113), snippet3.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(23, 115), snippet3.getBottomRightCorner());
 
     BitmapSnippet snippet4(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(174, 173), 3));
-    ASSERT_EQ(3U, snippet4.getPixelDataSize());
+    ASSERT_EQ(3, snippet4.getPixelDataSize());
     EXPECT_EQ(0x01U, snippet4.getPixelAt(BitmapXY(174, 173)));
     EXPECT_EQ(0xFFFFFFU, snippet4.getColorAt(BitmapXY(174, 173)));
     EXPECT_EQ(BitmapXY(168, 171), snippet4.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(174, 173), snippet4.getBottomRightCorner());
 
     BitmapSnippet snippet5(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(180, 180), 3));
-    ASSERT_EQ(0U, snippet5.getPixelDataSize());
+    ASSERT_EQ(0, snippet5.getPixelDataSize());
     EXPECT_EQ(0x0U, snippet5.getColorAt(BitmapXY(180, 180)));
 }
 
@@ -109,7 +109,7 @@ TEST(BitmapReadTest, TestFor16ColorBitmap) {
     EXPECT_EQ(BitmapXY(101, 99), snippet.getBottomRightCorner());
 
     PixelData pixels(snippet.getPixelDataReference());
-    unsigned char* reader = reinterpret_cast<unsigned char*>(pixels.getBufferPointer());
+    uint8_t* reader = reinterpret_cast<uint8_t*>(pixels.getBufferPointer());
     ASSERT_EQ(6U, pixels.getSize());
     EXPECT_EQ(0x57, reader[0]);
     EXPECT_EQ(0x78, reader[1]);
@@ -129,35 +129,35 @@ TEST(BitmapReadTest, TestFor16ColorBitmap) {
     EXPECT_EQ(0x08U, snippet.getPixelAt(BitmapXY(101, 99)));
 
     BitmapSnippet snippet1(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(0, 0), 6));
-    ASSERT_EQ(6U, snippet1.getPixelDataSize());
+    ASSERT_EQ(6, snippet1.getPixelDataSize());
     EXPECT_EQ(0x0FU, snippet1.getPixelAt(BitmapXY(0, 0)));
     EXPECT_EQ(0xFFFFFFU, snippet1.getColorAt(BitmapXY(0, 0)));
     EXPECT_EQ(BitmapXY(0, 0), snippet1.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(1, 5), snippet1.getBottomRightCorner());
 
     BitmapSnippet snippet2(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(152, 101), 6));
-    ASSERT_EQ(6U, snippet2.getPixelDataSize());
+    ASSERT_EQ(6, snippet2.getPixelDataSize());
     EXPECT_EQ(0x08U, snippet2.getPixelAt(BitmapXY(152, 101)));
     EXPECT_EQ(0xC0C0C0U, snippet2.getColorAt(BitmapXY(152, 101)));
     EXPECT_EQ(BitmapXY(150, 100), snippet2.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(153, 102), snippet2.getBottomRightCorner());
 
     BitmapSnippet snippet3(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(17, 114), 6));
-    ASSERT_EQ(6U, snippet3.getPixelDataSize());
+    ASSERT_EQ(6, snippet3.getPixelDataSize());
     EXPECT_EQ(0x07U, snippet3.getPixelAt(BitmapXY(17, 114)));
     EXPECT_EQ(0x808080U, snippet3.getColorAt(BitmapXY(17, 114)));
     EXPECT_EQ(BitmapXY(16, 113), snippet3.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(19, 115), snippet3.getBottomRightCorner());
 
     BitmapSnippet snippet4(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(174, 173), 6));
-    ASSERT_EQ(6U, snippet4.getPixelDataSize());
+    ASSERT_EQ(6, snippet4.getPixelDataSize());
     EXPECT_EQ(0x0FU, snippet4.getPixelAt(BitmapXY(174, 173)));
     EXPECT_EQ(0xFFFFFFU, snippet4.getColorAt(BitmapXY(174, 173)));
     EXPECT_EQ(BitmapXY(172, 171), snippet4.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(174, 173), snippet4.getBottomRightCorner());
 
     BitmapSnippet snippet5(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(180, 180), 3));
-    ASSERT_EQ(0U, snippet5.getPixelDataSize());
+    ASSERT_EQ(0, snippet5.getPixelDataSize());
     EXPECT_EQ(0x0U, snippet5.getColorAt(BitmapXY(180, 180)));
 }
 
@@ -181,7 +181,7 @@ TEST(BitmapReadTest, TestFor256ColorBitmap) {
     EXPECT_EQ(BitmapXY(101, 99), snippet.getBottomRightCorner());
 
     PixelData pixels(snippet.getPixelDataReference());
-    unsigned char* reader = reinterpret_cast<unsigned char*>(pixels.getBufferPointer());
+    uint8_t* reader = reinterpret_cast<uint8_t*>(pixels.getBufferPointer());
     ASSERT_EQ(9U, pixels.getSize());
     EXPECT_EQ(0x53, reader[0]);
     EXPECT_EQ(0xA4, reader[1]);
@@ -204,35 +204,35 @@ TEST(BitmapReadTest, TestFor256ColorBitmap) {
     EXPECT_EQ(0x07U, snippet.getPixelAt(BitmapXY(101, 99)));
 
     BitmapSnippet snippet1(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(0, 0), 9));
-    ASSERT_EQ(8U, snippet1.getPixelDataSize());
+    ASSERT_EQ(8, snippet1.getPixelDataSize());
     EXPECT_EQ(0xFFU, snippet1.getPixelAt(BitmapXY(0, 0)));
     EXPECT_EQ(0xFFFFFFU, snippet1.getColorAt(BitmapXY(0, 0)));
     EXPECT_EQ(BitmapXY(0, 0), snippet1.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(1, 3), snippet1.getBottomRightCorner());
 
     BitmapSnippet snippet2(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(152, 101), 9));
-    ASSERT_EQ(9U, snippet2.getPixelDataSize());
+    ASSERT_EQ(9, snippet2.getPixelDataSize());
     EXPECT_EQ(0xF5U, snippet2.getPixelAt(BitmapXY(152, 101)));
     EXPECT_EQ(0xA0C0C0U, snippet2.getColorAt(BitmapXY(152, 101)));
     EXPECT_EQ(BitmapXY(151, 100), snippet2.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(153, 102), snippet2.getBottomRightCorner());
 
     BitmapSnippet snippet3(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(17, 114), 9));
-    ASSERT_EQ(9U, snippet3.getPixelDataSize());
+    ASSERT_EQ(9, snippet3.getPixelDataSize());
     EXPECT_EQ(0x9DU, snippet3.getPixelAt(BitmapXY(17, 114)));
     EXPECT_EQ(0xA06080U, snippet3.getColorAt(BitmapXY(17, 114)));
     EXPECT_EQ(BitmapXY(16, 113), snippet3.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(18, 115), snippet3.getBottomRightCorner());
 
     BitmapSnippet snippet4(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(174, 173), 9));
-    ASSERT_EQ(8U, snippet4.getPixelDataSize());
+    ASSERT_EQ(8, snippet4.getPixelDataSize());
     EXPECT_EQ(0xFFU, snippet4.getPixelAt(BitmapXY(174, 173)));
     EXPECT_EQ(0xFFFFFFU, snippet4.getColorAt(BitmapXY(174, 173)));
     EXPECT_EQ(BitmapXY(173, 170), snippet4.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(174, 173), snippet4.getBottomRightCorner());
 
     BitmapSnippet snippet5(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(180, 180), 9));
-    ASSERT_EQ(0U, snippet5.getPixelDataSize());
+    ASSERT_EQ(0, snippet5.getPixelDataSize());
     EXPECT_EQ(0x0U, snippet5.getColorAt(BitmapXY(180, 180)));
 }
 
@@ -252,7 +252,7 @@ TEST(BitmapReadTest, TestFor24BitBitmap) {
     EXPECT_EQ(BitmapXY(101, 99), snippet.getBottomRightCorner());
 
     PixelData pixels(snippet.getPixelDataReference());
-    unsigned char* reader = reinterpret_cast<unsigned char*>(pixels.getBufferPointer());
+    uint8_t* reader = reinterpret_cast<uint8_t*>(pixels.getBufferPointer());
     ASSERT_EQ(27U, pixels.getSize());
     EXPECT_EQ(0x5F, reader[0]);
     EXPECT_EQ(0x4F, reader[1]);
@@ -293,35 +293,35 @@ TEST(BitmapReadTest, TestFor24BitBitmap) {
     EXPECT_EQ(0xC2BEC3U, snippet.getPixelAt(BitmapXY(101, 99)));
 
     BitmapSnippet snippet1(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(0, 0), 27));
-    ASSERT_EQ(24U, snippet1.getPixelDataSize());
+    ASSERT_EQ(24, snippet1.getPixelDataSize());
     EXPECT_EQ(0xFFFFFFU, snippet1.getPixelAt(BitmapXY(0, 0)));
     EXPECT_EQ(0xFFFFFFU, snippet1.getColorAt(BitmapXY(0, 0)));
     EXPECT_EQ(BitmapXY(0, 0), snippet1.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(1, 3), snippet1.getBottomRightCorner());
 
     BitmapSnippet snippet2(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(152, 101), 27));
-    ASSERT_EQ(27U, snippet2.getPixelDataSize());
+    ASSERT_EQ(27, snippet2.getPixelDataSize());
     EXPECT_EQ(0xAFB3B5U, snippet2.getPixelAt(BitmapXY(152, 101)));
     EXPECT_EQ(0xAFB3B5U, snippet2.getColorAt(BitmapXY(152, 101)));
     EXPECT_EQ(BitmapXY(151, 100), snippet2.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(153, 102), snippet2.getBottomRightCorner());
 
     BitmapSnippet snippet3(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(17, 114), 27));
-    ASSERT_EQ(27U, snippet3.getPixelDataSize());
+    ASSERT_EQ(27, snippet3.getPixelDataSize());
     EXPECT_EQ(0x916E95U, snippet3.getPixelAt(BitmapXY(17, 114)));
     EXPECT_EQ(0x916E95U, snippet3.getColorAt(BitmapXY(17, 114)));
     EXPECT_EQ(BitmapXY(16, 113), snippet3.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(18, 115), snippet3.getBottomRightCorner());
 
     BitmapSnippet snippet4(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(174, 173), 27));
-    ASSERT_EQ(24U, snippet4.getPixelDataSize());
+    ASSERT_EQ(24, snippet4.getPixelDataSize());
     EXPECT_EQ(0xFFFFFFU, snippet4.getPixelAt(BitmapXY(174, 173)));
     EXPECT_EQ(0xFFFFFFU, snippet4.getColorAt(BitmapXY(174, 173)));
     EXPECT_EQ(BitmapXY(173, 170), snippet4.getTopLeftCorner());
     EXPECT_EQ(BitmapXY(174, 173), snippet4.getBottomRightCorner());
 
     BitmapSnippet snippet5(bitmap.getSnippetReadFromFileWithNumberOfBytesToRead(BitmapXY(180, 180), 27));
-    ASSERT_EQ(0U, snippet5.getPixelDataSize());
+    ASSERT_EQ(0, snippet5.getPixelDataSize());
     EXPECT_EQ(0x0U, snippet5.getColorAt(BitmapXY(180, 180)));
 }
 
