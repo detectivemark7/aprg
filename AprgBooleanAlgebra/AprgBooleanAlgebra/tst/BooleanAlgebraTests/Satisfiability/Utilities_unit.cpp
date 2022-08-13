@@ -13,7 +13,7 @@ TEST(SatisfiabilityUtilitiesTest, GetSatisfiabilityLevelWorks) {
         {VariableTerm("b"), VariableTerm("c")},
         {VariableTerm("d"), VariableTerm("e"), VariableTerm("f")}};
 
-    EXPECT_EQ(3U, getSatisfiabilityLevel(satTermsToTest));
+    EXPECT_EQ(3, getSatisfiabilityLevel(satTermsToTest));
 }
 
 TEST(SatisfiabilityUtilitiesTest, GetSatisfiabilityTermsWorksWithTerm) {

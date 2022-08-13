@@ -25,7 +25,7 @@ bool SubstitutionOfVariablesToValues::isVariableFound(string const& variable) co
     return m_variableToValuesMap.find(variable) != m_variableToValuesMap.cend();
 }
 
-unsigned int SubstitutionOfVariablesToValues::getSize() const { return m_variableToValuesMap.size(); }
+int SubstitutionOfVariablesToValues::getSize() const { return m_variableToValuesMap.size(); }
 
 bool SubstitutionOfVariablesToValues::getValueForVariable(string const& variable) const {
     bool result(false);

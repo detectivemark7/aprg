@@ -23,7 +23,7 @@ bool SubstitutionOfTermsToTerms::isTermFound(Term const& term) const {
     return m_termsToTermsMap.find(term) != m_termsToTermsMap.cend();
 }
 
-unsigned int SubstitutionOfTermsToTerms::getSize() const { return m_termsToTermsMap.size(); }
+int SubstitutionOfTermsToTerms::getSize() const { return m_termsToTermsMap.size(); }
 
 Term SubstitutionOfTermsToTerms::getTermForTerm(Term const& term) const {
     Term result;

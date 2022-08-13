@@ -28,7 +28,7 @@ public:
         return !(first == second);
     }
 
-    unsigned int getSize() const { return m_implicantsData.size(); }
+    int getSize() const { return m_implicantsData.size(); }
 
     ImplicantWithMintermSet const& getImplicantsData() const& { return m_implicantsData; }
 

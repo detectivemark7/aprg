@@ -12,7 +12,7 @@ bool isConstant(std::string const& stringObject);
 bool isOperator(std::string const& stringObject);
 bool isPrime(char const character);
 
-unsigned int getOperatorPriority(std::string const& operatorString);
+int getOperatorPriority(std::string const& operatorString);
 
 std::string getString(OperatorType const operatorType);
 std::string getString(OperatorLevel const operatorLevel);

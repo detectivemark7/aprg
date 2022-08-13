@@ -19,7 +19,7 @@ public:
 
     bool isEmpty() const;
     bool isTermFound(Term const& term) const;
-    unsigned int getSize() const;
+    int getSize() const;
     Term getTermForTerm(Term const& term) const;
     Term performSubstitutionTo(Expression const& expression) const;
     Term performSubstitutionTo(Term const& term) const;

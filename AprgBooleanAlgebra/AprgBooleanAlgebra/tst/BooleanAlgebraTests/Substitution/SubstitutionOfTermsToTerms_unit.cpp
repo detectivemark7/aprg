@@ -16,10 +16,10 @@ TEST(SubstitutionOfTermsToTermsTest, ConstructionWorks) {
     SubstitutionOfTermsToTerms substitution3{variableWithValues};
 
     EXPECT_TRUE(substitution1.isEmpty());
-    EXPECT_EQ(2U, substitution2.getSize());
+    EXPECT_EQ(2, substitution2.getSize());
     EXPECT_EQ(Term(false), substitution2.getTermForTerm("x"));
     EXPECT_EQ(Term(true), substitution2.getTermForTerm("y"));
-    EXPECT_EQ(2U, substitution3.getSize());
+    EXPECT_EQ(2, substitution3.getSize());
     EXPECT_EQ(Term(false), substitution3.getTermForTerm("x"));
     EXPECT_EQ(Term(true), substitution3.getTermForTerm("y"));
 }
@@ -45,8 +45,8 @@ TEST(SubstitutionOfTermsToTermsTest, GetSizeWorks) {
     SubstitutionOfTermsToTerms substitution1;
     SubstitutionOfTermsToTerms substitution2({{"x", false}, {"y", true}});
 
-    EXPECT_EQ(0U, substitution1.getSize());
-    EXPECT_EQ(2U, substitution2.getSize());
+    EXPECT_EQ(0, substitution1.getSize());
+    EXPECT_EQ(2, substitution2.getSize());
 }
 
 TEST(SubstitutionOfTermsToTermsTest, GetTermForTermWorks) {

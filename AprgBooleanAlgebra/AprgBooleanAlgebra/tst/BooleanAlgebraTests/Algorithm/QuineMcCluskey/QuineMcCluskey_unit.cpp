@@ -15,7 +15,7 @@ namespace alba {
 namespace booleanAlgebra {
 
 namespace {
-using MintermForTest = unsigned int;
+using MintermForTest = uint64_t;
 using ImplicantForTest = Implicant<MintermForTest>;
 using ImplicantsForTest = Implicants<MintermForTest>;
 using QuineMcCluskeyForTest = QuineMcCluskey<MintermForTest>;

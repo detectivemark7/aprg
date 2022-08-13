@@ -39,11 +39,9 @@ public:
         return result;
     }
 
-    unsigned int getNumberOfOnes(Minterm const value) const {
-        return AlbaBitValueUtilities<Minterm>::getNumberOfOnes(value);
-    }
+    int getNumberOfOnes(Minterm const value) const { return AlbaBitValueUtilities<Minterm>::getNumberOfOnes(value); }
 
-    ImplicantsWithMinterm getImplicants(unsigned int numberOfOnes, unsigned int commonalityCount) const {
+    ImplicantsWithMinterm getImplicants(int numberOfOnes, int commonalityCount) const {
         ImplicantsWithMinterm result;
         auto numberOfOnesIt = m_computationalTable.find(numberOfOnes);
         if (numberOfOnesIt != m_computationalTable.end()) {
@@ -73,7 +71,7 @@ public:
         return result;
     }
 
-    bool doImplicantsExistAt(unsigned int numberOfOnes, unsigned int commonalityCount) const {
+    bool doImplicantsExistAt(int numberOfOnes, int commonalityCount) const {
         bool result(false);
         auto numberOfOnesIt = m_computationalTable.find(numberOfOnes);
         if (numberOfOnesIt != m_computationalTable.end()) {
@@ -90,11 +88,12 @@ public:
     }
 
     void findAllCombinations() {
-        unsigned int commonalityCount = 0;
+        int commonalityCount = 0;
         bool areAllCombinationsFound(false);
         while (!areAllCombinationsFound) {
             bool isCombinationFound(false);
-            for (unsigned int numberOfOnes = 0; numberOfOnes + 1 < m_computationalTable.size(); numberOfOnes++) {
+            for (int numberOfOnes = 0; numberOfOnes + 1 < static_cast<int>(m_computationalTable.size());
+                 numberOfOnes++) {
                 findCombinationOfImplicants(numberOfOnes, commonalityCount);
                 isCombinationFound = isCombinationFound | doImplicantsExistAt(numberOfOnes, commonalityCount + 1);
             }
@@ -110,8 +109,8 @@ public:
         }
     }
 
-    void findCombinationOfImplicants(unsigned int numberOfOnes, unsigned int commonalityCount) {
-        if (numberOfOnes + 1 < m_computationalTable.size()) {
+    void findCombinationOfImplicants(int numberOfOnes, int commonalityCount) {
+        if (numberOfOnes + 1 < static_cast<int>(m_computationalTable.size())) {
             ImplicantsWithMinterm const& implicants1(m_computationalTable[numberOfOnes][commonalityCount]);
             ImplicantsWithMinterm const& implicants2(m_computationalTable[numberOfOnes + 1][commonalityCount]);
             for (ImplicantWithMinterm const& implicant1 : implicants1.getImplicantsData()) {
@@ -142,11 +141,11 @@ public:
         SetOfMinterms inputMintermsWithTrue(getSetOfInputMintermsWithTrue());
 
         while (!inputMintermsWithTrue.empty()) {
-            std::map<Minterm, unsigned int> inputMintermToCountMap;
+            std::map<Minterm, int> inputMintermToCountMap;
             std::map<Minterm, ImplicantWithMinterm> inputMintermToImplicantMap;
-            std::map<unsigned int, ImplicantWithMinterm> countToImplicantMap;
+            std::map<int, ImplicantWithMinterm> countToImplicantMap;
             for (ImplicantWithMinterm const& implicant : finalImplicants.getImplicantsData()) {
-                unsigned int implicantCount(0U);
+                int implicantCount(0U);
                 for (auto const& inputMinterm : inputMintermsWithTrue) {
                     if (implicant.isSuperset(inputMinterm)) {
                         inputMintermToCountMap[inputMinterm]++;
@@ -156,7 +155,7 @@ public:
                 }
                 countToImplicantMap.emplace(implicantCount, implicant);
             }
-            unsigned int minCount = std::numeric_limits<unsigned int>::max();
+            int minCount = std::numeric_limits<int>::max();
             Minterm mintermWithMinCount;
             for (auto const& inputMintermAndCountPair : inputMintermToCountMap) {
                 if (minCount > inputMintermAndCountPair.second) {
@@ -227,13 +226,13 @@ private:
     }
 
     void addMintermForZeroCommonalityCount(Minterm const& minterm) {
-        unsigned int numberOfOnes(getNumberOfOnes(minterm));
+        int numberOfOnes(getNumberOfOnes(minterm));
         ImplicantWithMinterm implicant;
         implicant.addMinterm(minterm);
         m_computationalTable[numberOfOnes][0].addImplicant(implicant);
     }
 
-    unsigned int m_maxCommonalityCount;
+    int m_maxCommonalityCount;
     InputToOutputMap m_inputToOutputMap;
     ComputationalTable m_computationalTable;  // https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm
 };

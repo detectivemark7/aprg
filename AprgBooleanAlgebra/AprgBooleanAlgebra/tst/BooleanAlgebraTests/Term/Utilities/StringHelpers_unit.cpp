@@ -18,12 +18,12 @@ TEST(StringHelpersTest, IsOperatorWorks) {
 }
 
 TEST(StringHelpersTest, GetOperatorTypeValueWorks) {
-    EXPECT_EQ(1U, getOperatorPriority("("));
-    EXPECT_EQ(2U, getOperatorPriority(")"));
-    EXPECT_EQ(3U, getOperatorPriority("~"));
-    EXPECT_EQ(4U, getOperatorPriority("&"));
-    EXPECT_EQ(5U, getOperatorPriority("|"));
-    EXPECT_EQ(0U, getOperatorPriority("notAnOperator"));
+    EXPECT_EQ(1, getOperatorPriority("("));
+    EXPECT_EQ(2, getOperatorPriority(")"));
+    EXPECT_EQ(3, getOperatorPriority("~"));
+    EXPECT_EQ(4, getOperatorPriority("&"));
+    EXPECT_EQ(5, getOperatorPriority("|"));
+    EXPECT_EQ(0, getOperatorPriority("notAnOperator"));
 }
 
 TEST(StringHelpersTest, GetStringWorksForOperatorType) {

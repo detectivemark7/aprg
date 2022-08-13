@@ -43,13 +43,13 @@ public:
     }
 
     bool isCompatible(Implicant const& implicant) const {
-        unsigned int commonLength(
+        int commonLength(
             std::max(getMaxLengthOfEquivalentString(), implicant.getMaxLengthOfEquivalentString()));
         std::string string1(getEquivalentString(commonLength));
         std::string string2(implicant.getEquivalentString(commonLength));
         bool result(true);
-        unsigned int difference = 0;
-        for (unsigned int i = 0; i < commonLength; i++) {
+        int difference = 0;
+        for (int i = 0; i < commonLength; i++) {
             if (string1.at(i) != string2.at(i)) {
                 if (string1.at(i) == '-' || string2.at(i) == '-') {
                     result = false;
@@ -93,14 +93,14 @@ public:
 
     std::string getEquivalentString() const { return getEquivalentString(getMaxLengthOfEquivalentString()); }
 
-    std::string getEquivalentString(unsigned int const length) const {
+    std::string getEquivalentString(int const length) const {
         std::string booleanEquivalent;
         if (!m_minterms.empty() && length > 0) {
-            constexpr unsigned int NUMBER_OF_BITS(AlbaBitValueUtilities<Minterm>::getNumberOfBits());
+            constexpr int NUMBER_OF_BITS(AlbaBitValueUtilities<Minterm>::getNumberOfBits());
             std::bitset<NUMBER_OF_BITS> xorBits(performAndOperationOfAllMinterms() ^ performOrOperationOfAllMinterms());
             std::bitset<NUMBER_OF_BITS> displayBits(getFirstMinterm());
-            for (unsigned int i = 0; i < length; i++) {
-                unsigned int bitIndex = length - i - 1;
+            for (int i = 0; i < length; i++) {
+                int bitIndex = length - i - 1;
                 if (xorBits[bitIndex]) {
                     booleanEquivalent.push_back('-');
                 } else if (displayBits[bitIndex]) {
@@ -124,9 +124,9 @@ public:
     void addMinterm(Minterm const& minterm) { m_minterms.emplace(minterm); }
 
 private:
-    unsigned int getMaxLengthOfEquivalentString() const {
-        unsigned int result = 0;
-        unsigned int orResult(performOrOperationOfAllMinterms());
+    int getMaxLengthOfEquivalentString() const {
+        int result = 0;
+        int orResult(performOrOperationOfAllMinterms());
         for (; orResult > 0; orResult >>= 1) {
             result++;
         }

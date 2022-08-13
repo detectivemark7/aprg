@@ -25,7 +25,7 @@ bool SubstitutionOfVariablesToTerms::isVariableFound(string const& variable) con
     return m_variableToTermsMap.find(variable) != m_variableToTermsMap.cend();
 }
 
-unsigned int SubstitutionOfVariablesToTerms::getSize() const { return m_variableToTermsMap.size(); }
+int SubstitutionOfVariablesToTerms::getSize() const { return m_variableToTermsMap.size(); }
 
 Term SubstitutionOfVariablesToTerms::getTermForVariable(string const& variable) const {
     Term result;
