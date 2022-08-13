@@ -258,10 +258,10 @@ TEST(AlbaMatrixTest, GetNumberOfCellsWorks) {
 TEST(AlbaMatrixTest, GetMatrixIndexWorks) {
     AlbaMatrix<int> matrix(14, 6);
 
-    EXPECT_EQ(45, matrix.getMatrixIndex(3, 3));
-    EXPECT_EQ(73, matrix.getMatrixIndex(3, 5));
-    EXPECT_EQ(47, matrix.getMatrixIndex(5, 3));
-    EXPECT_EQ(75, matrix.getMatrixIndex(5, 5));
+    EXPECT_EQ(45U, matrix.getMatrixIndex(3, 3));
+    EXPECT_EQ(73U, matrix.getMatrixIndex(3, 5));
+    EXPECT_EQ(47U, matrix.getMatrixIndex(5, 3));
+    EXPECT_EQ(75U, matrix.getMatrixIndex(5, 5));
 }
 
 TEST(AlbaMatrixTest, GetEntryWorks_ValueCanBeFetchedFromEmptyVector) {
@@ -306,7 +306,7 @@ TEST(AlbaMatrixTest, RetrieveColumnWorks) {
     AlbaMatrix<int>::MatrixData secondColumn;
     matrix.retrieveColumn(secondColumn, 1);
 
-    ASSERT_EQ(3, secondColumn.size());
+    ASSERT_EQ(3U, secondColumn.size());
     EXPECT_EQ(2, secondColumn.at(0));
     EXPECT_EQ(4, secondColumn.at(1));
     EXPECT_EQ(6, secondColumn.at(2));
@@ -318,7 +318,7 @@ TEST(AlbaMatrixTest, RetrieveRowWorks) {
     AlbaMatrix<int>::MatrixData secondRow;
     matrix.retrieveRow(secondRow, 1);
 
-    ASSERT_EQ(2, secondRow.size());
+    ASSERT_EQ(2U, secondRow.size());
     EXPECT_EQ(3, secondRow.at(0));
     EXPECT_EQ(4, secondRow.at(1));
 }
@@ -329,12 +329,12 @@ TEST(AlbaMatrixTest, RetrieveColumnsWorks) {
     AlbaMatrix<int>::ListOfMatrixData columns;
     matrix.retrieveColumns(columns);
 
-    ASSERT_EQ(2, columns.size());
-    ASSERT_EQ(3, columns.at(0).size());
+    ASSERT_EQ(2U, columns.size());
+    ASSERT_EQ(3U, columns.at(0).size());
     EXPECT_EQ(1, columns.at(0).at(0));
     EXPECT_EQ(3, columns.at(0).at(1));
     EXPECT_EQ(5, columns.at(0).at(2));
-    ASSERT_EQ(3, columns.at(1).size());
+    ASSERT_EQ(3U, columns.at(1).size());
     EXPECT_EQ(2, columns.at(1).at(0));
     EXPECT_EQ(4, columns.at(1).at(1));
     EXPECT_EQ(6, columns.at(1).at(2));
@@ -346,14 +346,14 @@ TEST(AlbaMatrixTest, RetrieveRowsWorks) {
     AlbaMatrix<int>::ListOfMatrixData rows;
     matrix.retrieveRows(rows);
 
-    ASSERT_EQ(3, rows.size());
-    ASSERT_EQ(2, rows.at(0).size());
+    ASSERT_EQ(3U, rows.size());
+    ASSERT_EQ(2U, rows.at(0).size());
     EXPECT_EQ(1, rows.at(0).at(0));
     EXPECT_EQ(2, rows.at(0).at(1));
-    ASSERT_EQ(2, rows.at(1).size());
+    ASSERT_EQ(2U, rows.at(1).size());
     EXPECT_EQ(3, rows.at(1).at(0));
     EXPECT_EQ(4, rows.at(1).at(1));
-    ASSERT_EQ(2, rows.at(2).size());
+    ASSERT_EQ(2U, rows.at(2).size());
     EXPECT_EQ(5, rows.at(2).at(0));
     EXPECT_EQ(6, rows.at(2).at(1));
 }
@@ -364,8 +364,8 @@ TEST(AlbaMatrixTest, RetrieveXAndYFromIndexWorks) {
     size_t x, y;
     matrix.retrieveXAndYFromIndex(x, y, 43);
 
-    EXPECT_EQ(1, x);
-    EXPECT_EQ(3, y);
+    EXPECT_EQ(1U, x);
+    EXPECT_EQ(3U, y);
 }
 
 TEST(AlbaMatrixTest, SetEntryWorks_ValueCanSavedInTheMatrix) {
@@ -470,7 +470,7 @@ TEST(AlbaMatrixTest, IterateAllThroughYAndThenXWorks) {
     vector<PairOfNumbers> xyPairsToVerify;
     matrix.iterateAllThroughYAndThenX([&](int const x, int const y) { xyPairsToVerify.emplace_back(x, y); });
 
-    ASSERT_EQ(9, xyPairsToVerify.size());
+    ASSERT_EQ(9U, xyPairsToVerify.size());
     EXPECT_EQ(PairOfNumbers(0, 0), xyPairsToVerify.at(0));
     EXPECT_EQ(PairOfNumbers(1, 0), xyPairsToVerify.at(1));
     EXPECT_EQ(PairOfNumbers(2, 0), xyPairsToVerify.at(2));
@@ -492,7 +492,7 @@ TEST(AlbaMatrixTest, IterateThroughYAndThenXWithRangesWorks) {
     matrix.iterateThroughYAndThenXWithRanges(
         yRange, xRange, [&](int const x, int const y) { xyPairsToVerify.emplace_back(x, y); });
 
-    ASSERT_EQ(4, xyPairsToVerify.size());
+    ASSERT_EQ(4U, xyPairsToVerify.size());
     EXPECT_EQ(PairOfNumbers(0, 1), xyPairsToVerify.at(0));
     EXPECT_EQ(PairOfNumbers(1, 1), xyPairsToVerify.at(1));
     EXPECT_EQ(PairOfNumbers(0, 2), xyPairsToVerify.at(2));
@@ -509,7 +509,7 @@ TEST(AlbaMatrixTest, IterateThroughXAndThenYWithRangesWorks) {
     matrix.iterateThroughXAndThenYWithRanges(
         xRange, yRange, [&](int const x, int const y) { xyPairsToVerify.emplace_back(x, y); });
 
-    ASSERT_EQ(4, xyPairsToVerify.size());
+    ASSERT_EQ(4U, xyPairsToVerify.size());
     EXPECT_EQ(PairOfNumbers(0, 1), xyPairsToVerify.at(0));
     EXPECT_EQ(PairOfNumbers(0, 2), xyPairsToVerify.at(1));
     EXPECT_EQ(PairOfNumbers(1, 1), xyPairsToVerify.at(2));
