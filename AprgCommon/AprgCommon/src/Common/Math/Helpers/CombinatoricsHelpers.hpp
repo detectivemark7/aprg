@@ -11,7 +11,6 @@ namespace alba::mathHelper {
 template <typename NumberType>
 NumberType getNumberOfPossibilities(NumberType const numberOfPossibilitiesPerTime, NumberType const numberOfTimes) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     return getRaiseToPowerForIntegers(numberOfPossibilitiesPerTime, numberOfTimes);
 }
@@ -19,8 +18,6 @@ NumberType getNumberOfPossibilities(NumberType const numberOfPossibilitiesPerTim
 template <typename NumberType>
 NumberType getFactorial(NumberType const number) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
-
     NumberType result(1);
     for (NumberType currentNumber = number; currentNumber > 1; currentNumber--) {
         result *= currentNumber;
@@ -31,7 +28,6 @@ NumberType getFactorial(NumberType const number) {
 template <typename NumberType>
 NumberType getNumberOfPermutations(NumberType const n, NumberType const r) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     NumberType result(0);
     if (n >= r) {
@@ -46,7 +42,6 @@ NumberType getNumberOfPermutations(NumberType const n, NumberType const r) {
 template <typename NumberType>
 NumberType getNumberOfCombinations(NumberType const n, NumberType const r) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // Formula 1(recursive formula): (n, k) = (n-1, k-1) + (n-1, k)
     // Base cases: (n, 0) = 1, (n, n) = 1
@@ -65,7 +60,6 @@ NumberType getNumberOfCombinations(NumberType const n, NumberType const r) {
 
     NumberType result(0);
     if (n >= r) {
-        result = 1;
         NumberType numerator = n;
         NumberType denominator = r;
         NumberType accumulatedNumerator = 1;
@@ -96,7 +90,6 @@ NumberType getNumberOfCombinations(NumberType const n, NumberType const r) {
 template <typename NumberType>
 NumberType getValueAtPascalTriangle(NumberType const rowIndex, NumberType const columnIndex) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // This is also called the binomial coefficient.
     // The binomial coefficient equals the number of ways we can choose a subset of k elements from a set of n elements.
@@ -108,7 +101,6 @@ NumberType getValueAtPascalTriangle(NumberType const rowIndex, NumberType const 
 template <typename NumberType>
 typename std::make_signed<NumberType>::type getStirlingNumberOfTheSecondKind(NumberType const n, NumberType const k) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
-    static_assert(typeHelper::isUnsignedType<NumberType>(), "Number type must be an unsigned");
 
     // In mathematics, particularly in combinatorics, a Stirling number of the second kind (or Stirling partition
     // number) is the number of ways to partition a set of n objects into k non-empty subsets
