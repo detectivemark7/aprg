@@ -10,7 +10,7 @@ class NearestSamples {
 public:
     NearestSamples(Samples const& samples);
 
-    Indexes getNearestSamplesIndexes(double const value, unsigned int const recommendedNumberOfSamples);
+    Indexes getNearestSamplesIndexes(double const value, int const recommendedNumberOfSamples);
 
 private:
     void saveToValuesToIndexes();

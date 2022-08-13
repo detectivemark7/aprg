@@ -16,7 +16,7 @@ public:
         double totalValue;
         double weight;
     };
-    using SamplesMergingDetails = std::map<unsigned int, SampleMergingDetails>;
+    using SamplesMergingDetails = std::map<int, SampleMergingDetails>;
 
     NewSamplesBuilder(Samples const& oldSamples);
 

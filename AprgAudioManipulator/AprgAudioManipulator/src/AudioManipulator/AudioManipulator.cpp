@@ -18,12 +18,12 @@ AudioInDouble const& AudioManipulator::getAudio() const { return m_audio; }
 AudioInDouble& AudioManipulator::getAudioReference() { return m_audio; }
 
 void AudioManipulator::addSamplesWithValue(double const value) {
-    for (unsigned int i = 0; i < m_audio.getNumChannels(); i++) {
+    for (int i = 0; i < m_audio.getNumChannels(); i++) {
         addSamplesAtChannelWithValue(i, value);
     }
 }
 
-void AudioManipulator::addSamplesAtChannelWithValue(unsigned int const channelIndex, double const value) {
+void AudioManipulator::addSamplesAtChannelWithValue(int const channelIndex, double const value) {
     Samples& samplesAtChannel(m_audio.getSamplesReferenceAtChannel(channelIndex));
     for (double& sampleAtChannel : samplesAtChannel) {
         sampleAtChannel += value;
@@ -31,12 +31,12 @@ void AudioManipulator::addSamplesAtChannelWithValue(unsigned int const channelIn
 }
 
 void AudioManipulator::multiplySamplesWithValue(double const value) {
-    for (unsigned int i = 0; i < m_audio.getNumChannels(); i++) {
+    for (int i = 0; i < m_audio.getNumChannels(); i++) {
         multiplySamplesAtChannelWithValue(i, value);
     }
 }
 
-void AudioManipulator::multiplySamplesAtChannelWithValue(unsigned int const channelIndex, double const value) {
+void AudioManipulator::multiplySamplesAtChannelWithValue(int const channelIndex, double const value) {
     Samples& samplesAtChannel(m_audio.getSamplesReferenceAtChannel(channelIndex));
     for (double& sampleAtChannel : samplesAtChannel) {
         sampleAtChannel *= value;

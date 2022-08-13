@@ -16,9 +16,9 @@ public:
     AudioInDouble& getAudioReference();
 
     void addSamplesWithValue(double const value);
-    void addSamplesAtChannelWithValue(unsigned int const channelIndex, double const value);
+    void addSamplesAtChannelWithValue(int const channelIndex, double const value);
     void multiplySamplesWithValue(double const value);
-    void multiplySamplesAtChannelWithValue(unsigned int const channelIndex, double const value);
+    void multiplySamplesAtChannelWithValue(int const channelIndex, double const value);
 
     void saveAudioIntoCurrentFile();
     void saveAudioIntoFileInTheSameDirectory(std::string const& filename);
