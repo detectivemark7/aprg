@@ -18,10 +18,10 @@ TEST(SubstitutionOfVariablesToValuesTest, ConstructionWorks) {
     SubstitutionOfVariablesToValues substitution3{variableWithValues};
 
     EXPECT_TRUE(substitution1.isEmpty());
-    EXPECT_EQ(2U, substitution2.getSize());
+    EXPECT_EQ(2, substitution2.getSize());
     EXPECT_EQ(AlbaNumber(1), substitution2.getValueForVariable("x"));
     EXPECT_EQ(AlbaNumber(2), substitution2.getValueForVariable("y"));
-    EXPECT_EQ(2U, substitution3.getSize());
+    EXPECT_EQ(2, substitution3.getSize());
     EXPECT_EQ(AlbaNumber(1), substitution3.getValueForVariable("x"));
     EXPECT_EQ(AlbaNumber(2), substitution2.getValueForVariable("y"));
 }
@@ -47,8 +47,8 @@ TEST(SubstitutionOfVariablesToValuesTest, GetSizeWorks) {
     SubstitutionOfVariablesToValues substitution1;
     SubstitutionOfVariablesToValues substitution2({{"x", 1}, {"y", 2}});
 
-    EXPECT_EQ(0U, substitution1.getSize());
-    EXPECT_EQ(2U, substitution2.getSize());
+    EXPECT_EQ(0, substitution1.getSize());
+    EXPECT_EQ(2, substitution2.getSize());
 }
 
 TEST(SubstitutionOfVariablesToValuesTest, GetValueForVariableWorks) {

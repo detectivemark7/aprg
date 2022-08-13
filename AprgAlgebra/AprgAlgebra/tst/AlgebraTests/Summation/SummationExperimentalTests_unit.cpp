@@ -26,7 +26,7 @@ TEST(SummationTest, ExperimentalTest1) {
     // digits.
 
     Term formula(1);
-    for (unsigned int i = 1; i < 10; i++)  // continue to integrate for number of digits
+    for (int i = 1; i < 10; i++)  // continue to integrate for number of digits
     {
         Summation summation(formula, "x");
         formula = summation.getSummationModelWithUnknownConstant();
@@ -47,15 +47,15 @@ TEST(SummationTest, ExperimentalTest2) {
         Monomial(-1, {{"C", 1}, {"s", 2}}), Monomial(1, {{"s", 3}})};
     Summation summation(polynomial, "s");
 
-    unsigned int r = 1000;
-    unsigned int s = 500;
-    unsigned int minOfRSMinus1(min(r, s) - 1);
+    int r = 1000;
+    int s = 500;
+    int minOfRSMinus1(min(r, s) - 1);
     Term summationFormula(summation.getSum(1, "minOfRSMinus1"));
     Polynomials polynomials(factorizeAPolynomial(summationFormula.getPolynomialConstReference()));
     SubstitutionOfVariablesToValues substitution{{"R", r}, {"C", s}, {"minOfRSMinus1", minOfRSMinus1}};
-    unsigned long long result =
+    long long result =
         substitution.performSubstitutionTo(summationFormula).getConstantValueConstReference().getInteger();
-    unsigned long long display = result % 1000000007;
+    long long display = result % 1000000007;
 
     for (Polynomial const& polynomial : polynomials) {
         cout << "Factor: " << polynomial << "\n";

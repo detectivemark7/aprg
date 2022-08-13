@@ -254,10 +254,10 @@ TEST(FactorizationOfIncreasingAndDecreasingExponentFormTest, AreAllMonomialsFoun
 }
 
 TEST(FactorizationOfIncreasingAndDecreasingExponentFormTest, CalculateMaxExponentDivisorWorks) {
-    EXPECT_EQ(0U, calculateMaxExponentDivisor(Monomial(1, {}), Monomial(1, {})));
-    EXPECT_EQ(7U, calculateMaxExponentDivisor(Monomial(1, {{"x", 7}}), Monomial(1, {{"y", 7}})));
-    EXPECT_EQ(7U, calculateMaxExponentDivisor(Monomial(1, {{"x", 3}}), Monomial(1, {{"y", 7}})));
-    EXPECT_EQ(9U, calculateMaxExponentDivisor(Monomial(1, {{"x", 9}}), Monomial(1, {{"y", 7}})));
+    EXPECT_EQ(0, calculateMaxExponentDivisor(Monomial(1, {}), Monomial(1, {})));
+    EXPECT_EQ(7, calculateMaxExponentDivisor(Monomial(1, {{"x", 7}}), Monomial(1, {{"y", 7}})));
+    EXPECT_EQ(7, calculateMaxExponentDivisor(Monomial(1, {{"x", 3}}), Monomial(1, {{"y", 7}})));
+    EXPECT_EQ(9, calculateMaxExponentDivisor(Monomial(1, {{"x", 9}}), Monomial(1, {{"y", 7}})));
 }
 
 TEST(FactorizationOfIncreasingAndDecreasingExponentFormTest, GetCoefficientsInMonomialsWithExponentsInOrderWorks) {

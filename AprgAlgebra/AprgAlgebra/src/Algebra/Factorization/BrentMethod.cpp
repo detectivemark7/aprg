@@ -27,7 +27,7 @@ BrentMethod::BrentMethod(AlbaNumbers const& coefficients)
 
 bool BrentMethod::isFinished() const { return m_values.solutionOptional.has_value(); }
 
-unsigned int BrentMethod::getNumberOfIterationsExecuted() const { return m_numberOfIterationsExecuted; }
+int BrentMethod::getNumberOfIterationsExecuted() const { return m_numberOfIterationsExecuted; }
 
 AlbaNumbers const& BrentMethod::getCoefficients() const { return m_coefficients; }
 
@@ -111,8 +111,8 @@ void BrentMethod::runOneIteration() {
     m_numberOfIterationsExecuted++;
 }
 
-void BrentMethod::runMaxNumberOfIterationsOrUntilFinished(unsigned int const maxIterations) {
-    for (unsigned int i = 0; !isFinished() && i < maxIterations; i++) {
+void BrentMethod::runMaxNumberOfIterationsOrUntilFinished(int const maxIterations) {
+    for (int i = 0; !isFinished() && i < maxIterations; i++) {
         runOneIteration();
     }
 }

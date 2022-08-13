@@ -13,7 +13,7 @@ public:
 
     Expressions const& getExpressions() const;
     TermAssociationTypes const& getAssociations() const;
-    unsigned int getSize() const;
+    int getSize() const;
     TermsWithDetails getAsTermsWithDetails() const;
 
     Term getCombinedTerm();

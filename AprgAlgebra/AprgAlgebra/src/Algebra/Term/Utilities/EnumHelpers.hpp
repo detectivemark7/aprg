@@ -9,9 +9,9 @@
 namespace alba {
 
 namespace algebra {
-unsigned int getAssociationPriority(TermAssociationType const association);
-unsigned int getOperatorLevelInversePriority(OperatorLevel const operatorLevel);
-unsigned int getTermTypePriorityValue(TermType const termType);
+int getAssociationPriority(TermAssociationType const association);
+int getOperatorLevelInversePriority(OperatorLevel const operatorLevel);
+int getTermTypePriorityValue(TermType const termType);
 
 TermAssociationType getReversedAssociationType(TermAssociationType const associationType);
 

@@ -55,15 +55,15 @@ void factorizeCommonMonomialIfPossible(Polynomials& result, Polynomial const& po
 
 void factorizePolynomialsAndPutToResult(Polynomials& result, Polynomials const& polynomials) {
     Polynomials polynomialsToFactorize(polynomials);
-    for (unsigned int i = 0; i < polynomialsToFactorize.size(); i++) {
+    for (int i = 0; i < static_cast<int>(polynomialsToFactorize.size()); i++) {
         Polynomial const& polynomial(polynomialsToFactorize.at(i));
         Polynomial simplifiedPolynomial(polynomial);
         simplifiedPolynomial.simplify();
         if (doesNotNeedToBeFactorized(simplifiedPolynomial)) {
             result.emplace_back(simplifiedPolynomial);
         } else {
-            unsigned int const originalSize(polynomialsToFactorize.size());
-            unsigned int deltaSize = polynomialsToFactorize.size() - originalSize;
+            int const originalSize(polynomialsToFactorize.size());
+            int deltaSize = polynomialsToFactorize.size() - originalSize;
             tryToFactorizeCommonMonomial(polynomialsToFactorize, deltaSize, simplifiedPolynomial, originalSize);
             tryToFactorizeUsingPatterns(polynomialsToFactorize, deltaSize, simplifiedPolynomial, originalSize);
             tryToFactorizeIncreasingAndDecreasingExponentsForm(
@@ -81,8 +81,8 @@ void factorizePolynomialsAndPutToResult(Polynomials& result, Polynomials const& 
 }
 
 void tryToFactorizeCommonMonomial(
-    Polynomials& polynomialsToFactorize, unsigned int& deltaSize, Polynomial const& simplifiedPolynomial,
-    unsigned int const originalSize) {
+    Polynomials& polynomialsToFactorize, int& deltaSize, Polynomial const& simplifiedPolynomial,
+    int const originalSize) {
     if (deltaSize == 0) {
         Polynomials factorizedPolynomials;
         factorizeCommonMonomialIfPossible(factorizedPolynomials, simplifiedPolynomial);
@@ -92,8 +92,8 @@ void tryToFactorizeCommonMonomial(
 }
 
 void tryToFactorizeUsingPatterns(
-    Polynomials& polynomialsToFactorize, unsigned int& deltaSize, Polynomial const& simplifiedPolynomial,
-    unsigned int const originalSize) {
+    Polynomials& polynomialsToFactorize, int& deltaSize, Polynomial const& simplifiedPolynomial,
+    int const originalSize) {
     if (deltaSize == 0 && isFactorizeUsingPatternsNeeded(simplifiedPolynomial)) {
         Polynomials factorizedPolynomials;
         factorizeUsingPatternsIfPossible(factorizedPolynomials, simplifiedPolynomial);
@@ -103,8 +103,8 @@ void tryToFactorizeUsingPatterns(
 }
 
 void tryToFactorizeIncreasingAndDecreasingExponentsForm(
-    Polynomials& polynomialsToFactorize, unsigned int& deltaSize, Polynomial const& simplifiedPolynomial,
-    unsigned int const originalSize) {
+    Polynomials& polynomialsToFactorize, int& deltaSize, Polynomial const& simplifiedPolynomial,
+    int const originalSize) {
     if (deltaSize == 0 && isFactorizeIncreasingAndDecreasingExponentsFormNeeded(simplifiedPolynomial)) {
         Polynomials factorizedPolynomials;
         factorizeIncreasingAndDecreasingExponentsFormIfPossible(factorizedPolynomials, simplifiedPolynomial);
@@ -114,8 +114,8 @@ void tryToFactorizeIncreasingAndDecreasingExponentsForm(
 }
 
 void tryToFactorizeBySplittingToSmallerPolynomials(
-    Polynomials& polynomialsToFactorize, unsigned int& deltaSize, Polynomial const& simplifiedPolynomial,
-    unsigned int const originalSize) {
+    Polynomials& polynomialsToFactorize, int& deltaSize, Polynomial const& simplifiedPolynomial,
+    int const originalSize) {
     if (deltaSize == 0 && isFactorizeBySplittingToSmallerPolynomialsNeeded(simplifiedPolynomial)) {
         Polynomials factorizedPolynomials;
         factorizeBySplittingToSmallerPolynomialsIfPossible(factorizedPolynomials, simplifiedPolynomial);
@@ -144,8 +144,8 @@ void simplifyAndRemoveEmptyPolynomials(Polynomials& polynomials) {
         polynomials.end());
 }
 
-unsigned int getDeltaSize(Polynomials const& polynomials, unsigned int const originalSize) {
-    return static_cast<unsigned int>(polynomials.size()) - originalSize;
+int getDeltaSize(Polynomials const& polynomials, int const originalSize) {
+    return static_cast<int>(polynomials.size()) - originalSize;
 }
 
 bool isFactorizeUsingPatternsNeeded(Polynomial const& polynomial) {

@@ -4,7 +4,7 @@ namespace alba {
 
 namespace algebra {
 
-NumberOfTermsRetriever::NumberOfTermsRetriever() { m_savedData = 0U; }
+NumberOfTermsRetriever::NumberOfTermsRetriever() { m_savedData = 0; }
 
 void NumberOfTermsRetriever::retrieveFromConstant(Constant const&) { m_savedData++; }
 

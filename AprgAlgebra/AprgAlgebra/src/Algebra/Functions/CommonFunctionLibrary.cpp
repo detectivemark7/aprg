@@ -40,7 +40,7 @@ Function factorial(Term const& term) {
     return Function("factorial", term, [](AlbaNumber const& number) -> AlbaNumber {
         AlbaNumber result;
         if (number.isIntegerType() && number >= 0) {
-            result = AlbaNumber(getFactorial(static_cast<unsigned int>(number.getInteger())));
+            result = AlbaNumber(getFactorial(static_cast<int>(number.getInteger())));
         }
         return result;
     });
@@ -58,8 +58,8 @@ Function harmonicNumber(Term const& term) {
     return Function("harmonicNumber", term, [](AlbaNumber const& number) -> AlbaNumber {
         AlbaNumber result;
         if (number.getInteger() && number > 0) {
-            unsigned int lastNumber = static_cast<unsigned int>(number.getInteger());
-            for (unsigned int i = 1; i <= lastNumber; i++) {
+            int lastNumber = static_cast<int>(number.getInteger());
+            for (int i = 1; i <= lastNumber; i++) {
                 result = result + AlbaNumber::createFraction(1, i);
             }
         }

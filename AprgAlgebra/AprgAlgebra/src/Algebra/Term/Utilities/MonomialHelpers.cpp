@@ -177,7 +177,7 @@ AlbaNumber getLcmOfCoefficientsInMonomials(Monomials const& monomials) {
 AlbaNumber getCommonSignInMonomials(Monomials const& monomials) {
     bool isFirstMonomial(true);
     bool isFirstMonomialNegative(false);
-    unsigned int negativeSignCount(0);
+    int negativeSignCount(0);
     for (Monomial const& monomial : monomials) {
         if (monomial.getConstantConstReference() < AlbaNumber(0)) {
             negativeSignCount++;
@@ -187,7 +187,10 @@ AlbaNumber getCommonSignInMonomials(Monomials const& monomials) {
         }
         isFirstMonomial = false;
     }
-    return (isFirstMonomialNegative || (negativeSignCount > 0 && negativeSignCount == monomials.size())) ? -1 : 1;
+    return (isFirstMonomialNegative ||
+            (negativeSignCount > 0 && negativeSignCount == static_cast<int>(monomials.size())))
+               ? -1
+               : 1;
 }
 
 Monomial getGcfMonomialInMonomials(Monomials const& monomials) {

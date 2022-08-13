@@ -38,7 +38,7 @@ TEST(NewtonMethodTest, GetNumberOfIterationsExecutedWorksWhenNoIterationsAreExec
     NewtonMethod::Function functionToIterate = [](AlbaNumber const& number) { return (number ^ 2) - 16; };
     NewtonMethod newtonMethod(5, functionToIterate);
 
-    EXPECT_EQ(0U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(0, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, GetNumberOfIterationsExecutedWorksWhenOneIterationIsExecuted) {
@@ -46,7 +46,7 @@ TEST(NewtonMethodTest, GetNumberOfIterationsExecutedWorksWhenOneIterationIsExecu
     NewtonMethod newtonMethod(5, functionToIterate);
     newtonMethod.runOneIteration();
 
-    EXPECT_EQ(1U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(1, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, GetCurrentValueWorks) {
@@ -72,7 +72,7 @@ TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorksWhenMaxIterat
     newtonMethod.runMaxNumberOfIterationsOrUntilFinished(4);
 
     EXPECT_EQ(AlbaNumber(4.0022575248056222463), newtonMethod.getCurrentValue());
-    EXPECT_EQ(4U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(4, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorksWhenMaxIterationIsNotReached) {
@@ -82,7 +82,7 @@ TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorksWhenMaxIterat
     newtonMethod.runMaxNumberOfIterationsOrUntilFinished(100);
 
     EXPECT_EQ(AlbaNumber(4), newtonMethod.getCurrentValue());
-    EXPECT_EQ(6U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(6, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorks) {
@@ -92,7 +92,7 @@ TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorks) {
     newtonMethod.runUntilFinished();
 
     EXPECT_EQ(AlbaNumber(4), newtonMethod.getCurrentValue());
-    EXPECT_EQ(6U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(6, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorksForXToXForm) {
@@ -102,7 +102,7 @@ TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedWorksForXToXForm) 
     newtonMethod.runMaxNumberOfIterationsOrUntilFinished(100);
 
     EXPECT_EQ(AlbaNumber(4), newtonMethod.getCurrentValue());
-    EXPECT_EQ(44U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(44, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedFailsToGetSolutionWithXToXForm) {
@@ -112,7 +112,7 @@ TEST(NewtonMethodTest, RunMaxNumberOfIterationsOrUntilFinishedFailsToGetSolution
     newtonMethod.runMaxNumberOfIterationsOrUntilFinished(100);
 
     EXPECT_TRUE(newtonMethod.getCurrentValue().isNotANumber());
-    EXPECT_EQ(1U, newtonMethod.getNumberOfIterationsExecuted());
+    EXPECT_EQ(1, newtonMethod.getNumberOfIterationsExecuted());
 }
 
 }  // namespace algebra

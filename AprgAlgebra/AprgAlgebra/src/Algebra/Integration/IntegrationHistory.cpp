@@ -17,7 +17,7 @@ bool IntegrationHistory::didThisIntegrationPurposeAlreadyHappened(IntegrationPur
            m_recordOfIntegrationPurposes.cend();
 }
 
-unsigned int IntegrationHistory::getDepth() const { return m_recordOfIntegrationPurposes.size(); }
+int IntegrationHistory::getDepth() const { return m_recordOfIntegrationPurposes.size(); }
 
 IntegrationPurpose IntegrationHistory::getLastIntegrationPurpose() const {
     IntegrationPurpose result(IntegrationPurpose::NotSet);

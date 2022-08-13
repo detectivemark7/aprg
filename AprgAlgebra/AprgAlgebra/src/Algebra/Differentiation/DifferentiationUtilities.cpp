@@ -191,7 +191,7 @@ Term getSlopeOfTermInPolarCoordinates(
 
 Term getApproximationUsingTaylorsFormula(
     Term const& term, string const& variableName, Term const& startingValue, Term const& valueToApproach,
-    unsigned int const numberOfTimes) {
+    int const numberOfTimes) {
     // taylors formula:
     // f(b) = f(a) + f'(a)*(b-a)/1! + f''(a)*(b-a)^2/2! ...
     Differentiation differentiation(variableName);
@@ -200,7 +200,7 @@ Term getApproximationUsingTaylorsFormula(
     Term differenceRaiseToPower(1);
     AlbaNumber factorialValue(1);
     Term result(evaluateAtDefiniteTerm(term, variableName, startingValue));
-    for (unsigned int n = 1; n <= numberOfTimes; n++) {
+    for (int n = 1; n <= numberOfTimes; n++) {
         currentDerivative = differentiation.differentiate(currentDerivative);
         differenceRaiseToPower *= difference;
         factorialValue *= n;
@@ -214,13 +214,13 @@ Term getApproximationUsingTaylorsFormula(
 
 Term getApproximationOfErrorUsingTaylorsRemainder(
     Term const& term, string const& variableName, Term const& startingValue, Term const& valueToApproach,
-    Term const& valueForEstimation, unsigned int const numberOfTimes) {
+    Term const& valueForEstimation, int const numberOfTimes) {
     // taylors formula:
     // R(x) = f(n+1)(E) * (x-a)^(n+1) / (n+1)!
     // E or valueForEstimation should be between startingValue and valueToApproach
     Differentiation differentiation(variableName);
     Term difference(valueToApproach - startingValue);
-    unsigned int nPlusOne = numberOfTimes + 1;
+    int nPlusOne = numberOfTimes + 1;
     Term derivative(differentiation.differentiateMultipleTimes(term, nPlusOne));
     Term derivativeValue(evaluateAtDefiniteTerm(derivative, variableName, valueForEstimation));
     Term differenceRaiseToPower(difference ^ (nPlusOne));

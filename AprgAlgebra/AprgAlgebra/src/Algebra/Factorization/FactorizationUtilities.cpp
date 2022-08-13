@@ -20,7 +20,7 @@ namespace algebra {
 
 namespace Factorization {
 
-bool areExponentsDivisible(Monomial const& monomial, unsigned int const divisor) {
+bool areExponentsDivisible(Monomial const& monomial, int const divisor) {
     bool result(true);
     for (auto const& variableExponentPair : monomial.getVariablesToExponentsMapConstReference()) {
         if (!variableExponentPair.second.isIntegerType() ||
@@ -36,7 +36,7 @@ bool isPerfectSquare(Monomial const& monomial) { return isPerfectNthPower(monomi
 
 bool isPerfectCube(Monomial const& monomial) { return isPerfectNthPower(monomial, 3); }
 
-bool isPerfectNthPower(Monomial const& monomial, unsigned int const nthPower) {
+bool isPerfectNthPower(Monomial const& monomial, int const nthPower) {
     AlbaNumber constant(monomial.getConstantConstReference());
     bool result(false);
     if (constant.isIntegerType() && mathHelper::isPerfectNthPower(constant, nthPower)) {
@@ -79,7 +79,7 @@ bool doesContainOnlyConstants(Polynomials const& polynomials) {
 
 bool IsEmptyOrContainConstantsOrOneNonConstant(Polynomials const& polynomials) {
     bool result(true);
-    unsigned int nonConstantsCount = 0;
+    int nonConstantsCount = 0;
     for (Polynomial const& polynomial : polynomials) {
         if (!doesThePolynomialHaveOnlyOneConstant(polynomial)) {
             nonConstantsCount++;

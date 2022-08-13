@@ -6,7 +6,7 @@ namespace alba {
 
 namespace algebra {
 
-using BaseNumberOfTermsRetriever = BaseRetriever<unsigned int>;
+using BaseNumberOfTermsRetriever = BaseRetriever<int>;
 
 class NumberOfTermsRetriever final : public BaseNumberOfTermsRetriever {
 public:

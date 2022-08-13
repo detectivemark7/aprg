@@ -43,7 +43,7 @@ void TermsAggregator::updateStartIndexAndEndIndexAndCheckOpeningAndClosingOperat
     if (!m_terms.empty()) {
         m_endIndex = m_terms.size() - 1;
     }
-    for (unsigned int i = 0; i < m_terms.size(); i++) {
+    for (int i = 0; i < static_cast<int>(m_terms.size()); i++) {
         Term const& term(m_terms.at(i));
         if (term.isOperator()) {
             Operator const& operatorTerm(term.getOperatorConstReference());
@@ -60,7 +60,7 @@ void TermsAggregator::updateStartIndexAndEndIndexAndCheckOpeningAndClosingOperat
 
 bool TermsAggregator::combineOpeningClosingOperatorsAtStartEndIndexesAndReturnIfCombined() {
     bool isCombined(false);
-    if (m_startIndex + 2 == m_endIndex && m_endIndex < m_terms.size()) {
+    if (m_startIndex + 2 == m_endIndex && m_endIndex < static_cast<int>(m_terms.size())) {
         Term const& term1(m_terms.at(m_startIndex));
         Term const& term2(m_terms.at(m_startIndex + 1));
         Term const& term3(m_terms.at(m_endIndex));
@@ -89,7 +89,7 @@ bool TermsAggregator::traverseOnOperatorIndexesAndReturnIfContinue(
     AggregatorTraverseSteps const traverseSteps, OperatorInputType const operatorInputType) {
     bool continueToTraverse(false);
     Indexes nextOperatorIndexes(getNextOperatorIndexes(operatorInputType));
-    for (unsigned int const nextOperatorIndex : nextOperatorIndexes) {
+    for (int const nextOperatorIndex : nextOperatorIndexes) {
         continueToTraverse =
             performTraverseStepsAndReturnIfContinue(traverseSteps, nextOperatorIndex, operatorInputType);
         if (continueToTraverse) {
@@ -100,7 +100,7 @@ bool TermsAggregator::traverseOnOperatorIndexesAndReturnIfContinue(
 }
 
 bool TermsAggregator::performTraverseStepsAndReturnIfContinue(
-    AggregatorTraverseSteps const traverseSteps, unsigned int const nextOperatorIndex,
+    AggregatorTraverseSteps const traverseSteps, int const nextOperatorIndex,
     OperatorInputType const operatorInputType) {
     bool continueToTraverse(false);
     if (OperatorInputType::UnaryOperation == operatorInputType) {
@@ -114,7 +114,7 @@ bool TermsAggregator::performTraverseStepsAndReturnIfContinue(
 }
 
 bool TermsAggregator::performTraverseStepsWithBinaryOperationAndReturnIfContinue(
-    AggregatorTraverseSteps const traverseSteps, unsigned int const nextOperatorIndex) {
+    AggregatorTraverseSteps const traverseSteps, int const nextOperatorIndex) {
     bool continueToTraverse(true);
     if (AggregatorTraverseSteps::BuildExpression == traverseSteps) {
         continueToTraverse = buildExpressionWithBinaryOperationAndReturnIfBuilt(nextOperatorIndex);
@@ -125,7 +125,7 @@ bool TermsAggregator::performTraverseStepsWithBinaryOperationAndReturnIfContinue
 }
 
 bool TermsAggregator::performTraverseStepsWithUnaryOperationAndReturnIfContinue(
-    AggregatorTraverseSteps const traverseSteps, unsigned int const nextOperatorIndex) {
+    AggregatorTraverseSteps const traverseSteps, int const nextOperatorIndex) {
     bool continueToTraverse(true);
     if (AggregatorTraverseSteps::BuildExpression == traverseSteps) {
         continueToTraverse = buildExpressionWithUnaryOperationAndReturnIfBuilt(nextOperatorIndex);
@@ -137,8 +137,8 @@ bool TermsAggregator::performTraverseStepsWithUnaryOperationAndReturnIfContinue(
 
 TermsAggregator::Indexes TermsAggregator::getNextOperatorIndexes(OperatorInputType const operatorInputType) const {
     Indexes operatorIndexes;
-    multimap<unsigned int, unsigned int> operatorLevelToIndexMap;
-    for (unsigned int i = m_startIndex; i < m_endIndex; i++) {
+    multimap<int, int> operatorLevelToIndexMap;
+    for (int i = m_startIndex; i < m_endIndex; i++) {
         Term const& term(m_terms.at(i));
         if (term.isOperator()) {
             Operator const& operatorTerm(term.getOperatorConstReference());
@@ -153,9 +153,9 @@ TermsAggregator::Indexes TermsAggregator::getNextOperatorIndexes(OperatorInputTy
     return operatorIndexes;
 }
 
-bool TermsAggregator::buildExpressionWithBinaryOperationAndReturnIfBuilt(unsigned int const index) {
+bool TermsAggregator::buildExpressionWithBinaryOperationAndReturnIfBuilt(int const index) {
     bool isBuilt(false);
-    if (index > 0 && index + 1 < m_terms.size()) {
+    if (index > 0 && index + 1 < static_cast<int>(m_terms.size())) {
         Term const& term1(m_terms.at(index - 1));
         Term const& term2(m_terms.at(index));
         Term const& term3(m_terms.at(index + 1));
@@ -180,9 +180,9 @@ bool TermsAggregator::buildExpressionWithBinaryOperationAndReturnIfBuilt(unsigne
     return isBuilt;
 }
 
-bool TermsAggregator::buildExpressionWithUnaryOperationAndReturnIfBuilt(unsigned int const index) {
+bool TermsAggregator::buildExpressionWithUnaryOperationAndReturnIfBuilt(int const index) {
     bool isBuilt(false);
-    if (index + 1 < m_terms.size()) {
+    if (index + 1 < static_cast<int>(m_terms.size())) {
         Term const& term1(m_terms.at(index));
         Term const& term2(m_terms.at(index + 1));
         bool haveNoFirstValue(hasNoValueBeforeThisIndex(index));
@@ -202,9 +202,9 @@ bool TermsAggregator::buildExpressionWithUnaryOperationAndReturnIfBuilt(unsigned
     return isBuilt;
 }
 
-bool TermsAggregator::simplifyBinaryOperationAndReturnIfSimplified(unsigned int const index) {
+bool TermsAggregator::simplifyBinaryOperationAndReturnIfSimplified(int const index) {
     bool isSimplified(false);
-    if (index > 0 && index + 1 < m_terms.size()) {
+    if (index > 0 && index + 1 < static_cast<int>(m_terms.size())) {
         Term const& term1(m_terms.at(index - 1));
         Term const& term2(m_terms.at(index));
         Term const& term3(m_terms.at(index + 1));
@@ -217,9 +217,9 @@ bool TermsAggregator::simplifyBinaryOperationAndReturnIfSimplified(unsigned int 
     return isSimplified;
 }
 
-bool TermsAggregator::simplifyUnaryOperationAndReturnIfSimplified(unsigned int const index) {
+bool TermsAggregator::simplifyUnaryOperationAndReturnIfSimplified(int const index) {
     bool isSimplified(false);
-    if (index + 1 < m_terms.size()) {
+    if (index + 1 < static_cast<int>(m_terms.size())) {
         Term const& term1(m_terms.at(index));
         Term const& term2(m_terms.at(index + 1));
         bool haveNoFirstValue(hasNoValueBeforeThisIndex(index));
@@ -233,24 +233,23 @@ bool TermsAggregator::simplifyUnaryOperationAndReturnIfSimplified(unsigned int c
     return isSimplified;
 }
 
-bool TermsAggregator::hasNoValueBeforeThisIndex(unsigned int const index) const {
+bool TermsAggregator::hasNoValueBeforeThisIndex(int const index) const {
     bool result(false);
     if (index == 0) {
         result = true;
-    } else if (index - 1 < m_terms.size()) {
+    } else if (index - 1 < static_cast<int>(m_terms.size())) {
         result = !isNonEmptyOrNonOperatorType(m_terms.at(index - 1));
     }
     return result;
 }
 
-void TermsAggregator::eraseAndThenInsert(
-    unsigned int const firstIndex, unsigned int const secondIndex, Term const& term) {
+void TermsAggregator::eraseAndThenInsert(int const firstIndex, int const secondIndex, Term const& term) {
     Term newTerm(term);
     eraseTermsInclusive(firstIndex, secondIndex);
     insertTerm(firstIndex, newTerm);
 }
 
-void TermsAggregator::eraseTermsInclusive(unsigned int const firstIndex, unsigned int const secondIndex) {
+void TermsAggregator::eraseTermsInclusive(int const firstIndex, int const secondIndex) {
     bool isOutsideStartAndEndIndex(m_startIndex > firstIndex || m_endIndex < secondIndex);
     m_terms.erase(m_terms.cbegin() + firstIndex, m_terms.cbegin() + secondIndex + 1);
     if (isOutsideStartAndEndIndex) {
@@ -260,7 +259,7 @@ void TermsAggregator::eraseTermsInclusive(unsigned int const firstIndex, unsigne
     }
 }
 
-void TermsAggregator::insertTerm(unsigned int const index, Term const& term) {
+void TermsAggregator::insertTerm(int const index, Term const& term) {
     bool isOutsideStartAndEndIndex(m_startIndex > index || m_endIndex < index);
     m_terms.emplace(m_terms.cbegin() + index, term);
     if (isOutsideStartAndEndIndex) {

@@ -36,7 +36,7 @@ public:
     void multiplyMonomial(Monomial const& monomial);
     void multiplyPolynomial(Polynomial const& polynomial);
     void divideMonomial(Monomial const& monomial);
-    void raiseToUnsignedInteger(unsigned int const exponent);
+    void raiseToUnsignedInteger(int const exponent);
     void setAsSimplified();
     void clearSimplifiedFlag();
 

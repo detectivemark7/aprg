@@ -18,7 +18,7 @@ namespace VectorUtilities {
 
 bool isDivergenceOfCurlZero(MathVectorOfThreeTerms const& termVector, ArrayOfThreeStrings const& coordinateVariables) {
     // This is always true
-    return getDivergence<3U>(getCurl(termVector, coordinateVariables), coordinateVariables) == 0;
+    return getDivergence<3>(getCurl(termVector, coordinateVariables), coordinateVariables) == 0;
 }
 
 bool isGaussDivergenceTheoremInAPlaneTrue(
@@ -32,11 +32,11 @@ bool isGaussDivergenceTheoremInAPlaneTrue(
 
     // Line Integral result
     SubstitutionOfVariablesToTerms substitution;
-    for (unsigned int i = 0; i < 2U; i++) {
+    for (int i = 0; i < 2; i++) {
         substitution.putVariableWithTerm(coordinateVariables.at(i), regionOfLineIntegral.getValueAt(i));
     }
     MathVectorOfTwoTerms linePathInVectorField;
-    for (unsigned int i = 0; i < 2U; i++) {
+    for (int i = 0; i < 2; i++) {
         linePathInVectorField.getValueReferenceAt(i) = substitution.performSubstitutionTo(vectorField.getValueAt(i));
     }
     Term termIntegrate(getDotProduct(linePathInVectorField, unitOutwardNormal));
@@ -45,7 +45,7 @@ bool isGaussDivergenceTheoremInAPlaneTrue(
         termIntegrate, lineIntegralDetails.lowerEnd, lineIntegralDetails.higherEnd));
 
     // Area result
-    Term divergence(getDivergence<2U>(vectorField, coordinateVariables));
+    Term divergence(getDivergence<2>(vectorField, coordinateVariables));
     Term areaResult(getDoubleIntegralInCartesianCoordinates(divergence, areaDetailsInX, areaDetailsInY));
     return lineIntegralResult == areaResult;
 }
@@ -62,11 +62,11 @@ bool isStokesTheoremInAPlaneTrue(
 
     // Line Integral result
     SubstitutionOfVariablesToTerms substitution;
-    for (unsigned int i = 0; i < 2U; i++) {
+    for (int i = 0; i < 2; i++) {
         substitution.putVariableWithTerm(coordinateVariables.at(i), regionOfLineIntegral.getValueAt(i));
     }
     MathVectorOfTwoTerms linePathInVectorField;
-    for (unsigned int i = 0; i < 2U; i++) {
+    for (int i = 0; i < 2; i++) {
         linePathInVectorField.getValueReferenceAt(i) = substitution.performSubstitutionTo(vectorField.getValueAt(i));
     }
     Term termIntegrate(getDotProduct(linePathInVectorField, unitTangentVector));
@@ -91,7 +91,7 @@ Term getDyOverDx(MathVectorOfTwoTerms const& termVector, string const& variableN
 
 Term getDirectionalDerivativeInTwoDimensions(
     Term const& term, ArrayOfTwoStrings const& coordinateVariables, AlbaAngle const& angleOfDirection) {
-    MathVectorOfTwoTerms gradient(getGradient<2U>(term, coordinateVariables));
+    MathVectorOfTwoTerms gradient(getGradient<2>(term, coordinateVariables));
     MathVectorOfTwoTerms unitDirection({::cos(angleOfDirection.getRadians()), ::sin(angleOfDirection.getRadians())});
     Term result(getDotProduct(gradient, unitDirection));
     simplifyForTermInVector(result);
@@ -100,7 +100,7 @@ Term getDirectionalDerivativeInTwoDimensions(
 
 Term getDirectionalDerivativeInThreeDimensions(
     Term const& term, ArrayOfThreeStrings const& coordinateVariables, MathVectorOfThreeAngles const& coordinateAngles) {
-    MathVectorOfThreeTerms gradient(getGradient<3U>(term, coordinateVariables));
+    MathVectorOfThreeTerms gradient(getGradient<3>(term, coordinateVariables));
     MathVectorOfThreeTerms unitDirection(
         {::cos(coordinateAngles.getValueAt(0).getRadians()), ::cos(coordinateAngles.getValueAt(1).getRadians()),
          ::cos(coordinateAngles.getValueAt(2).getRadians())});
@@ -129,7 +129,7 @@ Term getAreaOfAClosedNonIntersectingPathUsingGreensTheorem(
     // Green's Theorem relates area to line integral
 
     MathVectorOfTwoTerms vectorField{coordinateVariables.at(1) * -1, coordinateVariables.at(0)};
-    return getLineIntegral<2U>(vectorField, coordinateVariables, linePath, linePathIntegralDetails) / 2;
+    return getLineIntegral<2>(vectorField, coordinateVariables, linePath, linePathIntegralDetails) / 2;
 }
 
 MathVectorOfThreeTerms getNormalOfASurfaceOnAPoint(
@@ -137,7 +137,7 @@ MathVectorOfThreeTerms getNormalOfASurfaceOnAPoint(
     using Values = typename MathVectorOfThreeTerms::ValuesInArray;
     Equation simplifiedSurface(surface);
     simplifiedSurface.simplify();
-    MathVectorOfThreeTerms gradient(getGradient<3U>(simplifiedSurface.getLeftHandTerm(), coordinateVariables));
+    MathVectorOfThreeTerms gradient(getGradient<3>(simplifiedSurface.getLeftHandTerm(), coordinateVariables));
     SubstitutionOfVariablesToValues substitution;
     substitution.putVariableWithValue(coordinateVariables.at(0), point.getValueAt(0));
     substitution.putVariableWithValue(coordinateVariables.at(1), point.getValueAt(1));

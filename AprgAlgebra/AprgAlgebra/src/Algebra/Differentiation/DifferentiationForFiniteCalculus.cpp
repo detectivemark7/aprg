@@ -48,18 +48,18 @@ Equation DifferentiationForFiniteCalculus::differentiate(Equation const& equatio
 }
 
 Term DifferentiationForFiniteCalculus::differentiateMultipleTimes(
-    Term const& term, unsigned int const numberOfTimes) const {
+    Term const& term, int const numberOfTimes) const {
     Term currentResult(term);
-    for (unsigned int i = 0; i < numberOfTimes; i++) {
+    for (int i = 0; i < numberOfTimes; i++) {
         currentResult = differentiate(currentResult);
     }
     return currentResult;
 }
 
 Equation DifferentiationForFiniteCalculus::differentiateMultipleTimes(
-    Equation const& equation, unsigned int const numberOfTimes) const {
+    Equation const& equation, int const numberOfTimes) const {
     Equation currentResult(equation);
-    for (unsigned int i = 0; i < numberOfTimes; i++) {
+    for (int i = 0; i < numberOfTimes; i++) {
         currentResult = differentiate(currentResult);
     }
     return currentResult;

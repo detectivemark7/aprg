@@ -41,7 +41,7 @@ bool isConvergentMonotonicSeriesBounded(SeriesBasedOnFormula const& series) {
 
 bool isConvergentUsingComparisonTest(
     SeriesBasedOnSummation const& seriesToCheck, SeriesBasedOnSummation const& convergentSeries,
-    unsigned int const numberOfIndexesToTest) {
+    int const numberOfIndexesToTest) {
     bool result(false);
     if (convergentSeries.isConvergent()) {
         bool areAllValuesSatisfied(true);
@@ -63,7 +63,7 @@ bool isConvergentUsingComparisonTest(
 
 bool isDivergentUsingComparisonTest(
     SeriesBasedOnSummation const& seriesToCheck, SeriesBasedOnSummation const& divergentSeries,
-    unsigned int const numberOfIndexesToTest) {
+    int const numberOfIndexesToTest) {
     bool result(false);
     if (!divergentSeries.isConvergent()) {
         bool areAllValuesSatisfied(true);

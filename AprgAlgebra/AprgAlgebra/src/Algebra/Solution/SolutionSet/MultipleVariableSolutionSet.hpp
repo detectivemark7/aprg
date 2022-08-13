@@ -18,7 +18,7 @@ public:
     MultipleVariableSolutionSet();
 
     bool isValueAcceptedForVariable(std::string const& variableName, AlbaNumber const& value) const;
-    unsigned int getNumberOfVariablesWithSolutions() const;
+    int getNumberOfVariablesWithSolutions() const;
 
     VariableNamesSet getVariableNames() const;
     SolutionSet getSolutionSetForVariable(std::string const& variableName) const;

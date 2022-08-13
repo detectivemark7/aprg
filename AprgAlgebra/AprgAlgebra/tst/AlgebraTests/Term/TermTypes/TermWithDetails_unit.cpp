@@ -76,8 +76,8 @@ TEST(TermWithDetailsTest, GetAssociationPriorityWorks) {
     TermWithDetails termWithDetails1(Term(10), TermAssociationType::Positive);
     TermWithDetails termWithDetails2(Term(10), TermAssociationType::Negative);
 
-    EXPECT_EQ(1U, termWithDetails1.getAssociationPriority());
-    EXPECT_EQ(2U, termWithDetails2.getAssociationPriority());
+    EXPECT_EQ(1, termWithDetails1.getAssociationPriority());
+    EXPECT_EQ(2, termWithDetails2.getAssociationPriority());
 }
 
 TEST(TermWithDetailsTest, ClearWorks) {

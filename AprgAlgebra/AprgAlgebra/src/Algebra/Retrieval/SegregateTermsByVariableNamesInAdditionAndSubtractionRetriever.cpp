@@ -35,7 +35,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
 }
 
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromVariable(Variable const& variable) {
-    unsigned int numberOfTimesFound(0);
+    int numberOfTimesFound(0);
     string lastVariableNameFound;
     for (auto& variableNameAndTermPair : m_variableNameToTermMap) {
         if (variableNameAndTermPair.first == variable.getVariableName()) {
@@ -47,7 +47,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
 }
 
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromMonomial(Monomial const& monomial) {
-    unsigned int numberOfTimesFound(0);
+    int numberOfTimesFound(0);
     string lastVariableNameFound;
     for (auto& variableNameAndTermPair : m_variableNameToTermMap) {
         if (monomial.getExponentForVariable(variableNameAndTermPair.first) != 0) {
@@ -76,7 +76,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
             }
         }
     } else {
-        unsigned int numberOfTimesFound(0);
+        int numberOfTimesFound(0);
         string lastVariableNameFound;
         VariableNamesRetriever variableNamesRetriever;
         variableNamesRetriever.retrieveFromExpression(expression);
@@ -93,7 +93,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
 
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromFunction(
     Function const& functionObject) {
-    unsigned int numberOfTimesFound(0);
+    int numberOfTimesFound(0);
     string lastVariableNameFound;
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromFunction(functionObject);
@@ -131,7 +131,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::initializeW
 }
 
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::saveTerm(
-    Term const& term, unsigned int numberOfTimesFound, string const& variableName) {
+    Term const& term, int numberOfTimesFound, string const& variableName) {
     if (numberOfTimesFound == 0) {
         m_remainingTerm += term;
     } else if (numberOfTimesFound == 1) {

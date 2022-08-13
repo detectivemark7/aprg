@@ -126,7 +126,7 @@ void collectAndUniqueValuesAndSort(AlbaNumbersSet& sortedValues, AlbaNumbers con
 }
 
 void collectMinAndMaxValues(AlbaNumbersSet& collectedValues, AlbaNumbersSet const& sortedValues) {
-    unsigned int const valuesSize = sortedValues.size();
+    int const valuesSize = sortedValues.size();
     if (valuesSize == 1) {
         AlbaNumbersSet::const_iterator itFront = sortedValues.cbegin();
         collectedValues.emplace(*itFront);

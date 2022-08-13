@@ -23,8 +23,8 @@ bool TermsWithAssociation::operator==(TermsWithAssociation const& second) const 
     bool result(false);
     if (terms1.size() == terms2.size()) {
         result = true;
-        unsigned int commonSize = terms1.size();
-        for (unsigned int i = 0; i < commonSize; i++) {
+        int commonSize = terms1.size();
+        for (int i = 0; i < commonSize; i++) {
             if (terms1.at(i) != terms2.at(i)) {
                 result = false;
                 break;
@@ -41,8 +41,8 @@ bool TermsWithAssociation::operator<(TermsWithAssociation const& second) const {
     TermsWithDetails const& terms2(second.m_termsWithDetails);
     bool result(false);
     if (terms1.size() == terms2.size()) {
-        unsigned int size = terms1.size();
-        for (unsigned int i = 0; i < size; i++) {
+        int size = terms1.size();
+        for (int i = 0; i < size; i++) {
             TermWithDetails const& termWithDetails1(terms1.at(i));
             TermWithDetails const& termWithDetails2(terms2.at(i));
             if (termWithDetails1 != termWithDetails2) {
@@ -58,7 +58,7 @@ bool TermsWithAssociation::operator<(TermsWithAssociation const& second) const {
 
 bool TermsWithAssociation::isEmpty() const { return m_termsWithDetails.empty(); }
 
-unsigned int TermsWithAssociation::getSize() const { return m_termsWithDetails.size(); }
+int TermsWithAssociation::getSize() const { return m_termsWithDetails.size(); }
 
 BaseTerm const& TermsWithAssociation::getFirstTermConstReference() const {
     return getBaseTermConstReferenceFromUniquePointer(m_termsWithDetails.front().baseTermPointer);

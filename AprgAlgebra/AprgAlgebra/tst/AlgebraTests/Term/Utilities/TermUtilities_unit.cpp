@@ -84,7 +84,7 @@ TEST(TermUtilitiesTest, IsARadicalTermWorks) {
 }
 
 TEST(TermUtilitiesTest, GetNumberOfTermsWorks) {
-    EXPECT_EQ(7U, getNumberOfTerms(createExpressionIfPossible({"w", "+", "x", "*", "y", "^", "z"})));
+    EXPECT_EQ(7, getNumberOfTerms(createExpressionIfPossible({"w", "+", "x", "*", "y", "^", "z"})));
 }
 
 TEST(TermUtilitiesTest, GetConstantFactorWorks) {

@@ -18,11 +18,11 @@ bool isConvergentMonotonicSeriesBounded(SeriesBasedOnFormula const& series);
 
 bool isConvergentUsingComparisonTest(
     SeriesBasedOnSummation const& seriesToCheck, SeriesBasedOnSummation const& convergentSeries,
-    unsigned int const numberOfIndexesToTest);
+    int const numberOfIndexesToTest);
 
 bool isDivergentUsingComparisonTest(
     SeriesBasedOnSummation const& seriesToCheck, SeriesBasedOnSummation const& divergentSeries,
-    unsigned int const numberOfIndexesToTest);
+    int const numberOfIndexesToTest);
 
 void performLimitComparisonTest(
     bool& isConvergent, bool& isDivergent, SeriesBasedOnSummation const& series1, SeriesBasedOnSummation const& series2,

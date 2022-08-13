@@ -1081,7 +1081,7 @@ Term operator^(Polynomial const& polynomial, Constant const& constant) {
         if (exponentInteger == 0) {
             newTerm = 1;
         } else {
-            unsigned int exponentAbsoluteValue(static_cast<unsigned int>(getAbsoluteValue(exponentInteger)));
+            int exponentAbsoluteValue(static_cast<int>(getAbsoluteValue(exponentInteger)));
             Polynomial newPolynomial(polynomial);
             newPolynomial.raiseToUnsignedInteger(exponentAbsoluteValue);
             if (exponentInteger > 0) {

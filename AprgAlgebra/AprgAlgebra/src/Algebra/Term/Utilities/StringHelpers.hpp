@@ -11,7 +11,7 @@ namespace algebra {
 bool isOperator(std::string const& stringObject);
 bool isFunction(std::string const& stringObject);
 
-unsigned int getOperatorPriority(std::string const& operatorString);
+int getOperatorPriority(std::string const& operatorString);
 
 std::string getOperatingString(OperatorLevel const operatorLevel, TermAssociationType const association);
 std::string getFirstStringIfNegativeAssociation(

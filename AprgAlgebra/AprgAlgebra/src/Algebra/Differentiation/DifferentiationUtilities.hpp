@@ -46,11 +46,11 @@ Term getSlopeOfTermInPolarCoordinates(
 
 Term getApproximationUsingTaylorsFormula(
     Term const& term, std::string const& variableName, Term const& startingValue, Term const& valueToApproach,
-    unsigned int const numberOfTimes);
+    int const numberOfTimes);
 
 Term getApproximationOfErrorUsingTaylorsRemainder(
     Term const& term, std::string const& variableName, Term const& startingValue, Term const& valueToApproach,
-    Term const& valueForEstimation, unsigned int const numberOfTimes);
+    Term const& valueForEstimation, int const numberOfTimes);
 
 Term getTotalDerivativeWithInnerTermsUsingChainRule(
     Term const& term, SubstitutionOfVariablesToTerms const& substitution, std::string const& commonVariable);

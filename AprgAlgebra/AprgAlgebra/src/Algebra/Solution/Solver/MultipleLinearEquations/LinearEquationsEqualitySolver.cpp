@@ -73,9 +73,9 @@ bool LinearEquationsEqualitySolver::areExponentsEqualToOneAndZero(AlbaNumbersSet
 
 void LinearEquationsEqualitySolver::setMatrixCoefficients(
     NumberMatrix& coefficientsMatrix, VariableNamesSet const& variableNames, Polynomials const& polynomials) {
-    unsigned int rowIndex = 0;
+    int rowIndex = 0;
     for (Polynomial const& polynomial : polynomials) {
-        unsigned int columnIndex = 0;
+        int columnIndex = 0;
         VariableToValueMap variableToValueMap(getCoefficientsForVariablesOnly(polynomial));
         for (string const& variableName : variableNames) {
             VariableToValueMap::const_iterator it = variableToValueMap.find(variableName);
@@ -90,8 +90,8 @@ void LinearEquationsEqualitySolver::setMatrixCoefficients(
 void LinearEquationsEqualitySolver::saveSolutionSetsFromTheCoefficientMatrix(
     MultipleVariableSolutionSet& solutionSet, NumberMatrix const& coefficientsMatrix,
     VariableNamesSet const& variables) {
-    unsigned int index = 0;
-    unsigned int columnEndIndex = variables.size();
+    int index = 0;
+    int columnEndIndex = variables.size();
     for (string const& variableName : variables) {
         AlbaNumber identityDiagonalEntry(coefficientsMatrix.getEntry(index, index));
         if (identityDiagonalEntry == 1) {

@@ -201,15 +201,16 @@ Polynomial TermsOverTerms::multiplyPolynomialTerms(Terms const& polynomialTerms)
 }
 
 bool TermsOverTerms::removeTermsIfNeededAndReturnIfSomeTermsAreRemoved(Terms& numerators, Terms& denominators) {
-    unsigned int previousNumberOfNumerators = numerators.size();
-    unsigned int previousNumberOfDenominators = denominators.size();
+    int previousNumberOfNumerators = numerators.size();
+    int previousNumberOfDenominators = denominators.size();
 
     handleZerosInNumeratorOrDenominator(denominators, numerators);
     removeTermsThatHaveNoEffect(numerators);
     removeTermsThatHaveNoEffect(denominators);
     calculateBasesAndExponentsAndPutThatToNumeratorsAndDenominators(numerators, denominators);
 
-    return previousNumberOfNumerators != numerators.size() || previousNumberOfDenominators != denominators.size();
+    return previousNumberOfNumerators != static_cast<int>(numerators.size()) ||
+           previousNumberOfDenominators != static_cast<int>(denominators.size());
 }
 
 void TermsOverTerms::handleZerosInNumeratorOrDenominator(Terms& denominators, Terms& numerators) {
@@ -317,8 +318,8 @@ void TermsOverTerms::putTermsOnNumeratorAndDenominatorBasedFromTermsRaiseToNumbe
 }
 
 void TermsOverTerms::populateTermsWithBase(Terms& termsToUpdate, Term const& base, AlbaNumber const& exponent) {
-    unsigned int exponentCount = static_cast<unsigned int>(getAbsoluteValue(exponent).getInteger());
-    for (unsigned int i = 0; i < exponentCount; i++) {
+    int exponentCount = static_cast<int>(getAbsoluteValue(exponent).getInteger());
+    for (int i = 0; i < exponentCount; i++) {
         termsToUpdate.emplace_back(base);
     }
 }

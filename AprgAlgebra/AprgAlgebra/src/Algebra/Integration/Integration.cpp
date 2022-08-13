@@ -399,22 +399,22 @@ void Integration::integrateChangingTermRaiseToNonChangingTerm(Term& result, Term
             bool isExponentGreaterThan1 = exponentValue.isIntegerType() && exponentValue > 1;
             if (functionName == "sin" && isExponentGreaterThan1) {
                 integrateSinRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             } else if (functionName == "cos" && isExponentGreaterThan1) {
                 integrateCosRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             } else if (functionName == "tan" && isExponentGreaterThan1) {
                 integrateTanRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             } else if (functionName == "csc" && isExponentGreaterThan1) {
                 integrateCscRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             } else if (functionName == "sec" && isExponentGreaterThan1) {
                 integrateSecRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             } else if (functionName == "cot" && isExponentGreaterThan1) {
                 integrateCotRaiseToAnIntegerGreaterThanOne(
-                    result, functionInputTerm, static_cast<unsigned int>(exponentValue.getInteger()));
+                    result, functionInputTerm, static_cast<int>(exponentValue.getInteger()));
             }
         }
     }
@@ -440,8 +440,8 @@ void Integration::segregateNonChangingAndChangingTerms(
 void Integration::integrateTermUsingSubstitutionWithMaxDepth(
     Term& result, Term const& term, Configuration const& configuration) {
     if (isIntegrationUsingSubstitutionAllowed(term)) {
-        constexpr unsigned int MAX_DEPTH = 2;
-        static unsigned int depth = 0;
+        constexpr int MAX_DEPTH = 2;
+        static int depth = 0;
         depth++;
         if (depth <= MAX_DEPTH) {
             integrateTermUsingSubstitution(result, term, configuration);
@@ -741,8 +741,8 @@ Term Integration::substituteFromTrigonometricFunctionsBackToNormal(
 
 void Integration::integrateInMultiplicationOrDivisionByTryingReverseChainRule(
     Term& result, TermsWithDetails const& termsWithDetailsInMultiplicationOrDivision) {
-    unsigned int numberOfTerms(termsWithDetailsInMultiplicationOrDivision.size());
-    for (unsigned int i = 0; result.isEmpty() && i < numberOfTerms; i++) {
+    int numberOfTerms(termsWithDetailsInMultiplicationOrDivision.size());
+    for (int i = 0; result.isEmpty() && i < numberOfTerms; i++) {
         TermsWithDetails termsInFirstTerms(termsWithDetailsInMultiplicationOrDivision);
         termsInFirstTerms.erase(termsInFirstTerms.cbegin() + i);
         Term firstTerm(createTermWithMultiplicationAndDivisionTermsWithDetails(termsInFirstTerms));
@@ -907,9 +907,9 @@ void Integration::retrievePartialFractions(
         Term const& factorsToProcess(termRaiseToANumber.getBase());
         if (negatedExponent.isIntegerType() && negatedExponent > 0 && canBeConvertedToPolynomial(factorsToProcess)) {
             Polynomial polynomialFactor(createPolynomialIfPossible(factorsToProcess));
-            unsigned int maxDegreeOfFactor = static_cast<unsigned int>(getMaxDegree(polynomialFactor).getInteger());
-            unsigned int denominatorExponent = static_cast<unsigned int>(negatedExponent.getInteger());
-            for (unsigned int i = 1; i <= denominatorExponent; i++) {
+            int maxDegreeOfFactor = static_cast<int>(getMaxDegree(polynomialFactor).getInteger());
+            int denominatorExponent = static_cast<int>(negatedExponent.getInteger());
+            for (int i = 1; i <= denominatorExponent; i++) {
                 Polynomial partialDenominator(polynomialFactor);
                 partialDenominator.raiseToUnsignedInteger(i);
                 partialDenominators.emplace_back(partialDenominator);
@@ -924,7 +924,7 @@ Polynomial Integration::getTotalNumeratorWithNewVariables(
     Polynomial const& originalDenominator, Polynomials const& partialNumerators,
     Polynomials const& partialDenominators) const {
     Polynomial numeratorWithNewVariables;
-    for (unsigned int i = 0; i < partialDenominators.size(); i++) {
+    for (int i = 0; i < static_cast<int>(partialDenominators.size()); i++) {
         Term currentNumeratorTerm = originalDenominator / partialDenominators.at(i) * partialNumerators.at(i);
         currentNumeratorTerm.simplify();
         if (canBeConvertedToPolynomial(currentNumeratorTerm)) {
@@ -971,8 +971,8 @@ void Integration::fillInMatrixForPartialFractionsWithVariableValues(
     AlbaNumbersSet const& exponents, Polynomial const& numeratorWithNewVariables) const {
     for (Monomial const& monomialWithNewVariable : numeratorWithNewVariables.getMonomialsConstReference()) {
         bool isVariablePositionFound;
-        unsigned int exponentPosition(0);
-        unsigned int variablePosition(0);
+        int exponentPosition(0);
+        int variablePosition(0);
         for (auto const& variableExponentPair : monomialWithNewVariable.getVariablesToExponentsMapConstReference()) {
             string const& variableName(variableExponentPair.first);
             AlbaNumber const& exponent(variableExponentPair.second);
@@ -1000,7 +1000,7 @@ void Integration::fillInMatrixForPartialFractionsWithOutputValues(
     NumberMatrix& matrixWithNewVariables, string const& originalVariableName, VariableNamesSet const& newVariableNames,
     AlbaNumbersSet const& exponents, Polynomial const& originalNumerator) const {
     for (Monomial const& numeratorMonomial : originalNumerator.getMonomialsConstReference()) {
-        unsigned int exponentPosition(0);
+        int exponentPosition(0);
         for (auto const& variableExponentPair : numeratorMonomial.getVariablesToExponentsMapConstReference()) {
             string const& variableName(variableExponentPair.first);
             AlbaNumber const& exponent(variableExponentPair.second);
@@ -1021,12 +1021,12 @@ void Integration::integratePartialFractionsBasedOnSolvedMatrix(
     Polynomials const& partialNumerators, Polynomials const& partialDenominators) {
     SubstitutionOfVariablesToTerms substitution;
     VariableNamesSet::const_iterator it = newVariableNames.cbegin();
-    for (unsigned int i = 0; i < solvedMatrix.getNumberOfRows() && it != newVariableNames.cend(); i++) {
+    for (int i = 0; i < static_cast<int>(solvedMatrix.getNumberOfRows()) && it != newVariableNames.cend(); i++) {
         substitution.putVariableWithTerm(*it, solvedMatrix.getEntry(newVariableNames.size(), i));
         it++;
     }
     Term partialResult;
-    for (unsigned int i = 0; i < partialNumerators.size(); i++) {
+    for (int i = 0; i < static_cast<int>(partialNumerators.size()); i++) {
         Polynomial const& partialNumerator(partialNumerators.at(i));
         Polynomial const& partialDenominator(partialDenominators.at(i));
         Term termToIntegrate = substitution.performSubstitutionTo(partialNumerator) / partialDenominator;
@@ -1037,10 +1037,9 @@ void Integration::integratePartialFractionsBasedOnSolvedMatrix(
     result = partialResult;
 }
 
-Polynomial Integration::getPartialNumeratorForPartialFractions(
-    unsigned int const degree, string const& variableName) const {
+Polynomial Integration::getPartialNumeratorForPartialFractions(int const degree, string const& variableName) const {
     Polynomial result;
-    for (unsigned int i = 0; i < degree; i++) {
+    for (int i = 0; i < degree; i++) {
         result.addMonomial(Monomial(1, {{variableName, i}, {getNewVariableNameForPartialFractions(), 1}}));
     }
     result.simplify();
@@ -1048,7 +1047,7 @@ Polynomial Integration::getPartialNumeratorForPartialFractions(
 }
 
 string Integration::getNewVariableNameForPartialFractions() const {
-    static unsigned int variableCount(0);
+    static int variableCount(0);
     variableCount++;
     if (variableCount > 999) {
         variableCount = 0;
@@ -1081,8 +1080,8 @@ void Integration::integrateUsingIntegrationByPartsByTryingTwoTerms(Term& result,
         if (OperatorLevel::MultiplicationAndDivision == expression.getCommonOperatorLevel()) {
             TermsWithDetails const& termsWithDetailsInMultiplicationAndDivision(
                 expression.getTermsWithAssociation().getTermsWithDetails());
-            unsigned int numberOfTerms(termsWithDetailsInMultiplicationAndDivision.size());
-            for (unsigned int i = 0; result.isEmpty() && i < numberOfTerms; i++) {
+            int numberOfTerms(termsWithDetailsInMultiplicationAndDivision.size());
+            for (int i = 0; result.isEmpty() && i < numberOfTerms; i++) {
                 TermsWithDetails termsInFirstTerms(termsWithDetailsInMultiplicationAndDivision);
                 termsInFirstTerms.erase(termsInFirstTerms.cbegin() + i);
                 Term firstTerm(createTermWithMultiplicationAndDivisionTermsWithDetails(termsInFirstTerms));
@@ -1112,9 +1111,9 @@ void Integration::integrateUsingIntegrationByPartsAndCheckingPreviousValues(
     // use static equations here to solve when recursion happens
     // use static depth here to determine when to clear
     static ListOfIntegrationByPartsTerms listOfIntegrationByPartsTerms;
-    constexpr unsigned int MAX_DEPTH = 5;
-    constexpr unsigned int MAX_SIZE = 5;
-    static unsigned int depth = 0;
+    constexpr int MAX_DEPTH = 5;
+    constexpr int MAX_SIZE = 5;
+    static int depth = 0;
     depth++;
 
     if (depth < MAX_DEPTH) {
@@ -1143,7 +1142,7 @@ void Integration::integrateUsingPreviousIntegrationByPartsTerms(
     bool isFirstRelationshipFound(true);
     while (isChanged) {
         isChanged = false;
-        for (unsigned int i = 0; i < termsToAnalyze.size(); i++) {
+        for (int i = 0; i < static_cast<int>(termsToAnalyze.size()); i++) {
             IntegrationByPartsTerms const& integrationByPartsTerms(termsToAnalyze.at(i));
             Term quotient(currentTermToIntegrate / integrationByPartsTerms.vTimesDuToIntegrate);
             quotient.simplify();
@@ -1241,27 +1240,27 @@ void Integration::integrateUsingKnownTrigonometricCombinations(
         exponents.cosExponent > 1 && exponents.tanExponent == 0 && exponents.cscExponent == 0 &&
         exponents.secExponent == 0 && exponents.cotExponent == 0) {
         integrateSinAndCosCombinationWithExponentsGreaterThanOne(
-            result, functionInputTerm, static_cast<unsigned int>(exponents.sinExponent.getInteger()),
-            static_cast<unsigned int>(exponents.cosExponent.getInteger()));
+            result, functionInputTerm, static_cast<int>(exponents.sinExponent.getInteger()),
+            static_cast<int>(exponents.cosExponent.getInteger()));
     } else if (
         exponents.sinExponent == 0 && exponents.cosExponent == 0 && exponents.tanExponent == 0 &&
         exponents.cscExponent.isIntegerType() && exponents.cscExponent > 2 && exponents.secExponent == 0 &&
         exponents.cotExponent.isIntegerType() && exponents.cotExponent > 1) {
         integrateCscAndCotCombinationWithExponentsGreaterThanOne(
-            result, functionInputTerm, static_cast<unsigned int>(exponents.cscExponent.getInteger()),
-            static_cast<unsigned int>(exponents.cotExponent.getInteger()));
+            result, functionInputTerm, static_cast<int>(exponents.cscExponent.getInteger()),
+            static_cast<int>(exponents.cotExponent.getInteger()));
     } else if (
         exponents.sinExponent == 0 && exponents.cosExponent == 0 && exponents.tanExponent.isIntegerType() &&
         exponents.tanExponent > 1 && exponents.cscExponent == 0 && exponents.secExponent.isIntegerType() &&
         exponents.secExponent > 2 && exponents.cotExponent == 0) {
         integrateSecAndTanCombinationWithExponentsGreaterThanOne(
-            result, functionInputTerm, static_cast<unsigned int>(exponents.secExponent.getInteger()),
-            static_cast<unsigned int>(exponents.tanExponent.getInteger()));
+            result, functionInputTerm, static_cast<int>(exponents.secExponent.getInteger()),
+            static_cast<int>(exponents.tanExponent.getInteger()));
     }
 }
 
 void Integration::integrateSinRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     if (isEven(exponent)) {
         Term termToIntegrate(1);
         putReducedSineSquaredToDoubleAngleCosineTerms(termToIntegrate, functionInputTerm, exponent);
@@ -1275,7 +1274,7 @@ void Integration::integrateSinRaiseToAnIntegerGreaterThanOne(
 }
 
 void Integration::integrateCosRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     if (isEven(exponent)) {
         Term termToIntegrate(1);
         putReducedCosineSquaredToDoubleAngleCosineTerms(termToIntegrate, functionInputTerm, exponent);
@@ -1289,21 +1288,21 @@ void Integration::integrateCosRaiseToAnIntegerGreaterThanOne(
 }
 
 void Integration::integrateTanRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     Term tanRaiseToExponentMinus2(createExpressionIfPossible({tan(functionInputTerm), "^", exponent - 2}));
     Term termToIntegrate = getTangentSquaredInSecant(functionInputTerm) * tanRaiseToExponentMinus2;
     result = integrateInternallyWithPurpose(termToIntegrate, IntegrationPurpose::Trigonometric);
 }
 
 void Integration::integrateCscRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     if (isEven(exponent)) {
         Term termToIntegrate(getCosecantSquared(functionInputTerm));
         putCosecantSquaredToCotangentSquaredTerms(termToIntegrate, functionInputTerm, exponent - 2);
         result = integrateInternallyWithPurpose(termToIntegrate, IntegrationPurpose::Trigonometric);
     } else {
-        unsigned int const exponentMinus1 = exponent - 1;
-        unsigned int const exponentMinus2 = exponent - 2;
+        int const exponentMinus1 = exponent - 1;
+        int const exponentMinus2 = exponent - 2;
         Term cscRaiseToExponentMinus2(createExpressionIfPossible({csc(functionInputTerm), "^", exponentMinus2}));
         Term nonIntegralTerm(
             createExpressionIfPossible({-1, "*", cscRaiseToExponentMinus2, "*", cot(functionInputTerm)}));
@@ -1314,14 +1313,14 @@ void Integration::integrateCscRaiseToAnIntegerGreaterThanOne(
 }
 
 void Integration::integrateSecRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     if (isEven(exponent)) {
         Term termToIntegrate(getSecantSquared(functionInputTerm));
         putSecantSquaredToTangentSquaredTerms(termToIntegrate, functionInputTerm, exponent - 2);
         result = integrateInternallyWithPurpose(termToIntegrate, IntegrationPurpose::Trigonometric);
     } else {
-        unsigned int const exponentMinus1 = exponent - 1;
-        unsigned int const exponentMinus2 = exponent - 2;
+        int const exponentMinus1 = exponent - 1;
+        int const exponentMinus2 = exponent - 2;
         Term secRaiseToExponentMinus2(createExpressionIfPossible({sec(functionInputTerm), "^", exponentMinus2}));
         Term nonIntegralTerm(createExpressionIfPossible({secRaiseToExponentMinus2, "*", tan(functionInputTerm)}));
         result = (nonIntegralTerm + exponentMinus2 * integrateInternallyWithPurpose(
@@ -1331,14 +1330,14 @@ void Integration::integrateSecRaiseToAnIntegerGreaterThanOne(
 }
 
 void Integration::integrateCotRaiseToAnIntegerGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const exponent) {
+    Term& result, Term const& functionInputTerm, int const exponent) {
     Term tanRaiseToExponentMinus2(createExpressionIfPossible({cot(functionInputTerm), "^", exponent - 2}));
     Term termToIntegrate = getCotangentSquaredInCosecant(functionInputTerm) * tanRaiseToExponentMinus2;
     result = integrateInternallyWithPurpose(termToIntegrate, IntegrationPurpose::Trigonometric);
 }
 
 void Integration::integrateSinAndCosCombinationWithExponentsGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const sinExponent, unsigned int const cosExponent) {
+    Term& result, Term const& functionInputTerm, int const sinExponent, int const cosExponent) {
     Term termToIntegrate(1);
     if (isEven(sinExponent) && isEven(cosExponent)) {
         putReducedSineSquaredToDoubleAngleCosineTerms(termToIntegrate, functionInputTerm, sinExponent);
@@ -1364,7 +1363,7 @@ void Integration::integrateSinAndCosCombinationWithExponentsGreaterThanOne(
 }
 
 void Integration::integrateCscAndCotCombinationWithExponentsGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const cscExponent, unsigned int const cotExponent) {
+    Term& result, Term const& functionInputTerm, int const cscExponent, int const cotExponent) {
     if (isEven(cscExponent)) {
         Term termToIntegrate(createExpressionIfPossible(
             {cot(functionInputTerm), "^", cotExponent, "*", csc(functionInputTerm), "^", 2}));
@@ -1380,7 +1379,7 @@ void Integration::integrateCscAndCotCombinationWithExponentsGreaterThanOne(
 }
 
 void Integration::integrateSecAndTanCombinationWithExponentsGreaterThanOne(
-    Term& result, Term const& functionInputTerm, unsigned int const secExponent, unsigned int const tanExponent) {
+    Term& result, Term const& functionInputTerm, int const secExponent, int const tanExponent) {
     if (isEven(secExponent)) {
         Term termToIntegrate(createExpressionIfPossible(
             {tan(functionInputTerm), "^", tanExponent, "*", sec(functionInputTerm), "^", 2}));
@@ -1450,46 +1449,46 @@ Integration::TrigonometryFunctionExponents Integration::getTrigonometricExponent
 }
 
 void Integration::putReducedSineSquaredToDoubleAngleCosineTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term inputTimes2(inputTerm * 2);
     Term equivalentToSineSquared(getSineSquaredOfHalvedValue(inputTimes2));
-    for (unsigned int i = 0; i < exponent; i += 2) {
+    for (int i = 0; i < exponent; i += 2) {
         outputTerm = outputTerm * equivalentToSineSquared;
     }
 }
 
 void Integration::putReducedCosineSquaredToDoubleAngleCosineTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term inputTimes2(inputTerm * 2);
     Term equivalentToCosineSquared(getCosineSquaredOfHalvedValue(inputTimes2));
-    for (unsigned int i = 0; i < exponent; i += 2) {
+    for (int i = 0; i < exponent; i += 2) {
         outputTerm = outputTerm * equivalentToCosineSquared;
     }
 }
 
 void Integration::putTangentSquaredToSecantSquaredTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term termToMultiply(
         createExpressionIfPossible({getTangentSquaredInSecant(inputTerm), "^", AlbaNumber(exponent) / 2}));
     outputTerm = outputTerm * termToMultiply;
 }
 
 void Integration::putCosecantSquaredToCotangentSquaredTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term termToMultiply(
         createExpressionIfPossible({getCosecantSquaredInCotangent(inputTerm), "^", AlbaNumber(exponent) / 2}));
     outputTerm = outputTerm * termToMultiply;
 }
 
 void Integration::putSecantSquaredToTangentSquaredTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term termToMultiply(
         createExpressionIfPossible({getSecantSquaredInTangent(inputTerm), "^", AlbaNumber(exponent) / 2}));
     outputTerm = outputTerm * termToMultiply;
 }
 
 void Integration::putCotangentSquaredToCosecantSquaredTerms(
-    Term& outputTerm, Term const& inputTerm, unsigned int const exponent) const {
+    Term& outputTerm, Term const& inputTerm, int const exponent) const {
     Term termToMultiply(
         createExpressionIfPossible({getCotangentSquaredInCosecant(inputTerm), "^", AlbaNumber(exponent) / 2}));
     outputTerm = outputTerm * termToMultiply;

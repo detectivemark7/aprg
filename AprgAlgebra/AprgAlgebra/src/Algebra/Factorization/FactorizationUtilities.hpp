@@ -8,10 +8,10 @@ namespace algebra {
 
 namespace Factorization {
 
-bool areExponentsDivisible(Monomial const& monomial, unsigned int const divisor);
+bool areExponentsDivisible(Monomial const& monomial, int const divisor);
 bool isPerfectSquare(Monomial const& monomial);
 bool isPerfectCube(Monomial const& monomial);
-bool isPerfectNthPower(Monomial const& monomial, unsigned int const nthPower);
+bool isPerfectNthPower(Monomial const& monomial, int const nthPower);
 bool doesNotNeedToBeFactorized(Polynomial const& polynomial);
 bool doesContainOnlyConstants(Polynomials const& polynomials);
 bool IsEmptyOrContainConstantsOrOneNonConstant(Polynomials const& polynomials);

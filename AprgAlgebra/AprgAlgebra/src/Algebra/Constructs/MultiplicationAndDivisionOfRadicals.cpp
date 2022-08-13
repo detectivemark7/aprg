@@ -72,7 +72,7 @@ bool MultiplicationAndDivisionOfRadicals::isNotANegativeTermWithExponentDenomina
     bool result(true);
     if (gcfOfExponents.isIntegerOrFractionType()) {
         AlbaNumber::FractionData fractionData(gcfOfExponents.getFractionData());
-        if (isEven(static_cast<unsigned int>(getAbsoluteValue<int>(fractionData.denominator)))) {
+        if (isEven(static_cast<int>(getAbsoluteValue<int>(fractionData.denominator)))) {
             result = !isANegativeMonomial(combinedMonomial);
         }
     }

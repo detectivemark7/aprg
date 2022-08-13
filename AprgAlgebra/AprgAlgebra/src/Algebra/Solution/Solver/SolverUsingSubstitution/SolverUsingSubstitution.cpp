@@ -95,13 +95,13 @@ void SolverUsingSubstitution::calculateSolutions(Equations const& equations) {
 
 void SolverUsingSubstitution::calculateASolutionForAllVariables(
     MultipleVariableSolutionSet& solutionSet, Equations const& equations) {
-    unsigned int previousNumberOfVariables(0);
+    int previousNumberOfVariables(0);
     VariableNamesSet variablesWithSolution;
     do {
         previousNumberOfVariables = variablesWithSolution.size();
         calculateASolutionForOneVariable(solutionSet, equations);
         variablesWithSolution = solutionSet.getVariableNames();
-    } while (previousNumberOfVariables != variablesWithSolution.size() &&
+    } while (previousNumberOfVariables != static_cast<int>(variablesWithSolution.size()) &&
              m_variablesNames.size() != variablesWithSolution.size());
 }
 

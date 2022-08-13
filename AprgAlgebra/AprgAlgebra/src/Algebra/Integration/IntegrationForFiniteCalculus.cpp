@@ -198,10 +198,10 @@ Polynomial IntegrationForFiniteCalculus::convertMonomialWithPositiveExponentsFro
     Polynomial result;
     int exponent(monomial.getExponentForVariable(m_nameOfVariableToIntegrate).getInteger());
     if (exponent >= 0) {
-        unsigned int exponentUnsigned = static_cast<unsigned int>(exponent);
+        int exponentUnsigned = static_cast<int>(exponent);
         Monomial monomialToRetain(monomial);
         monomialToRetain.putVariableWithExponent(m_nameOfVariableToIntegrate, 0);
-        for (unsigned int i = 0; i <= exponentUnsigned; i++) {
+        for (int i = 0; i <= exponentUnsigned; i++) {
             result.addMonomial(
                 Monomial(getStirlingNumberOfTheSecondKind(exponentUnsigned, i), {{m_nameOfVariableToIntegrate, i}}));
         }
@@ -216,11 +216,11 @@ Polynomial IntegrationForFiniteCalculus::convertMonomialWithPositiveExponentsFro
     Polynomial result;
     int exponent(monomial.getExponentForVariable(m_nameOfVariableToIntegrate).getInteger());
     if (exponent > 0) {
-        unsigned int exponentUnsigned = static_cast<unsigned int>(exponent);
+        int exponentUnsigned = static_cast<int>(exponent);
         result = createPolynomialFromNumber(1);
         Monomial monomialToRetain(monomial);
         monomialToRetain.putVariableWithExponent(m_nameOfVariableToIntegrate, 0);
-        for (unsigned int i = 0; i < exponentUnsigned; i++) {
+        for (int i = 0; i < exponentUnsigned; i++) {
             result.multiplyPolynomial(
                 Polynomial{Monomial(1, {{m_nameOfVariableToIntegrate, 1}}), Monomial(-AlbaNumber(i), {})});
         }

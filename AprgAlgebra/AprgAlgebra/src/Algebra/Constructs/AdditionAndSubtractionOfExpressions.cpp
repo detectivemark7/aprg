@@ -40,14 +40,12 @@ Expressions const& AdditionAndSubtractionOfExpressions::getExpressions() const {
 
 TermAssociationTypes const& AdditionAndSubtractionOfExpressions::getAssociations() const { return m_associations; }
 
-unsigned int AdditionAndSubtractionOfExpressions::getSize() const {
-    return min(m_expressions.size(), m_associations.size());
-}
+int AdditionAndSubtractionOfExpressions::getSize() const { return min(m_expressions.size(), m_associations.size()); }
 
 TermsWithDetails AdditionAndSubtractionOfExpressions::getAsTermsWithDetails() const {
     TermsWithDetails result;
-    unsigned int size = getSize();
-    for (unsigned int index = 0; index < size; index++) {
+    int size = getSize();
+    for (int index = 0; index < size; index++) {
         result.emplace_back(convertExpressionToSimplestTerm(m_expressions.at(index)), m_associations.at(index));
     }
     return result;
@@ -94,9 +92,9 @@ void AdditionAndSubtractionOfExpressions::combineExpressionsIfPossible() {
 
 void AdditionAndSubtractionOfExpressions::mergeExpressionsByCheckingTwoTermsAtATime(
     Terms& mergeParts, Terms& commonParts) {
-    unsigned int size = mergeParts.size();
-    for (unsigned int i = 0; i < size; i++) {
-        for (unsigned int j = i + 1; j < size; j++) {
+    int size = mergeParts.size();
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
             // quadratic time: think on how this can be better
             if (canBeMerged(mergeParts.at(i), mergeParts.at(j), commonParts.at(i), commonParts.at(j))) {
                 Term mergedTerm(

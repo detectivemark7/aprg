@@ -71,9 +71,9 @@ TEST(TermsWithAssociationTest, GetSizeWorks) {
     TermsWithAssociation terms2{termWithDetails};
     TermsWithAssociation terms3{termWithDetails, termWithDetails};
 
-    EXPECT_EQ(0U, terms1.getSize());
-    EXPECT_EQ(1U, terms2.getSize());
-    EXPECT_EQ(2U, terms3.getSize());
+    EXPECT_EQ(0, terms1.getSize());
+    EXPECT_EQ(1, terms2.getSize());
+    EXPECT_EQ(2, terms3.getSize());
 }
 
 TEST(TermsWithAssociationTest, GetFirstTermConstReferenceWorks) {

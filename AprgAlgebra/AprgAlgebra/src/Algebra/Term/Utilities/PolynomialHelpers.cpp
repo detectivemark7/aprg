@@ -227,10 +227,10 @@ AlbaNumbers getRoots(RootType const rootType, Polynomial const& polynomial) {
     return result;
 }
 
-Polynomial raiseBinomialToAPowerUsingBinomialExpansion(Polynomial const& binomial, unsigned int const power) {
+Polynomial raiseBinomialToAPowerUsingBinomialExpansion(Polynomial const& binomial, int const power) {
     Polynomial result;
     Monomials const& monomials(binomial.getMonomialsConstReference());
-    if (monomials.size() == 2U) {
+    if (monomials.size() == 2) {
         Monomial const& firstMonomial(monomials.at(0));
         Monomial const& secondMonomial(monomials.at(1));
         for (IntegerCoefficient i = 0; i <= power; i++) {

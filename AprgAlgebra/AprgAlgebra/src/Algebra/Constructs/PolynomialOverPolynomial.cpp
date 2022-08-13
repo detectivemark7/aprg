@@ -87,10 +87,10 @@ bool PolynomialOverPolynomial::shouldPerformFactorization() const {
 }
 
 void PolynomialOverPolynomial::convertFractionCoefficientsToInteger() {
-    unsigned int numeratorMultiplier(getLcmForDenominatorCoefficients(m_numerator));
+    int numeratorMultiplier(getLcmForDenominatorCoefficients(m_numerator));
     m_numerator.multiplyNumber(numeratorMultiplier);
     m_denominator.multiplyNumber(numeratorMultiplier);
-    unsigned int denominatorMultiplier(getLcmForDenominatorCoefficients(m_denominator));
+    int denominatorMultiplier(getLcmForDenominatorCoefficients(m_denominator));
     m_numerator.multiplyNumber(denominatorMultiplier);
     m_denominator.multiplyNumber(denominatorMultiplier);
 }
@@ -142,13 +142,13 @@ void PolynomialOverPolynomial::factorizeRemoveCommonFactorsInNumeratorAndDenomin
     }
 }
 
-unsigned int PolynomialOverPolynomial::getLcmForDenominatorCoefficients(Polynomial const& polynomial) {
-    unsigned int lcm(1);
+int PolynomialOverPolynomial::getLcmForDenominatorCoefficients(Polynomial const& polynomial) {
+    int lcm(1);
     for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
         AlbaNumber const& coefficient(monomial.getConstantConstReference());
         if (coefficient.isFractionType()) {
             AlbaNumber::FractionData fractionData(coefficient.getFractionData());
-            lcm = getLeastCommonMultiple(lcm, fractionData.denominator);
+            lcm = getLeastCommonMultiple(lcm, static_cast<int>(fractionData.denominator));
         }
     }
     return lcm;

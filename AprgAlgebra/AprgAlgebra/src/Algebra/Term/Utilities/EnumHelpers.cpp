@@ -8,8 +8,8 @@ namespace alba {
 
 namespace algebra {
 
-unsigned int getAssociationPriority(TermAssociationType const association) {
-    unsigned int result(0);
+int getAssociationPriority(TermAssociationType const association) {
+    int result(0);
     switch (association) {
         case TermAssociationType::Positive:
             result = 1;
@@ -21,8 +21,8 @@ unsigned int getAssociationPriority(TermAssociationType const association) {
     return result;
 }
 
-unsigned int getOperatorLevelInversePriority(OperatorLevel const operatorLevel) {
-    unsigned int result(0);
+int getOperatorLevelInversePriority(OperatorLevel const operatorLevel) {
+    int result(0);
     switch (operatorLevel) {
         case OperatorLevel::Unknown:
             result = 0;
@@ -40,8 +40,8 @@ unsigned int getOperatorLevelInversePriority(OperatorLevel const operatorLevel) 
     return result;
 }
 
-unsigned int getTermTypePriorityValue(TermType const termType) {
-    unsigned int result(0);
+int getTermTypePriorityValue(TermType const termType) {
+    int result(0);
     switch (termType) {
         case TermType::Empty:
             result = 0;

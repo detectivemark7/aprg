@@ -19,7 +19,7 @@ void fixCoefficientsOfFactors(
     AlbaNumber& aCoefficient, AlbaNumber& rootFirstCoefficient, AlbaNumber& rootSecondCoefficient);
 bool areAllMonomialsFoundInMonomialsWithExponentsInOrder(
     Monomials const& monomialsToCheck, Monomials const& monomialsWithExponentsInOrder);
-unsigned int calculateMaxExponentDivisor(Monomial const& firstMonomial, Monomial const& lastMonomial);
+int calculateMaxExponentDivisor(Monomial const& firstMonomial, Monomial const& lastMonomial);
 AlbaNumbers getCoefficientsInMonomialsWithExponentsInOrder(
     Polynomial const& polynomial, Monomials const& monomialsWithExponentsInOrder);
 AlbaNumbers calculatePolynomialRoots(AlbaNumbers const& coefficients);
@@ -28,7 +28,7 @@ AlbaNumbers calculatePolynomialRootsUsingBrentMethod(
 AlbaNumber getMaxAbsoluteValueForRootFinding(AlbaNumbers const& coefficients);
 AlbaNumbers getDerivativeCoefficients(AlbaNumbers const& coefficients);
 Monomials getMonomialsWithExponentsInOrder(
-    unsigned int const exponentDivisor, Monomial const& firstInPolynomial, Monomial const& lastInPolynomial);
+    int const exponentDivisor, Monomial const& firstInPolynomial, Monomial const& lastInPolynomial);
 bool areRootsAcceptable(AlbaNumbers const& rootValues);
 }  // namespace Factorization
 

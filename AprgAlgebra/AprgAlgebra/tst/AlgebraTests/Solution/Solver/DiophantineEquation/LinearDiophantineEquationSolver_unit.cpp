@@ -21,7 +21,7 @@ TEST(
 
     EXPECT_FALSE(solver.isSolved());
     EXPECT_FALSE(solver.isACompleteSolution());
-    EXPECT_EQ(0U, solutionSet.getNumberOfVariablesWithSolutions());
+    EXPECT_EQ(0, solutionSet.getNumberOfVariablesWithSolutions());
 }
 
 TEST(LinearDiophantineEquationSolverTest, CalculateSolutionAndReturnSolutionSetWorksForThreeMonomials) {
@@ -33,7 +33,7 @@ TEST(LinearDiophantineEquationSolverTest, CalculateSolutionAndReturnSolutionSetW
 
     EXPECT_TRUE(solver.isSolved());
     EXPECT_FALSE(solver.isACompleteSolution());
-    EXPECT_EQ(2U, solutionSet.getNumberOfVariablesWithSolutions());
+    EXPECT_EQ(2, solutionSet.getNumberOfVariablesWithSolutions());
     EXPECT_EQ(AlbaNumbers{8}, solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     EXPECT_EQ(AlbaNumbers{-20}, solutionSet.getSolutionSetForVariable("y").getAcceptedValues());
 }

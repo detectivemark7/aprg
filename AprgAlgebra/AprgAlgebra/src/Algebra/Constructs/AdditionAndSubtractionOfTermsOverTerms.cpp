@@ -54,9 +54,9 @@ Terms AdditionAndSubtractionOfTermsOverTerms::getLcmOfDenominatorTerms() const {
 }
 
 Terms AdditionAndSubtractionOfTermsOverTerms::getRevisedNumeratorTermsBasedOnLcmOnIndex(
-    unsigned int itemIndex, Terms const& lcmOfDenominatorTerms) const {
+    int itemIndex, Terms const& lcmOfDenominatorTerms) const {
     Terms numeratorTerms;
-    if (itemIndex < m_items.size()) {
+    if (itemIndex < static_cast<int>(m_items.size())) {
         Terms const& multipliers(lcmOfDenominatorTerms);
         Terms monomialMultiplierTerms;
         Terms nonMonomialMultiplierTerms;
@@ -106,7 +106,7 @@ Monomial AdditionAndSubtractionOfTermsOverTerms::getCombinedMonomialMultiplier(
 }
 
 void AdditionAndSubtractionOfTermsOverTerms::updateMonomialAndNonMonomialMultipliersBasedOnDenominatorOnIndex(
-    unsigned int itemIndex, Monomial& monomialMultiplier, Terms& nonMonomialMultiplierTerms) const {
+    int itemIndex, Monomial& monomialMultiplier, Terms& nonMonomialMultiplierTerms) const {
     for (Term const& denominatorTerm : m_items.at(itemIndex).getDenominators()) {
         if (canBeConvertedToMonomial(denominatorTerm)) {
             monomialMultiplier.divideMonomial(createMonomialIfPossible(denominatorTerm));
@@ -120,8 +120,7 @@ void AdditionAndSubtractionOfTermsOverTerms::updateMonomialAndNonMonomialMultipl
     }
 }
 
-void AdditionAndSubtractionOfTermsOverTerms::emplaceExistingNumeratorTerms(
-    Terms& numeratorTerms, unsigned int itemIndex) const {
+void AdditionAndSubtractionOfTermsOverTerms::emplaceExistingNumeratorTerms(Terms& numeratorTerms, int itemIndex) const {
     for (Term const& numeratorTerm : m_items.at(itemIndex).getNumerators()) {
         numeratorTerms.emplace_back(numeratorTerm);
     }
@@ -144,8 +143,8 @@ void AdditionAndSubtractionOfTermsOverTerms::emplaceNonMonomialMultipliers(
 Expression AdditionAndSubtractionOfTermsOverTerms::getCombinedNumeratorExpression(
     Terms const& lcmDenominatorTerms) const {
     Expression combinedNumerator;
-    unsigned int numberOfItems = m_items.size();
-    for (unsigned int numeratorIndex = 0; numeratorIndex < numberOfItems; numeratorIndex++) {
+    int numberOfItems = m_items.size();
+    for (int numeratorIndex = 0; numeratorIndex < numberOfItems; numeratorIndex++) {
         Expression combinedNumeratorOnIndex(
             getCombinedExpressionForNumeratorOnIndex(numeratorIndex, lcmDenominatorTerms));
         combineExpressionAsAddOrSubtract(
@@ -164,7 +163,7 @@ Expression AdditionAndSubtractionOfTermsOverTerms::getCombinedDenominatorExpress
 }
 
 Expression AdditionAndSubtractionOfTermsOverTerms::getCombinedExpressionForNumeratorOnIndex(
-    unsigned int numeratorIndex, Terms const& lcmDenominatorTerms) const {
+    int numeratorIndex, Terms const& lcmDenominatorTerms) const {
     Expression combinedNumeratorOnIndex(Term(1));
     Terms numeratorTermsOnIndex(getRevisedNumeratorTermsBasedOnLcmOnIndex(numeratorIndex, lcmDenominatorTerms));
     for (Term const& numeratorTermOnIndex : numeratorTermsOnIndex) {

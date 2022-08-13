@@ -19,8 +19,8 @@ bool isOperator(string const& stringObject) {
 
 bool isFunction(string const& stringObject) { return "abs" == stringObject; }
 
-unsigned int getOperatorPriority(string const& operatorString) {
-    unsigned int result = 0;
+int getOperatorPriority(string const& operatorString) {
+    int result = 0;
     if ("(" == operatorString) {
         result = 1;
     } else if (")" == operatorString) {

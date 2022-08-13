@@ -37,7 +37,7 @@ private:
     void convertNegativeExponentsToPositive();
     void removeCommonMonomialOnAllMonomialsInNumeratorAndDenominator();
     void factorizeRemoveCommonFactorsInNumeratorAndDenominatorAndCombineRemainingFactors();
-    unsigned int getLcmForDenominatorCoefficients(Polynomial const& polynomial);
+    int getLcmForDenominatorCoefficients(Polynomial const& polynomial);
     Monomial getMonomialWithMaxNegativeExponentsAndConvertItToPositive(Polynomial const& polynomial);
     bool removeCommonFactorsAndReturnIfSomeFactorsAreRemoved(
         Polynomials& numeratorFactors, Polynomials& denominatorFactors) const;

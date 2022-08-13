@@ -11,7 +11,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, ConstructionWorks) {
     PolynomialRaiseToAnUnsignedInt polynomialRaiseToAnUnsignedInt(polynomial);
 
     EXPECT_EQ(polynomial, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(1U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(1, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, GetBaseWorks) {
@@ -25,7 +25,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, GetExponentWorks) {
     Polynomial polynomial{Monomial(1, {{"x", 1}}), Monomial(1, {})};
     PolynomialRaiseToAnUnsignedInt polynomialRaiseToAnUnsignedInt(polynomial);
 
-    EXPECT_EQ(1U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(1, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, IsExponentOneWorks) {
@@ -40,7 +40,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithCommonMonomialAndFactorsB
     PolynomialRaiseToAnUnsignedInt polynomialRaiseToAnUnsignedInt(polynomial);
 
     EXPECT_EQ(polynomial, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(1U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(1, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquare) {
@@ -49,7 +49,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquare) {
 
     Polynomial expectedBase{Monomial(1, {{"x", 1}}), Monomial(2, {})};
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(2U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(2, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquareWithNegativeConstant) {
@@ -58,7 +58,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquareWithNegative
 
     Polynomial expectedBase(polynomial);
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(1U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(1, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquareAndCommonFactor) {
@@ -68,7 +68,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquareAndCommonFac
 
     Polynomial expectedBase{Monomial(2, {{"x", 3}, {"y", 1}}), Monomial(4, {{"x", 2}, {"y", 1}})};
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(2U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(2, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectCube) {
@@ -77,7 +77,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectCube) {
 
     Polynomial expectedBase{Monomial(1, {{"x", 1}}), Monomial(1, {})};
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(3U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(3, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectCubeAndCommonFactor) {
@@ -86,7 +86,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectCubeAndCommonFacto
 
     Polynomial expectedBase{Monomial(2, {{"x", 1}}), Monomial(2, {})};
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(3U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(3, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquaresAndPerfect4thPowerAndCommonFactor) {
@@ -104,7 +104,7 @@ TEST(PolynomialRaiseToAnUnsignedIntTest, PolynomialWithPerfectSquaresAndPerfect4
         Monomial(16, {{"x", 3}, {"y", 2}}), Monomial(160, {{"x", 2}, {"y", 2}}), Monomial(512, {{"x", 1}, {"y", 2}}),
         Monomial(512, {{"y", 2}})};
     EXPECT_EQ(expectedBase, polynomialRaiseToAnUnsignedInt.getBase());
-    EXPECT_EQ(2U, polynomialRaiseToAnUnsignedInt.getExponent());
+    EXPECT_EQ(2, polynomialRaiseToAnUnsignedInt.getExponent());
 }
 
 }  // namespace algebra

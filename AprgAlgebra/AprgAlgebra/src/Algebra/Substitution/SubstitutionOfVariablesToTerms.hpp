@@ -20,7 +20,7 @@ public:
 
     bool isEmpty() const;
     bool isVariableFound(std::string const& variable) const;
-    unsigned int getSize() const;
+    int getSize() const;
     Term getTermForVariable(std::string const& variable) const;
     VariablesToTermsMap const& getVariablesToTermsMap() const;
 

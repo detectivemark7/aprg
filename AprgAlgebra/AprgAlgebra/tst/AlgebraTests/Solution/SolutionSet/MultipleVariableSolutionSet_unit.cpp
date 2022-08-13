@@ -37,7 +37,7 @@ TEST(MultipleVariableSolutionSetTest, GetNumberOfVariablesWithSolutionsWorks) {
     solutionSet.addSolutionSetForVariable("a", solutionSetForVariable);
     solutionSet.addSolutionSetForVariable("b", solutionSetForVariable);
 
-    EXPECT_EQ(2U, solutionSet.getNumberOfVariablesWithSolutions());
+    EXPECT_EQ(2, solutionSet.getNumberOfVariablesWithSolutions());
 }
 
 TEST(MultipleVariableSolutionSetTest, GetVariableNamesWorks) {
