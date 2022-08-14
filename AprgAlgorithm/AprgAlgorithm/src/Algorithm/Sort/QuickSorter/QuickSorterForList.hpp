@@ -28,21 +28,19 @@ public:
     }
 
 private:
-    void sort(Values& valuesToSort, Iterator const lowestIt, Iterator const highestIt) const {
-        Iterator partitionIt = partitionAndGetPartitionIteratorInTwoDirections<Values>(lowestIt, highestIt);
+    void sort(Values& valuesToSort, Iterator const itLow, Iterator const itHigh) const {
+        Iterator partitionIt = partitionAndGetPartitionIteratorInTwoDirections<Values>(itLow, itHigh);
         Iterator partitionItMinusOne = partitionIt;
         Iterator partitionItPlusOne = partitionIt;
         partitionItMinusOne--;
         partitionItPlusOne++;
-        if (lowestIt != partitionIt && lowestIt != partitionItMinusOne)  // size must be at least two
-        {
+        if (itLow != partitionIt && itLow != partitionItMinusOne) {  // size must be at least two
             // recursively sort/partition the low part without the partitionIt
-            sort(valuesToSort, lowestIt, partitionItMinusOne);
+            sort(valuesToSort, itLow, partitionItMinusOne);
         }
-        if (partitionIt != highestIt && partitionItPlusOne != highestIt)  // size must be at least two
-        {
+        if (partitionIt != itHigh && partitionItPlusOne != itHigh) {  // size must be at least two
             // recursively sort/partition the high part without the partitionIt
-            sort(valuesToSort, partitionItPlusOne, highestIt);
+            sort(valuesToSort, partitionItPlusOne, itHigh);
         }
     }
 };

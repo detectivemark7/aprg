@@ -34,8 +34,8 @@ public:
 
 private:
     Index getIndexOfNearestValueWithoutCheck(Value const& value) const {
-        Index lowerIndex(getNearestLowerBoundIndex(value));
-        return getIndexOfNearestValueFromLowerIndex(value, lowerIndex);
+        Index lowIndex(getNearestLowerBoundIndex(value));
+        return getIndexOfNearestValueFromLowerIndex(value, lowIndex);
     }
 
     Index getNearestLowerBoundIndex(Value const& value) const {
@@ -52,16 +52,16 @@ private:
         return result;
     }
 
-    Index getIndexOfNearestValueFromLowerIndex(Value const& value, Index const lowerIndex) const {
-        Value lowerBoundValue(m_sortedValues.at(lowerIndex));
-        Value higherIndex(getHigherIndex(lowerIndex));
+    Index getIndexOfNearestValueFromLowerIndex(Value const& value, Index const lowIndex) const {
+        Value lowerBoundValue(m_sortedValues.at(lowIndex));
+        Value highIndex(getHigherIndex(lowIndex));
         Value deviationFromLower(mathHelper::getPositiveDelta(value, lowerBoundValue));
-        Value deviationFromHigher(mathHelper::getPositiveDelta(value, m_sortedValues.at(higherIndex)));
-        return (deviationFromLower <= deviationFromHigher) ? lowerIndex : higherIndex;
+        Value deviationFromHigher(mathHelper::getPositiveDelta(value, m_sortedValues.at(highIndex)));
+        return (deviationFromLower <= deviationFromHigher) ? lowIndex : highIndex;
     }
 
-    Index getHigherIndex(Index const lowerIndex) const {
-        return std::min(lowerIndex + 1, static_cast<Index>(m_sortedValues.size()) - 1);
+    Index getHigherIndex(Index const lowIndex) const {
+        return std::min(lowIndex + 1, static_cast<Index>(m_sortedValues.size()) - 1);
     }
 
     Values const& m_sortedValues;
