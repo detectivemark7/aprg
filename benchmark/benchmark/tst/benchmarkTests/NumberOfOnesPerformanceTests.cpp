@@ -18,7 +18,7 @@ uint64_t arrayBasedImplementationForOneByte(uint8_t const value) {
         5U, 6U, 4U, 5U, 5U, 6U, 5U, 6U, 6U, 7U, 2U, 3U, 3U, 4U, 3U, 4U, 4U, 5U, 3U, 4U, 4U, 5U, 4U, 5U, 5U, 6U,
         3U, 4U, 4U, 5U, 4U, 5U, 5U, 6U, 4U, 5U, 5U, 6U, 5U, 6U, 6U, 7U, 3U, 4U, 4U, 5U, 4U, 5U, 5U, 6U, 4U, 5U,
         5U, 6U, 5U, 6U, 6U, 7U, 4U, 5U, 5U, 6U, 5U, 6U, 6U, 7U, 5U, 6U, 6U, 7U, 6U, 7U, 7U, 8U};
-    return savedValues.at(value);
+    return savedValues[value];
 }
 
 uint64_t arrayBasedImplementation(uint64_t const value) {
