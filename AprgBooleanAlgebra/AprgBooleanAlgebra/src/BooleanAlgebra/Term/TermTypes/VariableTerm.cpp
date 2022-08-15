@@ -59,7 +59,7 @@ void VariableTerm::initializeIfNotEmpty() {
     int lastIndex = m_variableName.length() - 1;
     int index = lastIndex;
     for (; index >= 0; index--) {
-        if (!isPrime(m_variableName.at(index))) {
+        if (!isPrime(m_variableName[index])) {
             break;
         }
     }

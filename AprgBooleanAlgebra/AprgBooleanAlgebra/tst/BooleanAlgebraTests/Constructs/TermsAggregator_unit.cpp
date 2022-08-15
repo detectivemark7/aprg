@@ -27,7 +27,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithUnaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect("x'");
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithBinaryOperation) {
@@ -38,7 +38,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithBinaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(createExpressionIfPossible({"x", "&", "y"}));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithDifferentOperationLevels_AndOperationPrioritizedBeforeOrOperation) {
@@ -51,7 +51,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithDifferentOperationLevels_AndOp
     Expression subExpression1(createExpressionIfPossible({"b", "&", "c", "&", "d"}));
     Expression subExpression2(createExpressionIfPossible({"a", "|", subExpression1, "|", "e"}));
     Term termToExpect(subExpression2);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithParenthesis) {
@@ -65,7 +65,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithParenthesis) {
     Expression subExpression2(createExpressionIfPossible({subExpression1, "&", "c"}));
     Expression subExpression3(createExpressionIfPossible({subExpression2, "|", "d"}));
     Term termToExpect(subExpression3);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithNoTerms) {
@@ -85,7 +85,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithUnaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(false);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithBinaryOperation) {
@@ -96,7 +96,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithBinaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(false);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithDifferentOperationLevels) {
@@ -107,7 +107,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithDifferentOperationLevels) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(false);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithParenthesis) {
@@ -118,7 +118,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithParenthesis) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(true);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithNegatedTermsAndVariousOperations) {
@@ -132,7 +132,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithNegatedTermsAndVariousOperations) {
     Expression subExpression2(createExpressionIfPossible({"c'", "&", "x"}));
     Expression subExpression3(createExpressionIfPossible({subExpression1, "|", subExpression2, "|", "y"}));
     Term termToExpect(subExpression3);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 }  // namespace booleanAlgebra

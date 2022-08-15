@@ -68,7 +68,7 @@ void distributeTermsWithRecursion(
     Term& outputTerm, Terms& innerTermsCombinations, Expressions const& innerExpressions, Term const& outerFactor,
     OperatorLevel const outerOperation, OperatorLevel const innerOperation, int const index) {
     if (index < static_cast<int>(innerExpressions.size())) {
-        for (WrappedTerm const& subExpressionTerm : innerExpressions.at(index).getWrappedTerms()) {
+        for (WrappedTerm const& subExpressionTerm : innerExpressions[index].getWrappedTerms()) {
             innerTermsCombinations.emplace_back(
                 getTermConstReferenceFromUniquePointer(subExpressionTerm.baseTermPointer));
             distributeTermsWithRecursion(
@@ -149,7 +149,7 @@ void simplifyByQuineMcKluskey(Term& term) {
                 string bitString(bestFinalImplicant.getEquivalentString(variableNames.size()));
                 int i = variableNames.size() - 1;
                 for (string const& variableName : variableNames) {
-                    char primeBit(bitString.at(i));
+                    char primeBit(bitString[i]);
                     implicantExpression.putTerm(
                         getTermFromVariableAndPrimeValue(variableName, primeBit),
                         targetInner);  // if "outer and" "inner or", its the saved as dual
@@ -202,7 +202,7 @@ void combineComplementaryTerms(Terms& termsToCombine, OperatorLevel const operat
     for (int i = 0; i < static_cast<int>(termsToCombine.size()); i++) {
         bool hasComplimentary(false);
         for (int j = i + 1; j < static_cast<int>(termsToCombine.size()); j++) {
-            if (termsToCombine.at(i) == negatedTerms.at(j)) {
+            if (termsToCombine[i] == negatedTerms[j]) {
                 termsToCombine.erase(termsToCombine.begin() + j);
                 negatedTerms.erase(negatedTerms.begin() + j);
                 hasComplimentary = true;
@@ -218,7 +218,7 @@ void combineTermsByCheckingCommonFactor(Terms& termsToCombine, OperatorLevel con
     for (int i = 0; i < static_cast<int>(termsToCombine.size()); i++) {
         for (int j = i + 1; j < static_cast<int>(termsToCombine.size()); j++) {
             Term combinedTerm(combineTwoTermsByCheckingCommonFactorIfPossible(
-                termsToCombine.at(i), termsToCombine.at(j), operatorLevel));
+                termsToCombine[i], termsToCombine[j], operatorLevel));
             if (!combinedTerm.isEmpty()) {
                 termsToCombine[i] = combinedTerm;
                 termsToCombine.erase(termsToCombine.begin() + j);
@@ -242,8 +242,8 @@ Term combineTwoTermsByCheckingCommonFactorIfPossible(
         Terms uniqueTerms2(getTermOrSubTerms(term2));
         for (int i1 = 0; i1 < static_cast<int>(uniqueTerms1.size()); i1++) {
             for (int i2 = 0; i2 < static_cast<int>(uniqueTerms2.size()); i2++) {
-                if (uniqueTerms1.at(i1) == uniqueTerms2.at(i2)) {
-                    commonFactors.emplace_back(uniqueTerms1.at(i1));
+                if (uniqueTerms1[i1] == uniqueTerms2[i2]) {
+                    commonFactors.emplace_back(uniqueTerms1[i1]);
                     uniqueTerms1.erase(uniqueTerms1.begin() + i1);
                     uniqueTerms2.erase(uniqueTerms2.begin() + i2);
                     i1--;

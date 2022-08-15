@@ -165,7 +165,7 @@ public:
             }
             ImplicantWithMinterm bestFinalImplicant;
             if (minCount == 1U) {
-                bestFinalImplicant = inputMintermToImplicantMap.at(mintermWithMinCount);
+                bestFinalImplicant = inputMintermToImplicantMap[mintermWithMinCount];
             } else {
                 auto it = countToImplicantMap.cend();
                 it--;

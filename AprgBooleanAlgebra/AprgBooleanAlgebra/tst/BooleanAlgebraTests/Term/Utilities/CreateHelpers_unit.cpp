@@ -49,8 +49,8 @@ TEST(CreateHelpersTest, CreateExpressionIfPossibleWorks) {
     EXPECT_EQ(OperatorLevel::And, expressionToTest.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(2U, termsToVerify.size());
-    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term("y"), getTermConstReferenceFromUniquePointer(termsToVerify.at(1).baseTermPointer));
+    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term("y"), getTermConstReferenceFromUniquePointer(termsToVerify[1].baseTermPointer));
 }
 
 TEST(CreateHelpersTest, CreateExpressionIfPossibleDoesNotSimplifyExpressionInAExpression) {
@@ -63,19 +63,19 @@ TEST(CreateHelpersTest, CreateExpressionIfPossibleDoesNotSimplifyExpressionInAEx
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest1.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify1(expressionToTest1.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify1.size());
-    Term const& termToVerify1(getTermConstReferenceFromUniquePointer(termsToVerify1.at(0).baseTermPointer));
+    Term const& termToVerify1(getTermConstReferenceFromUniquePointer(termsToVerify1[0].baseTermPointer));
     ASSERT_TRUE(termToVerify1.isExpression());
     Expression const& expressionToTest2(termToVerify1.getExpressionConstReference());
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest2.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify2(expressionToTest2.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify2.size());
-    Term const& termToVerify2(getTermConstReferenceFromUniquePointer(termsToVerify2.at(0).baseTermPointer));
+    Term const& termToVerify2(getTermConstReferenceFromUniquePointer(termsToVerify2[0].baseTermPointer));
     ASSERT_TRUE(termToVerify2.isExpression());
     Expression const& expressionToTest3(termToVerify2.getExpressionConstReference());
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest3.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify3(expressionToTest3.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify3.size());
-    Term const& termToVerify3(getTermConstReferenceFromUniquePointer(termsToVerify3.at(0).baseTermPointer));
+    Term const& termToVerify3(getTermConstReferenceFromUniquePointer(termsToVerify3[0].baseTermPointer));
     ASSERT_TRUE(termToVerify3.isConstant());
     EXPECT_EQ(Constant(true), termToVerify3.getConstantConstReference());
 }
@@ -86,8 +86,8 @@ TEST(CreateHelpersTest, CreateExpressionIfPossibleDoesNotSimplify) {
     EXPECT_EQ(OperatorLevel::And, expressionToTest.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(2U, termsToVerify.size());
-    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify.at(1).baseTermPointer));
+    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(termsToVerify[1].baseTermPointer));
 }
 
 TEST(CreateHelpersTest, CreateExpressionIfPossibleReturnsEmptyIfListOfTermsAreWrong) {
@@ -104,7 +104,7 @@ TEST(CreateHelpersTest, CreateSimplifiedExpressionIfPossibleWorks) {
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
+    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
 }
 
 TEST(CreateHelpersTest, CreateSimplifiedExpressionIfPossibleReturnsEmptyIfListOfTermsAreWrong) {

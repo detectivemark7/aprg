@@ -26,15 +26,15 @@ TEST(ExpressionTest, ConstructionWorks) {
     EXPECT_EQ(OperatorLevel::Unknown, expression2.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify2(expression2.getWrappedTerms());
     ASSERT_EQ(1U, termsToVerify2.size());
-    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify2.at(0).baseTermPointer));
+    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify2[0].baseTermPointer));
     EXPECT_EQ(OperatorLevel::Unknown, expression3.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify3(expression3.getWrappedTerms());
     EXPECT_TRUE(termsToVerify3.empty());
     EXPECT_EQ(OperatorLevel::And, expression4.getCommonOperatorLevel());
     WrappedTerms const& termsToVerify4(expression4.getWrappedTerms());
     ASSERT_EQ(2U, termsToVerify4.size());
-    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify4.at(0).baseTermPointer));
-    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify4.at(1).baseTermPointer));
+    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify4[0].baseTermPointer));
+    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify4[1].baseTermPointer));
 }
 
 TEST(ExpressionTest, ExpressionThatIsDefaultConstructedHasIsSimplifiedFlagNotSet) {
@@ -177,8 +177,8 @@ TEST(ExpressionTest, GetWrappedTermsWorks) {
     WrappedTerms const& wrappedTermsToVerify(expression.getWrappedTerms());
 
     ASSERT_EQ(2U, wrappedTermsToVerify.size());
-    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(wrappedTermsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term("y"), getTermConstReferenceFromUniquePointer(wrappedTermsToVerify.at(1).baseTermPointer));
+    EXPECT_EQ(Term("x"), getTermConstReferenceFromUniquePointer(wrappedTermsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term("y"), getTermConstReferenceFromUniquePointer(wrappedTermsToVerify[1].baseTermPointer));
 }
 
 TEST(ExpressionTest, GetDebugStringWorks) {
@@ -239,10 +239,10 @@ TEST(ExpressionTest, PutTermWorks) {
 
     WrappedTerms termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(4U, termsToVerify.size());
-    EXPECT_EQ(Term("a"), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term("b"), getTermConstReferenceFromUniquePointer(termsToVerify.at(1).baseTermPointer));
-    EXPECT_EQ(Term("c"), getTermConstReferenceFromUniquePointer(termsToVerify.at(2).baseTermPointer));
-    EXPECT_EQ(Term("d"), getTermConstReferenceFromUniquePointer(termsToVerify.at(3).baseTermPointer));
+    EXPECT_EQ(Term("a"), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term("b"), getTermConstReferenceFromUniquePointer(termsToVerify[1].baseTermPointer));
+    EXPECT_EQ(Term("c"), getTermConstReferenceFromUniquePointer(termsToVerify[2].baseTermPointer));
+    EXPECT_EQ(Term("d"), getTermConstReferenceFromUniquePointer(termsToVerify[3].baseTermPointer));
 }
 
 TEST(ExpressionTest, PutTermWithOperationLevelWorks) {
@@ -528,9 +528,9 @@ TEST(ExpressionTest, PutWrappedTermWorks) {
 
     WrappedTerms termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(3U, termsToVerify.size());
-    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify.at(1).baseTermPointer));
-    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify.at(2).baseTermPointer));
+    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify[1].baseTermPointer));
+    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify[2].baseTermPointer));
 }
 
 TEST(ExpressionTest, PutWrappedTermsWorks) {
@@ -544,9 +544,9 @@ TEST(ExpressionTest, PutWrappedTermsWorks) {
 
     WrappedTerms termsToVerify(expressionToTest.getWrappedTerms());
     ASSERT_EQ(3U, termsToVerify.size());
-    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify.at(0).baseTermPointer));
-    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify.at(1).baseTermPointer));
-    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify.at(2).baseTermPointer));
+    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify[0].baseTermPointer));
+    EXPECT_EQ(Term(false), getTermConstReferenceFromUniquePointer(termsToVerify[1].baseTermPointer));
+    EXPECT_EQ(Term(true), getTermConstReferenceFromUniquePointer(termsToVerify[2].baseTermPointer));
 }
 
 TEST(ExpressionTest, SetWorks) {
