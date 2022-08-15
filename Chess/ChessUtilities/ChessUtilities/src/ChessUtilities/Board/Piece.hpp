@@ -20,7 +20,6 @@ public:
     static uint8_t getDataFromColorAndType(PieceColor const color, PieceType const type);
 
     Piece();
-    Piece(Piece const&) = default;
     Piece(uint8_t const data);
     Piece(PieceColorAndType const colorAndType);
     Piece(PieceColor const color, PieceType const type);
