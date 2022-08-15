@@ -52,7 +52,7 @@ public:
     std::unique_ptr<Prototype> createBasedFrom(int const index) {
         std::unique_ptr<Prototype> result;
         if (index < NUMBER_OF_TYPES) {
-            result = m_types.at(index)->clone();
+            result = m_types[index]->clone();
         }
         return result;
     }
