@@ -91,7 +91,7 @@ BinomialCoefficient::Value BinomialCoefficient::getBinomialCoefficientUsingItera
             Value lastK = min(n, m_k);
             for (Value k = lastK; k > 0; k--)  // reverse traversal to avoid accessing already computed values
             {
-                partialValues[k] += partialValues.at(k - 1);
+                partialValues[k] += partialValues[k - 1];
             }
         }
         result = partialValues.back();

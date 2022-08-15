@@ -20,15 +20,15 @@ BoxStackingProblem::Index BoxStackingProblem::getMaximumStackedHeight() const {
         Boxes possibleBoxes(getAllPossibleBoxes());
         Values partialHeights(possibleBoxes.size(), 0);
         for (Index index(0); index < static_cast<Index>(possibleBoxes.size()); index++) {
-            Box const& rightBox(possibleBoxes.at(index));
+            Box const& rightBox(possibleBoxes[index]);
             Value& partialHeight(partialHeights[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                Box const& leftBox(possibleBoxes.at(lowerIndex));
+                Box const& leftBox(possibleBoxes[lowerIndex]);
                 if (leftBox.getX() < rightBox.getX() && leftBox.getY() < rightBox.getY()) {
-                    partialHeight = max(partialHeight, partialHeights.at(lowerIndex));
+                    partialHeight = max(partialHeight, partialHeights[lowerIndex]);
                 }
             }
-            partialHeight += possibleBoxes.at(index).getZ();
+            partialHeight += possibleBoxes[index].getZ();
         }
         result = *max_element(partialHeights.cbegin(), partialHeights.cend());
     }
@@ -48,29 +48,29 @@ BoxStackingProblem::Boxes BoxStackingProblem::getBoxesWithMaximumStackedHeight()
         iota(indexToPreviousIndex.begin(), indexToPreviousIndex.end(), 0);
 
         for (Index index(0); index < static_cast<Index>(possibleBoxes.size()); index++) {
-            Box const& rightBox(possibleBoxes.at(index));
+            Box const& rightBox(possibleBoxes[index]);
             Value& partialHeight(partialHeights[index]);
             Value& previousIndex(indexToPreviousIndex[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                Box const& leftBox(possibleBoxes.at(lowerIndex));
+                Box const& leftBox(possibleBoxes[lowerIndex]);
                 if (leftBox.getX() < rightBox.getX() && leftBox.getY() < rightBox.getY() &&
-                    partialHeight < partialHeights.at(lowerIndex)) {
-                    partialHeight = partialHeights.at(lowerIndex);
+                    partialHeight < partialHeights[lowerIndex]) {
+                    partialHeight = partialHeights[lowerIndex];
                     previousIndex = lowerIndex;
                 }
             }
-            partialHeight += possibleBoxes.at(index).getZ();
+            partialHeight += possibleBoxes[index].getZ();
         }
 
         // construct longest sequence
         auto itMax = max_element(partialHeights.cbegin(), partialHeights.cend());
         Index indexOfMaxSum = distance(partialHeights.cbegin(), itMax);
         Index traverseIndex = indexOfMaxSum;
-        for (; traverseIndex != indexToPreviousIndex.at(traverseIndex);
-             traverseIndex = indexToPreviousIndex.at(traverseIndex)) {
-            result.emplace_back(possibleBoxes.at(traverseIndex));
+        for (; traverseIndex != indexToPreviousIndex[traverseIndex];
+             traverseIndex = indexToPreviousIndex[traverseIndex]) {
+            result.emplace_back(possibleBoxes[traverseIndex]);
         }
-        result.emplace_back(possibleBoxes.at(traverseIndex));
+        result.emplace_back(possibleBoxes[traverseIndex]);
         reverse(result.begin(), result.end());
     }
     return result;

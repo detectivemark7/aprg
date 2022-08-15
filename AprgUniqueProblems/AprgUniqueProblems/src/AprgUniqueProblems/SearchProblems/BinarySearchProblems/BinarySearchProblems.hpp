@@ -31,7 +31,7 @@ public:
 
         Value result{};
         if (!sortedValues.empty()) {
-            result = sortedValues.at(getNearestFloorIndex(sortedValues, valueToCheck));
+            result = sortedValues[getNearestFloorIndex(sortedValues, valueToCheck)];
         }
         return result;
     }
@@ -39,7 +39,7 @@ public:
     Value getNearestCeil(Values const& sortedValues, Value const& valueToCheck) {
         Value result{};
         if (!sortedValues.empty()) {
-            result = sortedValues.at(getNearestCielIndex(sortedValues, valueToCheck));
+            result = sortedValues[getNearestCielIndex(sortedValues, valueToCheck)];
         }
         return result;
     }
@@ -57,7 +57,7 @@ public:
             // reversed
             Index higherIndex = getNearestFloorIndex(sortedValues, valueToCheck);
             Index lowerIndex = getNearestCielIndex(sortedValues, valueToCheck);
-            if (sortedValues.at(higherIndex) == valueToCheck && valueToCheck == sortedValues.at(lowerIndex)) {
+            if (sortedValues[higherIndex] == valueToCheck && valueToCheck == sortedValues[lowerIndex]) {
                 result = higherIndex + 1 - lowerIndex;
             }
         }
@@ -80,7 +80,7 @@ public:
 
         Index result(getInvalidIndex<Index>());
         Index lowerIndex(0), higherIndex(sortedValues.size() - 1);
-        if (sortedValues.at(lowerIndex) <= sortedValues.at(higherIndex)) {
+        if (sortedValues[lowerIndex] <= sortedValues[higherIndex]) {
             result = lowerIndex;
         } else {
             while (lowerIndex <= higherIndex) {
@@ -89,7 +89,7 @@ public:
                     break;
                 }
                 Index middleIndex = getMidpointOfIndexes(lowerIndex, higherIndex);
-                if (sortedValues.at(middleIndex) < sortedValues.at(higherIndex)) {
+                if (sortedValues[middleIndex] < sortedValues[higherIndex]) {
                     higherIndex = middleIndex;
                 } else {
                     lowerIndex = middleIndex + 1;
@@ -105,7 +105,7 @@ private:
         Index lowerIndex(0), higherIndex(sortedValues.size() - 1);
         while (lowerIndex + 1 < higherIndex) {
             Index middleIndex = getMidpointOfIndexes(lowerIndex, higherIndex);
-            Value middleValue(sortedValues.at(middleIndex));
+            Value middleValue(sortedValues[middleIndex]);
             if (middleValue <= value) {
                 lowerIndex = middleIndex;
             } else {
@@ -120,7 +120,7 @@ private:
         Index lowerIndex(0), higherIndex(sortedValues.size() - 1);
         while (lowerIndex + 1 < higherIndex) {
             Index middleIndex = getMidpointOfIndexes(lowerIndex, higherIndex);
-            Value middleValue(sortedValues.at(middleIndex));
+            Value middleValue(sortedValues[middleIndex]);
             if (value <= middleValue) {
                 higherIndex = middleIndex;
             } else {

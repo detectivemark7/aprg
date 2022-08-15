@@ -72,11 +72,11 @@ WordWrapProblemWithLineWidth::Cost WordWrapProblemWithLineWidth::getOptimizedCos
             for (Index lastWordIndex = firstWordIndex; lastWordIndex < numberOfWords;
                  lastWordIndex++)  // try all last word in lines
             {
-                lineLength += m_words.at(lastWordIndex).length();
+                lineLength += m_words[lastWordIndex].length();
                 lineLength += (static_cast<Index>(firstWordIndex) < lastWordIndex) ? 1 : 0;  // add space character
                 if (lineLength <= m_maxLineLength) {
                     Cost possibleCost = getCostFromExtraSpaces(m_maxLineLength - lineLength);
-                    possibleCost += (lastWordIndex + 1 < numberOfWords) ? costsIfFirstWord.at(lastWordIndex + 1)
+                    possibleCost += (lastWordIndex + 1 < numberOfWords) ? costsIfFirstWord[lastWordIndex + 1]
                                                                         : 0;  // add cost of next lines
                     costIfFirstWord = min(costIfFirstWord, possibleCost);
                 }
@@ -92,7 +92,7 @@ WordWrapProblemWithLineWidth::Cost WordWrapProblemWithLineWidth::getOptimizedCos
     Cost result(0);
     if (wordIndex < static_cast<Index>(m_words.size())) {
         result = MAX_COST;
-        Index wordLength(m_words.at(wordIndex).length());
+        Index wordLength(m_words[wordIndex].length());
         if (wordLength <= m_maxLineLength) {
             Index lastLength(recursionDetails.lineLengths.back());
             if (lastLength + 1 + wordLength <= m_maxLineLength) {

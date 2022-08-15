@@ -47,7 +47,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
         }
         for (Index index = 0; index + 1 < stringLength; index++)  // length = 2
         {
-            if (m_string.at(index) == m_string.at(index + 1)) {
+            if (m_string[index] == m_string[index + 1]) {
                 isSubstrAPalindrome.setEntry(index, index + 1, true);
                 result = 2;
             }
@@ -56,7 +56,7 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
         {
             for (Index left = 0; left + length <= stringLength; left++) {
                 Index right = left + length - 1;
-                if (m_string.at(left) == m_string.at(right) && isSubstrAPalindrome.getEntry(left + 1, right - 1)) {
+                if (m_string[left] == m_string[right] && isSubstrAPalindrome.getEntry(left + 1, right - 1)) {
                     isSubstrAPalindrome.setEntry(left, right, true);
                     result = max(result, length);
                 }
@@ -76,13 +76,13 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
         Index const stringLength = m_string.length();
         Indices palidromeLengths(stringLength, 1);
         for (Index right = 1; right < stringLength; right++) {
-            Index previousLength = palidromeLengths.at(right - 1);
-            if (previousLength == 1 && m_string.at(right - 1) == m_string.at(right))  // length = 2
+            Index previousLength = palidromeLengths[right - 1];
+            if (previousLength == 1 && m_string[right - 1] == m_string[right])  // length = 2
             {
                 palidromeLengths[right] = 2;
             }
             int possibleLeft = static_cast<int>(right) - 1 - static_cast<int>(previousLength);
-            if (possibleLeft >= 0 && m_string.at(possibleLeft) == m_string.at(right))  // length >= 3
+            if (possibleLeft >= 0 && m_string[possibleLeft] == m_string[right])  // length >= 3
             {
                 palidromeLengths[right] = previousLength + 2;
             }
@@ -101,22 +101,22 @@ string LongestPalindromicSubstring::getLongestStringUsingIterativeDPAndSpaceEffi
         Index const stringLength = m_string.length();
         Indices palidromeLengths(stringLength, 1);
         for (Index right = 1; right < stringLength; right++) {
-            Index previousLength = palidromeLengths.at(right - 1);
-            if (previousLength == 1 && m_string.at(right - 1) == m_string.at(right))  // length = 2
+            Index previousLength = palidromeLengths[right - 1];
+            if (previousLength == 1 && m_string[right - 1] == m_string[right])  // length = 2
             {
                 palidromeLengths[right] = 2;
             }
             int possibleLeft = static_cast<int>(right) - 1 - static_cast<int>(previousLength);
-            if (possibleLeft >= 0 && m_string.at(possibleLeft) == m_string.at(right))  // length >= 3
+            if (possibleLeft >= 0 && m_string[possibleLeft] == m_string[right])  // length >= 3
             {
                 palidromeLengths[right] = previousLength + 2;
             }
         }
         auto itMax = max_element(palidromeLengths.cbegin(), palidromeLengths.cend());
         Index indexOfLongestLength = distance(palidromeLengths.cbegin(), itMax);
-        Index startIndex = indexOfLongestLength + 1 - palidromeLengths.at(indexOfLongestLength);
+        Index startIndex = indexOfLongestLength + 1 - palidromeLengths[indexOfLongestLength];
         for (; startIndex <= indexOfLongestLength; startIndex++) {
-            result.push_back(m_string.at(startIndex));
+            result.push_back(m_string[startIndex]);
         }
     }
     return result;
@@ -129,10 +129,10 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
     if (length == 1) {
         result = 1;
     } else if (length == 2) {
-        result = m_string.at(left) == m_string.at(right) ? 2 : 1;
+        result = m_string[left] == m_string[right] ? 2 : 1;
     } else {
         bool isCompletePalindrome(false);
-        if (m_string.at(left) == m_string.at(right)) {
+        if (m_string[left] == m_string[right]) {
             Index middleLength = getLongestLengthUsingNaiveRecursion(left + 1, right - 1);
             if (middleLength + 2 == length) {
                 isCompletePalindrome = true;
@@ -157,10 +157,10 @@ LongestPalindromicSubstring::Index LongestPalindromicSubstring::getLongestLength
         if (length == 1) {
             result = 1;
         } else if (length == 2) {
-            result = m_string.at(left) == m_string.at(right) ? 2 : 1;
+            result = m_string[left] == m_string[right] ? 2 : 1;
         } else {
             bool isCompletePalindrome(false);
-            if (m_string.at(left) == m_string.at(right)) {
+            if (m_string[left] == m_string[right]) {
                 Index middleLength = getLongestLengthUsingNaiveRecursion(left + 1, right - 1);
                 if (middleLength + 2 == length) {
                     isCompletePalindrome = true;

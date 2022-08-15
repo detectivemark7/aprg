@@ -22,8 +22,8 @@ MaximumLengthChainOfPairs::Index MaximumLengthChainOfPairs::getLongestLength() c
         for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
             Index& subLength(subLengths[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                if (m_sequence.at(lowerIndex).second < m_sequence.at(index).first) {
-                    subLength = max(subLength, subLengths.at(lowerIndex) + 1);
+                if (m_sequence[lowerIndex].second < m_sequence[index].first) {
+                    subLength = max(subLength, subLengths[lowerIndex] + 1);
                 }
             }
         }
@@ -46,9 +46,9 @@ MaximumLengthChainOfPairs::Pairs MaximumLengthChainOfPairs::getLongestSubsequenc
             Index& subLength(subLengths[index]);
             Index& previousIndex(indexToPreviousIndex[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                if (m_sequence.at(lowerIndex).second < m_sequence.at(index).first &&
-                    subLength < subLengths.at(lowerIndex) + 1) {
-                    subLength = subLengths.at(lowerIndex) + 1;
+                if (m_sequence[lowerIndex].second < m_sequence[index].first &&
+                    subLength < subLengths[lowerIndex] + 1) {
+                    subLength = subLengths[lowerIndex] + 1;
                     previousIndex = lowerIndex;
                 }
             }
@@ -58,11 +58,11 @@ MaximumLengthChainOfPairs::Pairs MaximumLengthChainOfPairs::getLongestSubsequenc
         auto itMax = max_element(subLengths.cbegin(), subLengths.cend());
         Index indexOfLongestLength = distance(subLengths.cbegin(), itMax);
         Index traverseIndex = indexOfLongestLength;
-        for (; traverseIndex != indexToPreviousIndex.at(traverseIndex);
-             traverseIndex = indexToPreviousIndex.at(traverseIndex)) {
-            result.emplace_back(m_sequence.at(traverseIndex));
+        for (; traverseIndex != indexToPreviousIndex[traverseIndex];
+             traverseIndex = indexToPreviousIndex[traverseIndex]) {
+            result.emplace_back(m_sequence[traverseIndex]);
         }
-        result.emplace_back(m_sequence.at(traverseIndex));
+        result.emplace_back(m_sequence[traverseIndex]);
         reverse(result.begin(), result.end());
     }
     return result;

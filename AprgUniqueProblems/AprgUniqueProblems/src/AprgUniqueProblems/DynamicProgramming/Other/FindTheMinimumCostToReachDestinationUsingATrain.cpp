@@ -48,7 +48,7 @@ FindTheMinimumCostToReachDestinationUsingATrain::getMinimumCostUsingIterativeDP(
             for (Index immediateStation = 0; immediateStation < endStation; immediateStation++) {
                 entryResult =
                     min(entryResult,
-                        savedCosts.at(immediateStation) + m_pricesAtEachStation.getEntry(immediateStation, endStation));
+                        savedCosts[immediateStation] + m_pricesAtEachStation.getEntry(immediateStation, endStation));
             }
             savedCosts[endStation] = entryResult;
         }
@@ -74,7 +74,7 @@ FindTheMinimumCostToReachDestinationUsingATrain::getMinimumCostUsingNaiveRecursi
 FindTheMinimumCostToReachDestinationUsingATrain::Value
 FindTheMinimumCostToReachDestinationUsingATrain::getMinimumCostUsingMemoizationDP(
     Values& savedCosts, Index const endStation) const {
-    Value result(savedCosts.at(endStation));
+    Value result(savedCosts[endStation]);
     if (UNUSED_VALUE == result) {
         result = 0;
         if (endStation > 0) {

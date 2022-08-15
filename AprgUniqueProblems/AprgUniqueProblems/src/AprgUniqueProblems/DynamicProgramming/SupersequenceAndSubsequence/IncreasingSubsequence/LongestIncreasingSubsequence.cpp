@@ -19,8 +19,8 @@ LongestIncreasingSubsequence::Index LongestIncreasingSubsequence::getLongestLeng
         for (Index index(0); index < static_cast<Index>(m_sequence.size()); index++) {
             Index& subLength(subLengths[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                if (m_sequence.at(lowerIndex) < m_sequence.at(index)) {
-                    subLength = max(subLength, subLengths.at(lowerIndex) + 1);
+                if (m_sequence[lowerIndex] < m_sequence[index]) {
+                    subLength = max(subLength, subLengths[lowerIndex] + 1);
                 }
             }
         }
@@ -43,8 +43,8 @@ LongestIncreasingSubsequence::Values LongestIncreasingSubsequence::getLongestSub
             Index& subLength(subLengths[index]);
             Index& previousIndex(indexToPreviousIndex[index]);
             for (Index lowerIndex = 0; lowerIndex < index; lowerIndex++) {
-                if (m_sequence.at(lowerIndex) < m_sequence.at(index) && subLength < subLengths.at(lowerIndex) + 1) {
-                    subLength = subLengths.at(lowerIndex) + 1;
+                if (m_sequence[lowerIndex] < m_sequence[index] && subLength < subLengths[lowerIndex] + 1) {
+                    subLength = subLengths[lowerIndex] + 1;
                     previousIndex = lowerIndex;
                 }
             }
@@ -54,11 +54,11 @@ LongestIncreasingSubsequence::Values LongestIncreasingSubsequence::getLongestSub
         auto itMax = max_element(subLengths.cbegin(), subLengths.cend());
         Index indexOfLongestLength = distance(subLengths.cbegin(), itMax);
         Index traverseIndex = indexOfLongestLength;
-        for (; traverseIndex != indexToPreviousIndex.at(traverseIndex);
-             traverseIndex = indexToPreviousIndex.at(traverseIndex)) {
-            result.emplace_back(m_sequence.at(traverseIndex));
+        for (; traverseIndex != indexToPreviousIndex[traverseIndex];
+             traverseIndex = indexToPreviousIndex[traverseIndex]) {
+            result.emplace_back(m_sequence[traverseIndex]);
         }
-        result.emplace_back(m_sequence.at(traverseIndex));
+        result.emplace_back(m_sequence[traverseIndex]);
         reverse(result.begin(), result.end());
     }
     return result;

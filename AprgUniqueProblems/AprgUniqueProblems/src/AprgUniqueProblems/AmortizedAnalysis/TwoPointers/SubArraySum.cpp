@@ -11,26 +11,26 @@ SubArraySum::Values SubArraySum::getSubArrayWithSum(Value const targetSum) const
     if (!m_valuesToCheck.empty()) {
         bool isFound(false);
         Index start = 0, end = 0, size = m_valuesToCheck.size();
-        Value currentSum = m_valuesToCheck.at(0);
+        Value currentSum = m_valuesToCheck[0];
         while (start < size && end < size) {
             if (currentSum == targetSum) {
                 isFound = true;
                 break;
             } else if (currentSum > targetSum) {
                 if (start < end) {
-                    currentSum -= m_valuesToCheck.at(start);
+                    currentSum -= m_valuesToCheck[start];
                     start++;
                 } else if (end + 1 < size) {
                     start++;
                     end++;
-                    currentSum = m_valuesToCheck.at(end);
+                    currentSum = m_valuesToCheck[end];
                 } else {
                     break;
                 }
             } else if (currentSum < targetSum) {
                 if (end + 1 < size) {
                     end++;
-                    currentSum += m_valuesToCheck.at(end);
+                    currentSum += m_valuesToCheck[end];
                 } else {
                     break;
                 }

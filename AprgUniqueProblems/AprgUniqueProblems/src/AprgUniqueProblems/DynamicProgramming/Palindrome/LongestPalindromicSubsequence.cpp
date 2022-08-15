@@ -39,7 +39,7 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
                  index1--)  // reverse traversal to get previous values
             {
                 Count entryResult(0);
-                if (m_string.at(index1) == m_string.at(index2)) {
+                if (m_string[index1] == m_string[index2]) {
                     entryResult = 2 + lengthMatrix.getEntry(index1 + 1, index2 - 1);
                 } else {
                     entryResult =
@@ -75,15 +75,15 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
         for (int index1 = static_cast<int>(index2) - 1; index1 >= 0;
              index1--)  // reverse traversal to get previous values
         {
-            if (m_string.at(index1) == m_string.at(index2)) {
-                currentCounts[index1] = 2 + previousCounts.at(index1 + 1);
+            if (m_string[index1] == m_string[index2]) {
+                currentCounts[index1] = 2 + previousCounts[index1 + 1];
             } else {
-                currentCounts[index1] = max(previousCounts.at(index1), currentCounts.at(index1 + 1));
+                currentCounts[index1] = max(previousCounts[index1], currentCounts[index1 + 1]);
             }
         }
     }
 
-    Counts const& lastCurrent(previousAndCurrentCounts.at(stringLength % 2));
+    Counts const& lastCurrent(previousAndCurrentCounts[stringLength % 2]);
     return lastCurrent.front();
 }
 
@@ -93,7 +93,7 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
     if (index1 == index2) {
         result = 1;  // one character is considered a palindrome
     } else if (index1 < index2) {
-        if (m_string.at(index1) == m_string.at(index2)) {
+        if (m_string[index1] == m_string[index2]) {
             result = 2 + getLongestLengthUsingNaiveRecursion(index1 + 1, index2 - 1);
         } else {
             result =
@@ -112,7 +112,7 @@ LongestPalindromicSubsequence::Count LongestPalindromicSubsequence::getLongestLe
         if (index1 == index2) {
             result = 1;  // one character is considered a palindrome
         } else if (index1 < index2) {
-            if (m_string.at(index1) == m_string.at(index2)) {
+            if (m_string[index1] == m_string[index2]) {
                 result = 2 + getLongestLengthUsingNaiveRecursion(index1 + 1, index2 - 1);
             } else {
                 result =

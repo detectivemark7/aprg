@@ -75,13 +75,13 @@ PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsin
         }
         for (Index index = 0; index + 1 < stringLength; index++)  // length = 2
         {
-            isSubstrAPalindrome.setEntry(index, index + 1, m_string.at(index) == m_string.at(index + 1));
+            isSubstrAPalindrome.setEntry(index, index + 1, m_string[index] == m_string[index + 1]);
         }
         for (Index length = 3; length <= stringLength; length++)  // length = >3
         {
             for (Index left = 0; left + length <= stringLength; left++) {
                 Index right = left + length - 1;
-                if (m_string.at(left) == m_string.at(right) && isSubstrAPalindrome.getEntry(left + 1, right - 1)) {
+                if (m_string[left] == m_string[right] && isSubstrAPalindrome.getEntry(left + 1, right - 1)) {
                     isSubstrAPalindrome.setEntry(left, right, true);
                 }
             }
@@ -93,13 +93,13 @@ PalindromePartitioning::Count PalindromePartitioning::getMinimumNumberOfCutsUsin
                 partialCountAtIndex = MAX_COUNT;
                 for (Index left = 0; left < right; left++) {
                     if (isSubstrAPalindrome.getEntry(left + 1, right)) {
-                        partialCountAtIndex = min(partialCountAtIndex, 1 + partialCounts.at(left));
+                        partialCountAtIndex = min(partialCountAtIndex, 1 + partialCounts[left]);
                     }
                 }
             }
         }
 
-        result = partialCounts.at(stringLength - 1);
+        result = partialCounts[stringLength - 1];
     }
     return result;
 }
@@ -110,7 +110,7 @@ bool PalindromePartitioning::isPalindrome(Index const left, Index const right) c
         result = true;
         int traverseLeft(left), traverseRight(right);
         while (traverseLeft < traverseRight) {
-            if (m_string.at(traverseLeft++) != m_string.at(traverseRight--)) {
+            if (m_string[traverseLeft++] != m_string[traverseRight--]) {
                 result = false;
                 break;
             }

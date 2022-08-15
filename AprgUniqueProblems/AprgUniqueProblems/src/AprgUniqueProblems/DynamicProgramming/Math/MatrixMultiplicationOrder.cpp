@@ -45,8 +45,8 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
                 for (Index inBetween = leftParenthesis + 1; inBetween < rightParenthesis; inBetween++) {
                     Count currentCount = countMatrix.getEntry(leftParenthesis, inBetween) +
                                          countMatrix.getEntry(inBetween, rightParenthesis) +
-                                         m_dimensions.at(leftParenthesis) * m_dimensions.at(inBetween) *
-                                             m_dimensions.at(rightParenthesis);
+                                         m_dimensions[leftParenthesis] * m_dimensions[inBetween] *
+                                             m_dimensions[rightParenthesis];
                     minimumCount = min(minimumCount, currentCount);
                 }
                 countMatrix.setEntry(leftParenthesis, rightParenthesis, minimumCount);
@@ -67,7 +67,7 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
             Count currentCount =
                 getMinimumNumberOfOperationsUsingNaiveRecursion(leftParenthesis, inBetween) +
                 getMinimumNumberOfOperationsUsingNaiveRecursion(inBetween, rightParenthesis) +
-                m_dimensions.at(leftParenthesis) * m_dimensions.at(inBetween) * m_dimensions.at(rightParenthesis);
+                m_dimensions[leftParenthesis] * m_dimensions[inBetween] * m_dimensions[rightParenthesis];
             result = min(result, currentCount);
         }
     }
@@ -85,7 +85,7 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
                 Count currentCount =
                     getMinimumNumberOfOperationsUsingMemoizationDP(countMatrix, leftParenthesis, inBetween) +
                     getMinimumNumberOfOperationsUsingMemoizationDP(countMatrix, inBetween, rightParenthesis) +
-                    m_dimensions.at(leftParenthesis) * m_dimensions.at(inBetween) * m_dimensions.at(rightParenthesis);
+                    m_dimensions[leftParenthesis] * m_dimensions[inBetween] * m_dimensions[rightParenthesis];
                 result = min(result, currentCount);
             }
         } else {

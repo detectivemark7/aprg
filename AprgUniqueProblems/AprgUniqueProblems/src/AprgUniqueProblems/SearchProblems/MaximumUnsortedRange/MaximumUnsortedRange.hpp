@@ -43,7 +43,7 @@ private:
     Index getStartIndex(Values const& valuesToSort) const {
         Index startIndex(0);
         for (; startIndex + 1 < static_cast<Index>(valuesToSort.size()); startIndex++) {
-            if (valuesToSort.at(startIndex) > valuesToSort.at(startIndex + 1)) {
+            if (valuesToSort[startIndex] > valuesToSort[startIndex + 1]) {
                 break;
             }
         }
@@ -53,7 +53,7 @@ private:
     Index getEndIndex(Values const& valuesToSort) const {
         int endIndex = valuesToSort.size() - 1;
         for (; endIndex > 0; endIndex--) {
-            if (valuesToSort.at(endIndex) < valuesToSort.at(endIndex - 1)) {
+            if (valuesToSort[endIndex] < valuesToSort[endIndex - 1]) {
                 break;
             }
         }
@@ -68,7 +68,7 @@ private:
 
     Index getAdjustedStartIndex(Values const& valuesToSort, Index const startIndex, Value const& minimum) const {
         int adjustedStartIndex = static_cast<int>(startIndex);
-        while (adjustedStartIndex - 1 > 0 && minimum < valuesToSort.at(adjustedStartIndex - 1)) {
+        while (adjustedStartIndex - 1 > 0 && minimum < valuesToSort[adjustedStartIndex - 1]) {
             adjustedStartIndex--;
         }
         return static_cast<Index>(adjustedStartIndex);
@@ -77,7 +77,7 @@ private:
     Index getAdjustedEndIndex(Values const& valuesToSort, Index const endIndex, Value const& maximum) const {
         Index adjustedEndIndex(endIndex);
         while (adjustedEndIndex + 1 < static_cast<Index>(valuesToSort.size()) &&
-               valuesToSort.at(adjustedEndIndex + 1) < maximum) {
+               valuesToSort[adjustedEndIndex + 1] < maximum) {
             adjustedEndIndex++;
         }
         return adjustedEndIndex;

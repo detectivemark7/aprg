@@ -60,17 +60,17 @@ void StringConstruction::saveHashOfAllSubstrings() {
 }
 
 int StringConstruction::getCount(int const prefixLength) {
-    if (UNUSED_VALUE == m_prefixLengthToCount.at(prefixLength)) {
+    if (UNUSED_VALUE == m_prefixLengthToCount[prefixLength]) {
         m_prefixLengthToCount[prefixLength] = count(prefixLength);
     }
-    return m_prefixLengthToCount.at(prefixLength);
+    return m_prefixLengthToCount[prefixLength];
 }
 
 int StringConstruction::getCountSquareRootAlgorithm(int const prefixLength) {
-    if (UNUSED_VALUE == m_prefixLengthToCount.at(prefixLength)) {
+    if (UNUSED_VALUE == m_prefixLengthToCount[prefixLength]) {
         m_prefixLengthToCount[prefixLength] = countSquareRootAlgorithm(prefixLength);
     }
-    return m_prefixLengthToCount.at(prefixLength);
+    return m_prefixLengthToCount[prefixLength];
 }
 
 int StringConstruction::count(int const prefixLength) {
@@ -106,8 +106,8 @@ int StringConstruction::countSquareRootAlgorithm(int const prefixLength) {
     int result(0);
     int limit = min(m_subStrings.size(), m_subStringHash.size());
     for (int i = 0; i < limit; i++) {
-        int subStringLength = m_subStrings.at(i).length();
-        HashValue subStringHash = m_subStringHash.at(i);
+        int subStringLength = m_subStrings[i].length();
+        HashValue subStringHash = m_subStringHash[i];
 
         // Note that getHashCodeOfSubstring is on constant time.
         if (subStringLength < prefixLength && subStringHash == mainHashFunction.getHashCodeOfSubstring(

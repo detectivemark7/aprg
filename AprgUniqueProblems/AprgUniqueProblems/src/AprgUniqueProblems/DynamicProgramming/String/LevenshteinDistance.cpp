@@ -51,7 +51,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingItera
             entryResult = y;
         } else if (y == 0) {
             entryResult = x;
-        } else if (m_string1.at(x - 1) == m_string2.at(y - 1)) {
+        } else if (m_string1[x - 1] == m_string2[y - 1]) {
             entryResult = indexGrid.getEntry(x - 1, y - 1);
         } else {
             Index replaceDistance = indexGrid.getEntry(x - 1, y - 1);
@@ -93,14 +93,13 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingItera
 
         currentCounts[0] = index2;  // first column
         for (Index index1 = 1; index1 <= static_cast<Index>(m_string1.length()); index1++) {
-            int cost = m_string1.at(index1 - 1) == m_string2.at(index2 - 1) ? 0 : 1;
+            int cost = m_string1[index1 - 1] == m_string2[index2 - 1] ? 0 : 1;
             currentCounts[index1] =
-                min(min(currentCounts.at(index1 - 1) + 1, previousCounts.at(index1) + 1),
-                    previousCounts.at(index1 - 1) + cost);
+                min(min(currentCounts[index1 - 1] + 1, previousCounts[index1] + 1), previousCounts[index1 - 1] + cost);
         }
     }
 
-    Counts const& lastCurrent(previousAndCurrentCounts.at(m_string2.length() % 2));
+    Counts const& lastCurrent(previousAndCurrentCounts[m_string2.length() % 2]);
     return lastCurrent.back();
 }
 
@@ -110,7 +109,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingNaive
         return index2;
     } else if (index2 == 0) {
         return index1;
-    } else if (m_string1.at(index1 - 1) == m_string2.at(index2 - 1)) {
+    } else if (m_string1[index1 - 1] == m_string2[index2 - 1]) {
         return getLevenshteinDistanceUsingNaiveRecursion(index1 - 1, index2 - 1);
     } else {
         Index replaceDistance = getLevenshteinDistanceUsingNaiveRecursion(index1 - 1, index2 - 1);
@@ -131,7 +130,7 @@ LevenshteinDistance::Count LevenshteinDistance::getLevenshteinDistanceUsingMemoi
             result = index2;
         } else if (index2 == 0) {
             result = index1;
-        } else if (m_string1.at(index1 - 1) == m_string2.at(index2 - 1)) {
+        } else if (m_string1[index1 - 1] == m_string2[index2 - 1]) {
             result = getLevenshteinDistanceUsingMemoizationDP(indexGrid, index1 - 1, index2 - 1);
         } else {
             Index replaceDistance = getLevenshteinDistanceUsingMemoizationDP(indexGrid, index1 - 1, index2 - 1);

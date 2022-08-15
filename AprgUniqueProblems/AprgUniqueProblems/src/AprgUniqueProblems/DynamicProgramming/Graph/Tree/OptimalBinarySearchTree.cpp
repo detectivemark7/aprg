@@ -43,7 +43,7 @@ OptimalBinarySearchTree::Cost OptimalBinarySearchTree::getMinimumCostUsingIterat
 
         for (Index index = 0; index < numberOfPairs; index++)  // length = 1
         {
-            costMatrix.setEntry(index, index, m_valueAndFrequencyPairs.at(index).second);
+            costMatrix.setEntry(index, index, m_valueAndFrequencyPairs[index].second);
         }
         for (Index length = 2; length <= numberOfPairs; length++)  // length >= 2
         {
@@ -76,7 +76,7 @@ OptimalBinarySearchTree::Cost OptimalBinarySearchTree::getMinimumCostUsingNaiveR
     if (left <= right) {
         result = MAX_COUNT;
         for (Index possibleParent = left; possibleParent <= right; possibleParent++) {
-            Cost costOfPossibleParent(getCost(depth, m_valueAndFrequencyPairs.at(possibleParent).second));
+            Cost costOfPossibleParent(getCost(depth, m_valueAndFrequencyPairs[possibleParent].second));
             if (left < possibleParent) {
                 costOfPossibleParent +=
                     getMinimumCostUsingNaiveRecursion(depth + 1, left, possibleParent - 1);  // left child

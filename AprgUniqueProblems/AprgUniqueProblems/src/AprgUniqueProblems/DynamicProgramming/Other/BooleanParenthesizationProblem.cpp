@@ -44,8 +44,8 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
 
         for (Index index = 0; index < static_cast<Index>(m_inputValues.size()); index++) {
             // for length 1
-            countsForFalse.setEntry(index, index, convertBoolToCount(!m_inputValues.at(index)));
-            countsForTrue.setEntry(index, index, convertBoolToCount(m_inputValues.at(index)));
+            countsForFalse.setEntry(index, index, convertBoolToCount(!m_inputValues[index]));
+            countsForTrue.setEntry(index, index, convertBoolToCount(m_inputValues[index]));
         }
         for (Index length = 2; length <= static_cast<Index>(m_inputValues.size()); length++) {
             for (Index leftParenthesis = 0; leftParenthesis + length <= static_cast<Index>(m_inputValues.size());
@@ -59,17 +59,17 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
                     Count numberOfFalseInRight = countsForFalse.getEntry(operationIndex + 1, rightParenthesis);
                     Count numberOfTrueInRight = countsForTrue.getEntry(operationIndex + 1, rightParenthesis);
 
-                    if (m_operators.at(operationIndex) == '&') {
+                    if (m_operators[operationIndex] == '&') {
                         currentCountForFalse += numberOfFalseInLeft * numberOfFalseInRight +
                                                 numberOfFalseInLeft * numberOfTrueInRight +
                                                 numberOfTrueInLeft * numberOfFalseInRight;
                         currentCountForTrue += numberOfTrueInLeft * numberOfTrueInRight;
-                    } else if (m_operators.at(operationIndex) == '|') {
+                    } else if (m_operators[operationIndex] == '|') {
                         currentCountForFalse += numberOfFalseInLeft * numberOfFalseInRight;
                         currentCountForTrue += numberOfFalseInLeft * numberOfTrueInRight +
                                                numberOfTrueInLeft * numberOfFalseInRight +
                                                numberOfTrueInLeft * numberOfTrueInRight;
-                    } else if (m_operators.at(operationIndex) == '^') {
+                    } else if (m_operators[operationIndex] == '^') {
                         currentCountForFalse +=
                             numberOfFalseInLeft * numberOfFalseInRight + numberOfTrueInLeft * numberOfTrueInRight;
                         currentCountForTrue +=
@@ -97,25 +97,25 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
                 getNumberOfWaysUsingNaiveRecursion(false, operationIndex + 1, rightParenthesis);
             Count numberOfTrueInRight = getNumberOfWaysUsingNaiveRecursion(true, operationIndex + 1, rightParenthesis);
 
-            if (m_operators.at(operationIndex) == '&' && !expectedOutput) {
+            if (m_operators[operationIndex] == '&' && !expectedOutput) {
                 result += numberOfFalseInLeft * numberOfFalseInRight + numberOfFalseInLeft * numberOfTrueInRight +
                           numberOfTrueInLeft * numberOfFalseInRight;
-            } else if (m_operators.at(operationIndex) == '&' && expectedOutput) {
+            } else if (m_operators[operationIndex] == '&' && expectedOutput) {
                 result += numberOfTrueInLeft * numberOfTrueInRight;
-            } else if (m_operators.at(operationIndex) == '|' && !expectedOutput) {
+            } else if (m_operators[operationIndex] == '|' && !expectedOutput) {
                 result += numberOfFalseInLeft * numberOfFalseInRight;
-            } else if (m_operators.at(operationIndex) == '|' && expectedOutput) {
+            } else if (m_operators[operationIndex] == '|' && expectedOutput) {
                 result += numberOfFalseInLeft * numberOfTrueInRight + numberOfTrueInLeft * numberOfFalseInRight +
                           numberOfTrueInLeft * numberOfTrueInRight;
-            } else if (m_operators.at(operationIndex) == '^' && !expectedOutput) {
+            } else if (m_operators[operationIndex] == '^' && !expectedOutput) {
                 result += numberOfFalseInLeft * numberOfFalseInRight + numberOfTrueInLeft * numberOfTrueInRight;
-            } else if (m_operators.at(operationIndex) == '^' && expectedOutput) {
+            } else if (m_operators[operationIndex] == '^' && expectedOutput) {
                 result += numberOfFalseInLeft * numberOfTrueInRight + numberOfTrueInLeft * numberOfFalseInRight;
             }
         }
     } else if (leftParenthesis == rightParenthesis)  // one element
     {
-        result = convertBoolToCount(m_inputValues.at(leftParenthesis) == expectedOutput);
+        result = convertBoolToCount(m_inputValues[leftParenthesis] == expectedOutput);
     }
     return result;
 }
@@ -124,7 +124,7 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
     CountMatrices& countMatrices, bool const expectedOutput, Index const leftParenthesis,
     Index const rightParenthesis) const {
     Count expectedOutputIndex = convertBoolToCount(expectedOutput);
-    Count result(countMatrices.at(expectedOutputIndex).getEntry(leftParenthesis, rightParenthesis));
+    Count result(countMatrices[expectedOutputIndex].getEntry(leftParenthesis, rightParenthesis));
     if (UNUSED_COUNT == result) {
         result = 0;
         if (leftParenthesis + 1 <= rightParenthesis)  // distance should be one for at least two elements
@@ -137,25 +137,25 @@ BooleanParenthesizationProblem::Count BooleanParenthesizationProblem::getNumberO
                 Count numberOfTrueInRight =
                     getNumberOfWaysUsingNaiveRecursion(true, operationIndex + 1, rightParenthesis);
 
-                if (m_operators.at(operationIndex) == '&' && !expectedOutput) {
+                if (m_operators[operationIndex] == '&' && !expectedOutput) {
                     result += numberOfFalseInLeft * numberOfFalseInRight + numberOfFalseInLeft * numberOfTrueInRight +
                               numberOfTrueInLeft * numberOfFalseInRight;
-                } else if (m_operators.at(operationIndex) == '&' && expectedOutput) {
+                } else if (m_operators[operationIndex] == '&' && expectedOutput) {
                     result += numberOfTrueInLeft * numberOfTrueInRight;
-                } else if (m_operators.at(operationIndex) == '|' && !expectedOutput) {
+                } else if (m_operators[operationIndex] == '|' && !expectedOutput) {
                     result += numberOfFalseInLeft * numberOfFalseInRight;
-                } else if (m_operators.at(operationIndex) == '|' && expectedOutput) {
+                } else if (m_operators[operationIndex] == '|' && expectedOutput) {
                     result += numberOfFalseInLeft * numberOfTrueInRight + numberOfTrueInLeft * numberOfFalseInRight +
                               numberOfTrueInLeft * numberOfTrueInRight;
-                } else if (m_operators.at(operationIndex) == '^' && !expectedOutput) {
+                } else if (m_operators[operationIndex] == '^' && !expectedOutput) {
                     result += numberOfFalseInLeft * numberOfFalseInRight + numberOfTrueInLeft * numberOfTrueInRight;
-                } else if (m_operators.at(operationIndex) == '^' && expectedOutput) {
+                } else if (m_operators[operationIndex] == '^' && expectedOutput) {
                     result += numberOfFalseInLeft * numberOfTrueInRight + numberOfTrueInLeft * numberOfFalseInRight;
                 }
             }
         } else if (leftParenthesis == rightParenthesis)  // one element
         {
-            result = convertBoolToCount(m_inputValues.at(leftParenthesis) == expectedOutput);
+            result = convertBoolToCount(m_inputValues[leftParenthesis] == expectedOutput);
         }
         countMatrices[expectedOutputIndex].setEntry(leftParenthesis, rightParenthesis, result);
     }

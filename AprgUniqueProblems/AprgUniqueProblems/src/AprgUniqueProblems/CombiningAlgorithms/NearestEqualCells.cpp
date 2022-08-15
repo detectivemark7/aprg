@@ -46,14 +46,14 @@ NearestEqualCells::CoordinatePair NearestEqualCells::getNearestEqualPairByChecki
     for (auto const& twoCoordinates : twoCoordinatesCombinations) {
         if (twoCoordinates.size() >= 2) {
             if (isFirst) {
-                minimumDistance = getDistance(twoCoordinates.at(0), twoCoordinates.at(1));
-                result = {twoCoordinates.at(0), twoCoordinates.at(1)};
+                minimumDistance = getDistance(twoCoordinates[0], twoCoordinates[1]);
+                result = {twoCoordinates[0], twoCoordinates[1]};
                 isFirst = false;
             } else {
-                int distance = getDistance(twoCoordinates.at(0), twoCoordinates.at(1));
+                int distance = getDistance(twoCoordinates[0], twoCoordinates[1]);
                 if (distance < minimumDistance) {
                     minimumDistance = distance;
-                    result = {twoCoordinates.at(0), twoCoordinates.at(1)};
+                    result = {twoCoordinates[0], twoCoordinates[1]};
                 }
             }
         }
