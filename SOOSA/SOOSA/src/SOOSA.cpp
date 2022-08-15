@@ -605,8 +605,8 @@ SOOSA::RangeOfDoubles SOOSA::getMinMaxCriteriaForBar(PointAndWidthPairs const& p
     bool continueRemoval(true);
     while (continueRemoval) {
         GroupOfOneDimensionSamples twoGroupsOfSamples(kMeansForWidths.getGroupOfSamplesUsingKMeans(2));
-        OneDimensionStatistics firstGroupStatistics(twoGroupsOfSamples.at(0));
-        OneDimensionStatistics secondGroupStatistics(twoGroupsOfSamples.at(1));
+        OneDimensionStatistics firstGroupStatistics(twoGroupsOfSamples[0]);
+        OneDimensionStatistics secondGroupStatistics(twoGroupsOfSamples[1]);
         double firstSdOverMean = firstGroupStatistics.getSampleStandardDeviation().getValueAt(0) /
                                  firstGroupStatistics.getMean().getValueAt(0);
         double secondSdOverMean = secondGroupStatistics.getSampleStandardDeviation().getValueAt(0) /
@@ -771,7 +771,7 @@ SOOSA::CountToEndPointIndexesMultiMap SOOSA::getHeightPointsCountToEndPointIndex
     double previousHeight(0);
     for (; endIndex < static_cast<int>(barPointsSamples.size()); endIndex++) {
         double currentHeight =
-            getDistance(convertToPoint(barPointsSamples.at(startIndex)), convertToPoint(barPointsSamples.at(endIndex)));
+            getDistance(convertToPoint(barPointsSamples[startIndex]), convertToPoint(barPointsSamples[endIndex]));
         if (currentHeight > previousHeight &&
             currentHeight - previousHeight < getMaximumDistanceForBetweenBarHeights(previousHeight)) {
             previousHeight = currentHeight;
@@ -836,7 +836,7 @@ void SOOSA::removeBarPointsToGetConsistentHeight(
             double largestDeviation(0);
             int indexToRemove(0);
             for (int groupIndex = 0; groupIndex < static_cast<int>(listOfGroupOfBarPoints.size()); groupIndex++) {
-                TwoDimensionSamples const& barPoints(listOfGroupOfBarPoints.at(groupIndex));
+                TwoDimensionSamples const& barPoints(listOfGroupOfBarPoints[groupIndex]);
                 if (!barPoints.empty()) {
                     double signedDeviation =
                         getHeight(barPoints) -
@@ -866,7 +866,7 @@ void SOOSA::addAndRetainBarPointsIfPossible(
     TwoDimensionKMeans& kMeansForBarPoints, GroupOfTwoDimensionSamples const& listOfGroupOfBarPoints,
     int const indexToRemove) const {
     for (int groupIndex = 0; groupIndex < static_cast<int>(listOfGroupOfBarPoints.size()); groupIndex++) {
-        TwoDimensionSamples const& barPointsSamples(listOfGroupOfBarPoints.at(groupIndex));
+        TwoDimensionSamples const& barPointsSamples(listOfGroupOfBarPoints[groupIndex]);
         if (groupIndex == indexToRemove) {
             TwoDimensionStatistics barPointsStatistics(barPointsSamples);
             Point center = convertToPoint(barPointsStatistics.getMean());
