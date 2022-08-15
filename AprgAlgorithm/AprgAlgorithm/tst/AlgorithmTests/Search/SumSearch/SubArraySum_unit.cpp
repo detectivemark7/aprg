@@ -15,8 +15,8 @@ using ValueForTest = SumSearch::Value;
 }  // namespace
 
 TEST(SubArraySumTest, GetSubArrayWithSumWorksOnExample1) {
-    ValuesForTest valuesToTest{1, 3, 2, 5, 1, 1, 2, 3};
-    SumSearch search(valuesToTest);
+    ValuesForTest valuesToSearch{1, 3, 2, 5, 1, 1, 2, 3};
+    SumSearch search(valuesToSearch);
 
     ValuesForTest valuesToVerify(search.getSubArrayWithSum(8));
 

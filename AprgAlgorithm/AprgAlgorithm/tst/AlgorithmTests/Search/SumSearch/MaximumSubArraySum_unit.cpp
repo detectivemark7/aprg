@@ -16,15 +16,15 @@ using SubArrayDetailsForTest = SumSearch::SubArrayDetails;
 }  // namespace
 
 TEST(MaximumSubArraySumTest, GetMaximumSubArraySumWorksOnExample1) {
-    ValuesForTest valuesToTest{-1, 2, 4, -3, 5, 2, -5, 2};
-    SumSearch search(valuesToTest);
+    ValuesForTest valuesToSearch{-1, 2, 4, -3, 5, 2, -5, 2};
+    SumSearch search(valuesToSearch);
 
     EXPECT_EQ(10, search.getMaximumSubArraySum());
 }
 
 TEST(MaximumSubArraySumTest, GetMaximumSubArraySumWithDetailsWorksOnExample1) {
-    ValuesForTest valuesToTest{-1, 2, 4, -3, 5, 2, -5, 2};
-    SumSearch search(valuesToTest);
+    ValuesForTest valuesToSearch{-1, 2, 4, -3, 5, 2, -5, 2};
+    SumSearch search(valuesToSearch);
 
     SubArrayDetailsForTest subArrayDetailsToVerify(search.getMaximumSubArraySumWithDetails());
 
