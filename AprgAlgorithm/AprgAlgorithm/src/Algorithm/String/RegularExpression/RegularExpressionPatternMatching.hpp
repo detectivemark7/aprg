@@ -29,8 +29,8 @@ public:
             Indexes nextStatesFromAMatch;
             for (Index const nullTransitionState : nullTransitionStates) {
                 if (nullTransitionState < lengthOfRE) {
-                    char charInRE(m_regularExpression.at(nullTransitionState));
-                    if (charInRE == stringToCheck.at(checkIndex) || charInRE == '.')  // if there is a match
+                    char charInRE(m_regularExpression[nullTransitionState]);
+                    if (charInRE == stringToCheck[checkIndex] || charInRE == '.')  // if there is a match
                     {
                         nextStatesFromAMatch.emplace_back(
                             nullTransitionState + 1);  // proceed to next state from nullTransitionState
@@ -73,12 +73,12 @@ private:
         Index lengthOfRE(m_regularExpression.length());
         for (Index indexOfRE = 0; indexOfRE < lengthOfRE; indexOfRE++) {
             Index startIndexOfExpression = indexOfRE;
-            if (m_regularExpression.at(indexOfRE) == '(' || m_regularExpression.at(indexOfRE) == '|') {
+            if (m_regularExpression[indexOfRE] == '(' || m_regularExpression[indexOfRE] == '|') {
                 operatorIndexes.push(indexOfRE);  // push to stack if '(' or '|'
-            } else if (m_regularExpression.at(indexOfRE) == ')') {
+            } else if (m_regularExpression[indexOfRE] == ')') {
                 Index operatorIndex(operatorIndexes.top());
                 operatorIndexes.pop();
-                if (m_regularExpression.at(operatorIndex) == '|')  // if stack has an or operator
+                if (m_regularExpression[operatorIndex] == '|')  // if stack has an or operator
                 {
                     startIndexOfExpression = operatorIndexes.top();
                     operatorIndexes.pop();
@@ -93,7 +93,7 @@ private:
                 }
             }
             if (indexOfRE < lengthOfRE - 1 &&
-                m_regularExpression.at(indexOfRE + 1) == '*')  // do one character look ahead if its a star
+                m_regularExpression[indexOfRE + 1] == '*')  // do one character look ahead if its a star
             {
                 m_nullTransitionsGraph.connect(
                     startIndexOfExpression,
@@ -102,8 +102,8 @@ private:
                     indexOfRE + 1,
                     startIndexOfExpression);  // add edge from current state going back to first part of an expression
             }
-            if (m_regularExpression.at(indexOfRE) == '(' || m_regularExpression.at(indexOfRE) == '*' ||
-                m_regularExpression.at(indexOfRE) == ')') {
+            if (m_regularExpression[indexOfRE] == '(' || m_regularExpression[indexOfRE] == '*' ||
+                m_regularExpression[indexOfRE] == ')') {
                 m_nullTransitionsGraph.connect(
                     indexOfRE, indexOfRE + 1);  // add edge null transition to next state if its any of these operators
             }

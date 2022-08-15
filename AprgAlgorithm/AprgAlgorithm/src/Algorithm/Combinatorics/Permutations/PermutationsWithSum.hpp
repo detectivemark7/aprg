@@ -27,7 +27,7 @@ public:
             m_permutations.resize(newSize);
 
             for (Value const inputValue : m_inputValues) {
-                if (m_permutations.at(inputValue).empty()) {
+                if (m_permutations[inputValue].empty()) {
                     m_permutations[inputValue].emplace(Permutation{inputValue});
                 }
             }
@@ -37,7 +37,7 @@ public:
                 for (Value const inputValue : m_inputValues) {
                     if (partialValue > inputValue) {
                         for (Permutation const& permutationWithoutValue :
-                             m_permutations.at(partialValue - inputValue)) {
+                             m_permutations[partialValue - inputValue]) {
                             Permutation permutationWithValue(permutationWithoutValue);
                             permutationWithValue.emplace_back(inputValue);
                             permutations.emplace(permutationWithValue);
@@ -46,7 +46,7 @@ public:
                 }
             }
         }
-        return m_permutations.at(total);
+        return m_permutations[total];
     }
 
 private:

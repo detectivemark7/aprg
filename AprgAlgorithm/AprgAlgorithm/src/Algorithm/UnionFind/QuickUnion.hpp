@@ -25,10 +25,10 @@ public:
         // this is a lazy approach (every getRoot() -> check relative roots until main root is found)
         // Continuously find relative root until main root is found (it needs to be equal to the previous root)
         Object currentRoot(object);
-        Object nextRoot(m_relativeRoots.at(object));
+        Object nextRoot(m_relativeRoots[object]);
         while (currentRoot != nextRoot) {
             currentRoot = nextRoot;
-            nextRoot = m_relativeRoots.at(currentRoot);
+            nextRoot = m_relativeRoots[currentRoot];
         }
         return currentRoot;
     }

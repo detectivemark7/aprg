@@ -37,7 +37,7 @@ int partitionAndGetPartitionIndex(Values& values, int const lowIndex, int const 
     // https://en.wikipedia.org/wiki/Quicksort#Hoare_partition_scheme
 
     int indexWithPivotValue = getPivotIndex(values, lowIndex, highIndex, pivotType);
-    auto pivotValue = values.at(indexWithPivotValue);
+    auto pivotValue = values[indexWithPivotValue];
     std::swap(values[lowIndex], values[indexWithPivotValue]);
 
     int indexWithGreaterValue = lowIndex;
@@ -45,12 +45,12 @@ int partitionAndGetPartitionIndex(Values& values, int const lowIndex, int const 
     while (true) {
         // Notice that the loop has increment first
         // Important: This loops exits when it finds a value greater than pivotValue
-        while (values.at(++indexWithGreaterValue) < pivotValue && indexWithGreaterValue < highIndex)
+        while (values[++indexWithGreaterValue] < pivotValue && indexWithGreaterValue < highIndex)
             ;
 
         // Notice that the loop has decrement first
         // Important: This loops exits when it finds a value less than pivotValue
-        while (pivotValue < values.at(--indexWithLesserValue) && indexWithLesserValue > lowIndex)
+        while (pivotValue < values[--indexWithLesserValue] && indexWithLesserValue > lowIndex)
             ;
 
         // stop if the indexWithGreaterValue and indexWithLesserValue meet
@@ -73,7 +73,7 @@ int partitionAndGetPartitionIndexUsingLomuto(
     // https://en.wikipedia.org/wiki/Quicksort#Lomuto_partition_scheme
 
     int indexWithPivotValue = getPivotIndex(values, lowIndex, highIndex, pivotType);
-    auto pivotValue = values.at(indexWithPivotValue);
+    auto pivotValue = values[indexWithPivotValue];
     std::swap(values[lowIndex], values[indexWithPivotValue]);
 
     int partitionIndex = lowIndex;

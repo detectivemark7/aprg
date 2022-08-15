@@ -70,7 +70,7 @@ private:
 
     static constexpr int getVirtualBottomIndex() { return getDimensionsSquared() + 1; }
 
-    bool isSiteOpen(int const index) const { return m_sites.at(index); }
+    bool isSiteOpen(int const index) const { return m_sites[index]; }
 
     int getIndex(int const x, int const y) const { return y * DIMENSION + x; }
 

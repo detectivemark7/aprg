@@ -25,15 +25,15 @@ private:
         if (!valuesToSort.empty()) {
             auto itLast = valuesToSort.end();
             do {
-                auto itSkip = valuesToSort.begin();
+                auto itNextSkip = valuesToSort.begin();
                 for (auto itFirst = valuesToSort.begin(), itSecond = std::next(valuesToSort.begin());
                      itSecond != itLast; itFirst++, itSecond++) {
                     if (*itSecond < *itFirst) {
                         std::swap(*itFirst, *itSecond);
-                        itSkip = itSecond;
+                        itNextSkip = itSecond;
                     }
                 }
-                itLast = itSkip;
+                itLast = itNextSkip;
             } while (itLast != valuesToSort.begin());
         }
     }

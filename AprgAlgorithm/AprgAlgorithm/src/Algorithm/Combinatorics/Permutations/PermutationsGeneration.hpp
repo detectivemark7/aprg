@@ -82,8 +82,8 @@ private:
             BooleanVector& isProcessed(recursionData.isProcessed);
 
             for (int index = 0; index < static_cast<int>(objects.size()); index++) {
-                if (!isProcessed.at(index)) {
-                    currentPermutation.emplace_back(objects.at(index));
+                if (!isProcessed[index]) {
+                    currentPermutation.emplace_back(objects[index]);
                     isProcessed[index] = true;
                     collectPermutationsUsingRecursion(recursionData);
                     isProcessed[index] = false;

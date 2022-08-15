@@ -23,7 +23,7 @@ public:
         Index lowIndex(0);
         Index exponentIndex(1);
         while (exponentIndex < static_cast<Index>(m_sortedValues.size()) &&
-               m_sortedValues.at(exponentIndex) < valueToCheck) {
+               m_sortedValues[exponentIndex] < valueToCheck) {
             lowIndex = exponentIndex + 1;
             exponentIndex = exponentIndex * 2;
         }

@@ -28,8 +28,7 @@ public:
     bool contains(int const objectIndex) const {
         bool result(false);
         if (objectIndex < static_cast<int>(m_objectIndexToTreeIndex.size())) {
-            result =
-                m_objectIndexToTreeIndex.at(objectIndex) != IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+            result = m_objectIndexToTreeIndex[objectIndex] != IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
         }
         return result;
     }
@@ -43,12 +42,12 @@ public:
     Indexes const& getObjectIndexToTreeIndex() const { return m_objectIndexToTreeIndex; }
 
     int getIndexOfTopObject() const {
-        return m_treeIndexToObjectIndex.at(IndexedHeapPriorityQueueConstants::INDEX_OF_TOP_TREE);
+        return m_treeIndexToObjectIndex[IndexedHeapPriorityQueueConstants::INDEX_OF_TOP_TREE];
     }
 
-    Object const& getTopObject() const { return m_objects.at(getIndexOfTopObject()); }
+    Object const& getTopObject() const { return m_objects[getIndexOfTopObject()]; }
 
-    Object const& getObjectAt(int const objectIndex) const { return m_objects.at(objectIndex); }
+    Object const& getObjectAt(int const objectIndex) const { return m_objects[objectIndex]; }
 
     void setNumberOfItems(int const numberOfItems) { resizeToHaveThisIndexIfNeeded(numberOfItems); }
 
@@ -78,7 +77,7 @@ public:
 
     void deleteObjectAt(int const objectIndex) {
         if (objectIndex < static_cast<int>(m_objects.size())) {
-            int treeIndex(m_objectIndexToTreeIndex.at(objectIndex));
+            int treeIndex(m_objectIndexToTreeIndex[objectIndex]);
             if (treeIndex != IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
                 swapIndexes(treeIndex, m_size--);
                 swim(treeIndex);
@@ -95,7 +94,7 @@ public:
             insert(objectIndex, object);
         } else {
             m_objects[objectIndex] = object;
-            int treeIndex(m_objectIndexToTreeIndex.at(objectIndex));
+            int treeIndex(m_objectIndexToTreeIndex[objectIndex]);
             if (treeIndex == IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
                 m_size++;
                 m_objectIndexToTreeIndex[objectIndex] = m_size;
@@ -116,7 +115,7 @@ private:
     }
 
     Object const& getObjectConstReferenceOnTree(int const treeIndex) const {
-        return m_objects.at(m_treeIndexToObjectIndex.at(treeIndex));
+        return m_objects[m_treeIndexToObjectIndex[treeIndex]];
     }
 
     void resizeToHaveThisIndexIfNeeded(int const index) {
@@ -170,8 +169,8 @@ private:
 
     void swapIndexes(int const treeIndex1, int const treeIndex2) {
         std::swap(m_treeIndexToObjectIndex[treeIndex1], m_treeIndexToObjectIndex[treeIndex2]);
-        m_objectIndexToTreeIndex[m_treeIndexToObjectIndex.at(treeIndex1)] = treeIndex1;
-        m_objectIndexToTreeIndex[m_treeIndexToObjectIndex.at(treeIndex2)] = treeIndex2;
+        m_objectIndexToTreeIndex[m_treeIndexToObjectIndex[treeIndex1]] = treeIndex1;
+        m_objectIndexToTreeIndex[m_treeIndexToObjectIndex[treeIndex2]] = treeIndex2;
     }
 
     int m_size;

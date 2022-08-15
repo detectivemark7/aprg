@@ -17,16 +17,16 @@ public:
     DataType getSize() const { return m_suffixes.size(); }
 
     DataType getIndexOnMainStringOfSuffixAt(DataType const index) const {
-        return getSize() - m_suffixes.at(index).length();
+        return getSize() - m_suffixes[index].length();
     }
 
     DataType getRank(std::string const& key) const {
         DataType low = 0, high = getSize() - 1;
         while (low <= high) {
             DataType mid = getMidpointOfIndexes(low, high);
-            if (key < m_suffixes.at(mid)) {
+            if (key < m_suffixes[mid]) {
                 high = mid - 1;
-            } else if (key > m_suffixes.at(mid)) {
+            } else if (key > m_suffixes[mid]) {
                 low = mid + 1;
             } else {
                 low = mid;
@@ -36,10 +36,10 @@ public:
         return low;
     }
 
-    std::string const& getSuffixAt(DataType const index) const { return m_suffixes.at(index); }
+    std::string const& getSuffixAt(DataType const index) const { return m_suffixes[index]; }
 
     std::string getLongestCommonPrefixOfTwoSuffixes(DataType const index1, DataType const index2) const {
-        return stringHelper::getLongestCommonPrefix(m_suffixes.at(index1), m_suffixes.at(index2));
+        return stringHelper::getLongestCommonPrefix(m_suffixes[index1], m_suffixes[index2]);
     }
 
 private:

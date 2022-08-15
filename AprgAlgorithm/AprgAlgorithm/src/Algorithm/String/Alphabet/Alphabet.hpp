@@ -21,7 +21,7 @@ public:
     char getCharacter(DigitValue const& digitValue) {
         char result{};
         if (digitValue < m_characters.size()) {
-            result = m_characters.at(digitValue);
+            result = m_characters[digitValue];
         }
         return result;
     }

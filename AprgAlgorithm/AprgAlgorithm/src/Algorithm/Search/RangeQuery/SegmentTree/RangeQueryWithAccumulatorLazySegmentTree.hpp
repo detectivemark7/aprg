@@ -77,7 +77,7 @@ public:
         if (childIndex < static_cast<Index>(b_treeValues.size())) {
             increaseAtRange(
                 index, index,
-                m_inverseFunction(newValue, b_treeValues.at(childIndex)));  // startOfChildren is size of base too
+                m_inverseFunction(newValue, b_treeValues[childIndex]));  // startOfChildren is size of base too
         }
     }
 
@@ -94,7 +94,7 @@ private:
         Value result{};
         performUpdateAtIndexIfNeeded(currentChild, baseLeft, baseRight);  // propagate current update before processing
         if (startInterval <= baseLeft && baseRight <= endInterval) {
-            result = b_treeValues.at(currentChild);
+            result = b_treeValues[currentChild];
         } else {
             Index baseMidPoint = getMidpointOfIndexes(baseLeft, baseRight);
             bool doesLeftPartIntersect = !(endInterval < baseLeft || baseMidPoint < startInterval);

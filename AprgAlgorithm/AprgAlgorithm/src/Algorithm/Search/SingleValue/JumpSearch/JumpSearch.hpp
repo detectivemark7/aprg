@@ -22,7 +22,7 @@ public:
         // find the block where value is included
         Index blockStartIndex(0);
         Index blockEndIndex(m_blockSize);
-        while (blockEndIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues.at(blockEndIndex) < valueToCheck) {
+        while (blockEndIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues[blockEndIndex] < valueToCheck) {
             blockStartIndex = blockEndIndex + 1;
             blockEndIndex += m_blockSize;
         }

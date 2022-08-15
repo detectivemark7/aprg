@@ -30,7 +30,7 @@ public:
         Value result{};
         Index selectedIndex(getIndexOfNearestValue(valueToCheck));
         if (selectedIndex != INVALID_INDEX) {
-            result = m_values.at(selectedIndex);
+            result = m_values[selectedIndex];
         }
         return result;
     }

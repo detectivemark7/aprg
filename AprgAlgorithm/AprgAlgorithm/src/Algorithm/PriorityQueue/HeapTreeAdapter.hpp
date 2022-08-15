@@ -16,7 +16,7 @@ public:
     HeapTreeAdapter(Objects& objects) : m_comparator(), m_objects(objects) {}
 
     Object const& getObjectConstReferenceOnTree(int const treeIndex) const {
-        return m_objects.at(getContainerIndex(treeIndex));
+        return m_objects[getContainerIndex(treeIndex)];
     }
 
     Object& getObjectReferenceOnTree(int const treeIndex) { return m_objects[getContainerIndex(treeIndex)]; }

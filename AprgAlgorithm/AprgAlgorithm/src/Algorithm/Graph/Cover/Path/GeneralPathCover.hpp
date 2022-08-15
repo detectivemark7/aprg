@@ -85,7 +85,7 @@ private:
             detectedEdges.pop_front();
             DequeOfVertices pathInDeque{firstEdge.first, firstEdge.second};
             for (int i = 0; i < static_cast<int>(detectedEdges.size());) {
-                Edge const& edge(detectedEdges.at(i));
+                Edge const& edge(detectedEdges[i]);
                 if (pathInDeque.front() == edge.second) {
                     pathInDeque.emplace_front(edge.first);
                     detectedEdges.erase(detectedEdges.begin() + i);

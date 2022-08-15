@@ -25,7 +25,7 @@ public:
                 std::max(total + 1, *(std::minmax_element(m_inputValues.cbegin(), m_inputValues.cend()).second));
             m_combinations.resize(newSize);
         }
-        if (m_combinations.at(total).empty()) {
+        if (m_combinations[total].empty()) {
             for (Value const inputValue : m_inputValues) {
                 if (total > inputValue) {
                     Combinations subCombinations(getCombinationsWithSumUsingRecursion(total - inputValue));
@@ -39,7 +39,7 @@ public:
                 }
             }
         }
-        return m_combinations.at(total);
+        return m_combinations[total];
     }
 
     Combinations getCombinationsWithSumUsingLoops(Value const total) {
@@ -51,7 +51,7 @@ public:
             m_combinations.resize(newSize);
 
             for (Value const inputValue : m_inputValues) {
-                if (m_combinations.at(inputValue).empty()) {
+                if (m_combinations[inputValue].empty()) {
                     m_combinations[inputValue].emplace(Combination{inputValue});
                 }
             }
@@ -74,7 +74,7 @@ public:
                 }
             }
         }
-        return m_combinations.at(total);
+        return m_combinations[total];
     }
 
 private:

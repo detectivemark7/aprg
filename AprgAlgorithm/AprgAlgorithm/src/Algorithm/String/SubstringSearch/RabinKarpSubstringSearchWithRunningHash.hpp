@@ -32,7 +32,7 @@ public:
         } else {
             for (Index searchIndex = m_matchLength; searchIndex < searchLength; searchIndex++) {
                 currentHash = getNextHash(
-                    currentHash, stringToSearch.at(searchIndex - m_matchLength), stringToSearch.at(searchIndex));
+                    currentHash, stringToSearch[searchIndex - m_matchLength], stringToSearch[searchIndex]);
                 if (m_substringToMatchHash == currentHash) {
                     result = searchIndex - m_matchLength + 1;  // Monte carlo approach (no double check)
                     break;

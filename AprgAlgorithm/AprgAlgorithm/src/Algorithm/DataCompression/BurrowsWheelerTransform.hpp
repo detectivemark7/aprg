@@ -28,10 +28,10 @@ public:
             Index deltaLength(wholeInputString.length() - suffixArray.getSuffixAt(i).length());
             if (deltaLength > 0)  // if its a suffix, take the character based from the delta
             {
-                stringOutput += wholeInputString.at(deltaLength - 1);
+                stringOutput += wholeInputString[deltaLength - 1];
             } else  // if its the whole input string, just take the last item
             {
-                stringOutput += wholeInputString.at(wholeInputString.length() - 1);
+                stringOutput += wholeInputString[wholeInputString.length() - 1];
             }
         }
         writer.writeStringData(stringOutput);
@@ -50,7 +50,7 @@ public:
             alba::stringHelper::strings possibleOutputs(prefix.size());
             for (Index iteration = 0; iteration < static_cast<Index>(wholeInputString.length()); iteration++) {
                 for (Index index = 0; index < static_cast<Index>(wholeInputString.length()); index++) {
-                    possibleOutputs[index] = prefix.at(index) + possibleOutputs.at(index);  // add prefixes
+                    possibleOutputs[index] = prefix[index] + possibleOutputs[index];  // add prefixes
                 }
                 std::sort(
                     possibleOutputs.begin(),

@@ -21,10 +21,10 @@ public:
 
     Object getRoot(Object const& object) const override {
         Object currentRoot(object);
-        Object nextRoot(m_relativeRoots.at(object));
+        Object nextRoot(m_relativeRoots[object]);
         while (currentRoot != nextRoot) {
             currentRoot = nextRoot;
-            nextRoot = m_relativeRoots.at(currentRoot);
+            nextRoot = m_relativeRoots[currentRoot];
         }
         return currentRoot;
     }
@@ -61,12 +61,12 @@ private:
 
     Object getRootAndRelativeRoots(Object const& object, RootVector& relativeRoots) const {
         Object currentRoot(object);
-        Object nextRoot(m_relativeRoots.at(object));
+        Object nextRoot(m_relativeRoots[object]);
         relativeRoots.emplace_back(currentRoot);
         while (currentRoot != nextRoot) {
             currentRoot = nextRoot;
             relativeRoots.emplace_back(nextRoot);
-            nextRoot = m_relativeRoots.at(currentRoot);
+            nextRoot = m_relativeRoots[currentRoot];
         }
         return currentRoot;
     }

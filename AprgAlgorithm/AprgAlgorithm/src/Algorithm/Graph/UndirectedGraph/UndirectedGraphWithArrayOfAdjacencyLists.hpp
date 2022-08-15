@@ -23,10 +23,10 @@ public:
 
     bool isEmpty() const override { return m_numberOfVertices == 0 && m_numberOfEdges == 0; }
 
-    bool hasAnyConnection(Vertex const& vertex) const override { return !m_adjacencyLists.at(vertex).empty(); }
+    bool hasAnyConnection(Vertex const& vertex) const override { return !m_adjacencyLists[vertex].empty(); }
 
     bool isDirectlyConnected(Vertex const& vertex1, Vertex const& vertex2) const override {
-        AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex1));
+        AdjacencyList const& adjacencyList(m_adjacencyLists[vertex1]);
         return adjacencyList.find(vertex2) != adjacencyList.cend();
     }
 
@@ -35,14 +35,14 @@ public:
     int getNumberOfEdges() const override { return m_numberOfEdges; }
 
     Vertices getAdjacentVerticesAt(Vertex const& vertex) const override {
-        AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex));
+        AdjacencyList const& adjacencyList(m_adjacencyLists[vertex]);
         return Vertices(adjacencyList.cbegin(), adjacencyList.cend());
     }
 
     Vertices getVertices() const override {
         Vertices result;
         for (Vertex vertex = 0; vertex < static_cast<Vertex>(m_adjacencyLists.size()); vertex++) {
-            if (!m_adjacencyLists.at(vertex).empty()) {
+            if (!m_adjacencyLists[vertex].empty()) {
                 result.emplace_back(vertex);
             }
         }
@@ -52,7 +52,7 @@ public:
     Edges getEdges() const override {
         Edges result;
         for (Vertex vertex1 = 0; vertex1 < static_cast<Vertex>(m_adjacencyLists.size()); vertex1++) {
-            AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex1));
+            AdjacencyList const& adjacencyList(m_adjacencyLists[vertex1]);
             if (!adjacencyList.empty()) {
                 std::for_each(adjacencyList.lower_bound(vertex1), adjacencyList.cend(), [&](Vertex const& vertex2) {
                     result.emplace_back(vertex1, vertex2);
@@ -102,7 +102,7 @@ protected:
     friend std::ostream& operator<<(std::ostream& out, UndirectedGraphWithArrayOfAdjacencyLists const& graph) {
         out << "Adjacency Lists: \n";
         for (Vertex vertex = 0; vertex < static_cast<Vertex>(graph.m_adjacencyLists.size()); vertex++) {
-            AdjacencyList const& adjacencyList(graph.m_adjacencyLists.at(vertex));
+            AdjacencyList const& adjacencyList(graph.m_adjacencyLists[vertex]);
             if (!adjacencyList.empty()) {
                 out << "Adjacent with vertex " << vertex << ": {";
                 containerHelper::saveContentsToStream(out, adjacencyList, containerHelper::StreamFormat::String);

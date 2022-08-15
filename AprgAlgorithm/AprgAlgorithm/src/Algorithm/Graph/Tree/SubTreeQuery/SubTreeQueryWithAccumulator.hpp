@@ -34,7 +34,7 @@ public:
         if (it != b_vertexToIndexMap.cend()) {
             int indexOfSubRoot = it->second;
             result = m_rangeQuery.getAccumulatedValueOnInterval(
-                indexOfSubRoot, indexOfSubRoot + b_subTreeSize.at(indexOfSubRoot) - 1);
+                indexOfSubRoot, indexOfSubRoot + b_subTreeSize[indexOfSubRoot] - 1);
         }
         return result;
     }

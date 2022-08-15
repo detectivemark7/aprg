@@ -33,7 +33,7 @@ public:
             int vertexIndex1 = it1->second;
             int vertexIndex2 = it2->second;
             int lowestCommonAncestorIndex(getLowestCommonAncestorIndex(vertexIndex1, vertexIndex2));
-            result = m_verticesInTreeOrder.at(lowestCommonAncestorIndex);
+            result = m_verticesInTreeOrder[lowestCommonAncestorIndex];
         }
         return result;
     }
@@ -46,7 +46,7 @@ public:
             int vertexIndex1 = it1->second;
             int vertexIndex2 = it2->second;
             int lowestCommonAncestorIndex(getLowestCommonAncestorIndex(vertexIndex1, vertexIndex2));
-            result = m_depths.at(vertexIndex1) + m_depths.at(vertexIndex2) - 2 * m_depths.at(lowestCommonAncestorIndex);
+            result = m_depths[vertexIndex1] + m_depths[vertexIndex2] - 2 * m_depths[lowestCommonAncestorIndex];
         }
         return result;
     }
@@ -54,9 +54,9 @@ public:
 private:
     int getLowestCommonAncestorIndex(int const vertexIndex1, int const vertexIndex2) const {
         int result = vertexIndex1;
-        int minimumDepth(m_depths.at(vertexIndex1));
+        int minimumDepth(m_depths[vertexIndex1]);
         for (int i = vertexIndex1 + 1; i <= vertexIndex2; i++) {
-            int currentDepth(m_depths.at(i));
+            int currentDepth(m_depths[i]);
             if (minimumDepth > currentDepth) {
                 minimumDepth = currentDepth;
                 result = i;

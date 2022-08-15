@@ -34,7 +34,7 @@ private:
     void continuouslySwapDownIfStillOutOfOrderWithSkipping(
         Values& valuesToSort, int const startingIndex, int const skipValue) const {
         // Works similar to insertion sort (but with skipping)
-        for (int i = startingIndex; i >= skipValue && valuesToSort.at(i) < valuesToSort.at(i - skipValue);
+        for (int i = startingIndex; i >= skipValue && valuesToSort[i] < valuesToSort[i - skipValue];
              i -= skipValue) {
             std::swap(valuesToSort[i], valuesToSort[i - skipValue]);
         }

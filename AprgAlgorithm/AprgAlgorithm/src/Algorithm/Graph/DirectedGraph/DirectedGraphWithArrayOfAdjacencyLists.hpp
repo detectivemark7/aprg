@@ -23,7 +23,7 @@ public:
     bool isEmpty() const override { return m_numberOfEdges == 0; }
 
     bool isDirectlyConnected(Vertex const& sourceVertex, Vertex const& destinationVertex) const override {
-        AdjacencyList const& adjacencyList(m_adjacencyLists.at(sourceVertex));
+        AdjacencyList const& adjacencyList(m_adjacencyLists[sourceVertex]);
         return adjacencyList.find(destinationVertex) != adjacencyList.cend();
     }
 
@@ -32,7 +32,7 @@ public:
     int getNumberOfEdges() const override { return m_numberOfEdges; }
 
     Vertices getAdjacentVerticesAt(Vertex const& vertex) const override {
-        AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex));
+        AdjacencyList const& adjacencyList(m_adjacencyLists[vertex]);
         return Vertices(adjacencyList.cbegin(), adjacencyList.cend());
     }
 
@@ -44,7 +44,7 @@ public:
     Edges getEdges() const override {
         Edges result;
         for (Vertex vertex1 = 0; vertex1 < static_cast<Vertex>(m_adjacencyLists.size()); vertex1++) {
-            AdjacencyList const& adjacencyList(m_adjacencyLists.at(vertex1));
+            AdjacencyList const& adjacencyList(m_adjacencyLists[vertex1]);
             for (Vertex const& vertex2 : adjacencyList) {
                 result.emplace_back(vertex1, vertex2);
             }
@@ -77,7 +77,7 @@ protected:
     SetOfVertices getUniqueVertices() const {
         SetOfVertices uniqueVertices;
         for (Vertex sourceVertex = 0; sourceVertex < static_cast<Vertex>(m_adjacencyLists.size()); sourceVertex++) {
-            AdjacencyList const& adjacencyList(m_adjacencyLists.at(sourceVertex));
+            AdjacencyList const& adjacencyList(m_adjacencyLists[sourceVertex]);
             if (!adjacencyList.empty()) {
                 uniqueVertices.emplace(sourceVertex);
                 std::copy(
@@ -92,7 +92,7 @@ protected:
         out << "Adjacency Lists: \n";
         for (Vertex vertex = 0; vertex < static_cast<Vertex>(graph.m_adjacencyLists.size()); vertex++) {
             DirectedGraphWithArrayOfAdjacencyLists::AdjacencyList const& adjacencyList(
-                graph.m_adjacencyLists.at(vertex));
+                graph.m_adjacencyLists[vertex]);
             if (!adjacencyList.empty()) {
                 out << "Adjacent with vertex " << vertex << ": {";
                 containerHelper::saveContentsToStream(out, adjacencyList, containerHelper::StreamFormat::String);

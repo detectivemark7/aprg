@@ -29,7 +29,7 @@ public:
         Value result{};
         if (!m_sortedValues.empty()) {
             moveIndexesUntilCloseToValue(value);
-            result = m_sortedValues.at(getIndexOfNearestValueInBetweenTwoIndices(value));
+            result = m_sortedValues[getIndexOfNearestValueInBetweenTwoIndices(value)];
         }
         return result;
     }
@@ -50,7 +50,7 @@ public:
     Value getLowerValue() const {
         Value result{};
         if (!m_sortedValues.empty()) {
-            result = m_sortedValues.at(m_lowIndex);
+            result = m_sortedValues[m_lowIndex];
         }
         return result;
     }
@@ -58,15 +58,15 @@ public:
     Value getHigherValue() const {
         Value result{};
         if (!m_sortedValues.empty()) {
-            result = m_sortedValues.at(m_highIndex);
+            result = m_sortedValues[m_highIndex];
         }
         return result;
     }
 
 private:
     Index getIndexOfNearestValueInBetweenTwoIndices(Value const& value) const {
-        Value deviationFromLower(mathHelper::getPositiveDelta(value, m_sortedValues.at(m_lowIndex)));
-        Value deviationFromHigher(mathHelper::getPositiveDelta(value, m_sortedValues.at(m_highIndex)));
+        Value deviationFromLower(mathHelper::getPositiveDelta(value, m_sortedValues[m_lowIndex]));
+        Value deviationFromHigher(mathHelper::getPositiveDelta(value, m_sortedValues[m_highIndex]));
         return (deviationFromLower <= deviationFromHigher) ? m_lowIndex : m_highIndex;
     }
 
@@ -100,7 +100,7 @@ private:
             // Binary search with one comparison per iteration
 
             Index middleIndex(getMidpointOfIndexes(m_lowIndex, m_highIndex));
-            Value middleValue(m_sortedValues.at(middleIndex));
+            Value middleValue(m_sortedValues[middleIndex]);
             if (value <= middleValue) {
                 m_highIndex = middleIndex;
             } else {
@@ -110,9 +110,9 @@ private:
     }
 
     void moveIndexesCloserWhenValueIsBeyondTheIndices(Value const& value) {
-        if (value <= m_sortedValues.at(m_lowIndex)) {
+        if (value <= m_sortedValues[m_lowIndex]) {
             m_highIndex = m_lowIndex;
-        } else if (m_sortedValues.at(m_highIndex) <= value) {
+        } else if (m_sortedValues[m_highIndex] <= value) {
             m_lowIndex = m_highIndex;
         }
     }

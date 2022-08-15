@@ -429,14 +429,14 @@ TEST(GraphUtilitiesTest, GetAllInDegreesAndOutDegreesAtWorks) {
 
     auto vertexToInDegreeAndOutDegreePairMap(getAllInDegreesAndOutDegrees<VertexForTest>(graph));
 
-    EXPECT_EQ(2, vertexToInDegreeAndOutDegreePairMap.at(0).first);
-    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap.at(0).second);
-    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap.at(1).first);
-    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap.at(1).second);
-    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap.at(2).first);
-    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap.at(2).second);
-    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap.at(3).first);
-    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap.at(3).second);
+    EXPECT_EQ(2, vertexToInDegreeAndOutDegreePairMap[0].first);
+    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap[0].second);
+    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap[1].first);
+    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap[1].second);
+    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap[2].first);
+    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap[2].second);
+    EXPECT_EQ(1, vertexToInDegreeAndOutDegreePairMap[3].first);
+    EXPECT_EQ(0, vertexToInDegreeAndOutDegreePairMap[3].second);
 }
 
 TEST(GraphUtilitiesTest, GetEdgesOfMaximalConnectedSubgraphsWorks) {

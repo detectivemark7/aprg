@@ -20,7 +20,7 @@ public:
         return getRoot(object1) == getRoot(object2);
     }
 
-    Object getRoot(Object const& object) const override { return m_roots.at(object); }
+    Object getRoot(Object const& object) const override { return m_roots[object]; }
 
     void connect(Object const& object1, Object const& object2)
         override  // runs in linear time (too expensive it should take constant/logarithmic time)

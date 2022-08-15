@@ -20,7 +20,7 @@ public:
         int numberOfWrites(0);
         for (int incorrectPosition = 0; incorrectPosition + 2 <= static_cast<int>(valuesToSort.size());
              incorrectPosition++) {
-            Value currentCycleValue = valuesToSort.at(incorrectPosition);
+            Value currentCycleValue = valuesToSort[incorrectPosition];
             int correctPosition = getCorrectPositionForValue(valuesToSort, currentCycleValue, incorrectPosition);
             if (correctPosition != incorrectPosition)  // check first unsorted
             {
@@ -35,7 +35,7 @@ public:
                 {
                     correctPosition = getCorrectPositionForValue(valuesToSort, currentCycleValue, incorrectPosition);
                     movePositionForwardUntilValueIsDifferent(valuesToSort, currentCycleValue, correctPosition);
-                    if (currentCycleValue != valuesToSort.at(correctPosition)) {
+                    if (currentCycleValue != valuesToSort[correctPosition]) {
                         std::swap(currentCycleValue, valuesToSort[correctPosition]);
                         numberOfWrites++;
                     }
@@ -60,7 +60,7 @@ private:
         // -> Remember after we swap values, we have to look for a new cycle value.
         // ---> Its redundant to look for the value again.
 
-        while (currentCycleValue == valuesToSort.at(correctPosition)) {
+        while (currentCycleValue == valuesToSort[correctPosition]) {
             correctPosition++;
         }
     }

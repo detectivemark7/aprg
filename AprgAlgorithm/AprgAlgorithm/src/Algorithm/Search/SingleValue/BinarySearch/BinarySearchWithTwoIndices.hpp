@@ -39,7 +39,7 @@ private:
         Index lowIndex(startIndex), highIndex(endIndex);
         while (lowIndex <= highIndex) {
             Index middleIndex = getMidpointOfIndexes(lowIndex, highIndex);
-            Value middleValue(m_sortedValues.at(middleIndex));
+            Value middleValue(m_sortedValues[middleIndex]);
             if (value == middleValue) {
                 result = middleIndex;
                 break;

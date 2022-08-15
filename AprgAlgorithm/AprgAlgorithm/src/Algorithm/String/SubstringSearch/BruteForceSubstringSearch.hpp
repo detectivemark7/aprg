@@ -29,7 +29,7 @@ private:
         int substringLength(substringToMatch.length());
         int searchIndex = 0, matchIndex = 0;
         for (; searchIndex < mainLength && matchIndex < substringLength; searchIndex++) {
-            if (mainString.at(searchIndex) == substringToMatch.at(matchIndex)) {
+            if (mainString[searchIndex] == substringToMatch[matchIndex]) {
                 matchIndex++;  // matchIndex represents the index of matches as well
             } else {
                 searchIndex -= matchIndex;  // if there is a mismatch, go back
@@ -53,7 +53,7 @@ private:
         for (int offset = 0; offset + substringLength <= mainLength; offset++) {
             int matchIndex = 0;
             for (; matchIndex < substringLength; matchIndex++) {
-                if (mainString.at(offset + matchIndex) != substringToMatch.at(matchIndex)) {
+                if (mainString[offset + matchIndex] != substringToMatch[matchIndex]) {
                     // matchIndex represents the index of matches as well
                     break;
                 }

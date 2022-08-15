@@ -15,7 +15,7 @@ public:
 
     Value getNthSelect(Values& valuesToSelect, int const selectionIndex) const {
         doNthElement(valuesToSelect, selectionIndex);
-        return valuesToSelect.at(selectionIndex);
+        return valuesToSelect[selectionIndex];
     }
 
     void doNthElement(Values& valuesToSelect, int const selectionIndex) const {

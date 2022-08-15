@@ -89,7 +89,7 @@ private:
     }
 
     void addValueWithIndex(Index& numberOfDistinct, FrequencyArray& frequencyArray, Index const index) const {
-        Index& frequency(frequencyArray[m_values.at(index)]);
+        Index& frequency(frequencyArray[m_values[index]]);
         frequency++;
         if (frequency == 1) {
             numberOfDistinct++;
@@ -97,7 +97,7 @@ private:
     }
 
     void removeValueWithIndex(Index& numberOfDistinct, FrequencyArray& frequencyArray, Index const index) const {
-        Index& frequency(frequencyArray[m_values.at(index)]);
+        Index& frequency(frequencyArray[m_values[index]]);
         frequency--;
         if (frequency == 0) {
             numberOfDistinct--;

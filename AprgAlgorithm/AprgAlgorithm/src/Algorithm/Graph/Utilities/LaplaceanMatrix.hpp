@@ -30,8 +30,8 @@ LaplaceanMatrix createLaplaceanMatrix(BaseGraph<Vertex> const& graph) {
 
     bool isUndirectedGraph = GraphDirectionType::Undirected == graph.getGraphDirectionType();
     for (Edge const& edge : graph.getEdges()) {
-        int index1 = vertexToIndexArray.at(edge.first);
-        int index2 = vertexToIndexArray.at(edge.second);
+        int index1 = vertexToIndexArray[edge.first];
+        int index2 = vertexToIndexArray[edge.second];
         result.setEntry(index1, index2, -1);
         if (isUndirectedGraph) {
             result.setEntry(index2, index1, -1);

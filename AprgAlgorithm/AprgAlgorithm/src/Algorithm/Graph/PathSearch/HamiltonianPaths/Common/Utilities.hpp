@@ -49,7 +49,7 @@ bool hasHamiltonianPathBecauseOfOreTheorem(BaseGraph<Vertex> const& graph) {
     for (Vertex const& vertex1 : graph.getVertices()) {
         for (Vertex const& vertex2 : graph.getVertices()) {
             if (vertex1 != vertex2 && !graph.isDirectlyConnected(vertex1, vertex2)) {
-                bool isOreSatisfied = vertexToDegreeMap.at(vertex1) + vertexToDegreeMap.at(vertex2) >= numberOfVertices;
+                bool isOreSatisfied = vertexToDegreeMap[vertex1] + vertexToDegreeMap[vertex2] >= numberOfVertices;
                 if (!isOreSatisfied) {
                     return false;
                 }

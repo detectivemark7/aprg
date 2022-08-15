@@ -54,7 +54,7 @@ private:
         for (int currentIndex = index; currentIndex < static_cast<int>(objects.size());
              currentIndex++)  // loop indexes starting from the index
         {
-            currentSubset.emplace_back(objects.at(currentIndex));
+            currentSubset.emplace_back(objects[currentIndex]);
             subsets.emplace_back(currentSubset);
             collectOrderedSubsetsUsingDfs(
                 subsets, currentSubset, objects, currentIndex + 1);  // increment to next index
@@ -70,7 +70,7 @@ private:
             collectSubsetsUsingOnlyRecursion(
                 subsets, currentSubset, objects,
                 index + 1);  // recursively call with next object (without object in subset)
-            currentSubset.emplace_back(objects.at(index));  // add object in subset
+            currentSubset.emplace_back(objects[index]);  // add object in subset
             collectSubsetsUsingOnlyRecursion(
                 subsets, currentSubset, objects,
                 index + 1);            // recursively call with next object (with object in subset)

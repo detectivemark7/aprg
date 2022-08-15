@@ -41,12 +41,12 @@ private:
         Values& valuesToSort, int const lowContainerIndex, int const highContainerIndex, int const digitIndex) const {
         int lowIndexWithEqualValue = lowContainerIndex, i = lowContainerIndex + 1,
             highIndexWithEqualValue = highContainerIndex;
-        Value const& partitionValue(valuesToSort.at(lowContainerIndex));  // use first value as partition
+        Value const& partitionValue(valuesToSort[lowContainerIndex]);  // use first value as partition
 
         DigitValue partitionDigit(m_getDigitAtFunction(partitionValue, digitIndex));
         bool shouldEqualPartProceed(m_isDigitValidFunction(partitionValue, digitIndex));
         while (i <= highIndexWithEqualValue) {
-            DigitValue currentDigit(m_getDigitAtFunction(valuesToSort.at(i), digitIndex));
+            DigitValue currentDigit(m_getDigitAtFunction(valuesToSort[i], digitIndex));
             if (currentDigit < partitionDigit) {
                 std::swap(valuesToSort[lowIndexWithEqualValue++], valuesToSort[i]);
             } else if (currentDigit > partitionDigit) {

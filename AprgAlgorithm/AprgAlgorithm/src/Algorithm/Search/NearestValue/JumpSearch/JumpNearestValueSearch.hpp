@@ -23,7 +23,7 @@ public:
         Value result{};
         Index selectedIndex(getIndexOfNearestValue(valueToCheck));
         if (selectedIndex != INVALID_INDEX) {
-            result = m_sortedValues.at(selectedIndex);
+            result = m_sortedValues[selectedIndex];
         }
         return result;
     }
@@ -31,7 +31,7 @@ public:
     Index getIndexOfNearestValue(Value const& valueToCheck) {
         Index previousSearchIndex(0);
         Index searchIndex(0);
-        while (searchIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues.at(searchIndex) < valueToCheck) {
+        while (searchIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues[searchIndex] < valueToCheck) {
             previousSearchIndex = searchIndex;
             searchIndex += m_blockSize;
         }

@@ -19,7 +19,7 @@ public:
         Index result(INVALID_INDEX);
         if (!m_sortedValues.empty()) {
             Index possibleIndex(getIndexUsingForwardSkip(value));
-            if (m_sortedValues.at(possibleIndex) == value) {
+            if (m_sortedValues[possibleIndex] == value) {
                 result = possibleIndex;
             }
         }
@@ -35,7 +35,7 @@ private:
              2)  // forward skip start from half of size, then quarter of size, then eighth of size and so on
         {
             while (result + forwardSkip < size &&
-                   m_sortedValues.at(result + forwardSkip) <
+                   m_sortedValues[result + forwardSkip] <
                        value)  // less than condition to avoid redundant traversal on equal values
             {
                 result += forwardSkip;

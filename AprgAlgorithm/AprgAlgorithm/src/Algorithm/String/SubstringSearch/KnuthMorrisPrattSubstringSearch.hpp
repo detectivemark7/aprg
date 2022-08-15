@@ -31,7 +31,7 @@ public:
         Index searchIndex = 0, matchIndex = 0;
         for (; searchIndex < mainLength && matchIndex < substringLength; searchIndex++) {
             matchIndex =
-                m_nextIndexDfa.getNextState(matchIndex, mainString.at(searchIndex));  // use DFA to determine next state
+                m_nextIndexDfa.getNextState(matchIndex, mainString[searchIndex]);  // use DFA to determine next state
         }
         if (matchIndex == substringLength) {
             result = searchIndex - substringLength;
@@ -43,7 +43,7 @@ private:
     void initialize() {
         if (!m_substringToMatch.empty()) {
             m_nextIndexDfa.setStateTransition(
-                0, 1, m_substringToMatch.at(0));  // put initial transition of: from first index go to second index (if
+                0, 1, m_substringToMatch[0]);  // put initial transition of: from first index go to second index (if
                                                   // character is encountered)
             Index matchLength(m_substringToMatch.size());
             Index stateWithDelayedInput(0);  // this state tracks if input is one tempo delayed
@@ -64,9 +64,9 @@ private:
                                                // "stateWithDelayedInput with inputed c" (mismatch state)
                 }
                 m_nextIndexDfa.setStateTransition(
-                    i, i + 1, m_substringToMatch.at(i));  // put transition (overwrite): if match go to the next state
+                    i, i + 1, m_substringToMatch[i]);  // put transition (overwrite): if match go to the next state
                 stateWithDelayedInput = m_nextIndexDfa.getNextState(
-                    stateWithDelayedInput, m_substringToMatch.at(i));  // update state (one tempo delayed)
+                    stateWithDelayedInput, m_substringToMatch[i]);  // update state (one tempo delayed)
             }
         }
     }

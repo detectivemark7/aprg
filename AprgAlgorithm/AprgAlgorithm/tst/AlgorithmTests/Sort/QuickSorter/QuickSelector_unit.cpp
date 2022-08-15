@@ -63,7 +63,7 @@ TEST(QuickSelectorTest, DoNthElementWorksOnCharactersUsingExample1WithPivotWithV
 
     selector.doNthElement(valuesToSort, 5);
 
-    EXPECT_EQ('O', valuesToSort.at(5));
+    EXPECT_EQ('O', valuesToSort[5]);
 }
 
 TEST(QuickSelectorTest, DoNthElementWorksOnCharactersUsingExample1WithPivotWithValueAtMedianOfMedians) {

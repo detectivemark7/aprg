@@ -118,7 +118,7 @@ private:
     Node const* get(NodeUniquePointer const& currentNodePointer, Key const& key, int const index) const {
         Node const* result(nullptr);
         if (currentNodePointer && index < static_cast<int>(key.length())) {
-            char c(key.at(index));
+            char c(key[index]);
             if (c < currentNodePointer->c) {
                 result = get(currentNodePointer->left, key, index);  // search left
             } else if (c > currentNodePointer->c) {
@@ -136,7 +136,7 @@ private:
         NodeUniquePointer const& currentNodePointer, Key const& keyToCheck, int const index, int const length) const {
         int currentLongestLength(length);
         if (currentNodePointer && index < static_cast<int>(keyToCheck.length())) {
-            char c(keyToCheck.at(index));
+            char c(keyToCheck[index]);
             if (c < currentNodePointer->c) {
                 currentLongestLength =
                     getLengthOfLongestPrefix(currentNodePointer->left, keyToCheck, index, currentLongestLength);
@@ -175,7 +175,7 @@ private:
             int previousPrefixLength = previousPrefix.length();
             int lastIndexToMatch = patternToMatch.length() - 1;
             char currentChar = currentNodePointer->c;
-            char charToMatch = patternToMatch.at(previousPrefixLength);
+            char charToMatch = patternToMatch[previousPrefixLength];
             Key currentPrefix(previousPrefix + currentNodePointer->c);
             if (charToMatch < currentChar) {
                 collectKeysThatMatchAtNode(
@@ -203,7 +203,7 @@ private:
     }
 
     void put(NodeUniquePointer& currentNodePointer, Key const& key, Value const& value, int const index) {
-        char charAtKey(key.at(index));
+        char charAtKey(key[index]);
         if (!currentNodePointer) {
             currentNodePointer = std::make_unique<Node>(Node{charAtKey, nullptr, nullptr, nullptr, nullptr});
         }
@@ -223,7 +223,7 @@ private:
             int lastIndex = key.length() - 1;
             ValueUniquePointer& valueUniquePointer(currentNodePointer->valueUniquePointer);
             if (index < lastIndex) {
-                char charAtKey(key.at(index));
+                char charAtKey(key[index]);
                 if (charAtKey < currentNodePointer->c) {
                     deleteBasedOnKey(currentNodePointer->left, key, index);
                 } else if (charAtKey > currentNodePointer->c) {

@@ -46,11 +46,11 @@ public:
             endIndex < static_cast<int>(m_stringToHash.length()) && startIndex <= endIndex) {
             if (startIndex > 0) {
                 result =
-                    (m_largeRandomPrime + m_hParts.at(endIndex) -
-                     ((m_hParts.at(startIndex - 1) * m_pParts.at(endIndex - startIndex + 1)) % m_largeRandomPrime)) %
+                    (m_largeRandomPrime + m_hParts[endIndex] -
+                     ((m_hParts[startIndex - 1] * m_pParts[endIndex - startIndex + 1]) % m_largeRandomPrime)) %
                     m_largeRandomPrime;
             } else {
-                result = m_hParts.at(endIndex);
+                result = m_hParts[endIndex];
             }
         }
         return result;

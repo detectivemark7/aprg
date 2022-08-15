@@ -105,7 +105,7 @@ protected:
             nodePointer.reset(new Node{Value{}, nullptr, nullptr});
         }
         if (baseLeft == baseRight) {
-            nodePointer->value = values.at(baseLeft);
+            nodePointer->value = values[baseLeft];
         } else {
             Index baseMidPoint = getMidpointOfIndexes(baseLeft, baseRight);
             setValuesFromTopToBottom(values, nodePointer->leftChildPointer, baseLeft, baseMidPoint);

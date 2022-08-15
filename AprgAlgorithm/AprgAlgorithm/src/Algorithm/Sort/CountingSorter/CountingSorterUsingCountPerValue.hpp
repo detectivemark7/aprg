@@ -34,7 +34,7 @@ public:
         for (int indexableValue = 0; indexableValue < static_cast<int>(countPerValue.size());
              indexableValue++)  // Linear because i runs on valuesToSort.size()
         {
-            for (int currentCount = 0; currentCount < countPerValue.at(indexableValue); currentCount++) {
+            for (int currentCount = 0; currentCount < countPerValue[indexableValue]; currentCount++) {
                 *(it++) = m_indexableValueToValueFunction(
                     indexableValue);  // put the value multiple times depending on the current count
             }

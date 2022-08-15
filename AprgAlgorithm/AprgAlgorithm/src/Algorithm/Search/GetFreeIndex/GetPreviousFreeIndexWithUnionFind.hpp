@@ -37,7 +37,7 @@ public:
 
             relativeRoots[index] = index;
             for (Index i = index + 1; i < static_cast<Index>(relativeRoots.size()); i++) {
-                if (relativeRoots.at(i) == rootOfIndex) {
+                if (relativeRoots[i] == rootOfIndex) {
                     relativeRoots[i] = index;
                 }
             }

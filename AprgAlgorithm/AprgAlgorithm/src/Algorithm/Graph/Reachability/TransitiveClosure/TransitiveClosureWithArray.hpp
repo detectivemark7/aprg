@@ -27,7 +27,7 @@ public:
 
     bool isReachable(Vertex const& sourceVertex, Vertex const& destinationVertex) const override {
         bool result(false);
-        ReachabilityPointer const& pointer(m_reachabilityPointerArray.at(sourceVertex));
+        ReachabilityPointer const& pointer(m_reachabilityPointerArray[sourceVertex]);
         if (pointer) {
             result = pointer->isReachable(destinationVertex);
         }

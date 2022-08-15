@@ -40,7 +40,7 @@ public:
             std::bitset<AlbaBitValueUtilities<BitDataType>::getNumberOfBits()> iterationBits(iteration);
             for (int index = 0; index < static_cast<int>(objects.size()); index++) {
                 if (iterationBits[index]) {
-                    currentSubset.emplace_back(objects.at(index));
+                    currentSubset.emplace_back(objects[index]);
                 }
             }
             result.emplace_back(currentSubset);
