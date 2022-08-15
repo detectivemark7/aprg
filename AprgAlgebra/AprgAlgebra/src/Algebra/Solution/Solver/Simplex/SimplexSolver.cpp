@@ -34,7 +34,7 @@ Equations SimplexSolver::getSolutionEquations() const {
         for (int x = 0; x < static_cast<int>(m_inputVariables.size()); x++) {
             AlbaNumber coefficient(m_simplexTable.getEntry(x, y));
             if (coefficient != 0) {
-                solutionPolynomial.addMonomial(Monomial(coefficient, {{m_inputVariables.at(x), 1}}));
+                solutionPolynomial.addMonomial(Monomial(coefficient, {{m_inputVariables[x], 1}}));
             }
         }
         if (!solutionPolynomial
@@ -119,14 +119,14 @@ void SimplexSolver::initializeSimplexTable(
     int lastX = m_simplexTable.getNumberOfColumns() - 1;
     int slackColumn = inputVariableNames.size();
     for (int y = 0; y < static_cast<int>(constraintsInStandardForm.size()); y++) {
-        Polynomial const& standardFormConstraint(constraintsInStandardForm.at(y));
+        Polynomial const& standardFormConstraint(constraintsInStandardForm[y]);
         for (Monomial const& monomial : standardFormConstraint.getMonomialsConstReference()) {
             string variableName(getFirstVariableName(monomial));
             if (variableName.empty()) {
                 m_simplexTable.setEntry(lastX, y, monomial.getConstantConstReference() * -1);  // put constant
             } else {
                 m_simplexTable.setEntry(
-                    variableNameToIndexMap.at(variableName), y,
+                    variableNameToIndexMap[variableName], y,
                     monomial.getConstantConstReference());  // put variable coefficient
             }
         }

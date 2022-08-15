@@ -44,7 +44,7 @@ TEST(OneEquationOneVariableEqualitySolverTest, EquationsThatAreAlwaysSatisfiedRe
     EXPECT_TRUE(solver.isACompleteSolution());
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, actualIntervals.size());
-    EXPECT_EQ(createAllRealValuesInterval(), actualIntervals.at(0));
+    EXPECT_EQ(createAllRealValuesInterval(), actualIntervals[0]);
 }
 
 TEST(OneEquationOneVariableEqualitySolverTest, PolynomialAreSolvedCorrectly) {
@@ -124,8 +124,8 @@ TEST(OneEquationOneVariableEqualitySolverTest, TwoAbsoluteValueFunctionsAreSolve
 
     AlbaNumbers acceptedValues(solutionSet.getAcceptedValues());
     ASSERT_EQ(2U, acceptedValues.size());
-    EXPECT_EQ(AlbaNumber(-2), acceptedValues.at(0));
-    EXPECT_EQ(AlbaNumber::createFraction(-1, 3), acceptedValues.at(1));
+    EXPECT_EQ(AlbaNumber(-2), acceptedValues[0]);
+    EXPECT_EQ(AlbaNumber::createFraction(-1, 3), acceptedValues[1]);
 }
 
 TEST(OneEquationOneVariableEqualitySolverTest, AdditionFractionsInEquationIsSolved) {

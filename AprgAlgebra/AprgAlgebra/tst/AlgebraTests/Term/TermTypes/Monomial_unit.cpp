@@ -53,12 +53,12 @@ TEST(MonomialTest, CombineVariableExponentMapByMultiplicationWorks) {
         Monomial::combineVariableExponentMapByMultiplication(variableMap1, variableMap3));
 
     ASSERT_EQ(2U, variableMapToVerify1.size());
-    EXPECT_DOUBLE_EQ(8, variableMapToVerify1.at("x").getDouble());
-    EXPECT_DOUBLE_EQ(0, variableMapToVerify1.at("y").getDouble());
+    EXPECT_DOUBLE_EQ(8, variableMapToVerify1["x"].getDouble());
+    EXPECT_DOUBLE_EQ(0, variableMapToVerify1["y"].getDouble());
     ASSERT_EQ(3U, variableMapToVerify2.size());
-    EXPECT_DOUBLE_EQ(7, variableMapToVerify2.at("x").getDouble());
-    EXPECT_DOUBLE_EQ(8, variableMapToVerify2.at("y").getDouble());
-    EXPECT_DOUBLE_EQ(5, variableMapToVerify2.at("z").getDouble());
+    EXPECT_DOUBLE_EQ(7, variableMapToVerify2["x"].getDouble());
+    EXPECT_DOUBLE_EQ(8, variableMapToVerify2["y"].getDouble());
+    EXPECT_DOUBLE_EQ(5, variableMapToVerify2["z"].getDouble());
 }
 
 TEST(MonomialTest, CombineVariableExponentMapByDivisionWorks) {
@@ -72,12 +72,12 @@ TEST(MonomialTest, CombineVariableExponentMapByDivisionWorks) {
         Monomial::combineVariableExponentMapByDivision(variableMap1, variableMap3));
 
     ASSERT_EQ(2U, variableMapToVerify1.size());
-    EXPECT_DOUBLE_EQ(6, variableMapToVerify1.at("x").getDouble());
-    EXPECT_DOUBLE_EQ(0, variableMapToVerify1.at("y").getDouble());
+    EXPECT_DOUBLE_EQ(6, variableMapToVerify1["x"].getDouble());
+    EXPECT_DOUBLE_EQ(0, variableMapToVerify1["y"].getDouble());
     ASSERT_EQ(3U, variableMapToVerify2.size());
-    EXPECT_DOUBLE_EQ(7, variableMapToVerify2.at("x").getDouble());
-    EXPECT_DOUBLE_EQ(8, variableMapToVerify2.at("y").getDouble());
-    EXPECT_DOUBLE_EQ(-5, variableMapToVerify2.at("z").getDouble());
+    EXPECT_DOUBLE_EQ(7, variableMapToVerify2["x"].getDouble());
+    EXPECT_DOUBLE_EQ(8, variableMapToVerify2["y"].getDouble());
+    EXPECT_DOUBLE_EQ(-5, variableMapToVerify2["z"].getDouble());
 }
 
 TEST(MonomialTest, EqualityOperatorWorks) {

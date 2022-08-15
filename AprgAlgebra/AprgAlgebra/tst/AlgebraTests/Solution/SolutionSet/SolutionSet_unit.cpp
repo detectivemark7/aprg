@@ -80,7 +80,7 @@ TEST(SolutionSetTest, AddAcceptedIntervalWorks) {
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(87), createOpenEndpoint(99)), actualIntervals.at(0));
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(87), createOpenEndpoint(99)), actualIntervals[0]);
 }
 
 TEST(SolutionSetTest, AddValueForAcceptedValueWorks) {
@@ -113,8 +113,8 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithOnePoint) {
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createPositiveInfinityOpenEndpoint()), actualIntervals.at(1));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createPositiveInfinityOpenEndpoint()), actualIntervals[1]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAcceptedValue) {
@@ -130,9 +130,9 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAcceptedValue) {
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(3U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(2)), actualIntervals.at(1));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals.at(2));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(2)), actualIntervals[1]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals[2]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithRejectedValue) {
@@ -148,9 +148,9 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithRejectedValue) {
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(3U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(2)), actualIntervals.at(1));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals.at(2));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(2)), actualIntervals[1]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals[2]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithRedundantInfinities) {
@@ -167,8 +167,8 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithRedundantInfiniti
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createPositiveInfinityOpenEndpoint()), actualIntervals.at(1));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createPositiveInfinityOpenEndpoint()), actualIntervals[1]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAllKindOfIntervalsIncluded) {
@@ -182,9 +182,9 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAllKindOfInterval
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(3U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(4)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(4), createOpenEndpoint(5)), actualIntervals.at(1));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(5), createPositiveInfinityOpenEndpoint()), actualIntervals.at(2));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(4)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(4), createOpenEndpoint(5)), actualIntervals[1]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(5), createPositiveInfinityOpenEndpoint()), actualIntervals[2]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAllConnectedIntervalsCombined) {
@@ -199,8 +199,8 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksWithAllConnectedInter
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(2)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals.at(1));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(2)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals[1]);
 }
 
 TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksAndNotAcceptedIntervalsNotIncluded) {
@@ -215,8 +215,8 @@ TEST(SolutionSetTest, DetermineAndAddAcceptedIntervalsWorksAndNotAcceptedInterva
 
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, actualIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals.at(1));
+    EXPECT_EQ(AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(1)), actualIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(2), createPositiveInfinityOpenEndpoint()), actualIntervals[1]);
 }
 
 TEST(SolutionSetTest, OutputStreamOperatorWorks) {

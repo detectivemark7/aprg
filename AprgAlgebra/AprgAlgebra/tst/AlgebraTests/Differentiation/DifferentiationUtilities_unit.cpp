@@ -283,10 +283,10 @@ TEST(DifferentiationUtilitiesTest, GetDifferentiabilityDomainWorks) {
     ASSERT_EQ(2U, intervalToVerify.size());
     EXPECT_EQ(
         AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createCloseEndpoint(0.9999979999999644)),
-        intervalToVerify.at(0));
+        intervalToVerify[0]);
     EXPECT_EQ(
         AlbaNumberInterval(createOpenEndpoint(1.000001999999898), createPositiveInfinityOpenEndpoint()),
-        intervalToVerify.at(1));
+        intervalToVerify[1]);
 }
 
 TEST(DifferentiationUtilitiesTest, SimplifyDerivativeByDefinitionWorks) {

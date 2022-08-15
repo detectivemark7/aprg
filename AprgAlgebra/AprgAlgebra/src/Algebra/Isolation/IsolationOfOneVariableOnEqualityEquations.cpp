@@ -27,7 +27,7 @@ void IsolationOfOneVariableOnEqualityEquations::isolateTermWithVariable(
         reducedEquations, variableName, equationsWithVariable, equationsWithoutVariable);
     if (!equationsWithVariable.empty()) {
         sortEquationsWithVariable(equationsWithVariable);
-        Equation const& selectedEquation(equationsWithVariable.at(0));
+        Equation const& selectedEquation(equationsWithVariable[0]);
         IsolationOfOneVariableOnEqualityEquation isolationForVariable(selectedEquation);
         isolationForVariable.isolateTermWithVariable(variableName, termWithVariable, termWithWithoutVariable);
     }

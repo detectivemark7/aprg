@@ -142,7 +142,7 @@ TEST(ExtremaUtilitiesTest, GetInputValuesInIntervalWithSameAsMeanOfIntervalWorks
     AlbaNumbers values(getInputValuesInIntervalWithSameAsMeanOfInterval(termToTest, "x", 1, 3));
 
     ASSERT_EQ(1U, values.size());
-    EXPECT_EQ(AlbaNumber::createFraction(7, 3), values.at(0));
+    EXPECT_EQ(AlbaNumber::createFraction(7, 3), values[0]);
 }
 
 TEST(ExtremaUtilitiesTest, GetInputValuesForCauchyMeanValueTheoremWorks) {
@@ -153,7 +153,7 @@ TEST(ExtremaUtilitiesTest, GetInputValuesForCauchyMeanValueTheoremWorks) {
     AlbaNumbers values(getInputValuesForCauchyMeanValueTheorem(termToTest, "x", 1, 3));
 
     ASSERT_EQ(1U, values.size());
-    EXPECT_EQ(AlbaNumber(2), values.at(0));
+    EXPECT_EQ(AlbaNumber(2), values[0]);
 }
 
 TEST(ExtremaUtilitiesTest, GetAbsoluteExtremumBasedOnRelativeExtremaOnIntervalWorks) {
@@ -178,8 +178,8 @@ TEST(ExtremaUtilitiesTest, GetCriticalNumbersWorks) {
     AlbaNumbers criticalNumbers(getCriticalNumbers(termToTest, "x"));
 
     ASSERT_EQ(2U, criticalNumbers.size());
-    EXPECT_EQ(AlbaNumber(-1), criticalNumbers.at(0));
-    EXPECT_EQ(AlbaNumber(0), criticalNumbers.at(1));
+    EXPECT_EQ(AlbaNumber(-1), criticalNumbers[0]);
+    EXPECT_EQ(AlbaNumber(0), criticalNumbers[1]);
 }
 
 TEST(ExtremaUtilitiesTest, GetCriticalNumbersWithMultipleVariablesWorksWithExample1) {
@@ -221,7 +221,7 @@ TEST(ExtremaUtilitiesTest, GetInputValuesAtPointsOfInflectionWorksWithExample1) 
     AlbaNumbers values(getInputValuesAtPointsOfInflection(termToTest, "x"));
 
     ASSERT_EQ(1U, values.size());
-    EXPECT_EQ(AlbaNumber(0), values.at(0));
+    EXPECT_EQ(AlbaNumber(0), values[0]);
 }
 
 TEST(ExtremaUtilitiesTest, GetInputValuesAtPointsOfInflectionWorksWithExample2) {
@@ -232,8 +232,8 @@ TEST(ExtremaUtilitiesTest, GetInputValuesAtPointsOfInflectionWorksWithExample2) 
     AlbaNumbers values(getInputValuesAtPointsOfInflection(termToTest, "x"));
 
     ASSERT_EQ(2U, values.size());
-    EXPECT_EQ(AlbaNumber(8), values.at(0));
-    EXPECT_EQ(AlbaNumber(0), values.at(1));
+    EXPECT_EQ(AlbaNumber(8), values[0]);
+    EXPECT_EQ(AlbaNumber(0), values[1]);
 }
 
 TEST(ExtremaUtilitiesTest, GetMaximumAndMinimumAtClosedIntervalWorksOnExample1) {
@@ -269,15 +269,15 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWorksOnExample1) {
     Extrema extrema(getRelativeExtrema(termToTest, "x"));
 
     ASSERT_EQ(3U, extrema.size());
-    EXPECT_EQ(ExtremumType::Minimum, extrema.at(0).extremumType);
-    EXPECT_EQ(AlbaNumber(-2), extrema.at(0).inputOutputValues.first);
-    EXPECT_EQ(AlbaNumber::createFraction(-32, 3), extrema.at(0).inputOutputValues.second);
-    EXPECT_EQ(ExtremumType::Maximum, extrema.at(1).extremumType);
-    EXPECT_EQ(AlbaNumber(0), extrema.at(1).inputOutputValues.first);
-    EXPECT_EQ(AlbaNumber(0), extrema.at(1).inputOutputValues.second);
-    EXPECT_EQ(ExtremumType::Minimum, extrema.at(2).extremumType);
-    EXPECT_EQ(AlbaNumber(1), extrema.at(2).inputOutputValues.first);
-    EXPECT_EQ(AlbaNumber::createFraction(-5, 3), extrema.at(2).inputOutputValues.second);
+    EXPECT_EQ(ExtremumType::Minimum, extrema[0].extremumType);
+    EXPECT_EQ(AlbaNumber(-2), extrema[0].inputOutputValues.first);
+    EXPECT_EQ(AlbaNumber::createFraction(-32, 3), extrema[0].inputOutputValues.second);
+    EXPECT_EQ(ExtremumType::Maximum, extrema[1].extremumType);
+    EXPECT_EQ(AlbaNumber(0), extrema[1].inputOutputValues.first);
+    EXPECT_EQ(AlbaNumber(0), extrema[1].inputOutputValues.second);
+    EXPECT_EQ(ExtremumType::Minimum, extrema[2].extremumType);
+    EXPECT_EQ(AlbaNumber(1), extrema[2].inputOutputValues.first);
+    EXPECT_EQ(AlbaNumber::createFraction(-5, 3), extrema[2].inputOutputValues.second);
 }
 
 TEST(ExtremaUtilitiesTest, GetRelativeExtremaWorksOnExample2) {
@@ -288,9 +288,9 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWorksOnExample2) {
     Extrema extrema(getRelativeExtrema(termToTest, "x"));
 
     ASSERT_EQ(1U, extrema.size());
-    EXPECT_EQ(ExtremumType::Minimum, extrema.at(0).extremumType);
-    EXPECT_EQ(AlbaNumber(1), extrema.at(0).inputOutputValues.first);
-    EXPECT_EQ(AlbaNumber(-1), extrema.at(0).inputOutputValues.second);
+    EXPECT_EQ(ExtremumType::Minimum, extrema[0].extremumType);
+    EXPECT_EQ(AlbaNumber(1), extrema[0].inputOutputValues.first);
+    EXPECT_EQ(AlbaNumber(-1), extrema[0].inputOutputValues.second);
 }
 
 TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample1) {
@@ -300,7 +300,7 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample1) 
     ExtremaWithMultipleVariables extrema(getRelativeExtremaWithMultipleVariables(termToTest, {"x", "y"}));
 
     ASSERT_EQ(1U, extrema.size());
-    ExtremumWithMultipleVariables const& extremum(extrema.at(0));
+    ExtremumWithMultipleVariables const& extremum(extrema[0]);
     EXPECT_EQ(ExtremumType::SaddlePoint, extremum.extremumType);
     auto const& variableNamesToValues(extremum.variableNamesToValues);
     ASSERT_EQ(2U, variableNamesToValues.size());
@@ -320,7 +320,7 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample2) 
     ExtremaWithMultipleVariables extrema(getRelativeExtremaWithMultipleVariables(termToTest, {"x", "y"}));
 
     ASSERT_EQ(1U, extrema.size());
-    ExtremumWithMultipleVariables const& extremum(extrema.at(0));
+    ExtremumWithMultipleVariables const& extremum(extrema[0]);
     EXPECT_EQ(ExtremumType::Maximum, extremum.extremumType);
     auto const& variableNamesToValues(extremum.variableNamesToValues);
     ASSERT_EQ(2U, variableNamesToValues.size());
@@ -340,7 +340,7 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample3) 
     ExtremaWithMultipleVariables extrema(getRelativeExtremaWithMultipleVariables(termToTest, {"x", "y"}));
 
     ASSERT_EQ(3U, extrema.size());
-    ExtremumWithMultipleVariables const& extremum1(extrema.at(0));
+    ExtremumWithMultipleVariables const& extremum1(extrema[0]);
     EXPECT_EQ(ExtremumType::Minimum, extremum1.extremumType);
     auto const& variableNamesToValues1(extremum1.variableNamesToValues);
     ASSERT_EQ(2U, variableNamesToValues1.size());
@@ -351,7 +351,7 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample3) 
     EXPECT_EQ("y", it->first);
     EXPECT_EQ(AlbaNumber(1), it->second);
 
-    ExtremumWithMultipleVariables const& extremum2(extrema.at(1));
+    ExtremumWithMultipleVariables const& extremum2(extrema[1]);
     EXPECT_EQ(ExtremumType::Minimum, extremum2.extremumType);
     auto const& variableNamesToValues2(extremum2.variableNamesToValues);
     ASSERT_EQ(2U, variableNamesToValues2.size());
@@ -362,7 +362,7 @@ TEST(ExtremaUtilitiesTest, GetRelativeExtremaWithMultipleVariablesWithExample3) 
     EXPECT_EQ("y", it->first);
     EXPECT_EQ(AlbaNumber(1), it->second);
 
-    ExtremumWithMultipleVariables const& extremum3(extrema.at(2));
+    ExtremumWithMultipleVariables const& extremum3(extrema[2]);
     EXPECT_EQ(ExtremumType::SaddlePoint, extremum3.extremumType);
     auto const& variableNamesToValues3(extremum3.variableNamesToValues);
     ASSERT_EQ(2U, variableNamesToValues3.size());

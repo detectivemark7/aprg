@@ -81,10 +81,10 @@ TEST(ComboTest, OneVariableInequalityCanBeSolvedUsingExample3) {
 
     AlbaNumberIntervals acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, acceptedIntervals.size());
-    AlbaNumberInterval const& interval1(acceptedIntervals.at(0));
+    AlbaNumberInterval const& interval1(acceptedIntervals[0]);
     EXPECT_EQ(createNegativeInfinityOpenEndpoint(), interval1.getLowerEndpoint());
     EXPECT_EQ(createOpenEndpoint(AlbaNumber::createFraction(-7, 3)), interval1.getHigherEndpoint());
-    AlbaNumberInterval const& interval2(acceptedIntervals.at(1));
+    AlbaNumberInterval const& interval2(acceptedIntervals[1]);
     EXPECT_EQ(createOpenEndpoint(1), interval2.getLowerEndpoint());
     EXPECT_EQ(createPositiveInfinityOpenEndpoint(), interval2.getHigherEndpoint());
 }
@@ -95,10 +95,10 @@ TEST(ComboTest, OneVariableInequalityCanBeSolvedUsingExample4) {
 
     AlbaNumberIntervals acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, acceptedIntervals.size());
-    AlbaNumberInterval const& interval1(acceptedIntervals.at(0));
+    AlbaNumberInterval const& interval1(acceptedIntervals[0]);
     EXPECT_EQ(createNegativeInfinityOpenEndpoint(), interval1.getLowerEndpoint());
     EXPECT_EQ(AlbaNumberIntervalEndpoint(createCloseEndpoint(-4)), interval1.getHigherEndpoint());
-    AlbaNumberInterval const& interval2(acceptedIntervals.at(1));
+    AlbaNumberInterval const& interval2(acceptedIntervals[1]);
     EXPECT_EQ(AlbaNumberIntervalEndpoint(createCloseEndpoint(-3)), interval2.getLowerEndpoint());
     EXPECT_EQ(createPositiveInfinityOpenEndpoint(), interval2.getHigherEndpoint());
 }

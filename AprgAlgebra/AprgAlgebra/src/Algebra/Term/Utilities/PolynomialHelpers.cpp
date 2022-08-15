@@ -204,8 +204,8 @@ AlbaNumbers getRoots(RootType const rootType, Polynomial const& polynomial) {
             if (monomialsToCheck.size() == 1 && maxDegree > 0) {
                 result.emplace_back(AlbaNumber(0));
             } else if (monomialsToCheck.size() == 2) {
-                Monomial firstMonomial(monomialsToCheck.at(0));
-                Monomial secondMonomial(monomialsToCheck.at(1));
+                Monomial firstMonomial(monomialsToCheck[0]);
+                Monomial secondMonomial(monomialsToCheck[1]);
                 if (isConstantOnly(secondMonomial)) {
                     AlbaNumber constant(-secondMonomial.getConstantConstReference());
                     constant = constant / firstMonomial.getConstantConstReference();
@@ -231,8 +231,8 @@ Polynomial raiseBinomialToAPowerUsingBinomialExpansion(Polynomial const& binomia
     Polynomial result;
     Monomials const& monomials(binomial.getMonomialsConstReference());
     if (monomials.size() == 2) {
-        Monomial const& firstMonomial(monomials.at(0));
-        Monomial const& secondMonomial(monomials.at(1));
+        Monomial const& firstMonomial(monomials[0]);
+        Monomial const& secondMonomial(monomials[1]);
         for (IntegerCoefficient i = 0; i <= power; i++) {
             IntegerCoefficient firstPower = i;
             IntegerCoefficient secondPower = power - i;

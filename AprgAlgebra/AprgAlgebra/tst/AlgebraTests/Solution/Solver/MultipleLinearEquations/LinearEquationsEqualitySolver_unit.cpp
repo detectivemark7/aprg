@@ -38,7 +38,7 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(1, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(4), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(4), acceptedValuesForX[0]);
 }
 
 TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWorksFor2Equations) {
@@ -56,10 +56,10 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(2, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(-2), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(-2), acceptedValuesForX[0]);
     AlbaNumbers acceptedValuesForY(solutionSet.getSolutionSetForVariable("y").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForY.size());
-    EXPECT_EQ(AlbaNumber(3), acceptedValuesForY.at(0));
+    EXPECT_EQ(AlbaNumber(3), acceptedValuesForY[0]);
 }
 
 TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWorksFor3Equations) {
@@ -79,13 +79,13 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(3, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(2), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(2), acceptedValuesForX[0]);
     AlbaNumbers acceptedValuesForY(solutionSet.getSolutionSetForVariable("y").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForY.size());
-    EXPECT_EQ(AlbaNumber(-1), acceptedValuesForY.at(0));
+    EXPECT_EQ(AlbaNumber(-1), acceptedValuesForY[0]);
     AlbaNumbers acceptedValuesForZ(solutionSet.getSolutionSetForVariable("z").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForZ.size());
-    EXPECT_EQ(AlbaNumber(3), acceptedValuesForZ.at(0));
+    EXPECT_EQ(AlbaNumber(3), acceptedValuesForZ[0]);
 }
 
 TEST(
@@ -128,7 +128,7 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(1, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(4), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(4), acceptedValuesForX[0]);
 }
 
 TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWorksFor2Polynomials) {
@@ -144,10 +144,10 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(2, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(-2), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(-2), acceptedValuesForX[0]);
     AlbaNumbers acceptedValuesForY(solutionSet.getSolutionSetForVariable("y").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForY.size());
-    EXPECT_EQ(AlbaNumber(3), acceptedValuesForY.at(0));
+    EXPECT_EQ(AlbaNumber(3), acceptedValuesForY[0]);
 }
 
 TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWorksFor3Polynomials) {
@@ -167,13 +167,13 @@ TEST(LinearEquationsEqualitySolverTest, CalculateSolutionAndReturnSolutionSetWor
     EXPECT_EQ(3, solutionSet.getNumberOfVariablesWithSolutions());
     AlbaNumbers acceptedValuesForX(solutionSet.getSolutionSetForVariable("x").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForX.size());
-    EXPECT_EQ(AlbaNumber(2), acceptedValuesForX.at(0));
+    EXPECT_EQ(AlbaNumber(2), acceptedValuesForX[0]);
     AlbaNumbers acceptedValuesForY(solutionSet.getSolutionSetForVariable("y").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForY.size());
-    EXPECT_EQ(AlbaNumber(-1), acceptedValuesForY.at(0));
+    EXPECT_EQ(AlbaNumber(-1), acceptedValuesForY[0]);
     AlbaNumbers acceptedValuesForZ(solutionSet.getSolutionSetForVariable("z").getAcceptedValues());
     ASSERT_EQ(1U, acceptedValuesForZ.size());
-    EXPECT_EQ(AlbaNumber(3), acceptedValuesForZ.at(0));
+    EXPECT_EQ(AlbaNumber(3), acceptedValuesForZ[0]);
 }
 
 }  // namespace algebra

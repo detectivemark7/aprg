@@ -102,9 +102,9 @@ void SimplificationOfEquation::completeExpressionWithFractionalExponentsIfNeeded
         if (OperatorLevel::AdditionAndSubtraction == expression.getCommonOperatorLevel()) {
             TermsWithDetails const& termsWithDetails(expression.getTermsWithAssociation().getTermsWithDetails());
             if (termsWithDetails.size() == 2 &&
-                areTheSignsOfTwoTermsDifferent(termsWithDetails.at(0), termsWithDetails.at(1))) {
-                Term const& firstTerm(getTermConstReferenceFromUniquePointer(termsWithDetails.at(0).baseTermPointer));
-                Term const& secondTerm(getTermConstReferenceFromUniquePointer(termsWithDetails.at(1).baseTermPointer));
+                areTheSignsOfTwoTermsDifferent(termsWithDetails[0], termsWithDetails[1])) {
+                Term const& firstTerm(getTermConstReferenceFromUniquePointer(termsWithDetails[0].baseTermPointer));
+                Term const& secondTerm(getTermConstReferenceFromUniquePointer(termsWithDetails[1].baseTermPointer));
                 TermRaiseToANumber termRaiseToANumber1(createTermRaiseToANumberFromTerm(firstTerm));
                 TermRaiseToANumber termRaiseToANumber2(createTermRaiseToANumberFromTerm(secondTerm));
                 AlbaNumber gcfOfExponents =
@@ -133,7 +133,7 @@ void SimplificationOfEquation::removeCommonConstant(Term& leftHandSide) {
             for (Polynomial& factor : factors) {
                 Monomials& monomials(factor.getMonomialsReference());
                 if (monomials.size() == 1) {
-                    Monomial& onlyMonomial(monomials.at(0));
+                    Monomial& onlyMonomial(monomials[0]);
                     onlyMonomial.setConstant(getSign(onlyMonomial.getConstantConstReference()));
                     isLeftHandSideChanged = true;
                 }

@@ -148,8 +148,8 @@ TEST(MathVectorOfTermsUtilitiesTest, GetPerpendicularLineOnAPointOfASurfaceWorks
     string stringToExpect1("(1[x] + -2[y] + 6) = 0");
     string stringToExpect2("(1[x] + 1[z] + -4) = 0");
     ASSERT_EQ(2U, equationsToVerify.size());
-    EXPECT_EQ(stringToExpect1, convertToString(equationsToVerify.at(0)));
-    EXPECT_EQ(stringToExpect2, convertToString(equationsToVerify.at(1)));
+    EXPECT_EQ(stringToExpect1, convertToString(equationsToVerify[0]));
+    EXPECT_EQ(stringToExpect2, convertToString(equationsToVerify[1]));
 }
 
 TEST(MathVectorOfTermsUtilitiesTest, GetCurlWorks) {

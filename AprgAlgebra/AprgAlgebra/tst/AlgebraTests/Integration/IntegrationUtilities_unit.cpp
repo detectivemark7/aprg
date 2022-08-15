@@ -48,11 +48,11 @@ TEST(IntegrationUtilitiesTest, GetInputForAverageValueInBetweenTwoValuesWorks) {
     AlbaNumbers numbersToVerify3(getInputForAverageValueInBetweenTwoValues(termToTest3, "x", 5, 10));
 
     ASSERT_EQ(1U, numbersToVerify1.size());
-    EXPECT_EQ(AlbaNumber::createFraction(15, 2), numbersToVerify1.at(0));
+    EXPECT_EQ(AlbaNumber::createFraction(15, 2), numbersToVerify1[0]);
     ASSERT_EQ(1U, numbersToVerify2.size());
-    EXPECT_EQ(AlbaNumber(7.637626158259732), numbersToVerify2.at(0));
+    EXPECT_EQ(AlbaNumber(7.637626158259732), numbersToVerify2[0]);
     ASSERT_EQ(1U, numbersToVerify3.size());
-    EXPECT_EQ(AlbaNumber(7.76808126488466), numbersToVerify3.at(0));
+    EXPECT_EQ(AlbaNumber(7.76808126488466), numbersToVerify3[0]);
 }
 
 TEST(IntegrationUtilitiesTest, GetAverageValueInBetweenTwoValuesWorks) {

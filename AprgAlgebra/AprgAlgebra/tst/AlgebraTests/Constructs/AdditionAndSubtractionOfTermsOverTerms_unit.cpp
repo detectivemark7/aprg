@@ -31,7 +31,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithNoT
 
     Term termToExpect1(1);
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithTermsThatAreEmptyWorks) {
@@ -47,7 +47,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithTer
 
     Term termToExpect1(1);
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
 }
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithAllOneWorks) {
     AdditionAndSubtractionOfTermsOverTerms additionAndSubtraction;
@@ -62,7 +62,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithAll
 
     Term termToExpect1(1);
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithLcmMonomialWorks) {
@@ -78,7 +78,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithLcm
 
     Term termToExpect1(Monomial(105, {{"x", 5}, {"y", 7}}));
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithNoCommonFactorsWorks) {
@@ -96,9 +96,9 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithNoC
     Term termToExpect2(Polynomial{Monomial(1, {{"y", 1}}), Monomial(5, {})});
     Term termToExpect3(Polynomial{Monomial(1, {{"z", 1}}), Monomial(7, {})});
     ASSERT_EQ(3U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
-    EXPECT_EQ(termToExpect2, termsToVerify.at(1));
-    EXPECT_EQ(termToExpect3, termsToVerify.at(2));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
+    EXPECT_EQ(termToExpect2, termsToVerify[1]);
+    EXPECT_EQ(termToExpect3, termsToVerify[2]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithCommonFactorsWorks) {
@@ -116,8 +116,8 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithCom
     Term termToExpect1(polynomial);
     Term termToExpect2(createExpressionIfPossible({polynomial, "^", 3}));
     ASSERT_EQ(2U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
-    EXPECT_EQ(termToExpect2, termsToVerify.at(1));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
+    EXPECT_EQ(termToExpect2, termsToVerify[1]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithFactorsOfDifferenceOfSquaresWorks) {
@@ -134,8 +134,8 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetLcmOfDenominatorTermsWithFac
     Term termToExpect1(Polynomial{Monomial(1, {{"x", 1}}), Monomial(2, {})});
     Term termToExpect2(Polynomial{Monomial(1, {{"x", 1}}), Monomial(-2, {})});
     ASSERT_EQ(2U, termsToVerify.size());
-    EXPECT_EQ(termToExpect1, termsToVerify.at(0));
-    EXPECT_EQ(termToExpect2, termsToVerify.at(1));
+    EXPECT_EQ(termToExpect1, termsToVerify[0]);
+    EXPECT_EQ(termToExpect2, termsToVerify[1]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIndexUsingOutOfRangeIndexReturnsEmpty) {
@@ -160,7 +160,7 @@ TEST(
 
     Term termToExpect(Polynomial{Monomial(1, {{"x", 1}}), Monomial(17, {})});
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIndexReturnsNumeratorTermsWhenLcmIsOne) {
@@ -172,7 +172,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIn
 
     Term termToExpect(Polynomial{Monomial(1, {{"x", 1}}), Monomial(17, {})});
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIndexReturnsGcfOfDenominatorAndLcm) {
@@ -185,7 +185,7 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIn
 
     Term termToExpect(Monomial(13, {{"x", 2}, {"y", 5}}));
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(
@@ -201,8 +201,8 @@ TEST(
 
     Term termToExpect(polynomial);
     ASSERT_EQ(2U, termsToVerify.size());
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
-    EXPECT_EQ(termToExpect, termsToVerify.at(1));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
+    EXPECT_EQ(termToExpect, termsToVerify[1]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIndexUsingAComplicatedExampleWorks) {
@@ -229,13 +229,13 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetNumeratorTermsBasedOnLcmOnIn
     Term termToExpect4(Polynomial{Monomial(2, {{"x", 1}}), Monomial(1, {})});
     Term termToExpect5(Polynomial{Monomial(1, {{"x", 1}}), Monomial(2, {})});
     ASSERT_EQ(2U, termsToVerify1.size());
-    EXPECT_EQ(termToExpect1, termsToVerify1.at(0));
-    EXPECT_EQ(termToExpect2, termsToVerify1.at(1));
+    EXPECT_EQ(termToExpect1, termsToVerify1[0]);
+    EXPECT_EQ(termToExpect2, termsToVerify1[1]);
     ASSERT_EQ(1U, termsToVerify2.size());
-    EXPECT_EQ(termToExpect3, termsToVerify2.at(0));
+    EXPECT_EQ(termToExpect3, termsToVerify2[0]);
     ASSERT_EQ(2U, termsToVerify3.size());
-    EXPECT_EQ(termToExpect4, termsToVerify3.at(0));
-    EXPECT_EQ(termToExpect5, termsToVerify3.at(1));
+    EXPECT_EQ(termToExpect4, termsToVerify3[0]);
+    EXPECT_EQ(termToExpect5, termsToVerify3[1]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, GetCombinedExpressionForNumeratorTermsWorks) {
@@ -396,14 +396,14 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, PutAsAdditionWorks) {
     VectorOfTermsOverTerms const& itemsToVerify(additionAndSubtraction.getItems());
     TermAssociationTypes const& associationToVerify(additionAndSubtraction.getAssociations());
     ASSERT_EQ(1U, itemsToVerify.size());
-    Terms const& numerators(itemsToVerify.at(0).getNumerators());
-    Terms const& denominators(itemsToVerify.at(0).getDenominators());
+    Terms const& numerators(itemsToVerify[0].getNumerators());
+    Terms const& denominators(itemsToVerify[0].getDenominators());
     ASSERT_EQ(1U, numerators.size());
-    EXPECT_EQ(Term(487), numerators.at(0));
+    EXPECT_EQ(Term(487), numerators[0]);
     ASSERT_EQ(1U, denominators.size());
-    EXPECT_EQ(Term(756), denominators.at(0));
+    EXPECT_EQ(Term(756), denominators[0]);
     ASSERT_EQ(1U, associationToVerify.size());
-    EXPECT_EQ(TermAssociationType::Positive, associationToVerify.at(0));
+    EXPECT_EQ(TermAssociationType::Positive, associationToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, PutAsSubtractionWorks) {
@@ -415,14 +415,14 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, PutAsSubtractionWorks) {
     VectorOfTermsOverTerms const& itemsToVerify(additionAndSubtraction.getItems());
     TermAssociationTypes const& associationToVerify(additionAndSubtraction.getAssociations());
     ASSERT_EQ(1U, itemsToVerify.size());
-    Terms const& numerators(itemsToVerify.at(0).getNumerators());
-    Terms const& denominators(itemsToVerify.at(0).getDenominators());
+    Terms const& numerators(itemsToVerify[0].getNumerators());
+    Terms const& denominators(itemsToVerify[0].getDenominators());
     ASSERT_EQ(1U, numerators.size());
-    EXPECT_EQ(Term(487), numerators.at(0));
+    EXPECT_EQ(Term(487), numerators[0]);
     ASSERT_EQ(1U, denominators.size());
-    EXPECT_EQ(Term(756), denominators.at(0));
+    EXPECT_EQ(Term(756), denominators[0]);
     ASSERT_EQ(1U, associationToVerify.size());
-    EXPECT_EQ(TermAssociationType::Negative, associationToVerify.at(0));
+    EXPECT_EQ(TermAssociationType::Negative, associationToVerify[0]);
 }
 
 TEST(AdditionAndSubtractionOfTermsOverTermsTest, PutAsAddOrSubtractionWorks) {
@@ -434,14 +434,14 @@ TEST(AdditionAndSubtractionOfTermsOverTermsTest, PutAsAddOrSubtractionWorks) {
     VectorOfTermsOverTerms const& itemsToVerify(additionAndSubtraction.getItems());
     TermAssociationTypes const& associationToVerify(additionAndSubtraction.getAssociations());
     ASSERT_EQ(1U, itemsToVerify.size());
-    Terms const& numerators(itemsToVerify.at(0).getNumerators());
-    Terms const& denominators(itemsToVerify.at(0).getDenominators());
+    Terms const& numerators(itemsToVerify[0].getNumerators());
+    Terms const& denominators(itemsToVerify[0].getDenominators());
     ASSERT_EQ(1U, numerators.size());
-    EXPECT_EQ(Term(487), numerators.at(0));
+    EXPECT_EQ(Term(487), numerators[0]);
     ASSERT_EQ(1U, denominators.size());
-    EXPECT_EQ(Term(756), denominators.at(0));
+    EXPECT_EQ(Term(756), denominators[0]);
     ASSERT_EQ(1U, associationToVerify.size());
-    EXPECT_EQ(TermAssociationType::Negative, associationToVerify.at(0));
+    EXPECT_EQ(TermAssociationType::Negative, associationToVerify[0]);
 }
 
 }  // namespace algebra

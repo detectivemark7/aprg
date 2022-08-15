@@ -94,7 +94,7 @@ Term buildTermIfPossible(string const& termString) {
     aggregator.simplifyTerms();
     Terms const& simplifiedTerms(aggregator.getTermsConstReference());
     if (simplifiedTerms.size() == 1) {
-        result = simplifiedTerms.at(0);
+        result = simplifiedTerms[0];
     }
     return result;
 }

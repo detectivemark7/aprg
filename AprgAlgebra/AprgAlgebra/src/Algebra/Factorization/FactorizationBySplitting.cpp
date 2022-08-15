@@ -222,9 +222,9 @@ void updateToGetSubsetOfFactors(Polynomials& commonFactors, Polynomials const& c
     commonFactors.clear();
     for (int i = 0; i < static_cast<int>(previousCommonFactors.size()); i++) {
         bool isFound(false);
-        Polynomial const& previousCommonFactor(previousCommonFactors.at(i));
+        Polynomial const& previousCommonFactor(previousCommonFactors[i]);
         for (int j = 0; j < static_cast<int>(currentCommonFactors.size()); j++) {
-            Polynomial const& currentCommonFactor(currentCommonFactors.at(j));
+            Polynomial const& currentCommonFactor(currentCommonFactors[j]);
             if (isOneMonomial(previousCommonFactor) && isOneMonomial(currentCommonFactor)) {
                 Monomial gcfMonomial(getGcfMonomialInMonomials(
                     {getFirstMonomial(previousCommonFactor), getFirstMonomial(currentCommonFactor)}));

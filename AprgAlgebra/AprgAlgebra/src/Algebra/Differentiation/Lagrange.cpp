@@ -41,7 +41,7 @@ Term getTermWithLagrangeFunctions(
     int size(min(lagrangeFunctions.size(), lagrangeMultiplierNames.size()));
     Term result(term);
     for (int i = 0; i < size; i++) {
-        result += lagrangeFunctions.at(i) * Term(lagrangeMultiplierNames.at(i));
+        result += lagrangeFunctions[i] * Term(lagrangeMultiplierNames[i]);
     }
     return result;
 }

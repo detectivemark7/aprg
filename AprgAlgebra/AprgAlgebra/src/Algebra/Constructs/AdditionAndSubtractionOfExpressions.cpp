@@ -46,7 +46,7 @@ TermsWithDetails AdditionAndSubtractionOfExpressions::getAsTermsWithDetails() co
     TermsWithDetails result;
     int size = getSize();
     for (int index = 0; index < size; index++) {
-        result.emplace_back(convertExpressionToSimplestTerm(m_expressions.at(index)), m_associations.at(index));
+        result.emplace_back(convertExpressionToSimplestTerm(m_expressions[index]), m_associations[index]);
     }
     return result;
 }
@@ -96,10 +96,10 @@ void AdditionAndSubtractionOfExpressions::mergeExpressionsByCheckingTwoTermsAtAT
     for (int i = 0; i < size; i++) {
         for (int j = i + 1; j < size; j++) {
             // quadratic time: think on how this can be better
-            if (canBeMerged(mergeParts.at(i), mergeParts.at(j), commonParts.at(i), commonParts.at(j))) {
+            if (canBeMerged(mergeParts[i], mergeParts[j], commonParts[i], commonParts[j])) {
                 Term mergedTerm(
-                    mergeTerms(mergeParts.at(i), mergeParts.at(j), m_associations.at(i), m_associations.at(j)));
-                Term const& commonPart(commonParts.at(i));
+                    mergeTerms(mergeParts[i], mergeParts[j], m_associations[i], m_associations[j]));
+                Term const& commonPart(commonParts[i]);
                 mergeParts[i] = mergedTerm;
                 m_expressions[i] = createOrCopyExpressionFromATerm(mergedTerm * commonPart);
                 m_associations[i] = TermAssociationType::Positive;

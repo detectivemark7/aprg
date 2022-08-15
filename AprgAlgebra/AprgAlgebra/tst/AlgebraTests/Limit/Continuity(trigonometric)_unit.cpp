@@ -19,7 +19,7 @@ TEST(ContinuityTest, GetContinuityDomainWorksOnSine) {
 
     AlbaNumberIntervals const& intervalToVerify(continuityDomain.getAcceptedIntervals());
     ASSERT_EQ(1U, intervalToVerify.size());
-    EXPECT_EQ(createAllRealValuesInterval(), intervalToVerify.at(0));
+    EXPECT_EQ(createAllRealValuesInterval(), intervalToVerify[0]);
 }
 
 TEST(ContinuityTest, GetContinuityDomainWorksOnCosine) {
@@ -29,7 +29,7 @@ TEST(ContinuityTest, GetContinuityDomainWorksOnCosine) {
 
     AlbaNumberIntervals const& intervalToVerify(continuityDomain.getAcceptedIntervals());
     ASSERT_EQ(1U, intervalToVerify.size());
-    EXPECT_EQ(createAllRealValuesInterval(), intervalToVerify.at(0));
+    EXPECT_EQ(createAllRealValuesInterval(), intervalToVerify[0]);
 }
 
 }  // namespace algebra

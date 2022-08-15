@@ -58,7 +58,7 @@ void substituteEquationForSelectedEquationIndex(
     Equations& substitutedEquations, bool const areVariableAndEquationSelected, string const& selectedVariableName,
     int const selectedEquationIndex) {
     if (areVariableAndEquationSelected) {
-        IsolationOfOneVariableOnEqualityEquation isolation(substitutedEquations.at(selectedEquationIndex));
+        IsolationOfOneVariableOnEqualityEquation isolation(substitutedEquations[selectedEquationIndex]);
         substitutedEquations.erase(substitutedEquations.begin() + selectedEquationIndex);
         SubstitutionOfVariablesToTerms substitution;
         substitution.putVariableWithTerm(

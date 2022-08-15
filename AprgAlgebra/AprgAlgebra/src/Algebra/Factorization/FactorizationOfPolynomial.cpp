@@ -56,7 +56,7 @@ void factorizeCommonMonomialIfPossible(Polynomials& result, Polynomial const& po
 void factorizePolynomialsAndPutToResult(Polynomials& result, Polynomials const& polynomials) {
     Polynomials polynomialsToFactorize(polynomials);
     for (int i = 0; i < static_cast<int>(polynomialsToFactorize.size()); i++) {
-        Polynomial const& polynomial(polynomialsToFactorize.at(i));
+        Polynomial const& polynomial(polynomialsToFactorize[i]);
         Polynomial simplifiedPolynomial(polynomial);
         simplifiedPolynomial.simplify();
         if (doesNotNeedToBeFactorized(simplifiedPolynomial)) {

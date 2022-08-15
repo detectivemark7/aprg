@@ -25,7 +25,7 @@ TEST(PowerSeriesTest, GetIntervalsOfConvergenceWorks) {
 
     AlbaNumberIntervals expectedIntervals(series.getIntervalsOfConvergence());
     ASSERT_EQ(1U, expectedIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(3)), expectedIntervals.at(0));
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(1), createOpenEndpoint(3)), expectedIntervals[0]);
 }
 
 TEST(PowerSeriesTest, GetRadiusOfConvergenceWorks) {

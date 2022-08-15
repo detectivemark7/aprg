@@ -159,10 +159,10 @@ TermsRaiseToNumbers getFactorizedItemsForAdditionAndSubtraction(
          i < static_cast<int>(nonConstantFactorsPerAddends.size()) && i < static_cast<int>(originalAddends.size());
          i++) {
         TermsWithDetails innerMultipliers;
-        putRemainingConstantFactorAsAnInnerMultiplier(innerMultipliers, constantFactorsPerAddends.at(i), constantGcf);
+        putRemainingConstantFactorAsAnInnerMultiplier(innerMultipliers, constantFactorsPerAddends[i], constantGcf);
         putRemainingNonConstantFactorsAsInnerMultipliers(
-            innerMultipliers, nonConstantFactorsPerAddends.at(i), commonNonConstantFactors);
-        putRemainingInnerMultipliersAsOuterAddend(outerAddends, innerMultipliers, originalAddends.at(i));
+            innerMultipliers, nonConstantFactorsPerAddends[i], commonNonConstantFactors);
+        putRemainingInnerMultipliersAsOuterAddend(outerAddends, innerMultipliers, originalAddends[i]);
     }
     return getFactorizedItemsBasedFromCollectedData(constantGcf, commonNonConstantFactors, outerAddends);
 }

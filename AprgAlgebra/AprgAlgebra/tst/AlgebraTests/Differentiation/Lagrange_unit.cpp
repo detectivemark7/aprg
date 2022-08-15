@@ -23,7 +23,7 @@ TEST(LagrangeTest, GetLagrangeMultipliersWorks) {
 
     ASSERT_EQ(1U, langrangeMultipliers.size());
     string stringToExpect("-2[z^-1]");
-    EXPECT_EQ(stringToExpect, convertToString(langrangeMultipliers.at(0)));
+    EXPECT_EQ(stringToExpect, convertToString(langrangeMultipliers[0]));
 
     // using lagrange multipler as -2/z, we can use that to calculate the other values.
 }
@@ -42,8 +42,8 @@ TEST(LagrangeTest, GetLagrangeMultipliersWorksUsingExample1) {
     ASSERT_EQ(2U, langrangeMultipliers.size());
     string stringToExpect1("(((1/32)[z^6] + (-1/16)[z^4])^(1/2))");
     string stringToExpect2("{EmptyTerm}");
-    EXPECT_EQ(stringToExpect1, convertToString(langrangeMultipliers.at(0)));
-    EXPECT_EQ(stringToExpect2, convertToString(langrangeMultipliers.at(1)));
+    EXPECT_EQ(stringToExpect1, convertToString(langrangeMultipliers[0]));
+    EXPECT_EQ(stringToExpect2, convertToString(langrangeMultipliers[1]));
 }
 
 }  // namespace algebra

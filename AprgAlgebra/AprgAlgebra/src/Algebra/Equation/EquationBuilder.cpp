@@ -17,10 +17,10 @@ EquationBuilder::EquationBuilder(string const& equationInString) {
 Equation EquationBuilder::getEquation() const {
     Equation result;
     if (m_termStrings.size() == 2 && m_equationOperatorStrings.size() == 1) {
-        Term firstTerm(buildTermIfPossible(m_termStrings.at(0)));
-        Term secondTerm(buildTermIfPossible(m_termStrings.at(1)));
+        Term firstTerm(buildTermIfPossible(m_termStrings[0]));
+        Term secondTerm(buildTermIfPossible(m_termStrings[1]));
         if (!firstTerm.isEmpty() && !secondTerm.isEmpty()) {
-            result = Equation(firstTerm, m_equationOperatorStrings.at(0), secondTerm);
+            result = Equation(firstTerm, m_equationOperatorStrings[0], secondTerm);
         }
     }
     return result;

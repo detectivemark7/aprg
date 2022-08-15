@@ -515,7 +515,7 @@ void retrieveSubstitutionsFromCriticalNumbers(
             if (static_cast<int>(substitutions.size()) <= i) {
                 substitutions.emplace_back();
             }
-            substitutions.at(i++).putVariableWithValue(nameAndCriticalNumbersPair.first, criticalNumber);
+            substitutions[i++].putVariableWithValue(nameAndCriticalNumbersPair.first, criticalNumber);
         }
     }
 }

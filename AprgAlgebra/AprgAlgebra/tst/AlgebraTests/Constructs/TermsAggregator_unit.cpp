@@ -29,7 +29,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithUnaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(createExpressionIfPossible({"-", "x"}));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithBinaryOperation) {
@@ -40,7 +40,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithBinaryOperation) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(createExpressionIfPossible({"x", "+", "x"}));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithDifferentOperationLevels) {
@@ -54,7 +54,7 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithDifferentOperationLevels) {
     Expression subExpression2(createExpressionIfPossible({"b", "*", subExpression1}));
     Expression subExpression3(createExpressionIfPossible({"a", "+", subExpression2}));
     Term termToExpect(subExpression3);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithParenthesis) {
@@ -64,12 +64,12 @@ TEST(TermsAggregatorTest, ExpressionCanBeBuiltWithParenthesis) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    ASSERT_EQ(TermType::Expression, termsToVerify.at(0).getTermType());
+    ASSERT_EQ(TermType::Expression, termsToVerify[0].getTermType());
     Expression subExpression1(createExpressionIfPossible({"a", "+", "b"}));
     Expression subExpression2(createExpressionIfPossible({subExpression1, "*", "c"}));
     Expression subExpression3(createExpressionIfPossible({subExpression2, "^", "d"}));
     Term termToExpect(subExpression3);
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, BuildExpressionFromTermsWorksOnNegativeFractionInParenthesis) {
@@ -79,10 +79,10 @@ TEST(TermsAggregatorTest, BuildExpressionFromTermsWorksOnNegativeFractionInParen
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    ASSERT_EQ(TermType::Expression, termsToVerify.at(0).getTermType());
+    ASSERT_EQ(TermType::Expression, termsToVerify[0].getTermType());
     Expression subExpression1(createExpressionIfPossible({"-", 1}));
     Term termToExpect(createExpressionIfPossible({subExpression1, "/", 3}));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithNoTerms) {
@@ -101,7 +101,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithUnaryOperation) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(Term(-14), termsToVerify.at(0));
+    EXPECT_EQ(Term(-14), termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithBinaryOperation) {
@@ -111,7 +111,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithBinaryOperation) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(Term(5), termsToVerify.at(0));
+    EXPECT_EQ(Term(5), termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithDifferentOperationLevels) {
@@ -121,7 +121,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithDifferentOperationLevels) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(Term(3074), termsToVerify.at(0));
+    EXPECT_EQ(Term(3074), termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithParenthesis) {
@@ -131,7 +131,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithParenthesis) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    EXPECT_EQ(Term(3200000), termsToVerify.at(0));
+    EXPECT_EQ(Term(3200000), termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithNegativeValues) {
@@ -141,9 +141,9 @@ TEST(TermsAggregatorTest, SimplifyWorksWithNegativeValues) {
 
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
-    ASSERT_EQ(TermType::Monomial, termsToVerify.at(0).getTermType());
+    ASSERT_EQ(TermType::Monomial, termsToVerify[0].getTermType());
     Term termToExpect(Monomial(1, {{"x", 2}, {"y", -3}, {"z", 4}}));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 TEST(TermsAggregatorTest, SimplifyWorksWithFunction) {
@@ -154,7 +154,7 @@ TEST(TermsAggregatorTest, SimplifyWorksWithFunction) {
     Terms termsToVerify(aggregator.getTermsConstReference());
     ASSERT_EQ(1U, termsToVerify.size());
     Term termToExpect(Functions::abs(5));
-    EXPECT_EQ(termToExpect, termsToVerify.at(0));
+    EXPECT_EQ(termToExpect, termsToVerify[0]);
 }
 
 }  // namespace algebra

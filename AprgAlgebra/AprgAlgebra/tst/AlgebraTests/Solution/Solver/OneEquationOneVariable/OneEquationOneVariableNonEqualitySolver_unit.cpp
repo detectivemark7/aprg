@@ -42,7 +42,7 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, EquationsThatAreAlwaysSatisfie
     EXPECT_TRUE(solver.isACompleteSolution());
     AlbaNumberIntervals actualIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, actualIntervals.size());
-    EXPECT_EQ(createAllRealValuesInterval(), actualIntervals.at(0));
+    EXPECT_EQ(createAllRealValuesInterval(), actualIntervals[0]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialAreSolvedCorrectly) {
@@ -54,7 +54,7 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialAreSolvedCorrectly) 
     EXPECT_TRUE(solver.isACompleteSolution());
     AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, acceptedIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(-2), createOpenEndpoint(2)), acceptedIntervals.at(0));
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(-2), createOpenEndpoint(2)), acceptedIntervals[0]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialOverPolynomialAreSolvedCorrectly) {
@@ -70,9 +70,9 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialOverPolynomialAreSol
     AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(3U, acceptedIntervals.size());
     EXPECT_EQ(
-        AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(-6)), acceptedIntervals.at(0));
-    EXPECT_EQ(AlbaNumberInterval(createCloseEndpoint(-5), createCloseEndpoint(5)), acceptedIntervals.at(1));
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(6), createPositiveInfinityOpenEndpoint()), acceptedIntervals.at(2));
+        AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(-6)), acceptedIntervals[0]);
+    EXPECT_EQ(AlbaNumberInterval(createCloseEndpoint(-5), createCloseEndpoint(5)), acceptedIntervals[1]);
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(6), createPositiveInfinityOpenEndpoint()), acceptedIntervals[2]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, XToTheXAreNotSolved) {
@@ -109,7 +109,7 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, AbsoluteValueFunctionsAreSolve
     EXPECT_TRUE(solver.isACompleteSolution());
     AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, acceptedIntervals.size());
-    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(-526), createOpenEndpoint(526)), acceptedIntervals.at(0));
+    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(-526), createOpenEndpoint(526)), acceptedIntervals[0]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, AbsoluteValueFunctionWithInputExpressionAreSolved) {
@@ -123,9 +123,9 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, AbsoluteValueFunctionWithInput
     AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(2U, acceptedIntervals.size());
     EXPECT_EQ(
-        AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createCloseEndpoint(-626)), acceptedIntervals.at(0));
+        AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createCloseEndpoint(-626)), acceptedIntervals[0]);
     EXPECT_EQ(
-        AlbaNumberInterval(createCloseEndpoint(426), createPositiveInfinityOpenEndpoint()), acceptedIntervals.at(1));
+        AlbaNumberInterval(createCloseEndpoint(426), createPositiveInfinityOpenEndpoint()), acceptedIntervals[1]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, AbsoluteValueFunctionInDenominatorAreSolved) {
@@ -143,10 +143,10 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, AbsoluteValueFunctionInDenomin
     ASSERT_EQ(2U, acceptedIntervals.size());
     EXPECT_EQ(
         AlbaNumberInterval(createNegativeInfinityOpenEndpoint(), createOpenEndpoint(AlbaNumber::createFraction(-7, 2))),
-        acceptedIntervals.at(0));
+        acceptedIntervals[0]);
     EXPECT_EQ(
         AlbaNumberInterval(createOpenEndpoint(AlbaNumber::createFraction(1, 2)), createPositiveInfinityOpenEndpoint()),
-        acceptedIntervals.at(1));
+        acceptedIntervals[1]);
 }
 
 TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialsInEquationAreSolved) {
@@ -162,7 +162,7 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialsInEquationAreSolved
     AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
     ASSERT_EQ(1U, acceptedIntervals.size());
     EXPECT_EQ(
-        AlbaNumberInterval(createOpenEndpoint(-3), createPositiveInfinityOpenEndpoint()), acceptedIntervals.at(0));
+        AlbaNumberInterval(createOpenEndpoint(-3), createPositiveInfinityOpenEndpoint()), acceptedIntervals[0]);
 }
 
 // There is no capability for TermsOverTerms solution yet in non equality solver. This is hard.
@@ -182,7 +182,7 @@ TEST(OneEquationOneVariableNonEqualitySolverTest, PolynomialsInEquationAreSolved
 //    AlbaNumberIntervals const& acceptedIntervals(solutionSet.getAcceptedIntervals());
 //    ASSERT_EQ(1U, acceptedIntervals.size());
 //    EXPECT_EQ(AlbaNumberInterval(createOpenEndpoint(-3), createPositiveInfinityOpenEndpoint()),
-//    acceptedIntervals.at(0));
+//    acceptedIntervals[0]);
 //}
 
 }  // namespace algebra

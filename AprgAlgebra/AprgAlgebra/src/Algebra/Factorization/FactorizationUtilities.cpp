@@ -53,8 +53,8 @@ bool doesNotNeedToBeFactorized(Polynomial const& polynomial) {
     } else if (monomials.size() <= 1) {
         result = true;
     } else if (monomials.size() == 2) {
-        Monomial const& first(monomials.at(0));
-        Monomial const& second(monomials.at(1));
+        Monomial const& first(monomials[0]);
+        Monomial const& second(monomials[1]);
         bool areBothConstantIntegers =
             first.getConstantConstReference().isIntegerType() && second.getConstantConstReference().isIntegerType();
         bool areEitherConstantOne = first.getConstantConstReference() == 1 || second.getConstantConstReference() == 1;
