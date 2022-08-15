@@ -50,7 +50,7 @@ bool isTwinPrimeConjectureTrue(UnsignedInteger const number) {
     UnsignedIntegers numbers(getPrimesBelowThisNumber(number));
     UnsignedInteger twinPrimeCount = 0;
     for (UnsignedInteger i = 0; i < numbers.size() - 1; i++) {
-        if (numbers.at(i + 1) - numbers.at(i) == 2) {
+        if (numbers[i + 1] - numbers[i] == 2) {
             twinPrimeCount++;
         }
     }
@@ -147,7 +147,7 @@ UnsignedIntegers getPrimesBelowThisNumber(UnsignedInteger const number) {
     }
     UnsignedIntegers result;
     for (UnsignedInteger prime = 2; prime < number; prime++) {
-        if (sieveOfEratosthenes.at(prime)) {
+        if (sieveOfEratosthenes[prime]) {
             result.emplace_back(prime);
         }
     }

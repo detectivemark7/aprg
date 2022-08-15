@@ -22,7 +22,7 @@ void findDistinctNonConsecutiveFibonacciNumbersForSum(
     UnsignedInteger const index) {
     // This can be improved by dynamic programming
     for (UnsignedInteger i = index; i < fibonaccis.size(); i++) {
-        UnsignedInteger fibonacci(fibonaccis.at(i));
+        UnsignedInteger fibonacci(fibonaccis[i]);
         if (sum > fibonacci) {
             fibonaccisForSum.emplace_back(fibonacci);
             findDistinctNonConsecutiveFibonacciNumbersForSum(
@@ -147,17 +147,17 @@ UnsignedInteger getNthFibonacciUsingLogarithmicTabularDP(UnsignedInteger const n
             UnsignedInteger& resultForStep(tabularData[step]);
             if (mathHelper::isOdd(step)) {
                 UnsignedInteger n = (step + 1) / 2;
-                UnsignedInteger fibonacciAtK = tabularData.at(n);
-                UnsignedInteger fibonacciAtKMinus1 = tabularData.at(n - 1);
+                UnsignedInteger fibonacciAtK = tabularData[n];
+                UnsignedInteger fibonacciAtKMinus1 = tabularData[n - 1];
                 resultForStep = fibonacciAtK * fibonacciAtK + fibonacciAtKMinus1 * fibonacciAtKMinus1;
             } else {
                 UnsignedInteger n = step / 2;
-                UnsignedInteger fibonacciAtK = tabularData.at(n);
-                UnsignedInteger fibonacciAtKMinus1 = tabularData.at(n - 1);
+                UnsignedInteger fibonacciAtK = tabularData[n];
+                UnsignedInteger fibonacciAtKMinus1 = tabularData[n - 1];
                 resultForStep = (2 * fibonacciAtKMinus1 + fibonacciAtK) * fibonacciAtK;
             }
         }
-        result = tabularData.at(number);
+        result = tabularData[number];
     }
     return result;
 }

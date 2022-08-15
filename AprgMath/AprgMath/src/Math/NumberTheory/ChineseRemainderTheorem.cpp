@@ -31,8 +31,8 @@ void ChineseRemainderTheorem::solve(UnsignedIntegers const& numbers, UnsignedInt
         m_productOfModulos =
             std::accumulate(modulos.cbegin(), modulos.cend(), UnsignedInteger(1), std::multiplies<UnsignedInteger>());
         for (int k = 0; k < static_cast<int>(numbers.size()); k++) {
-            UnsignedInteger const& number(numbers.at(k));
-            UnsignedInteger const& modulo(modulos.at(k));
+            UnsignedInteger const& number(numbers[k]);
+            UnsignedInteger const& modulo(modulos[k]);
             UnsignedInteger formulaForK = m_productOfModulos / modulo;
             UnsignedInteger modularInverseOfFk = getModularInverseByEulersTheorem(formulaForK, modulo);
             m_solutionValue += number * formulaForK * modularInverseOfFk;

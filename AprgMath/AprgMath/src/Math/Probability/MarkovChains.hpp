@@ -57,7 +57,7 @@ private:
     ProbabilityDistribution calculateNextProbabilityDistribution(ProbabilityDistribution const& current) {
         ProbabilityMatrix inputMatrix(1U, MAX_STATE_VALUE);
         for (int i = 0; i < MAX_STATE_VALUE; i++) {
-            inputMatrix.setEntry(0U, i, current.at(i));
+            inputMatrix.setEntry(0U, i, current[i]);
         }
         ProbabilityMatrix outputMatrix = m_probabilityMatrix * inputMatrix;
         ProbabilityDistribution result;
