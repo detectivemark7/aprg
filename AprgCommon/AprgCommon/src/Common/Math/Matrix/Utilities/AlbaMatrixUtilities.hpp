@@ -170,7 +170,7 @@ DataType multiplyEachItemAndGetSum(AlbaMatrixData<DataType> const& first, AlbaMa
     DataType result{};
     size_t minSize = std::min(first.size(), second.size());
     for (size_t i = 0; i < minSize; i++) {
-        result += first.at(i) * second.at(i);
+        result += first[i] * second[i];
     }
     return result;
 }

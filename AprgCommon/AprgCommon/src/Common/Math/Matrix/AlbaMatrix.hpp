@@ -154,12 +154,12 @@ public:
 
     DataType getEntry(size_t const x, size_t const y) const {
         assert(isInside(x, y));
-        return m_matrixData.at(getMatrixIndex(x, y));
+        return m_matrixData[getMatrixIndex(x, y)];
     }
 
     DataType const& getEntryConstReference(size_t const x, size_t const y) const {
         assert(isInside(x, y));
-        return m_matrixData.at(getMatrixIndex(x, y));
+        return m_matrixData[getMatrixIndex(x, y)];
     }
 
     MatrixData const& getMatrixData() const { return m_matrixData; }
@@ -199,7 +199,7 @@ public:
 
     DataType& getEntryReference(size_t const x, size_t const y) {
         assert(isInside(x, y));
-        return m_matrixData.at(getMatrixIndex(x, y));
+        return m_matrixData[getMatrixIndex(x, y)];
     }
 
     void setEntry(size_t const x, size_t const y, DataType const& value) {
@@ -215,14 +215,14 @@ public:
     void setColumn(size_t const columnIndex, MatrixData const& dataSampleValues) {
         size_t limit = std::min(m_numberOfRows, static_cast<size_t>(dataSampleValues.size()));
         for (size_t y = 0; y < limit; y++) {
-            setEntry(columnIndex, y, dataSampleValues.at(y));
+            setEntry(columnIndex, y, dataSampleValues[y]);
         }
     }
 
     void setRow(size_t const rowIndex, MatrixData const& dataSampleValues) {
         size_t limit = std::min(m_numberOfColumns, static_cast<size_t>(dataSampleValues.size()));
         for (size_t x = 0; x < limit; x++) {
-            setEntry(x, rowIndex, dataSampleValues.at(x));
+            setEntry(x, rowIndex, dataSampleValues[x]);
         }
     }
 
@@ -270,7 +270,7 @@ public:
         transformToReducedEchelonFormUsingGaussJordanReduction(tempMatrix);
         iterateAllThroughYAndThenX([&](size_t const x, size_t const y) {
             m_matrixData[getMatrixIndex(x, y)] =
-                tempMatrix.m_matrixData.at(getMatrixIndex(m_numberOfColumns + x, y, newColumns));
+                tempMatrix.m_matrixData[getMatrixIndex(m_numberOfColumns + x, y, newColumns)];
         });
     }
 

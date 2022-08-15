@@ -41,7 +41,7 @@ size_t DisplayTableRow::getCharacters() const {
 
 Cells const& DisplayTableRow::getCells() const { return m_cells; }
 
-DisplayTableCell const& DisplayTableRow::getCellAt(size_t const columnIndex) const { return m_cells.at(columnIndex); }
+DisplayTableCell const& DisplayTableRow::getCellAt(size_t const columnIndex) const { return m_cells[columnIndex]; }
 
 Cells& DisplayTableRow::getCellsReference() { return m_cells; }
 
@@ -75,7 +75,7 @@ size_t DisplayTable::getMaxCharactersInOneRow() const {
 }
 
 DisplayTableCell const& DisplayTable::getCellAt(size_t const columnIndex, size_t const rowIndex) const {
-    return m_rows.at(rowIndex).getCellAt(columnIndex);
+    return m_rows[rowIndex].getCellAt(columnIndex);
 }
 
 DisplayTableRow& DisplayTable::getLastRow() { return m_rows.back(); }

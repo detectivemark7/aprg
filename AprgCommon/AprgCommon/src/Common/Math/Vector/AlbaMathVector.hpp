@@ -131,7 +131,7 @@ public:
 
     DataType const& getValueAt(size_t const index) const {
         assert(index < SIZE);
-        return m_values.at(index);
+        return m_values[index];
     }
 
     DataType getMagnitude() const {
@@ -149,7 +149,7 @@ public:
 
     DataType& getValueReferenceAt(size_t const index) {
         assert(index < SIZE);
-        return m_values.at(index);
+        return m_values[index];
     }
 
     ValuesInArray& getValuesReference() { return m_values; }

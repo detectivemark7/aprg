@@ -20,7 +20,9 @@ public:
         typeHelper::isIntegralType<ValueType>(), std::uniform_int_distribution<ValueType>,
         std::uniform_real_distribution<ValueType>>;
 
-    AlbaUniformDeterministicAllBitsRandomizer(ValueType const customSeed) : m_randomEngine(customSeed) {}
+    AlbaUniformDeterministicAllBitsRandomizer() : m_randomEngine() {}
+
+    explicit AlbaUniformDeterministicAllBitsRandomizer(ValueType const customSeed) : m_randomEngine(customSeed) {}
 
     ValueType getRandomValue() { return m_randomEngine(); }
 
