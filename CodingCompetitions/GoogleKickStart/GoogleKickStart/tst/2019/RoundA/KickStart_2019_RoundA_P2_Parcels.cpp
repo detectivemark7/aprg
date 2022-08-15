@@ -87,7 +87,7 @@ bool doAllDistancesFitsOnTheDistanceLimit(vector<int> const& distanceGrid, int c
     bool noCellIsBeyondTheLimit(true);
     for (int x = 0; x < columns; ++x) {
         for (int y = 0; y < rows; ++y) {
-            if (distanceGrid.at(getIndex(x, y)) > distanceLimit) {
+            if (distanceGrid[getIndex(x, y)] > distanceLimit) {
                 plusMaxLimit = min(plusMaxLimit, x + y + distanceLimit);
                 plusMinLimit = max(plusMinLimit, x + y - distanceLimit);
                 minusMaxLimit = min(minusMaxLimit, x - y + distanceLimit);
@@ -121,7 +121,7 @@ void runTestCase(int const testCaseNumber) {
         string bits;
         my_cin >> bits;
         for (int x = 0; x < columns; ++x) {
-            bool isDeliveryOffice = (bits.at(x) != '0');
+            bool isDeliveryOffice = (bits[x] != '0');
             if (isDeliveryOffice) {
                 deliveryOffices.emplace_back(x, y);
             }

@@ -33,7 +33,7 @@ int32_t getPalindromeValue(string const& blocksString, Question const& question)
     // this can be faster using dynamic programming
     int32_t result = 0;
     for (int i = question.first; i <= question.second; i++) {
-        result ^= 1 << (blocksString.at(i - 1) - 'A');
+        result ^= 1 << (blocksString[i - 1] - 'A');
     }
     return result;
 }
