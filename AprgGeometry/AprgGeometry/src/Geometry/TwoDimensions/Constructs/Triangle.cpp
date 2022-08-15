@@ -17,9 +17,9 @@ Triangle::Triangle(Point const& first, Point const& second, Point const& third)
 bool Triangle::isIsoceles() const {
     Distances lengthOfSides(getLengthOfSides());
 
-    return isAlmostEqual(lengthOfSides.at(0), lengthOfSides.at(1)) ||
-           isAlmostEqual(lengthOfSides.at(1), lengthOfSides.at(2)) ||
-           isAlmostEqual(lengthOfSides.at(2), lengthOfSides.at(0));
+    return isAlmostEqual(lengthOfSides[0], lengthOfSides[1]) ||
+           isAlmostEqual(lengthOfSides[1], lengthOfSides[2]) ||
+           isAlmostEqual(lengthOfSides[2], lengthOfSides[0]);
 }
 
 bool Triangle::isRightTriangle() const {
@@ -30,7 +30,7 @@ bool Triangle::isRightTriangle() const {
 }
 
 ostream& operator<<(ostream& out, Triangle const& triangle) {
-    out << "[" << triangle.m_vertices.at(0) << "][" << triangle.m_vertices.at(1) << "][" << triangle.m_vertices.at(2)
+    out << "[" << triangle.m_vertices[0] << "][" << triangle.m_vertices[1] << "][" << triangle.m_vertices[2]
         << "]";
     return out;
 }

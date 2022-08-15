@@ -140,9 +140,9 @@ double getArea(Polygon<numberOfVertices> const& polygon) {
     Points const& vertices(polygon.getVertices());
     int sizeMinusOne = static_cast<int>(vertices.size()) - 1;
     for (int i = 0; i < sizeMinusOne; i++) {
-        area += getSignedCounterClockwiseDoubleTriangleAreaOfOriginAnd2Points(vertices.at(i), vertices.at(i + 1));
+        area += getSignedCounterClockwiseDoubleTriangleAreaOfOriginAnd2Points(vertices[i], vertices[i + 1]);
     }
-    area += getSignedCounterClockwiseDoubleTriangleAreaOfOriginAnd2Points(vertices.at(sizeMinusOne), vertices.at(0));
+    area += getSignedCounterClockwiseDoubleTriangleAreaOfOriginAnd2Points(vertices[sizeMinusOne], vertices[0]);
     area = mathHelper::getAbsoluteValue(area) / 2;
     return area;
 }

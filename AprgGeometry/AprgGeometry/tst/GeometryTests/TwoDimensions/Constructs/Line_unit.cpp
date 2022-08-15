@@ -65,11 +65,11 @@ TEST(TwoDimensionsLineTest, HorizontalLine) {
 
     Points points(line.getPoints(Point(-2, 10), Point(2, -10), 1));
     ASSERT_EQ(5U, points.size());
-    EXPECT_EQ(Point(-2, 3), points.at(0));
-    EXPECT_EQ(Point(-1, 3), points.at(1));
-    EXPECT_EQ(Point(0, 3), points.at(2));
-    EXPECT_EQ(Point(1, 3), points.at(3));
-    EXPECT_EQ(Point(2, 3), points.at(4));
+    EXPECT_EQ(Point(-2, 3), points[0]);
+    EXPECT_EQ(Point(-1, 3), points[1]);
+    EXPECT_EQ(Point(0, 3), points[2]);
+    EXPECT_EQ(Point(1, 3), points[3]);
+    EXPECT_EQ(Point(2, 3), points[4]);
 }
 
 TEST(TwoDimensionsLineTest, VerticalLine) {
@@ -89,13 +89,13 @@ TEST(TwoDimensionsLineTest, VerticalLine) {
 
     Points points(line.getPoints(Point(10, -3), Point(-10, 3), 1));
     ASSERT_EQ(7U, points.size());
-    EXPECT_EQ(Point(2, -3), points.at(0));
-    EXPECT_EQ(Point(2, -2), points.at(1));
-    EXPECT_EQ(Point(2, -1), points.at(2));
-    EXPECT_EQ(Point(2, 0), points.at(3));
-    EXPECT_EQ(Point(2, 1), points.at(4));
-    EXPECT_EQ(Point(2, 2), points.at(5));
-    EXPECT_EQ(Point(2, 3), points.at(6));
+    EXPECT_EQ(Point(2, -3), points[0]);
+    EXPECT_EQ(Point(2, -2), points[1]);
+    EXPECT_EQ(Point(2, -1), points[2]);
+    EXPECT_EQ(Point(2, 0), points[3]);
+    EXPECT_EQ(Point(2, 1), points[4]);
+    EXPECT_EQ(Point(2, 2), points[5]);
+    EXPECT_EQ(Point(2, 3), points[6]);
 }
 
 TEST(TwoDimensionsLineTest, LineWithSlope) {
@@ -115,15 +115,15 @@ TEST(TwoDimensionsLineTest, LineWithSlope) {
 
     Points points(line.getPoints(Point(-2, -3), Point(2, 3), 1));
     ASSERT_EQ(9U, points.size());
-    EXPECT_EQ(Point(-2, -3), points.at(0));
-    EXPECT_EQ(Point(-1.33333333333333333, -2), points.at(1));
-    EXPECT_EQ(Point(-1, -1.5), points.at(2));
-    EXPECT_EQ(Point(-0.66666666666666666, -1), points.at(3));
-    EXPECT_EQ(Point(0, 0), points.at(4));
-    EXPECT_EQ(Point(0.66666666666666666, 1), points.at(5));
-    EXPECT_EQ(Point(1, 1.5), points.at(6));
-    EXPECT_EQ(Point(1.33333333333333333, 2), points.at(7));
-    EXPECT_EQ(Point(2, 3), points.at(8));
+    EXPECT_EQ(Point(-2, -3), points[0]);
+    EXPECT_EQ(Point(-1.33333333333333333, -2), points[1]);
+    EXPECT_EQ(Point(-1, -1.5), points[2]);
+    EXPECT_EQ(Point(-0.66666666666666666, -1), points[3]);
+    EXPECT_EQ(Point(0, 0), points[4]);
+    EXPECT_EQ(Point(0.66666666666666666, 1), points[5]);
+    EXPECT_EQ(Point(1, 1.5), points[6]);
+    EXPECT_EQ(Point(1.33333333333333333, 2), points[7]);
+    EXPECT_EQ(Point(2, 3), points[8]);
 }
 
 TEST(TwoDimensionsLineTest, HorizontalLineWithPointsReversed) {
@@ -143,11 +143,11 @@ TEST(TwoDimensionsLineTest, HorizontalLineWithPointsReversed) {
 
     Points points(line.getPoints(Point(2, 10), Point(-2, -10), 1));
     ASSERT_EQ(5U, points.size());
-    EXPECT_EQ(Point(2, 3), points.at(0));
-    EXPECT_EQ(Point(1, 3), points.at(1));
-    EXPECT_EQ(Point(0, 3), points.at(2));
-    EXPECT_EQ(Point(-1, 3), points.at(3));
-    EXPECT_EQ(Point(-2, 3), points.at(4));
+    EXPECT_EQ(Point(2, 3), points[0]);
+    EXPECT_EQ(Point(1, 3), points[1]);
+    EXPECT_EQ(Point(0, 3), points[2]);
+    EXPECT_EQ(Point(-1, 3), points[3]);
+    EXPECT_EQ(Point(-2, 3), points[4]);
 }
 
 TEST(TwoDimensionsLineTest, VerticalLineWithPointsReversed) {
@@ -167,13 +167,13 @@ TEST(TwoDimensionsLineTest, VerticalLineWithPointsReversed) {
 
     Points points(line.getPoints(Point(10, 3), Point(-10, -3), 1));
     ASSERT_EQ(7U, points.size());
-    EXPECT_EQ(Point(2, 3), points.at(0));
-    EXPECT_EQ(Point(2, 2), points.at(1));
-    EXPECT_EQ(Point(2, 1), points.at(2));
-    EXPECT_EQ(Point(2, 0), points.at(3));
-    EXPECT_EQ(Point(2, -1), points.at(4));
-    EXPECT_EQ(Point(2, -2), points.at(5));
-    EXPECT_EQ(Point(2, -3), points.at(6));
+    EXPECT_EQ(Point(2, 3), points[0]);
+    EXPECT_EQ(Point(2, 2), points[1]);
+    EXPECT_EQ(Point(2, 1), points[2]);
+    EXPECT_EQ(Point(2, 0), points[3]);
+    EXPECT_EQ(Point(2, -1), points[4]);
+    EXPECT_EQ(Point(2, -2), points[5]);
+    EXPECT_EQ(Point(2, -3), points[6]);
 }
 
 TEST(TwoDimensionsLineTest, LineWithSlopeWithPointsReversed) {
@@ -193,15 +193,15 @@ TEST(TwoDimensionsLineTest, LineWithSlopeWithPointsReversed) {
 
     Points points(line.getPoints(Point(2, 3), Point(-2, -3), 1));
     ASSERT_EQ(9U, points.size());
-    EXPECT_EQ(Point(2, 3), points.at(0));
-    EXPECT_EQ(Point(1.33333333333333333, 2), points.at(1));
-    EXPECT_EQ(Point(1, 1.5), points.at(2));
-    EXPECT_EQ(Point(0.66666666666666666, 1), points.at(3));
-    EXPECT_EQ(Point(0, 0), points.at(4));
-    EXPECT_EQ(Point(-0.66666666666666666, -1), points.at(5));
-    EXPECT_EQ(Point(-1, -1.5), points.at(6));
-    EXPECT_EQ(Point(-1.33333333333333333, -2), points.at(7));
-    EXPECT_EQ(Point(-2, -3), points.at(8.));
+    EXPECT_EQ(Point(2, 3), points[0]);
+    EXPECT_EQ(Point(1.33333333333333333, 2), points[1]);
+    EXPECT_EQ(Point(1, 1.5), points[2]);
+    EXPECT_EQ(Point(0.66666666666666666, 1), points[3]);
+    EXPECT_EQ(Point(0, 0), points[4]);
+    EXPECT_EQ(Point(-0.66666666666666666, -1), points[5]);
+    EXPECT_EQ(Point(-1, -1.5), points[6]);
+    EXPECT_EQ(Point(-1.33333333333333333, -2), points[7]);
+    EXPECT_EQ(Point(-2, -3), points[8.]);
 }
 
 TEST(TwoDimensionsLineTest, LineWithNegativeSlope) {
@@ -221,9 +221,9 @@ TEST(TwoDimensionsLineTest, LineWithNegativeSlope) {
 
     Points points(line.getPoints(Point(2, 0), Point(0, 2), 1));
     ASSERT_EQ(3U, points.size());
-    EXPECT_EQ(Point(2, 0), points.at(0));
-    EXPECT_EQ(Point(1, 1), points.at(1));
-    EXPECT_EQ(Point(0, 2), points.at(2));
+    EXPECT_EQ(Point(2, 0), points[0]);
+    EXPECT_EQ(Point(1, 1), points[1]);
+    EXPECT_EQ(Point(0, 2), points[2]);
 }
 
 TEST(TwoDimensionsLineTest, InvalidLineConstructedByCoefficients) {
@@ -259,11 +259,11 @@ TEST(TwoDimensionsLineTest, HorizontalLineConstructedByCoefficients) {
 
     Points points(line.getPoints(Point(-2, 10), Point(2, -10), 1));
     ASSERT_EQ(5U, points.size());
-    EXPECT_EQ(Point(-2, 3), points.at(0));
-    EXPECT_EQ(Point(-1, 3), points.at(1));
-    EXPECT_EQ(Point(0, 3), points.at(2));
-    EXPECT_EQ(Point(1, 3), points.at(3));
-    EXPECT_EQ(Point(2, 3), points.at(4));
+    EXPECT_EQ(Point(-2, 3), points[0]);
+    EXPECT_EQ(Point(-1, 3), points[1]);
+    EXPECT_EQ(Point(0, 3), points[2]);
+    EXPECT_EQ(Point(1, 3), points[3]);
+    EXPECT_EQ(Point(2, 3), points[4]);
 }
 
 TEST(TwoDimensionsLineTest, VerticalLineConstructedByCoefficients) {
@@ -283,13 +283,13 @@ TEST(TwoDimensionsLineTest, VerticalLineConstructedByCoefficients) {
 
     Points points(line.getPoints(Point(10, -3), Point(-10, 3), 1));
     ASSERT_EQ(7U, points.size());
-    EXPECT_EQ(Point(2, -3), points.at(0));
-    EXPECT_EQ(Point(2, -2), points.at(1));
-    EXPECT_EQ(Point(2, -1), points.at(2));
-    EXPECT_EQ(Point(2, 0), points.at(3));
-    EXPECT_EQ(Point(2, 1), points.at(4));
-    EXPECT_EQ(Point(2, 2), points.at(5));
-    EXPECT_EQ(Point(2, 3), points.at(6));
+    EXPECT_EQ(Point(2, -3), points[0]);
+    EXPECT_EQ(Point(2, -2), points[1]);
+    EXPECT_EQ(Point(2, -1), points[2]);
+    EXPECT_EQ(Point(2, 0), points[3]);
+    EXPECT_EQ(Point(2, 1), points[4]);
+    EXPECT_EQ(Point(2, 2), points[5]);
+    EXPECT_EQ(Point(2, 3), points[6]);
 }
 
 TEST(TwoDimensionsLineTest, LineWithSlopeConstructedByCoefficients) {
@@ -309,15 +309,15 @@ TEST(TwoDimensionsLineTest, LineWithSlopeConstructedByCoefficients) {
 
     Points points(line.getPoints(Point(-2, -3), Point(2, 3), 1));
     ASSERT_EQ(9U, points.size());
-    EXPECT_EQ(Point(-2, -3), points.at(0));
-    EXPECT_EQ(Point(-1.33333333333333333, -2), points.at(1));
-    EXPECT_EQ(Point(-1, -1.5), points.at(2));
-    EXPECT_EQ(Point(-0.66666666666666666, -1), points.at(3));
-    EXPECT_EQ(Point(0, 0), points.at(4));
-    EXPECT_EQ(Point(0.66666666666666666, 1), points.at(5));
-    EXPECT_EQ(Point(1, 1.5), points.at(6));
-    EXPECT_EQ(Point(1.33333333333333333, 2), points.at(7));
-    EXPECT_EQ(Point(2, 3), points.at(8));
+    EXPECT_EQ(Point(-2, -3), points[0]);
+    EXPECT_EQ(Point(-1.33333333333333333, -2), points[1]);
+    EXPECT_EQ(Point(-1, -1.5), points[2]);
+    EXPECT_EQ(Point(-0.66666666666666666, -1), points[3]);
+    EXPECT_EQ(Point(0, 0), points[4]);
+    EXPECT_EQ(Point(0.66666666666666666, 1), points[5]);
+    EXPECT_EQ(Point(1, 1.5), points[6]);
+    EXPECT_EQ(Point(1.33333333333333333, 2), points[7]);
+    EXPECT_EQ(Point(2, 3), points[8]);
 }
 
 TEST(TwoDimensionsLineTest, PointsAreCorrectForLineWithSteepSlope) {
@@ -337,11 +337,11 @@ TEST(TwoDimensionsLineTest, PointsAreCorrectForLineWithSteepSlope) {
 
     Points points(line.getPoints(Point(-2, -2), Point(2, 2), 1));
     ASSERT_EQ(5U, points.size());
-    EXPECT_EQ(Point(-0.4, -2), points.at(0));
-    EXPECT_EQ(Point(-0.2, -1), points.at(1));
-    EXPECT_EQ(Point(0, 0), points.at(2));
-    EXPECT_EQ(Point(0.2, 1), points.at(3));
-    EXPECT_EQ(Point(0.4, 2), points.at(4));
+    EXPECT_EQ(Point(-0.4, -2), points[0]);
+    EXPECT_EQ(Point(-0.2, -1), points[1]);
+    EXPECT_EQ(Point(0, 0), points[2]);
+    EXPECT_EQ(Point(0.2, 1), points[3]);
+    EXPECT_EQ(Point(0.4, 2), points[4]);
 }
 
 TEST(TwoDimensionsLineTest, LineWithExtremeSlopeWithManyPoints) {

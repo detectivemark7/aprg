@@ -141,7 +141,7 @@ Line Ellipse::getMajorAxis() const {
     Line result;
     Points vertices(getMajorVertices());
     if (2 == vertices.size()) {
-        result = Line(vertices.at(0), vertices.at(1));
+        result = Line(vertices[0], vertices[1]);
     }
     return result;
 }
@@ -150,7 +150,7 @@ Line Ellipse::getMinorAxis() const {
     Line result;
     Points vertices(getMinorVertices());
     if (2 == vertices.size()) {
-        result = Line(vertices.at(0), vertices.at(1));
+        result = Line(vertices[0], vertices[1]);
     }
     return result;
 }
