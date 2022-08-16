@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Algorithm/Search/NearestValue/LinearSearch/LinearNearestValueSearchWithOneIndex.hpp>
-#include <Algorithm/Utilities/InvalidIndex.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 #include <Common/Math/Helpers/PrecisionHelpers.hpp>
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 

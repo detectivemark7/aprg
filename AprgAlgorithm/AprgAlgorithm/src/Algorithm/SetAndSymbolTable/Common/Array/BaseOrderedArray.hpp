@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Algorithm/SetAndSymbolTable/SymbolTable/BaseSymbolTable.hpp>
-#include <Algorithm/Utilities/MidpointOfIndexes.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 #include <vector>
 

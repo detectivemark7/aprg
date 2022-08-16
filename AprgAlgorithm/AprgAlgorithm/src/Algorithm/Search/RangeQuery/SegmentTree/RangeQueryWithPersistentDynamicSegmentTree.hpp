@@ -2,7 +2,7 @@
 
 #include <Algorithm/Search/Common/DynamicSegmentTreeNode.hpp>
 #include <Algorithm/Search/Common/SegmentTreeUtilities.hpp>
-#include <Algorithm/Utilities/MidpointOfIndexes.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 #include <functional>
 #include <list>

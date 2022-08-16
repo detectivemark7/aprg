@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/Utilities/InvalidIndex.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 #include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 
 namespace alba {

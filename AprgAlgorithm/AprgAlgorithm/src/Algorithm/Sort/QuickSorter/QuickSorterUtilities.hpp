@@ -40,17 +40,17 @@ int partitionAndGetPartitionIndex(Values& values, int const lowIndex, int const 
     auto pivotValue = values[indexWithPivotValue];
     std::swap(values[lowIndex], values[indexWithPivotValue]);
 
-    int indexWithGreaterValue = lowIndex;
+    int indexWithGreaterValue = lowIndex;  // no need for minus one because pivot is in lowIndex
     int indexWithLesserValue = highIndex + 1;
     while (true) {
         // Notice that the loop has increment first
         // Important: This loops exits when it finds a value greater than pivotValue
-        while (values[++indexWithGreaterValue] < pivotValue && indexWithGreaterValue < highIndex)
+        while (values[++indexWithGreaterValue] < pivotValue)
             ;
 
         // Notice that the loop has decrement first
         // Important: This loops exits when it finds a value less than pivotValue
-        while (pivotValue < values[--indexWithLesserValue] && indexWithLesserValue > lowIndex)
+        while (pivotValue < values[--indexWithLesserValue])
             ;
 
         // stop if the indexWithGreaterValue and indexWithLesserValue meet

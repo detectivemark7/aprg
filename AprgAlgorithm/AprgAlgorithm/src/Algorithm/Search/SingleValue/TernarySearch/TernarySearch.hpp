@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/Utilities/InvalidIndex.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 namespace alba {
 
@@ -38,16 +38,13 @@ private:
 
         Index result(INVALID_INDEX);
         if (lowIndex < highIndex) {
-            Index firstMiddleIndex = (2 * lowIndex + highIndex) / 3;   // Note: possible overflow bug
-            Index secondMiddleIndex = (lowIndex + 2 * highIndex) / 3;  // Note: possible overflow bug
+            Index firstMiddleIndex = getFirstOneThirdIndex(lowIndex, highIndex);
+            Index secondMiddleIndex = getSecondOneThirdIndex(lowIndex, highIndex);
             if (value < m_sortedValues[firstMiddleIndex]) {
-                // if on the first one-third part
                 result = getIndexOfValueWithoutCheck(lowIndex, firstMiddleIndex - 1, value);
             } else if (m_sortedValues[secondMiddleIndex] < value) {
-                // if on the third one-third part
                 result = getIndexOfValueWithoutCheck(secondMiddleIndex + 1, highIndex, value);
             } else {
-                // if on the second one-third part
                 result = getIndexOfValueWithoutCheck(firstMiddleIndex, secondMiddleIndex, value);
             }
         } else if (lowIndex == highIndex && value == m_sortedValues[lowIndex]) {

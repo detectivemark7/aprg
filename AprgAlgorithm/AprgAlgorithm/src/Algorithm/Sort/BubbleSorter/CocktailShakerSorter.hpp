@@ -16,7 +16,7 @@ public:
 
     void sort(Values& valuesToSort) const override {
         // Based from https://en.wikipedia.org/wiki/Cocktail_shaker_sort#Pseudocode
-        // This can be implemented using lists
+        // This can be reimplemented with iterators (for list)
         int lowIndex = 0, highIndex = valuesToSort.size() - 1;
         while (lowIndex <= highIndex) {
             int lowBoundary = highIndex, highBoundary = lowIndex;

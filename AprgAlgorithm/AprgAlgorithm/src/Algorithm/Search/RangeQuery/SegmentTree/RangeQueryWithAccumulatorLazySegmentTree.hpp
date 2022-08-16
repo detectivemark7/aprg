@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Algorithm/Search/RangeQuery/SegmentTree/RangeQueryWithStaticSegmentTree.hpp>
-#include <Algorithm/Utilities/MidpointOfIndexes.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 namespace alba {
 

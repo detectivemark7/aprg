@@ -2,7 +2,7 @@
 
 #include <Algorithm/Sort/BaseSorter.hpp>
 #include <Algorithm/Sort/MergeSorter/MergeSorterUtilities.hpp>
-#include <Algorithm/Utilities/MidpointOfIndexes.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 namespace alba {
 

@@ -22,7 +22,7 @@ public:
             int gap = size;
 
             bool didSwapHappened(true);
-            while (didSwapHappened || gap != 1) {
+            while (didSwapHappened || gap > 1) {
                 didSwapHappened = false;
                 gap = getNextGapValue(gap);
                 for (int i = 0; i < size - gap; i++) {
