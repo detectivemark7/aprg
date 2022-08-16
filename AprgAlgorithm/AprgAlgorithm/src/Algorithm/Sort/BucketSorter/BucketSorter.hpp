@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Algorithm/Sort/BaseSorter.hpp>
-#include <Common/Math/Helpers/PrecisionHelpers.hpp>
 
 #include <algorithm>
 #include <array>
@@ -23,11 +22,10 @@ public:
 
     void sort(Values& valuesToSort) const override {
         Buckets buckets;  // Create n empty buckets
+        int deltaValue = m_maxValue - m_minValue;
 
-        double factor = static_cast<double>(NUMBER_OF_BUCKETS) / (m_maxValue - m_minValue);
-        for (Value const& value : valuesToSort)  // Put array elements in different buckets
-        {
-            int bucketIndex = mathHelper::getIntegerAfterRoundingADoubleValue<int>((value - m_minValue) * factor);
+        for (Value const& value : valuesToSort) {  // Put array elements in different buckets
+            int bucketIndex = (value - m_minValue) * NUMBER_OF_BUCKETS / deltaValue;
             if (bucketIndex < NUMBER_OF_BUCKETS) {
                 buckets[bucketIndex].emplace_back(value);
             }
@@ -36,6 +34,7 @@ public:
         auto itCopy = valuesToSort.begin();
         for (Bucket& bucket : buckets) {
             std::sort(bucket.begin(), bucket.end());  // change to stable sort if its need to be stable
+            // Conventionally, insertion sort(if small) is used, but selection sort or merge sort can be used as well
             itCopy = std::copy(bucket.cbegin(), bucket.cend(), itCopy);  // copy back to original container
         }
     }

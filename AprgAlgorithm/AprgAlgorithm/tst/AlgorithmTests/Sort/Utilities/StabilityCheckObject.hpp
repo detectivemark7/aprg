@@ -18,8 +18,13 @@ public:
     operator int() const;
     StabilityCheckObject operator+(StabilityCheckObject const& second) const;
     StabilityCheckObject operator-(StabilityCheckObject const& second) const;
+    StabilityCheckObject operator*(StabilityCheckObject const& second) const;
+    StabilityCheckObject operator/(StabilityCheckObject const& second) const;
     StabilityCheckObject operator+(int const second) const;
     StabilityCheckObject operator-(int const second) const;
+    StabilityCheckObject operator*(int const second) const;
+    StabilityCheckObject operator/(int const second) const;
+
     double operator*(double const multiplier) const;
 
     char getVisiblePart() const;
