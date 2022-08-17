@@ -61,7 +61,7 @@ TEST(QuickSorterWithIterativeApproachTest, SortWorksOnStringsUsingExample1) {
     testSortUsingExample1WithStrings<StringsSorter, Strings>(sorter);
 }
 
-TEST(QuickSorterWithIterativeApproachTest, SortWorksAsNotStableOnStabilityCheckObjectsUsingExample1)  // NOT STABLE
+TEST(QuickSorterWithIterativeApproachTest, SortWorksAsNotStableOnStabilityCheckObjectsUsingExample1)
 {
     StabilityCheckObjectsSorter sorter(PivotType::LowestIndex);
     testSortAsNotStableUsingExample1WithStabilityCheckObjects<StabilityCheckObjectsSorter, StabilityCheckObjects>(

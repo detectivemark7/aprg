@@ -73,6 +73,10 @@ bool areObjectsEqualOnVisibleAndNotVisiblePart(
     return object1.m_visiblePart == object2.m_visiblePart && object1.m_notVisiblePart == object2.m_notVisiblePart;
 }
 
+bool areObjectsEqualOnVisibleOnly(StabilityCheckObject const& object1, StabilityCheckObject const& object2) {
+    return object1.m_visiblePart == object2.m_visiblePart;
+}
+
 ostream& operator<<(ostream& out, StabilityCheckObject const& object) {
     out << "(" << object.m_visiblePart << object.m_notVisiblePart << ")";
     return out;

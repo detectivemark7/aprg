@@ -48,11 +48,8 @@ TEST(CocktailShakerSorterTest, SortWorksOnCharactersUsingExample2) {
     testSortUsingExample2WithCharacters<CharactersSorter, Characters>(sorter);
 }
 
+// CANNOT SORT STD::LIST
 // The implementation uses indexes so list is not compatible, but this can be changed.
-// TEST(CocktailShakerSorterTest, SortWorksOnListOfCharactersUsingExample1) {
-//     ListOfCharactersSorter sorter;
-//     testSortUsingExample1WithCharacters<ListOfCharactersSorter, ListOfCharacters>(sorter);
-// }
 
 TEST(CocktailShakerSorterTest, SortWorksOnPositiveAndNegativeIntegersUsingExample1) {
     IntegersSorter sorter;
@@ -69,8 +66,7 @@ TEST(CocktailShakerSorterTest, SortWorksOnStringsUsingExample1) {
     testSortUsingExample1WithStrings<StringsSorter, Strings>(sorter);
 }
 
-TEST(CocktailShakerSorterTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1)  // STABLE
-{
+TEST(CocktailShakerSorterTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1) {
     StabilityCheckObjectsSorter sorter;
     testSortAsStableUsingExample1WithStabilityCheckObjects<StabilityCheckObjectsSorter, StabilityCheckObjects>(sorter);
 }

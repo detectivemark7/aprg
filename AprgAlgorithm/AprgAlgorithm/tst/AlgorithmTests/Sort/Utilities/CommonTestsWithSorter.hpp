@@ -94,10 +94,10 @@ void testSortAsStableUsingExample1WithStabilityCheckObjects(Sorter const& sorter
 
     Values valuesToExpect{{'A', 1}, {'A', 2}, {'A', 3}, {'A', 4}, {'B', 1}, {'B', 2}, {'B', 3},
                           {'C', 1}, {'D', 1}, {'D', 2}, {'D', 3}, {'E', 1}, {'F', 1}};
-    bool areEqual = std::equal(
+    bool isStableSorted = std::equal(
         valuesToSort.cbegin(), valuesToSort.cend(), valuesToExpect.cbegin(), valuesToExpect.cend(),
         areObjectsEqualOnVisibleAndNotVisiblePart);
-    EXPECT_TRUE(areEqual);
+    EXPECT_TRUE(isStableSorted);
 }
 
 template <typename Sorter, typename Values>
@@ -109,10 +109,10 @@ void testSortAsNotStableUsingExample1WithStabilityCheckObjects(Sorter const& sor
 
     Values valuesToExpect{{'A', 1}, {'A', 2}, {'A', 3}, {'A', 4}, {'B', 1}, {'B', 2}, {'B', 3},
                           {'C', 1}, {'D', 1}, {'D', 2}, {'D', 3}, {'E', 1}, {'F', 1}};
-    bool areEqual = std::equal(
+    bool isSortedButNotStable = std::equal(
         valuesToSort.cbegin(), valuesToSort.cend(), valuesToExpect.cbegin(), valuesToExpect.cend(),
-        areObjectsEqualOnVisibleAndNotVisiblePart);
-    EXPECT_FALSE(areEqual);
+        areObjectsEqualOnVisibleOnly);
+    EXPECT_TRUE(isSortedButNotStable);
 }
 
 }  // namespace CommonTestsWithSorter

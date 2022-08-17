@@ -31,10 +31,9 @@ public:
                                     getObjectConstReferenceOnTree(getParentIndex(treeIndex)),
                                     getObjectConstReferenceOnTree(treeIndex))) {
             int parentTreeIndex(getParentIndex(treeIndex));
-            std::swap(
-                getObjectReferenceOnTree(parentTreeIndex),
-                getObjectReferenceOnTree(treeIndex));  // swap parent and child
-            treeIndex = parentTreeIndex;               // move to the next parent
+            // swap parent and child
+            std::swap(getObjectReferenceOnTree(parentTreeIndex), getObjectReferenceOnTree(treeIndex));
+            treeIndex = parentTreeIndex;  // move to the next parent
         }
     }
 
@@ -49,10 +48,8 @@ public:
                     getObjectConstReferenceOnTree(treeIndex), getObjectConstReferenceOnTree(significantChildIndex))) {
                 break;  // heap order is found so stop
             }
-            std::swap(
-                getObjectReferenceOnTree(treeIndex),
-                getObjectReferenceOnTree(
-                    significantChildIndex));  // swap if heap order is not maintained (swap to have heap order)
+            // swap if heap order is not maintained (swap to have heap order)
+            std::swap(getObjectReferenceOnTree(treeIndex), getObjectReferenceOnTree(significantChildIndex));
             treeIndex = significantChildIndex;
         }
     }
@@ -79,14 +76,12 @@ private:
         int firstChildIndex(getFirstChildIndex(treeIndex));
         int lastPossibleChildIndex(std::min(getLastChildIndex(treeIndex), treeSize));
         int significantChildIndex = firstChildIndex;
-        for (int index = firstChildIndex + 1; index <= lastPossibleChildIndex; index++) {
-            // Get the child the most break the heap order (this would be swapped in sink)
+        for (int childIndex = firstChildIndex + 1; childIndex <= lastPossibleChildIndex; childIndex++) {
             // Heap order: isComparisonSatisfied(child, parent) is true
+            // Get the child the most break the heap order (this would be swapped in sink)
             if (isComparisonSatisfied(
-                    getObjectConstReferenceOnTree(significantChildIndex),
-                    getObjectConstReferenceOnTree(index)))  // most break comparison
-            {
-                significantChildIndex = index;
+                    getObjectConstReferenceOnTree(significantChildIndex), getObjectConstReferenceOnTree(childIndex))) {
+                significantChildIndex = childIndex;
             }
         }
         return significantChildIndex;

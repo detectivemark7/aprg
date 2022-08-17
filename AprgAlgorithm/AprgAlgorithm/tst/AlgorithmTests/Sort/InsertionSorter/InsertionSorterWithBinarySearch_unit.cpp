@@ -65,7 +65,7 @@ TEST(InsertionSorterWithBinarySearchTest, SortWorksOnStringsUsingExample1) {
     testSortUsingExample1WithStrings<StringsSorter, Strings>(sorter);
 }
 
-TEST(InsertionSorterWithBinarySearchTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1)  // STABLE
+TEST(InsertionSorterWithBinarySearchTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1)
 {
     StabilityCheckObjectsSorter sorter;
     testSortAsStableUsingExample1WithStabilityCheckObjects<StabilityCheckObjectsSorter, StabilityCheckObjects>(sorter);

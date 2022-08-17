@@ -48,11 +48,8 @@ TEST(OddEvenSorterTest, SortWorksOnCharactersUsingExample2) {
     testSortUsingExample2WithCharacters<CharactersSorter, Characters>(sorter);
 }
 
+// CANNOT SORT STD::LIST
 // The implementation uses indexes so list is not compatible, but this can be changed.
-// TEST(OddEvenSorterTest, SortWorksOnListOfCharactersUsingExample1) {
-//     ListOfCharactersSorter sorter;
-//     testSortUsingExample1WithCharacters<ListOfCharactersSorter, ListOfCharacters>(sorter);
-// }
 
 TEST(OddEvenSorterTest, SortWorksOnPositiveAndNegativeIntegersUsingExample1) {
     IntegersSorter sorter;
@@ -69,8 +66,7 @@ TEST(OddEvenSorterTest, SortWorksOnStringsUsingExample1) {
     testSortUsingExample1WithStrings<StringsSorter, Strings>(sorter);
 }
 
-TEST(OddEvenSorterTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1)  // STABLE
-{
+TEST(OddEvenSorterTest, SortWorksAsStableOnStabilityCheckObjectsUsingExample1) {
     StabilityCheckObjectsSorter sorter;
     testSortAsStableUsingExample1WithStabilityCheckObjects<StabilityCheckObjectsSorter, StabilityCheckObjects>(sorter);
 }

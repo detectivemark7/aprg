@@ -50,10 +50,21 @@ public:
         return getVerticesInThisOrder(startVertex, VertexTraversalOrder::ReversePostOrder);
     }
 
+    Vertices getVerticesInTopologicalOrderWithDagChecking() {
+        Vertices traversedVertices;
+        traverseTopologicalOrderWithDagCheckingStartingFromAllVertices(traversedVertices);
+        reverseVertices(traversedVertices);
+        return traversedVertices;
+    }
+
 private:
+    void reverseVertices(Vertices& traversedVertices) const {
+        std::reverse(traversedVertices.begin(), traversedVertices.end());
+    }
+
     void reverseVerticesIfNeeded(Vertices& traversedVertices, VertexTraversalOrder const traversalOrder) const {
         if (VertexTraversalOrder::ReversePostOrder == traversalOrder) {
-            std::reverse(traversedVertices.begin(), traversedVertices.end());
+            reverseVertices(traversedVertices);
         }
     }
 
@@ -75,6 +86,14 @@ private:
             if (m_processedVertices.isNotFound(vertex)) {
                 traverseAt(traversedVertices, traversalOrder, vertex);
             }
+        }
+    }
+
+    void traverseTopologicalOrderWithDagCheckingStartingFromAllVertices(Vertices& traversedVertices) {
+        clear();
+        CheckableVerticesWithVertex temporaryMarks;
+        for (Vertex const& vertex : m_graph.getVertices()) {
+            traverseTopologicalOrderWithDagChecking(traversedVertices, temporaryMarks, vertex);
         }
     }
 
@@ -113,6 +132,24 @@ private:
                 traversePostOrderAt(traversedVertices, adjacentVertex);
             }
         }
+        traversedVertices.emplace_back(vertex);  // add vertex after DFS is done for the vertex
+    }
+
+    void traverseTopologicalOrderWithDagChecking(
+        Vertices& traversedVertices, CheckableVerticesWithVertex& temporaryMarks, Vertex const& vertex) {
+        if (m_processedVertices.isFound(vertex)) {
+            return;
+        }
+        if (temporaryMarks.isFound(vertex)) {
+            // stop because its not a dag
+            return;
+        }
+        temporaryMarks.putVertex(vertex);
+        for (Vertex const& adjacentVertex : m_graph.getAdjacentVerticesAt(vertex)) {
+            traverseTopologicalOrderWithDagChecking(traversedVertices, temporaryMarks, adjacentVertex);
+        }
+        temporaryMarks.removeVertex(vertex);
+        m_processedVertices.putVertex(vertex);
         traversedVertices.emplace_back(vertex);  // add vertex after DFS is done for the vertex
     }
 

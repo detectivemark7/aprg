@@ -63,7 +63,7 @@ TEST(HeapSorterTest, SortWorksOnStringsUsingExample1) {
     testSortUsingExample1WithStrings<StringsSorter, Strings>(sorter);
 }
 
-TEST(HeapSorterTest, SortWorksAsNotStableOnStabilityCheckObjectsUsingExample1)  // NOT STABLE
+TEST(HeapSorterTest, SortWorksAsNotStableOnStabilityCheckObjectsUsingExample1)
 {
     StabilityCheckObjectsSorter sorter;
     testSortAsNotStableUsingExample1WithStabilityCheckObjects<StabilityCheckObjectsSorter, StabilityCheckObjects>(
