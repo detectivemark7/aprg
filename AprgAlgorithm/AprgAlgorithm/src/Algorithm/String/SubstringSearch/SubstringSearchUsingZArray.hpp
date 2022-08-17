@@ -22,11 +22,11 @@ public:
         Index result = static_cast<Index>(std::string::npos);
         std::string stringForZArray = createStringForZArray(mainString);
         Indexes zArray = calculateZArray(stringForZArray);
-        Index subStringLength = m_substringToMatch.length();
-        Index i = subStringLength;
+        Index substringLength = m_substringToMatch.length();
+        Index i = substringLength;
         for (; i < static_cast<Index>(zArray.size()); i++) {
-            if (zArray[i] >= subStringLength) {
-                result = i - subStringLength - 1;
+            if (zArray[i] >= substringLength) {
+                result = i - substringLength - 1;
                 break;
             }
         }
@@ -37,11 +37,11 @@ public:
         Indexes result{};
         std::string stringForZArray = createStringForZArray(mainString);
         Indexes zArray = calculateZArray(stringForZArray);
-        Index subStringLength = m_substringToMatch.length();
-        Index i = subStringLength;
+        Index substringLength = m_substringToMatch.length();
+        Index i = substringLength;
         for (; i < static_cast<int>(zArray.size()); i++) {
-            if (zArray[i] >= subStringLength) {
-                result.emplace_back(i - subStringLength - 1);
+            if (zArray[i] >= substringLength) {
+                result.emplace_back(i - substringLength - 1);
             }
         }
         return result;

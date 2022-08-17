@@ -17,24 +17,24 @@ public:
 
     RabinKarpSubstringSearchWithRunningHash(std::string const& substringToMatch)
         : m_substringToMatch(substringToMatch),
-          m_matchLength(substringToMatch.length()),
+          m_substringLength(substringToMatch.length()),
           m_hornerHashFunction(RADIX, A_LARGE_PRIME),
           m_largeRandomPrime(A_LARGE_PRIME),
           m_radixRaiseToMatchLengthHash(getRadixRaiseToMatchLengthHash()),
-          m_substringToMatchHash(getHash(m_substringToMatch)) {}
+          m_substringHash(getHash(m_substringToMatch)) {}
 
-    Index search(std::string const& stringToSearch) {
+    Index search(std::string const& mainString) {
         Index result(static_cast<Index>(std::string::npos));
-        Index searchLength(stringToSearch.size());
-        HashValue currentHash(getHash(stringToSearch));
-        if (m_substringToMatchHash == currentHash) {
+        Index searchLength(mainString.size());
+        HashValue currentHash(getHash(mainString));
+        if (m_substringHash == currentHash) {
             result = 0;
         } else {
-            for (Index searchIndex = m_matchLength; searchIndex < searchLength; searchIndex++) {
+            for (Index searchIndex = m_substringLength; searchIndex < searchLength; searchIndex++) {
                 currentHash = getNextHash(
-                    currentHash, stringToSearch[searchIndex - m_matchLength], stringToSearch[searchIndex]);
-                if (m_substringToMatchHash == currentHash) {
-                    result = searchIndex - m_matchLength + 1;  // Monte carlo approach (no double check)
+                    currentHash, mainString[searchIndex - m_substringLength], mainString[searchIndex]);
+                if (m_substringHash == currentHash) {
+                    result = searchIndex - m_substringLength + 1;  // Monte carlo approach (no double check)
                     break;
                 }
             }
@@ -44,7 +44,7 @@ public:
 
 private:
     HashValue getHash(std::string const& key) {
-        return m_hornerHashFunction.getHashCode(key.substr(0, m_matchLength));
+        return m_hornerHashFunction.getHashCode(key.substr(0, m_substringLength));
     }
 
     HashValue getNextHash(HashValue const currentHash, char const charToRemove, char const charToAdd) {
@@ -59,18 +59,18 @@ private:
 
     HashValue getRadixRaiseToMatchLengthHash() {
         HashValue result(1);
-        for (int i = 1; i < m_matchLength; i++) {
+        for (int i = 1; i < m_substringLength; i++) {
             result = (result * RADIX) % m_largeRandomPrime;
         }
         return result;
     }
 
     std::string const m_substringToMatch;
-    Index const m_matchLength;
+    Index const m_substringLength;
     HornerHashFunctionForWholeString<HashValue> m_hornerHashFunction;
     HashValue m_largeRandomPrime;
     HashValue m_radixRaiseToMatchLengthHash;
-    HashValue m_substringToMatchHash;
+    HashValue m_substringHash;
 };
 
 // Invented by two Turing award winners Michael Rabin (Turing Award '76) and Dick Karp (Turing Award '85).

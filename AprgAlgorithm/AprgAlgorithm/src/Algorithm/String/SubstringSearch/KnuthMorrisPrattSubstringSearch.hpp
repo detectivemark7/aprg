@@ -30,8 +30,8 @@ public:
         Index substringLength(m_substringToMatch.size());
         Index searchIndex = 0, matchIndex = 0;
         for (; searchIndex < mainLength && matchIndex < substringLength; searchIndex++) {
-            matchIndex =
-                m_nextIndexDfa.getNextState(matchIndex, mainString[searchIndex]);  // use DFA to determine next state
+            // use DFA to determine next state
+            matchIndex = m_nextIndexDfa.getNextState(matchIndex, mainString[searchIndex]);
         }
         if (matchIndex == substringLength) {
             result = searchIndex - substringLength;
@@ -42,10 +42,9 @@ public:
 private:
     void initialize() {
         if (!m_substringToMatch.empty()) {
-            m_nextIndexDfa.setStateTransition(
-                0, 1, m_substringToMatch[0]);  // put initial transition of: from first index go to second index (if
-                                                  // character is encountered)
-            Index matchLength(m_substringToMatch.size());
+            // put initial transition of: from first index go to second index (if character is encountered)
+            m_nextIndexDfa.setStateTransition(0, 1, m_substringToMatch[0]);
+            Index substringLength(m_substringToMatch.size());
             Index stateWithDelayedInput(0);  // this state tracks if input is one tempo delayed
             // stateWithDelayedInput is useful because if there is a mismatch, we could track where that state would go
             // (as it already have previous matches)
@@ -54,7 +53,7 @@ private:
             // j-1], followed by c
             // ---> Reason for this is salvaging previous matches from mismatches only occurs on indexes [1 ... j-1]
 
-            for (Index i = 1; i < matchLength; i++) {
+            for (Index i = 1; i < substringLength; i++) {
                 for (RadixType c = 0; c < RADIX; c++) {
                     Index mismatchState(m_nextIndexDfa.getNextState(
                         stateWithDelayedInput,

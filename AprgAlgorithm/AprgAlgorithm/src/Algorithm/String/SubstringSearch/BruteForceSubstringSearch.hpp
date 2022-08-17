@@ -71,14 +71,14 @@ private:
 
 template <>
 int BruteForceSubstringSearch<1>::searchWithLoops(
-    std::string const& stringToSearch, std::string const& substringToMatch) {
-    return searchUsingOneLoop(stringToSearch, substringToMatch);
+    std::string const& mainString, std::string const& substringToMatch) {
+    return searchUsingOneLoop(mainString, substringToMatch);
 }
 
 template <>
 int BruteForceSubstringSearch<2>::searchWithLoops(
-    std::string const& stringToSearch, std::string const& substringToMatch) {
-    return searchUsingTwoLoops(stringToSearch, substringToMatch);
+    std::string const& mainString, std::string const& substringToMatch) {
+    return searchUsingTwoLoops(mainString, substringToMatch);
 }
 
 // Brute-force substring search: worst case
