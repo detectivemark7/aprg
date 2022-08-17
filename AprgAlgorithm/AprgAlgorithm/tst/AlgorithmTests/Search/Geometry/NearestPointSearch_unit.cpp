@@ -38,7 +38,19 @@ TEST(NearestPointSearchTest, GetNearestPointWorksWhenPointIsAtTheRight) {
     EXPECT_EQ(pointToExpect, pointToVerify);
 }
 
-TEST(NearestPointSearchTest, GetNearestPointWorksOnComplicatedExample) {
+TEST(NearestPointSearchTest, GetNearestPointWorksOnExample1) {
+    SearchForTest search;
+    search.addPoint({0, 0});
+    search.addPoint({1, 100});
+    search.addPoint({-1, -10});
+
+    auto pointToVerify(search.getNearestPoint({1, -11}));
+
+    PointForTest pointToExpect{-1, -10};
+    EXPECT_EQ(pointToExpect, pointToVerify);
+}
+
+TEST(NearestPointSearchTest, GetNearestPointWorksOnExample2) {
     SearchForTest search;
     search.addPoint({0, 0});
     search.addPoint({3, -2});
@@ -57,7 +69,7 @@ TEST(NearestPointSearchTest, GetNearestPointWorksOnComplicatedExample) {
     EXPECT_EQ(pointToExpect, pointToVerify);
 }
 
-TEST(NearestPointSearchTest, GetNearestPointPairWorks) {
+TEST(NearestPointSearchTest, GetNearestPointPairWorksOnExample1) {
     SearchForTest search;
     search.addPoint({0, 0});
     search.addPoint({3, -1});

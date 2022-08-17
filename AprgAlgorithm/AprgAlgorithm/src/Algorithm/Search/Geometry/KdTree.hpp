@@ -127,6 +127,10 @@ protected:
             } else if (isGreaterThanWithDepth(key, currentKey, depth)) {
                 putStartingOnThisNode(nodePointer->right, key);
                 this->updateTreeNodeDetails(*nodePointer);
+            } else {
+                // if equal, just pick left
+                putStartingOnThisNode(nodePointer->left, key);
+                this->updateTreeNodeDetails(*nodePointer);
             }
         } else {
             nodePointer.reset(new Node{key, nullptr, nullptr, 1});
@@ -139,12 +143,11 @@ protected:
         depth++;
         // this is called hibbard deletion
         if (nodePointer) {
-            if (isLessThanWithDepth(key, nodePointer->key, depth))  // search for the node in the left in less than
-            {
+            if (isLessThanWithDepth(key, nodePointer->key, depth)) {
+                // search for the node in the left in less than
                 deleteBasedOnKeyStartingOnThisNode(nodePointer->left, key);
-            } else if (isGreaterThanWithDepth(
-                           key, nodePointer->key, depth))  // search for the node in the right in greater than
-            {
+            } else if (isGreaterThanWithDepth(key, nodePointer->key, depth)) {
+                // search for the node in the right in greater than
                 deleteBasedOnKeyStartingOnThisNode(nodePointer->right, key);
             } else  // if found
             {
@@ -158,8 +161,8 @@ protected:
                     nodePointer.reset(nullptr);
                 } else {
                     this->copyContents(*nodePointer, *minimumOnTheRight);
-                    this->deleteMinimumStartingOnThisNode(
-                        minimumOnTheRight);  // starting from the minimum so less checks
+                    // starting from the minimum so less checks
+                    this->deleteMinimumStartingOnThisNode(minimumOnTheRight);
                 }
             }
             if (nodePointer) {

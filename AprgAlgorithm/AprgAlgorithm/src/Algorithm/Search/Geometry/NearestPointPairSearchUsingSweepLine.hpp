@@ -10,10 +10,9 @@
 namespace alba {
 
 namespace algorithm {
-
+// The one on NearestPointSearch class is better(getNearestPointPair()).
 template <typename Unit>
-class NearestPointPairSearchUsingSweepLine  // The one on NearestPointSearch class is better(getNearestPointPair()).
-{
+class NearestPointPairSearchUsingSweepLine {
 public:
     using Point = std::pair<Unit, Unit>;
     using SetOfPoints = std::set<Point>;
@@ -29,6 +28,7 @@ public:
         for (Point const& point : m_setOfPoints) {
             xToSetOfYMap[point.first].emplace(point.second);
 
+            // This delete is unnecessary i think(?).
             auto itXToDelete = xToSetOfYMap.lower_bound(point.first - smallestDistance);
             xToSetOfYMap.erase(xToSetOfYMap.begin(), itXToDelete);
 
