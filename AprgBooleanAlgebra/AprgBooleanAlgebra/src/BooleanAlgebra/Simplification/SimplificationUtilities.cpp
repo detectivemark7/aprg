@@ -21,9 +21,9 @@ namespace booleanAlgebra {
 namespace Simplification {
 
 using Minterm = uint64_t;
-using Implicant = Implicant<Minterm>;
-using Implicants = Implicants<Minterm>;
 using QuineMcCluskey = QuineMcCluskey<Minterm>;
+using Implicant = QuineMcCluskey::Implicant;
+using Implicants = QuineMcCluskey::Implicants;
 
 // utilties functions for this file
 namespace {
@@ -142,9 +142,9 @@ void simplifyByQuineMcKluskey(Term& term) {
             mutator.mutateTerm(term);  // get dual if target is "outer and" "inner or"
         }
         Implicants bestPrimeImplicants(getBestPrimeImplicantsUsingQuineMcCluskey(term, variableNames));
-        if (bestPrimeImplicants.getSize() > 0) {
+        if (!bestPrimeImplicants.empty()) {
             Expression newExpression;
-            for (Implicant const& bestPrimeImplicant : bestPrimeImplicants.getImplicantsData()) {
+            for (Implicant const& bestPrimeImplicant : bestPrimeImplicants) {
                 Expression implicantExpression;
                 string bitString(bestPrimeImplicant.getEquivalentString(variableNames.size()));
                 int i = variableNames.size() - 1;
@@ -217,8 +217,8 @@ void combineComplementaryTerms(Terms& termsToCombine, OperatorLevel const operat
 void combineTermsByCheckingCommonFactor(Terms& termsToCombine, OperatorLevel const operatorLevel) {
     for (int i = 0; i < static_cast<int>(termsToCombine.size()); i++) {
         for (int j = i + 1; j < static_cast<int>(termsToCombine.size()); j++) {
-            Term combinedTerm(combineTwoTermsByCheckingCommonFactorIfPossible(
-                termsToCombine[i], termsToCombine[j], operatorLevel));
+            Term combinedTerm(
+                combineTwoTermsByCheckingCommonFactorIfPossible(termsToCombine[i], termsToCombine[j], operatorLevel));
             if (!combinedTerm.isEmpty()) {
                 termsToCombine[i] = combinedTerm;
                 termsToCombine.erase(termsToCombine.begin() + j);
