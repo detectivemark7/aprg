@@ -39,7 +39,7 @@ class AlbaFundamentalOperationsCounter : public TypeToShadow {
 public:
 #define COUNTS AlbaFundamentalOperationsCounts<TypeToShadow>::getInstance().counts
 
-    // NOTE: COMMENT operation if not needed
+    // NOTE: COMMENT OUT operation if not needed
 
     template <typename... Params>
     AlbaFundamentalOperationsCounter(Params&&... params) : TypeToShadow(std::forward<Params>(params)...) {
