@@ -159,7 +159,7 @@ TEST(QuineMcCluskeyTest, GetImplicantsWithTwoCommonalityCounts) {
     EXPECT_EQ("Implicants : [{size: 0 | }]", convertToString(mintermsWithFour));
 }
 
-TEST(QuineMcCluskeyTest, GetAllFinalImplicantsAndGetBestFinalImplicantsWorks) {
+TEST(QuineMcCluskeyTest, GetAllPrimeImplicantsAndGetBestPrimeImplicantsWorks) {
     QuineMcCluskeyForTest quineMcCluskey;
     quineMcCluskey.setInputOutput(4, LogicalValue::True);
     quineMcCluskey.setInputOutput(8, LogicalValue::True);
@@ -173,18 +173,18 @@ TEST(QuineMcCluskeyTest, GetAllFinalImplicantsAndGetBestFinalImplicantsWorks) {
     quineMcCluskey.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     quineMcCluskey.findAllCombinations();
 
-    ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
+    ImplicantsForTest primeImplicants(quineMcCluskey.getAllPrimeImplicants());
     EXPECT_EQ(
         "Implicants : [{size: 4 | '-100 (4, 12, )', '10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', '1-1- (10, 11, "
         "14, 15, )', }]",
-        convertToString(finalImplicants));
-    cout << quineMcCluskey.getOutputTable(finalImplicants);
+        convertToString(primeImplicants));
+    cout << quineMcCluskey.getOutputTable(primeImplicants);
 
-    ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
+    ImplicantsForTest bestPrimeImplicants(quineMcCluskey.getBestPrimeImplicants(primeImplicants));
     EXPECT_EQ(
         "Implicants : [{size: 3 | '-100 (4, 12, )', '10-- (8, 9, 10, 11, )', '1-1- (10, 11, 14, 15, )', }]",
-        convertToString(bestFinalImplicants));
-    cout << quineMcCluskey.getOutputTable(bestFinalImplicants);
+        convertToString(bestPrimeImplicants));
+    cout << quineMcCluskey.getOutputTable(bestPrimeImplicants);
 }
 
 TEST(QuineMcCluskeyTest, DISABLED_ExperimentalTest)  //
@@ -206,19 +206,19 @@ TEST(QuineMcCluskeyTest, DISABLED_ExperimentalTest)  //
     quineMcCluskey.fillComputationalTableWithMintermsWithZeroCommonalityCount();
     quineMcCluskey.findAllCombinations();
 
-    ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
+    ImplicantsForTest primeImplicants(quineMcCluskey.getAllPrimeImplicants());
     EXPECT_EQ(
         "Implicants : [{size: 7 | '-01- (2, 3, 10, 11, )', '--10 (2, 6, 10, 14, )', '10- (4, 5, )', '-1-0 (4, 6, 12, "
         "14, )', "
         "'10-- (8, 9, 10, 11, )', '1--0 (8, 10, 12, 14, )', '1-1- (10, 11, 14, 15, )', }]",
-        convertToString(finalImplicants));
-    cout << quineMcCluskey.getOutputTable(finalImplicants);
+        convertToString(primeImplicants));
+    cout << quineMcCluskey.getOutputTable(primeImplicants);
 
-    ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
+    ImplicantsForTest bestPrimeImplicants(quineMcCluskey.getBestPrimeImplicants(primeImplicants));
     EXPECT_EQ(
         "Implicants : [{size: 3 | '-01- (2, 3, 10, 11, )', '-1-0 (4, 6, 12, 14, )', '10-- (8, 9, 10, 11, )', }]",
-        convertToString(bestFinalImplicants));
-    cout << quineMcCluskey.getOutputTable(bestFinalImplicants);
+        convertToString(bestPrimeImplicants));
+    cout << quineMcCluskey.getOutputTable(bestPrimeImplicants);
 }
 
 namespace {
@@ -256,7 +256,7 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
     cout << "Initial computation table: \n" << quineMcCluskey.getComputationTableString() << "\n";
     quineMcCluskey.findAllCombinations();
 
-    ImplicantsForTest finalImplicants(quineMcCluskey.getAllFinalImplicants());
+    ImplicantsForTest primeImplicants(quineMcCluskey.getAllPrimeImplicants());
     EXPECT_EQ(
         "Implicants : [{size: 30 | ' (0)', '1010 (10)', '10100 (20)', '11110 (30)', '-101000 (40, 104, )', '111100 "
         "(60)', '1-00110 (70, 102, )',"
@@ -269,10 +269,10 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
         " '11001--- (200, 201, 202, 203, 204, 205, 206, 207, )', '110-1100 (204, 220, )', '1101000- (208, 209, )', "
         "'110100-0 (208, 210, )',"
         " '11-10000 (208, 240, )', '11111010 (250)', }]",
-        convertToString(finalImplicants));
-    cout << quineMcCluskey.getOutputTable(finalImplicants);
+        convertToString(primeImplicants));
+    cout << quineMcCluskey.getOutputTable(primeImplicants);
 
-    ImplicantsForTest bestFinalImplicants(quineMcCluskey.getBestFinalImplicants(finalImplicants));
+    ImplicantsForTest bestPrimeImplicants(quineMcCluskey.getBestPrimeImplicants(primeImplicants));
     EXPECT_EQ(
         "Implicants : [{size: 28 | ' (0)', '1010 (10)', '10100 (20)', '11110 (30)', '-101000 (40, 104, )', '111100 "
         "(60)', '1-00110 (70, 102, )', "
@@ -284,8 +284,8 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFileWorks_HasZeroInDigitForBy
         "205, 206, 207, )', "
         "'110-1100 (204, 220, )', '1101000- (208, 209, )', '110100-0 (208, 210, )', '11-10000 (208, 240, )', '11111010 "
         "(250)', }]",
-        convertToString(bestFinalImplicants));
-    cout << quineMcCluskey.getOutputTable(bestFinalImplicants);
+        convertToString(bestPrimeImplicants));
+    cout << quineMcCluskey.getOutputTable(bestPrimeImplicants);
 }
 
 TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_LogarithmBase2ForByte) {
@@ -318,12 +318,12 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_LogarithmBase2ForByte) {
     qm1.findAllCombinations();
     qm2.findAllCombinations();
 
-    ImplicantsForTest finalImplicants0(qm0.getAllFinalImplicants());
-    ImplicantsForTest finalImplicants1(qm1.getAllFinalImplicants());
-    ImplicantsForTest finalImplicants2(qm2.getAllFinalImplicants());
-    cout << qm0.getOutputTable(finalImplicants0);
-    cout << qm1.getOutputTable(finalImplicants1);
-    cout << qm2.getOutputTable(finalImplicants2);
+    ImplicantsForTest primeImplicants0(qm0.getAllPrimeImplicants());
+    ImplicantsForTest primeImplicants1(qm1.getAllPrimeImplicants());
+    ImplicantsForTest primeImplicants2(qm2.getAllPrimeImplicants());
+    cout << qm0.getOutputTable(primeImplicants0);
+    cout << qm1.getOutputTable(primeImplicants1);
+    cout << qm2.getOutputTable(primeImplicants2);
 }
 
 TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_ZeroesStartingFromMsb) {
@@ -361,14 +361,14 @@ TEST(QuineMcCluskeyTest, DISABLED_GetInputsFromFromFile_ZeroesStartingFromMsb) {
     qm2.findAllCombinations();
     qm3.findAllCombinations();
 
-    ImplicantsForTest finalImplicants0(qm0.getAllFinalImplicants());
-    ImplicantsForTest finalImplicants1(qm1.getAllFinalImplicants());
-    ImplicantsForTest finalImplicants2(qm2.getAllFinalImplicants());
-    ImplicantsForTest finalImplicants3(qm3.getAllFinalImplicants());
-    cout << qm0.getOutputTable(finalImplicants0);
-    cout << qm1.getOutputTable(finalImplicants1);
-    cout << qm2.getOutputTable(finalImplicants2);
-    cout << qm3.getOutputTable(finalImplicants3);
+    ImplicantsForTest primeImplicants0(qm0.getAllPrimeImplicants());
+    ImplicantsForTest primeImplicants1(qm1.getAllPrimeImplicants());
+    ImplicantsForTest primeImplicants2(qm2.getAllPrimeImplicants());
+    ImplicantsForTest primeImplicants3(qm3.getAllPrimeImplicants());
+    cout << qm0.getOutputTable(primeImplicants0);
+    cout << qm1.getOutputTable(primeImplicants1);
+    cout << qm2.getOutputTable(primeImplicants2);
+    cout << qm3.getOutputTable(primeImplicants3);
 }
 
 }  // namespace booleanAlgebra
