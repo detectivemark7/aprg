@@ -40,6 +40,28 @@ TEST(ConvertHelpersTest, CanBeConvertedToPolynomialWorks) {
     EXPECT_FALSE(canBeConvertedToPolynomial(Term(Expression())));
 }
 
+TEST(ConvertHelpersTest, ReverseWorks) {
+    Operator nullOperator;
+    Operator addOperator("+");
+    Operator subtractOperator("-");
+    Operator multiplyOperator("*");
+    Operator divideOperator("/");
+    Operator raiseToPowerOperator("^");
+    Operator openingGroupOperator("(");
+    Operator closingGroupOperator(")");
+    Operator invalidOperator("invalid");
+
+    EXPECT_TRUE(reverse(nullOperator).getOperatorString().empty());
+    EXPECT_EQ("-", reverse(addOperator).getOperatorString());
+    EXPECT_EQ("+", reverse(subtractOperator).getOperatorString());
+    EXPECT_EQ("/", reverse(multiplyOperator).getOperatorString());
+    EXPECT_EQ("*", reverse(divideOperator).getOperatorString());
+    EXPECT_TRUE(reverse(raiseToPowerOperator).getOperatorString().empty());
+    EXPECT_TRUE(reverse(openingGroupOperator).getOperatorString().empty());
+    EXPECT_TRUE(reverse(closingGroupOperator).getOperatorString().empty());
+    EXPECT_TRUE(reverse(invalidOperator).getOperatorString().empty());
+}
+
 TEST(ConvertHelpersTest, SimplifyAndConvertMonomialToSimplestTermWorks) {
     Term termToVerify1(simplifyAndConvertMonomialToSimplestTerm(Monomial()));
     Term termToVerify2(simplifyAndConvertMonomialToSimplestTerm(Monomial(6, {})));
