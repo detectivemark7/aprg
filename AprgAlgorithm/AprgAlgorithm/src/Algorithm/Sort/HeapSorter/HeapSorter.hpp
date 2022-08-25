@@ -30,6 +30,7 @@ private:
     void putItemsInHeapOrder(MaxHeapTreeAdapter& maxHeapTreeAdapter) const {
         int size(maxHeapTreeAdapter.getSize());
         // Traverse all parents (starting from bottom to top), and sink down to put items in heap order
+        // Note: According to CLS this runs on O(n) / linear time.
         for (int parentIndex = getLastParentAtTheBottom(maxHeapTreeAdapter);
              parentIndex >= maxHeapTreeAdapter.getTopTreeIndex(); parentIndex--) {
             maxHeapTreeAdapter.sink(parentIndex, size);
@@ -37,7 +38,8 @@ private:
     }
 
     void swapTopItemsToLastPlaces(MaxHeapTreeAdapter& maxHeapTreeAdapter) const {
-        int treeIndex(maxHeapTreeAdapter.getBottomTreeIndex());  // traverse from bottom to top
+        // traverse from bottom to top
+        int treeIndex(maxHeapTreeAdapter.getBottomTreeIndex());
         while (treeIndex > maxHeapTreeAdapter.getTopTreeIndex()) {
             // swap current max to current last place
             std::swap(

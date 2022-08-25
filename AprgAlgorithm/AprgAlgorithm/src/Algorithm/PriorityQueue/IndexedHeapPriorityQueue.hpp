@@ -101,22 +101,22 @@ public:
                 m_treeIndexToObjectIndex[m_size] = objectIndex;
                 treeIndex = m_size;
             }
+            // Note: Swin and sink stops when its already on heap order
+            // so there is no need if the value increased or decreased
             swim(treeIndex);
             sink(treeIndex);
         }
     }
 
 private:
-    bool isComparisonSatisfied(Object const& object1, Object const& object2) { return m_comparator(object1, object2); }
+    bool isInHeapOrder(Object const& child, Object const& parent) { return m_comparator(child, parent); }
 
     int getContainerIndex(int const treeIndex) const {
         // This is not used because size usage is not efficient. No use to make it efficient.
         return treeIndex - 1;
     }
 
-    Object const& getObjectConstReferenceOnTree(int const treeIndex) const {
-        return m_objects[m_treeIndexToObjectIndex[treeIndex]];
-    }
+    Object const& getObjectOnTree(int const treeIndex) const { return m_objects[m_treeIndexToObjectIndex[treeIndex]]; }
 
     void resizeToHaveThisIndexIfNeeded(int const index) {
         if (m_maxSize <= index) {
@@ -138,9 +138,8 @@ private:
     void swim(int const startTreeIndex) {
         // Swim is "bottom up reheapify"
         int treeIndex(startTreeIndex);
-        while (treeIndex > 1 && isComparisonSatisfied(
-                                    getObjectConstReferenceOnTree(treeIndex / NUMBER_OF_CHILDREN),
-                                    getObjectConstReferenceOnTree(treeIndex))) {
+        while (treeIndex > 1 &&
+               !isInHeapOrder(getObjectOnTree(treeIndex), getObjectOnTree(treeIndex / NUMBER_OF_CHILDREN))) {
             swapIndexes(treeIndex / NUMBER_OF_CHILDREN, treeIndex);
             treeIndex /= NUMBER_OF_CHILDREN;
         }
@@ -151,19 +150,18 @@ private:
     void sink(int const startTreeIndex, int const treeSize) {
         // Sink is "top down reheapify"
         int treeIndex(startTreeIndex);
-        while (treeIndex * NUMBER_OF_CHILDREN < treeSize) {
-            int multipliedIndex(treeIndex * NUMBER_OF_CHILDREN);
-            if (multipliedIndex < treeSize && isComparisonSatisfied(
-                                                  getObjectConstReferenceOnTree(multipliedIndex),
-                                                  getObjectConstReferenceOnTree(multipliedIndex + 1))) {
-                multipliedIndex++;
+        while (treeIndex * NUMBER_OF_CHILDREN <= treeSize) {
+            int childIndex(treeIndex * NUMBER_OF_CHILDREN);
+            if (childIndex < treeSize && !isInHeapOrder(getObjectOnTree(childIndex + 1), getObjectOnTree(childIndex))) {
+                // Heap order: isInHeapOrder(child, parent) is true
+                // Get the child the most break the heap order (this would be swapped in sink)
+                ++childIndex;
             }
-            if (!isComparisonSatisfied(
-                    getObjectConstReferenceOnTree(treeIndex), getObjectConstReferenceOnTree(multipliedIndex))) {
-                break;
+            if (isInHeapOrder(getObjectOnTree(childIndex), getObjectOnTree(treeIndex))) {
+                break;  // heap order is found so stop
             }
-            swapIndexes(treeIndex, multipliedIndex);
-            treeIndex = multipliedIndex;
+            swapIndexes(treeIndex, childIndex);
+            treeIndex = childIndex;
         }
     }
 
