@@ -14,9 +14,8 @@ constexpr double PRECISION_OF_DOUBLE = 1E-15;
 constexpr double COMPARISON_TOLERANCE_FOR_FLOAT = 1E-5;
 constexpr double COMPARISON_TOLERANCE_FOR_DOUBLE = 1E-12;
 
-constexpr double DOUBLE_EPSILON =
-    std::numeric_limits<double>::epsilon();  // The difference between 1.0 and the next value representable by the
-                                             // floating-point type T.
+constexpr double DOUBLE_EPSILON = std::numeric_limits<double>::epsilon();
+// The difference between 1.0 and the next value representable by the floating-point type T.
 
 constexpr double PI_DOUBLE_VALUE = 3.14159265358979323846;
 constexpr double E_DOUBLE_VALUE = 2.7182818284590452354;
