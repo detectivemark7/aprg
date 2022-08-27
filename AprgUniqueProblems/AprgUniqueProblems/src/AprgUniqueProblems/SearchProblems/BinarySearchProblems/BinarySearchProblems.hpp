@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Algorithm/Utilities/InvalidIndex.hpp>
-#include <Algorithm/Utilities/MidpointOfIndexes.hpp>
+#include <Algorithm/Utilities/IndexHelper.hpp>
 
 namespace alba {
 
