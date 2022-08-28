@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/DeBruijnSequences/DeBruijnSequences.hpp>
+#include <AprgUniqueProblems/SpecialProblems/DeBruijnSequences/DeBruijnSequences.hpp>
 
 #include <gtest/gtest.h>
 

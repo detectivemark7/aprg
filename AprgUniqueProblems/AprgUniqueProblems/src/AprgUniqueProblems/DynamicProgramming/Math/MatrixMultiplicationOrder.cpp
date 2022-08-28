@@ -43,10 +43,10 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
                 Index rightParenthesis = leftParenthesis + length - 1;
                 Count minimumCount(MAX_COUNT);
                 for (Index inBetween = leftParenthesis + 1; inBetween < rightParenthesis; inBetween++) {
-                    Count currentCount = countMatrix.getEntry(leftParenthesis, inBetween) +
-                                         countMatrix.getEntry(inBetween, rightParenthesis) +
-                                         m_dimensions[leftParenthesis] * m_dimensions[inBetween] *
-                                             m_dimensions[rightParenthesis];
+                    Count currentCount =
+                        countMatrix.getEntry(leftParenthesis, inBetween) +
+                        countMatrix.getEntry(inBetween, rightParenthesis) +
+                        m_dimensions[leftParenthesis] * m_dimensions[inBetween] * m_dimensions[rightParenthesis];
                     minimumCount = min(minimumCount, currentCount);
                 }
                 countMatrix.setEntry(leftParenthesis, rightParenthesis, minimumCount);
@@ -60,8 +60,8 @@ MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOp
 MatrixMultiplicationOrder::Count MatrixMultiplicationOrder::getMinimumNumberOfOperationsUsingNaiveRecursion(
     Index const leftParenthesis, Index const rightParenthesis) const {
     Count result(0);
-    if (leftParenthesis + 2 <= rightParenthesis)  // distance should be two for at least three elements
-    {
+    if (leftParenthesis + 2 <= rightParenthesis) {
+        // distance should be two for at least three elements
         result = MAX_COUNT;
         for (Index inBetween = leftParenthesis + 1; inBetween < rightParenthesis; inBetween++) {
             Count currentCount =

@@ -1,4 +1,4 @@
-#include <AprgUniqueProblems/KnightsTour/KnightsTour.hpp>
+#include <AprgUniqueProblems/SpecialProblems/KnightsTour/KnightsTour.hpp>
 
 #include <gtest/gtest.h>
 
@@ -65,8 +65,7 @@ TEST(KnightsTourTest, GetAClosedKnightsTourWorksOn2By4) {
 TEST(KnightsTourTest, GetAnOpenKnightsTourWorksOn4By5) {
     KnightsTour knightsTour(4, 5);
 
-    ChessBoardIndexes expectedKnightsTour{0, 6, 15, 17, 8,  1, 7, 14, 16, 9,
-                                          2, 4, 13, 19, 10, 3, 5, 12, 18, 11};
+    ChessBoardIndexes expectedKnightsTour{0, 6, 15, 17, 8, 1, 7, 14, 16, 9, 2, 4, 13, 19, 10, 3, 5, 12, 18, 11};
     EXPECT_EQ(expectedKnightsTour, knightsTour.getAnOpenKnightsTour());
 }
 
