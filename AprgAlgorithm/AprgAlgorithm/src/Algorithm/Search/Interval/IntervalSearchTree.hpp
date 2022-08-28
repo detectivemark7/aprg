@@ -32,6 +32,7 @@ public:
         Interval<IntervalUnit>, IntervalSearchTreeNode<Interval<IntervalUnit>, IntervalUnit>>;
     using Node = typename BaseClass::Node;
     using NodeUniquePointer = typename BaseClass::NodeUniquePointer;
+    using BooleanBinaryFunction = std::function<bool(Key const&, Key const&)>;
 
     IntervalSearchTree() : b_root(BaseClass::m_root) {}
 
@@ -40,6 +41,8 @@ public:
         searchForIntersectingIntervals(keys, b_root, intervalToCheck);
         return keys;
     }
+
+    void mergeIntervals(BooleanBinaryFunction const& shouldMerge) { mergeIntervals(b_root, shouldMerge); }
 
 protected:
     void updateTreeNodeDetails(Node& node) const override {
@@ -84,21 +87,18 @@ protected:
     void searchForIntersectingIntervals(
         Keys& intersectingIntervals, NodeUniquePointer const& nodePointer, Key const& intervalToCheck) const {
         if (nodePointer) {
-            if (areIntersectingIntervals(
-                    nodePointer->key, intervalToCheck))  // if interval in node intersect query interval
-            {
+            if (areIntersectingIntervals(nodePointer->key, intervalToCheck)) {
+                // if interval in node intersect query interval
                 intersectingIntervals.emplace_back(nodePointer->key);
             }
-            if (!nodePointer->left)  // if left subtree is null, go right
-            {
+            if (!nodePointer->left) {
+                // if left subtree is null, go right
                 searchForIntersectingIntervals(intersectingIntervals, nodePointer->right, intervalToCheck);
-            } else if (nodePointer->left->maxIntervalValueInSubtree < intervalToCheck.start)  // if max endpoint in left
-                                                                                              // subtree is less than
-                                                                                              // low, go right
-            {
+            } else if (nodePointer->left->maxIntervalValueInSubtree < intervalToCheck.start) {
+                // if max endpoint in left subtree is less than low, go right
                 searchForIntersectingIntervals(intersectingIntervals, nodePointer->right, intervalToCheck);
-            } else  // else go left (and go right as well because all intervals should be collected)
-            {
+            } else {
+                // else go left (and go right as well because all intervals should be collected)
                 searchForIntersectingIntervals(intersectingIntervals, nodePointer->left, intervalToCheck);
                 searchForIntersectingIntervals(intersectingIntervals, nodePointer->right, intervalToCheck);
             }
@@ -114,6 +114,25 @@ protected:
             maxIntervalValueInSubtree = std::max(maxIntervalValueInSubtree, node.right->key.end);
         }
         return maxIntervalValueInSubtree;
+    }
+
+    void mergeIntervals(NodeUniquePointer& nodePointer, BooleanBinaryFunction const& shouldMerge) {
+        if (nodePointer) {
+            if (nodePointer->left) {
+                if (shouldMerge(nodePointer->left->key, nodePointer->key)) {
+                    nodePointer->key.start = nodePointer->left->key.start;
+                    BaseClass::deleteBasedOnKeyStartingOnThisNode(nodePointer->left, nodePointer->left->key);
+                }
+            }
+            if (nodePointer->right) {
+                if (shouldMerge(nodePointer->key, nodePointer->right->key)) {
+                    nodePointer->key.end = nodePointer->right->key.end;
+                    BaseClass::deleteBasedOnKeyStartingOnThisNode(nodePointer->right, nodePointer->right->key);
+                }
+            }
+            mergeIntervals(nodePointer->left, shouldMerge);
+            mergeIntervals(nodePointer->right, shouldMerge);
+        }
     }
 
 private:

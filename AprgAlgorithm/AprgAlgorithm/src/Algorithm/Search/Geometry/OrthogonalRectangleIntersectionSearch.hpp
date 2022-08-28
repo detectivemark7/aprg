@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/Search/Geometry/IntervalSearchTree.hpp>
+#include <Algorithm/Search/Interval/IntervalSearchTree.hpp>
 
 #include <map>
 #include <set>  // lets just use set when we can

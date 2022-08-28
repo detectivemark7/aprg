@@ -17,11 +17,13 @@ public:
     // An ordinary segment tree is static, which means that each node has a fixed position in the array and the tree
     // requires a fixed amount of memory.
 
-    // A segment tree is a data structure that supports two operations: processing a range query and updating an array
-    // value. Segment trees can support sum queries, minimum and maximum queries and many other queries so that both
-    // operations work in O(logn) time. Compared to a binary indexed tree, the advantage of a segment tree is that it is
-    // a more general data structure. While binary indexed trees only support sum queries, segment trees also support
-    // other queries. On the other hand, a segment tree requires more memory and is a bit more difficult to implement.
+    // A segment tree is a data structure that supports two operations:
+    // processing a range query and updating an array value.
+    // Segment trees can support sum queries, minimum and maximum queries
+    //  and many other queries so that both operations work in O(logn) time.
+    // Compared to a binary indexed tree, the advantage of a segment tree is that it is a more general data structure.
+    // While binary indexed trees only support sum queries, segment trees also support other queries.
+    // On the other hand, a segment tree requires more memory and is a bit more difficult to implement.
 
     // Segment trees can support all range queries where it is possible to divide a range into two parts,
     // Calculate the answer separately for both parts and then efficiently combine the answers.
@@ -56,8 +58,8 @@ public:
         Value result{};
         if (start <= end && (m_startOfChildren + start) < static_cast<Index>(m_treeValues.size()) &&
             (m_startOfChildren + end) < static_cast<Index>(m_treeValues.size())) {
-            result = getValueOnIntervalFromTopToBottom(
-                start, end, Utilities::ROOT_PARENT_INDEX, 0, m_startOfChildren);  // startOfChildren is size of base too
+            // startOfChildren is size of base too
+            result = getValueOnIntervalFromTopToBottom(start, end, Utilities::ROOT_PARENT_INDEX, 0, m_startOfChildren);
         }
         return result;
     }
@@ -65,6 +67,18 @@ public:
     void changeValueAtIndex(Index const index, Value const& newValue) {
         // This has log(N) running time
         changeValueAtIndexFromBottomToTop(index, newValue);
+    }
+
+    Index getIndexWithTargetValue(Index const start, Value const targetValue, Function const& inverseFunction) const {
+        Index result(-1);
+        Index startTreeIndex = m_startOfChildren + start;
+        if (startTreeIndex < static_cast<Index>(m_treeValues.size())) {
+            result = getIndexWithTargetValueInternal(startTreeIndex, targetValue, inverseFunction);
+            if (result >= m_startOfChildren) {
+                result -= m_startOfChildren;
+            }
+        }
+        return result;
     }
 
 protected:
@@ -75,23 +89,23 @@ protected:
 
             m_treeValues.resize(totalSize);
             m_treeValues.shrink_to_fit();
-            std::copy(
-                valuesToCheck.cbegin(), valuesToCheck.cend(),
-                m_treeValues.begin() + m_startOfChildren);  // copy children
 
+            // copy children
+            std::copy(valuesToCheck.cbegin(), valuesToCheck.cend(), m_treeValues.begin() + m_startOfChildren);
+
+            // fill up parent values
             Index treeBaseLeft(m_startOfChildren);
             Index treeBaseRight(totalSize - 1);
-            while (treeBaseLeft < treeBaseRight)  // fill up parent values
-            {
+            while (treeBaseLeft < treeBaseRight) {
                 Index treeBaseRightComplete = treeBaseRight;
-                if (Utilities::isALeftChild(treeBaseRight))  // incomplete pair
-                {
+                if (Utilities::isALeftChild(treeBaseRight)) {
+                    // incomplete pair
                     m_treeValues[Utilities::getParent(treeBaseRight)] = m_treeValues[treeBaseRight];
-                    treeBaseRightComplete--;
+                    --treeBaseRightComplete;
                 }
                 for (Index treeIndex = treeBaseLeft; treeIndex < treeBaseRightComplete;
-                     treeIndex += Utilities::NUMBER_OF_CHILDREN)  // complete pairs
-                {
+                     treeIndex += Utilities::NUMBER_OF_CHILDREN) {
+                    // complete pairs
                     m_treeValues[Utilities::getParent(treeIndex)] =
                         m_function(m_treeValues[treeIndex], m_treeValues[treeIndex + 1]);
                 }
@@ -176,11 +190,14 @@ protected:
                 while (treeIndex > 0) {
                     Index parentIndex(Utilities::getParent(treeIndex));
                     if (Utilities::isALeftChild(treeIndex)) {
-                        m_treeValues[parentIndex] =
-                            m_function(m_treeValues[treeIndex], m_treeValues[treeIndex + 1]);
+                        if (treeIndex + 1 < static_cast<int>(m_treeValues.size())) {
+                            m_treeValues[parentIndex] =
+                                m_function(m_treeValues[treeIndex], m_treeValues[treeIndex + 1]);
+                        } else {
+                            m_treeValues[parentIndex] = m_treeValues[treeIndex];
+                        }
                     } else {
-                        m_treeValues[parentIndex] =
-                            m_function(m_treeValues[treeIndex - 1], m_treeValues[treeIndex]);
+                        m_treeValues[parentIndex] = m_function(m_treeValues[treeIndex - 1], m_treeValues[treeIndex]);
                     }
                     treeIndex = parentIndex;
                 }
@@ -189,6 +206,43 @@ protected:
                 m_treeValues[0] = m_treeValues[1];
             }
         }
+    }
+
+    Index getIndexWithTargetValueInternal(
+        Index const treeIndex, Value const targetValue, Function const& inverseFunction) const {
+        Index result(-1);
+        Index parent = Utilities::getParent(treeIndex);
+        Index leftChild = Utilities::getLeftChild(treeIndex);
+        Index rightChild = Utilities::getRightChild(treeIndex);
+        if (targetValue == m_treeValues[treeIndex]) {
+            if (leftChild < static_cast<int>(m_treeValues.size()) && targetValue == m_treeValues[leftChild]) {
+                return getIndexWithTargetValueInternal(leftChild, targetValue, inverseFunction);
+            } else if (rightChild < static_cast<int>(m_treeValues.size())) {
+                return getIndexWithTargetValueInternal(
+                    rightChild, inverseFunction(targetValue, m_treeValues[leftChild]), inverseFunction);
+            } else if (leftChild < static_cast<int>(m_treeValues.size())) {
+                return getIndexWithTargetValueInternal(leftChild, targetValue, inverseFunction);
+            } else {
+                return treeIndex;
+            }
+        } else if (leftChild < static_cast<int>(m_treeValues.size()) && targetValue <= m_treeValues[leftChild]) {
+            return getIndexWithTargetValueInternal(leftChild, targetValue, inverseFunction);
+        } else if (
+            rightChild < static_cast<int>(m_treeValues.size()) &&
+            targetValue <= m_treeValues[leftChild] + m_treeValues[rightChild]) {
+            return getIndexWithTargetValueInternal(
+                rightChild, inverseFunction(targetValue, m_treeValues[leftChild]), inverseFunction);
+        } else if (targetValue <= m_treeValues[treeIndex]) {
+            // do nothing
+        } else if (treeIndex > 0) {
+            if (Utilities::isALeftChild(treeIndex)) {
+                return getIndexWithTargetValueInternal(parent, targetValue, inverseFunction);
+            } else {
+                return getIndexWithTargetValueInternal(
+                    parent, m_function(m_treeValues[Utilities::getLeftChild(parent)], targetValue), inverseFunction);
+            }
+        }
+        return result;
     }
 
     Index m_startOfChildren;

@@ -114,8 +114,8 @@ private:
             }
         }
         CycleDetectionUsingDfs<Vertex> cycleDetection(bestPathTree);
-        m_hasPositiveOrNegativeCycle =
-            !cycleDetection.getOneCycle().empty();  // a cycle in best tree means a positive or negative cycle
+        // a cycle in best tree means a positive or negative cycle
+        m_hasPositiveOrNegativeCycle = !cycleDetection.getOneCycle().empty();
     }
 
     Graph const& b_graph;
@@ -160,7 +160,7 @@ private:
 // edgeTo[v] entries to find it) We can just check if there are any cycles when relax happened V times. This is
 // implemented above.
 
-// Other discusssions:
+// Other discussions:
 
 // Bellman–Ford Algorithm
 // Given a graph and a source vertex src in graph, find shortest paths from src to all vertices in the given graph.
