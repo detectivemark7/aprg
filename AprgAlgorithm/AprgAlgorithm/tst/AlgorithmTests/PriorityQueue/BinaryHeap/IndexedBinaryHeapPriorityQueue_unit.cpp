@@ -1,8 +1,8 @@
-#include <Algorithm/PriorityQueue/IndexedHeapPriorityQueue.hpp>
+#include <Algorithm/PriorityQueue/BinaryHeap/IndexedBinaryHeapPriorityQueue.hpp>
 
 #include <gtest/gtest.h>
 
-using namespace alba::algorithm::IndexedHeapPriorityQueueConstants;
+using namespace alba::algorithm::IndexedBinaryHeapPriorityQueueConstants;
 using namespace std;
 
 namespace alba {
@@ -11,11 +11,11 @@ namespace algorithm {
 
 namespace {
 // less leads to Max Priority Queue same as in c++ standard
-using IndexedPqForTest = IndexedHeapPriorityQueue<char, less, 2>;
+using IndexedPqForTest = IndexedBinaryHeapPriorityQueue<char, less, 2>;
 auto UNUSED = VALUE_FOR_UNUSED_INDEX;
 }  // namespace
 
-TEST(IndexedHeapPriorityQueueTest, IsEmptyWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, IsEmptyWorks) {
     IndexedPqForTest indexedPQ1;
     IndexedPqForTest indexedPQ2;
     indexedPQ2.insert(0, 'A');
@@ -24,7 +24,7 @@ TEST(IndexedHeapPriorityQueueTest, IsEmptyWorks) {
     EXPECT_FALSE(indexedPQ2.isEmpty());
 }
 
-TEST(IndexedHeapPriorityQueueTest, ContainsWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, ContainsWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(2, 'C');
 
@@ -33,7 +33,7 @@ TEST(IndexedHeapPriorityQueueTest, ContainsWorks) {
     EXPECT_TRUE(indexedPq.contains(2));
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetSizeWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetSizeWorks) {
     IndexedPqForTest indexedPQ1;
     IndexedPqForTest indexedPQ2;
     indexedPQ2.insert(1, 'B');
@@ -46,7 +46,7 @@ TEST(IndexedHeapPriorityQueueTest, GetSizeWorks) {
     EXPECT_EQ(5, indexedPQ2.getSize());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetObjectsWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetObjectsWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -58,7 +58,7 @@ TEST(IndexedHeapPriorityQueueTest, GetObjectsWorks) {
     EXPECT_EQ(expectedObjects, indexedPq.getObjects());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetTreeIndexToObjectIndexWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetTreeIndexToObjectIndexWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -70,7 +70,7 @@ TEST(IndexedHeapPriorityQueueTest, GetTreeIndexToObjectIndexWorks) {
     EXPECT_EQ(expectedTreeIndexToObjectIndex, indexedPq.getTreeIndexToObjectIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetObjectIndexToTreeIndexWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetObjectIndexToTreeIndexWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -82,7 +82,7 @@ TEST(IndexedHeapPriorityQueueTest, GetObjectIndexToTreeIndexWorks) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetIndexOfTopObjectWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetIndexOfTopObjectWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -93,7 +93,7 @@ TEST(IndexedHeapPriorityQueueTest, GetIndexOfTopObjectWorks) {
     EXPECT_EQ(6, indexedPq.getIndexOfTopObject());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetTopObjectWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetTopObjectWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -104,7 +104,7 @@ TEST(IndexedHeapPriorityQueueTest, GetTopObjectWorks) {
     EXPECT_EQ('G', indexedPq.getTopObject());
 }
 
-TEST(IndexedHeapPriorityQueueTest, GetObjectAtWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, GetObjectAtWorks) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -121,7 +121,7 @@ TEST(IndexedHeapPriorityQueueTest, GetObjectAtWorks) {
     EXPECT_EQ('G', indexedPq.getObjectAt(6));
 }
 
-TEST(IndexedHeapPriorityQueueTest, SetNumberOfItemsWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, SetNumberOfItemsWorks) {
     IndexedPqForTest indexedPq;
 
     indexedPq.setNumberOfItems(7);
@@ -135,7 +135,7 @@ TEST(IndexedHeapPriorityQueueTest, SetNumberOfItemsWorks) {
     EXPECT_EQ('\0', indexedPq.getObjectAt(6));
 }
 
-TEST(IndexedHeapPriorityQueueTest, InsertWorks) {
+TEST(IndexedBinaryHeapPriorityQueueTest, InsertWorks) {
     IndexedPqForTest indexedPq;
 
     indexedPq.insert(6, 'G');
@@ -152,7 +152,7 @@ TEST(IndexedHeapPriorityQueueTest, InsertWorks) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenEmpty) {
+TEST(IndexedBinaryHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenEmpty) {
     IndexedPqForTest indexedPq;
 
     EXPECT_EQ('\0', indexedPq.deleteAndGetTopObject());
@@ -162,7 +162,7 @@ TEST(IndexedHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenEmpty) {
     EXPECT_TRUE(indexedPq.getObjectIndexToTreeIndex().empty());
 }
 
-TEST(IndexedHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenNotEmpty) {
+TEST(IndexedBinaryHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenNotEmpty) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -180,7 +180,7 @@ TEST(IndexedHeapPriorityQueueTest, DeleteAndGetTopObjectWorksWhenNotEmpty) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenEmpty) {
+TEST(IndexedBinaryHeapPriorityQueueTest, DeleteObjectAtWorksWhenEmpty) {
     IndexedPqForTest indexedPq;
 
     indexedPq.deleteObjectAt(2);
@@ -190,7 +190,7 @@ TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenEmpty) {
     EXPECT_TRUE(indexedPq.getObjectIndexToTreeIndex().empty());
 }
 
-TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectExists) {
+TEST(IndexedBinaryHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectExists) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -208,7 +208,7 @@ TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectExists) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectDoesNotExist) {
+TEST(IndexedBinaryHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectDoesNotExist) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -226,7 +226,7 @@ TEST(IndexedHeapPriorityQueueTest, DeleteObjectAtWorksWhenObjectDoesNotExist) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, ChangeWorksWhenEmpty) {
+TEST(IndexedBinaryHeapPriorityQueueTest, ChangeWorksWhenEmpty) {
     IndexedPqForTest indexedPq;
 
     indexedPq.change(2, 'c');
@@ -239,7 +239,7 @@ TEST(IndexedHeapPriorityQueueTest, ChangeWorksWhenEmpty) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, ChangeWorksWhenObjectExists) {
+TEST(IndexedBinaryHeapPriorityQueueTest, ChangeWorksWhenObjectExists) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');
@@ -257,7 +257,7 @@ TEST(IndexedHeapPriorityQueueTest, ChangeWorksWhenObjectExists) {
     EXPECT_EQ(expectedObjectIndexToTreeIndex, indexedPq.getObjectIndexToTreeIndex());
 }
 
-TEST(IndexedHeapPriorityQueueTest, ChangeWorksWhenObjectDoesNotExist) {
+TEST(IndexedBinaryHeapPriorityQueueTest, ChangeWorksWhenObjectDoesNotExist) {
     IndexedPqForTest indexedPq;
     indexedPq.insert(6, 'G');
     indexedPq.insert(5, 'F');

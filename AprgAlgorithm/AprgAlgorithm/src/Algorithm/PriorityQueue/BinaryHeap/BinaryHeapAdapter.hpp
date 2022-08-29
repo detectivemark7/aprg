@@ -8,12 +8,12 @@ namespace alba {
 namespace algorithm {
 
 template <typename Objects, int NUMBER_OF_CHILDREN, template <class> class ComparatorTemplateType>
-class HeapTreeAdapter {
+class BinaryHeapAdapter {
 public:
     using Object = typename Objects::value_type;
     using Comparator = ComparatorTemplateType<Object>;
 
-    HeapTreeAdapter(Objects& objects) : m_comparator(), m_objects(objects) {}
+    BinaryHeapAdapter(Objects& objects) : m_comparator(), m_objects(objects) {}
 
     Object const& getObjectOnTree(int const treeIndex) const { return m_objects[getContainerIndex(treeIndex)]; }
 

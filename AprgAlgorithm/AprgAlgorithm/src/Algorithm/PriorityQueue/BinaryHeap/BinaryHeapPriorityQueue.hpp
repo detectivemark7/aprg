@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/PriorityQueue/HeapTreeAdapter.hpp>
+#include <Algorithm/PriorityQueue/BinaryHeap/BinaryHeapAdapter.hpp>
 
 #include <utility>
 #include <vector>
@@ -10,11 +10,11 @@ namespace alba {
 namespace algorithm {
 
 template <typename Object, template <class> class ComparatorTemplateType>
-class HeapPriorityQueue {
+class BinaryHeapPriorityQueue {
 public:
     using Objects = std::vector<Object>;
 
-    HeapPriorityQueue() : m_objects(), m_heapTreeAdapter(m_objects) {}
+    BinaryHeapPriorityQueue() : m_objects(), m_heapTreeAdapter(m_objects) {}
 
     bool isEmpty() const { return getSize() == 0; }
 
@@ -48,7 +48,7 @@ private:
 
     static constexpr int INDEX_OF_TOP_TREE = 1;
     Objects m_objects;
-    HeapTreeAdapter<Objects, 2, ComparatorTemplateType> m_heapTreeAdapter;
+    BinaryHeapAdapter<Objects, 2, ComparatorTemplateType> m_heapTreeAdapter;
 };
 
 // Applications:

@@ -1,4 +1,4 @@
-#include <Algorithm/PriorityQueue/HeapTreeAdapter.hpp>
+#include <Algorithm/PriorityQueue/BinaryHeap/BinaryHeapAdapter.hpp>
 
 #include <gtest/gtest.h>
 
@@ -10,10 +10,10 @@ namespace algorithm {
 
 namespace {
 using ContainerForTest = vector<char>;
-using AdapterForTest = HeapTreeAdapter<ContainerForTest, 2, less>;
+using AdapterForTest = BinaryHeapAdapter<ContainerForTest, 2, less>;
 }  // namespace
 
-TEST(HeapTreeAdapterTest, GetObjectConstReferenceOnTreeWorks) {
+TEST(BinaryHeapAdapterTest, GetObjectConstReferenceOnTreeWorks) {
     ContainerForTest objects{'H', 'E', 'A', 'P', 'O', 'B', 'J', 'E', 'C', 'T', 'S'};
     AdapterForTest adapter(objects);
 
@@ -24,7 +24,7 @@ TEST(HeapTreeAdapterTest, GetObjectConstReferenceOnTreeWorks) {
     EXPECT_EQ('S', adapter.getObjectOnTree(objects.size()));
 }
 
-TEST(HeapTreeAdapterTest, GetObjectReferenceOnTreeWorks) {
+TEST(BinaryHeapAdapterTest, GetObjectReferenceOnTreeWorks) {
     ContainerForTest objects{'H', 'E', 'A', 'P', 'O', 'B', 'J', 'E', 'C', 'T', 'S'};
     AdapterForTest adapter(objects);
 
@@ -36,7 +36,7 @@ TEST(HeapTreeAdapterTest, GetObjectReferenceOnTreeWorks) {
     EXPECT_EQ(objectsToExpect, objects);
 }
 
-TEST(HeapTreeAdapterTest, SwimWorks) {
+TEST(BinaryHeapAdapterTest, SwimWorks) {
     ContainerForTest objects{'H', 'E', 'A', 'P', 'O', 'B', 'J', 'E', 'C', 'T', 'S'};
     AdapterForTest adapter(objects);
 
@@ -46,7 +46,7 @@ TEST(HeapTreeAdapterTest, SwimWorks) {
     EXPECT_EQ(objectsToExpect, objects);
 }
 
-TEST(HeapTreeAdapterTest, SinkWorksOnExample1) {
+TEST(BinaryHeapAdapterTest, SinkWorksOnExample1) {
     ContainerForTest objects{'A', 'D', 'A', 'P', 'T', 'E', 'R', 'F', 'O', 'R', 'H', 'E', 'A', 'P'};
     AdapterForTest adapter(objects);
 
@@ -56,7 +56,7 @@ TEST(HeapTreeAdapterTest, SinkWorksOnExample1) {
     EXPECT_EQ(objectsToExpect, objects);
 }
 
-TEST(HeapTreeAdapterTest, SinkWorksOnExample2) {
+TEST(BinaryHeapAdapterTest, SinkWorksOnExample2) {
     ContainerForTest objects{'A', 'B'};
     AdapterForTest adapter(objects);
 

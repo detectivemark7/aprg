@@ -8,27 +8,27 @@ namespace alba {
 
 namespace algorithm {
 
-namespace IndexedHeapPriorityQueueConstants {
+namespace IndexedBinaryHeapPriorityQueueConstants {
 constexpr int INDEX_OF_TOP_TREE = 1;
 constexpr int VALUE_FOR_UNUSED_INDEX = std::numeric_limits<int>::max();
-}  // namespace IndexedHeapPriorityQueueConstants
+}  // namespace IndexedBinaryHeapPriorityQueueConstants
 
 template <typename Object, template <class> class ComparatorTemplateType, int NUMBER_OF_CHILDREN>
-class IndexedHeapPriorityQueue {
+class IndexedBinaryHeapPriorityQueue {
 public:
     // this class is dangerous, the user needs to be aware of index used -> no checks implemented
     using Indexes = std::vector<int>;
     using Objects = std::vector<Object>;
     using Comparator = ComparatorTemplateType<Object>;
 
-    IndexedHeapPriorityQueue() : m_size(0), m_maxSize(0) {}
+    IndexedBinaryHeapPriorityQueue() : m_size(0), m_maxSize(0) {}
 
     bool isEmpty() const { return getSize() == 0; }
 
     bool contains(int const objectIndex) const {
         bool result(false);
         if (objectIndex < static_cast<int>(m_objectIndexToTreeIndex.size())) {
-            result = m_objectIndexToTreeIndex[objectIndex] != IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+            result = m_objectIndexToTreeIndex[objectIndex] != IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
         }
         return result;
     }
@@ -42,7 +42,7 @@ public:
     Indexes const& getObjectIndexToTreeIndex() const { return m_objectIndexToTreeIndex; }
 
     int getIndexOfTopObject() const {
-        return m_treeIndexToObjectIndex[IndexedHeapPriorityQueueConstants::INDEX_OF_TOP_TREE];
+        return m_treeIndexToObjectIndex[IndexedBinaryHeapPriorityQueueConstants::INDEX_OF_TOP_TREE];
     }
 
     Object const& getTopObject() const { return m_objects[getIndexOfTopObject()]; }
@@ -65,12 +65,12 @@ public:
         if (!isEmpty()) {
             topObject = getTopObject();
             int objectIndexOfTopObject = getIndexOfTopObject();
-            swapIndexes(IndexedHeapPriorityQueueConstants::INDEX_OF_TOP_TREE, m_size--);
-            sink(IndexedHeapPriorityQueueConstants::INDEX_OF_TOP_TREE);
+            swapIndexes(IndexedBinaryHeapPriorityQueueConstants::INDEX_OF_TOP_TREE, m_size--);
+            sink(IndexedBinaryHeapPriorityQueueConstants::INDEX_OF_TOP_TREE);
             m_objectIndexToTreeIndex[objectIndexOfTopObject] =
-                IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+                IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
             m_objects[objectIndexOfTopObject] = Object{};
-            m_treeIndexToObjectIndex[m_size + 1] = IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+            m_treeIndexToObjectIndex[m_size + 1] = IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
         }
         return topObject;
     }
@@ -78,13 +78,13 @@ public:
     void deleteObjectAt(int const objectIndex) {
         if (objectIndex < static_cast<int>(m_objects.size())) {
             int treeIndex(m_objectIndexToTreeIndex[objectIndex]);
-            if (treeIndex != IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
+            if (treeIndex != IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
                 swapIndexes(treeIndex, m_size--);
                 swim(treeIndex);
                 sink(treeIndex);
                 m_objects[objectIndex] = Object{};
-                m_objectIndexToTreeIndex[objectIndex] = IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
-                m_treeIndexToObjectIndex[m_size + 1] = IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+                m_objectIndexToTreeIndex[objectIndex] = IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
+                m_treeIndexToObjectIndex[m_size + 1] = IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX;
             }
         }
     }
@@ -95,7 +95,7 @@ public:
         } else {
             m_objects[objectIndex] = object;
             int treeIndex(m_objectIndexToTreeIndex[objectIndex]);
-            if (treeIndex == IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
+            if (treeIndex == IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX) {
                 m_size++;
                 m_objectIndexToTreeIndex[objectIndex] = m_size;
                 m_treeIndexToObjectIndex[m_size] = objectIndex;
@@ -126,10 +126,10 @@ private:
             m_objects.resize(index + 1);
             std::fill(
                 m_treeIndexToObjectIndex.begin() + m_maxSize, m_treeIndexToObjectIndex.end(),
-                IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX);
+                IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX);
             std::fill(
                 m_objectIndexToTreeIndex.begin() + m_maxSize, m_objectIndexToTreeIndex.end(),
-                IndexedHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX);
+                IndexedBinaryHeapPriorityQueueConstants::VALUE_FOR_UNUSED_INDEX);
             std::fill(m_objects.begin() + m_maxSize, m_objects.end(), Object{});
             m_maxSize = index + 1;
         }
