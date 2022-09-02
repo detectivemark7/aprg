@@ -12,7 +12,7 @@ namespace alba {
 namespace algebra {
 
 ProofByInduction::ProofByInduction(
-    std::string const& variableName, Term const& expressionForEachStep, Operator const& accumulateOperator,
+    string const& variableName, Term const& expressionForEachStep, Operator const& accumulateOperator,
     Term const& guessExpression, ManualCalculationFunction const& manualCalculation)
     : m_variableName(variableName),
       m_expressionForEachStep(expressionForEachStep),

@@ -9,7 +9,7 @@ namespace algebra {
 
 class SeriesBasedOnSummation : public SeriesBasedOnFormula {
 public:
-    SeriesBasedOnSummation(Term const& formulaForEachTermInSummation, std::string const& nameForVariableInFormula);
+    SeriesBasedOnSummation(Term const& formulaForEachTermInSummation, std::string const& variableName);
 
     bool isSummationModelValid() const;
     bool isConvergent() const override;
@@ -23,11 +23,11 @@ public:
 
 protected:
     Summation getSummation(
-        Term const& formulaForEachTermInSummation, std::string const& nameForVariableInFormula) const;
+        Term const& formulaForEachTermInSummation, std::string const& variableName) const;
     Term getFormulaForSummation(
-        Term const& formulaForEachTermInSummation, std::string const& nameForVariableInFormula) const;
+        Term const& formulaForEachTermInSummation, std::string const& variableName) const;
     Term m_formulaForEachTermInSummation;
-    std::string m_nameForVariableInFormula;
+    std::string m_variableName;
     Summation m_summation;
     bool m_isSummationModelValid;
 };

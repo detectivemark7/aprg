@@ -83,6 +83,17 @@ bool isDivergentUsingComparisonTest(
     return result;
 }
 
+bool hasLinearity(
+    Term const& termToSum, string const& variableName, AlbaNumber const& multiplier, AlbaNumber const& startNumber) {
+    Summation summation(termToSum, variableName);
+    Summation summationInTimesConstant(termToSum * multiplier, variableName);
+    Term termWithOuterMultiplier(summation.getSummationModelWithKnownConstant(startNumber) * multiplier);
+    Term termWithInnerMultiplier(summationInTimesConstant.getSummationModelWithKnownConstant(startNumber));
+    termWithInnerMultiplier.simplify();
+    termWithOuterMultiplier.simplify();
+    return termWithInnerMultiplier == termWithOuterMultiplier;
+}
+
 void performLimitComparisonTest(
     bool& isConvergent, bool& isDivergent, SeriesBasedOnSummation const& series1, SeriesBasedOnSummation const& series2,
     string const& variableName) {

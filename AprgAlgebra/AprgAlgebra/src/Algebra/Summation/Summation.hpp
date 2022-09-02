@@ -8,7 +8,7 @@ namespace algebra {
 
 class Summation {
 public:
-    Summation(Term const& termToSum, std::string const& variableToSubstitute);
+    Summation(Term const& termToSum, std::string const& variableName);
 
     Term getSummationModelWithKnownConstant(AlbaNumber const& startNumber) const;
     Term getSummationModelWithUnknownConstant() const;
@@ -24,7 +24,7 @@ private:
     Term getSummationModel() const;
 
     Term m_termToSum;
-    std::string m_variableToSubstitute;
+    std::string m_variableName;
     Term m_summationModel;
 };
 

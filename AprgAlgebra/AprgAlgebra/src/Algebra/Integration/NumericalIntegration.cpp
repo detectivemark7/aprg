@@ -30,7 +30,7 @@ Term getAnApproximateOfDefiniteIntegralUsingTrapezoidalRule(
             sum = sum + (currentY * 2);
         }
     }
-    return sum * lengthOfInterval / 2 / numberOfSamples;
+    return sum * incrementInX / 2;
 }
 
 Term getAnApproximateOfDefiniteIntegralUsingSimpsonRule(
@@ -91,8 +91,7 @@ Term getAnApproximateOfTruncationErrorInSimpsonRuleAt(
     return termDoublePrimeValue * lengthOfInterval / -180 * (deltaX ^ 2);
 }
 
-AlbaNumber getAnApproximateOfNaturalLogarithmUsingTrapezoidRule(
-    AlbaNumber const& input, int const numberOfSamples) {
+AlbaNumber getAnApproximateOfNaturalLogarithmUsingTrapezoidRule(AlbaNumber const& input, int const numberOfSamples) {
     AlbaNumber result;
     if (input > 0) {
         Term oneOverX(Monomial(1, {{"x", -1}}));
@@ -105,8 +104,7 @@ AlbaNumber getAnApproximateOfNaturalLogarithmUsingTrapezoidRule(
     return result;
 }
 
-AlbaNumber getAnApproximateOfNaturalLogarithmUsingSimpsonRule(
-    AlbaNumber const& input, int const numberOfSamples) {
+AlbaNumber getAnApproximateOfNaturalLogarithmUsingSimpsonRule(AlbaNumber const& input, int const numberOfSamples) {
     AlbaNumber result;
     if (input > 0) {
         Term oneOverX(Monomial(1, {{"x", -1}}));

@@ -11,7 +11,7 @@ namespace algebra {
 
 class SeriesBasedOnFormula {
 public:
-    SeriesBasedOnFormula(Term const& formulaForSeries, std::string const& nameForVariableInFormula);
+    SeriesBasedOnFormula(Term const& formulaForSeries, std::string const& variableName);
     virtual bool isConvergent() const;
     virtual bool isIncreasing() const;
     virtual bool isDecreasing() const;
@@ -34,7 +34,7 @@ protected:
     AlbaNumbers getExtremaIndexes() const;
     Term getSignDerivativeForFiniteCalculus() const;
     Term m_formulaForSeries;
-    std::string m_nameForVariableInFormula;
+    std::string m_variableName;
 };
 
 }  // namespace algebra

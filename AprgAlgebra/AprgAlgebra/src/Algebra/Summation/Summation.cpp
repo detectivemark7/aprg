@@ -16,13 +16,13 @@ namespace alba {
 
 namespace algebra {
 
-Summation::Summation(Term const& termToSum, string const& variableToSubstitute)
-    : m_termToSum(termToSum), m_variableToSubstitute(variableToSubstitute), m_summationModel(getSummationModel()) {}
+Summation::Summation(Term const& termToSum, string const& variableName)
+    : m_termToSum(termToSum), m_variableName(variableName), m_summationModel(getSummationModel()) {}
 
 Term Summation::getSummationModelWithKnownConstant(AlbaNumber const& startNumber) const {
-    SubstitutionOfVariablesToValues substitution({{m_variableToSubstitute, startNumber}});
+    SubstitutionOfVariablesToValues substitution({{m_variableName, startNumber}});
     Term firstTerm(substitution.performSubstitutionTo(m_termToSum));
-    substitution.putVariableWithValue(m_variableToSubstitute, startNumber);
+    substitution.putVariableWithValue(m_variableName, startNumber);
     Term summationValueFromModel(substitution.performSubstitutionTo(m_summationModel));
     Term difference = firstTerm - summationValueFromModel;
     Term result(m_summationModel + difference);
@@ -64,9 +64,9 @@ void Summation::calculateSumStartingFromANumber(Term& result, AlbaNumber const& 
         Term summationModelWithConstant(getSummationModelWithKnownConstant(startNumber));
 
         if (end.isConstant() && end.getConstantValueConstReference().isPositiveInfinity()) {
-            result = getLimit(summationModelWithConstant, m_variableToSubstitute, ALBA_NUMBER_POSITIVE_INFINITY);
+            result = getLimit(summationModelWithConstant, m_variableName, ALBA_NUMBER_POSITIVE_INFINITY);
         } else {
-            SubstitutionOfVariablesToTerms substitution({{m_variableToSubstitute, end}});
+            SubstitutionOfVariablesToTerms substitution({{m_variableName, end}});
             result = substitution.performSubstitutionTo(summationModelWithConstant);
         }
     } else {
@@ -81,10 +81,10 @@ void Summation::calculateSumUsingEachTerm(
     Term sum;
     if (start <= end) {
         SubstitutionOfVariablesToValues substitution;
-        substitution.putVariableWithValue(m_variableToSubstitute, start);
+        substitution.putVariableWithValue(m_variableName, start);
         sum = substitution.performSubstitutionTo(m_termToSum);
         for (long long value = start + 1; value <= end; value++) {
-            substitution.putVariableWithValue(m_variableToSubstitute, value);
+            substitution.putVariableWithValue(m_variableName, value);
             sum += substitution.performSubstitutionTo(m_termToSum);
         }
     }
@@ -93,15 +93,15 @@ void Summation::calculateSumUsingEachTerm(
 
 void Summation::calculateSumUsingModel(Term& result, AlbaNumber const& startNumber, AlbaNumber const& endNumber) const {
     Term summationModelWithConstant(getSummationModelWithKnownConstant(startNumber));
-    SubstitutionOfVariablesToValues substitution({{m_variableToSubstitute, endNumber}});
+    SubstitutionOfVariablesToValues substitution({{m_variableName, endNumber}});
     result = substitution.performSubstitutionTo(summationModelWithConstant);
 }
 
 Term Summation::getSummationModel() const {
-    IntegrationForFiniteCalculus integration(m_variableToSubstitute);
+    IntegrationForFiniteCalculus integration(m_variableName);
     // Put plus one because finite calculus terms are summation up to n-1.
-    Term variablePlusOne(Polynomial{Monomial(1, {{m_variableToSubstitute, 1}}), Monomial(1, {})});
-    SubstitutionOfVariablesToTerms substitution({{m_variableToSubstitute, variablePlusOne}});
+    Term variablePlusOne(Polynomial{Monomial(1, {{m_variableName, 1}}), Monomial(1, {})});
+    SubstitutionOfVariablesToTerms substitution({{m_variableName, variablePlusOne}});
     return substitution.performSubstitutionTo(integration.integrate(m_termToSum));
 }
 
