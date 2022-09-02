@@ -10,7 +10,7 @@ namespace algorithm {}
 
 // -> Asymptotic Analysis
 //
-// ---> NOTE: The CLS book restricts the definitions of functions to be asymptotically non negative, other books just
+// ---> NOTE: The CLRS book restricts the definitions of functions to be asymptotically non negative, other books just
 // use limits on their definitions.
 //
 // ---> (1) Θ Notation (BIG THETA Notation):

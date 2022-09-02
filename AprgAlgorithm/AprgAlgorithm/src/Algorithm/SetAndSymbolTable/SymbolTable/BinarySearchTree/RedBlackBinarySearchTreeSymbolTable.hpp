@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Algorithm/SetAndSymbolTable/Common/BinarySearchTree/BinarySearchTreeNode.hpp>
+#include <Algorithm/SetAndSymbolTable/Common/BinarySearchTree/BinarySearchTreeNodes.hpp>
 #include <Algorithm/SetAndSymbolTable/SymbolTable/BinarySearchTree/Common/BaseRedBlackBinarySearchTreeSymbolTable.hpp>
 
 namespace alba {

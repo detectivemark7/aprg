@@ -31,10 +31,11 @@ public:
             result = 0;
         } else {
             for (Index searchIndex = m_substringLength; searchIndex < searchLength; searchIndex++) {
-                currentHash = getNextHash(
-                    currentHash, mainString[searchIndex - m_substringLength], mainString[searchIndex]);
+                currentHash =
+                    getNextHash(currentHash, mainString[searchIndex - m_substringLength], mainString[searchIndex]);
                 if (m_substringHash == currentHash) {
-                    result = searchIndex - m_substringLength + 1;  // Monte carlo approach (no double check)
+                    // Monte carlo approach (no double check)
+                    result = searchIndex - m_substringLength + 1;
                     break;
                 }
             }

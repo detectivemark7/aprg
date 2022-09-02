@@ -30,7 +30,7 @@ private:
     void putItemsInHeapOrder(MaxBinaryHeapAdapter& maxBinaryHeapAdapter) const {
         int size(maxBinaryHeapAdapter.getSize());
         // Traverse all parents (starting from bottom to top), and sink down to put items in heap order
-        // Note: According to CLS this runs on O(n) / linear time.
+        // Note: According to CLRS this runs on O(n) / linear time.
         for (int parentIndex = getLastParentAtTheBottom(maxBinaryHeapAdapter);
              parentIndex >= maxBinaryHeapAdapter.getTopTreeIndex(); parentIndex--) {
             maxBinaryHeapAdapter.sink(parentIndex, size);

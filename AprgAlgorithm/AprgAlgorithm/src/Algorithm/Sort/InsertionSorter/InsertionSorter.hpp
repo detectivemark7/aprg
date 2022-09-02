@@ -36,7 +36,7 @@ private:
 
     void continuouslyCopyBackIfStillOutOfOrder(Values& valuesToSort, Iterator const insertIt) const {
         // reserve a copy instead of continuously swapping down
-        // this is another implementation (from CLS book)
+        // this is another implementation (from CLRS book)
         auto insertItem = *insertIt;
         auto rItLow = std::make_reverse_iterator(insertIt);  // make_reverse_iterator moves it by one
         // so final the stiuation here is rItLow < insertIt
@@ -103,7 +103,7 @@ private:
 // -> 2.a) Insert current node in sorted way in sorted/result list.
 // 3) Change head of given linked list to head of sorted (or result) list.
 
-// There is also an implementation of insertion sort that does not involve swapping (check the CLS book for it).
+// There is also an implementation of insertion sort that does not involve swapping (check the CLRS book for it).
 // It basically copies the "key" (item on the position of insert index)
 // and moves the values down before the insert index until the current item larger than the key (maintaining the order)
 // But I think swap implementation is much better on things benefits on swapping (instead of copying).
