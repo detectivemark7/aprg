@@ -480,9 +480,7 @@ AlbaNumber AlbaNumber::addBothFractionsAndReturnNumber(
     double doubleNumerator = doubleNumeratorPart1 + doubleNumeratorPart2;
     if (lcd != 0 && lcd >= fractionData1.denominator && lcd >= fractionData2.denominator &&
         isValueWithinLimits<DenominatorDataType>(doubleLcd) &&
-        isValueWithinLimits<NumeratorDataType>(doubleNumerator) &&
-        isValueWithinLimits<NumeratorDataType>(doubleNumeratorPart1) &&
-        isValueWithinLimits<NumeratorDataType>(doubleNumeratorPart2)) {
+        isValueWithinLimits<NumeratorDataType>(doubleNumerator)) {
         NumeratorDataType integerNumerator =
             fractionData1.numerator * static_cast<NumeratorDataType>(lcd / fractionData1.denominator) +
             fractionData2.numerator * static_cast<NumeratorDataType>(lcd / fractionData2.denominator);
