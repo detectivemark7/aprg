@@ -19,12 +19,12 @@ public:
     FibonacciSearch(Values const& values)  // values can be unsorted
         : m_sortedValues(values) {}
 
-    Index getIndexOfValue(Value const& valueToCheck) {
+    Index getIndexOfValue(Value const& target) {
         // This is different from whats is described below (wikipedia entry)
         Index previousFibonacci(0);
         Index currentFibonacci(1);
         while (currentFibonacci < static_cast<Index>(m_sortedValues.size()) &&
-               m_sortedValues[currentFibonacci] < valueToCheck) {
+               m_sortedValues[currentFibonacci] < target) {
             Index nextFibonacci = currentFibonacci + previousFibonacci;
             previousFibonacci = currentFibonacci;
             currentFibonacci = nextFibonacci;
@@ -32,7 +32,7 @@ public:
 
         BinarySearchWithTwoIndices<Values> binarySearch(m_sortedValues);  // perform binary search on that block
         return binarySearch.getIndexOfValue(
-            previousFibonacci, std::min(currentFibonacci, static_cast<int>(m_sortedValues.size()) - 1), valueToCheck);
+            previousFibonacci, std::min(currentFibonacci, static_cast<int>(m_sortedValues.size()) - 1), target);
     }
 
 private:

@@ -18,18 +18,18 @@ public:
     JumpSearch(Values const& values)  // values can be unsorted
         : m_blockSize(getOptimalSize(values)), m_sortedValues(values) {}
 
-    Index getIndexOfValue(Value const& valueToCheck) {
-        // find the block where value is included
+    Index getIndexOfValue(Value const& target) {
+        // find the block where target is included
         Index blockStartIndex(0);
         Index blockEndIndex(m_blockSize);
-        while (blockEndIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues[blockEndIndex] < valueToCheck) {
+        while (blockEndIndex < static_cast<Index>(m_sortedValues.size()) && m_sortedValues[blockEndIndex] < target) {
             blockStartIndex = blockEndIndex + 1;
             blockEndIndex += m_blockSize;
         }
 
         LinearSearchWithOneIndex<Values> linearSearch(m_sortedValues);  // perform linear search on that block
         return linearSearch.getIndexOfValue(
-            blockStartIndex, std::min(blockEndIndex, static_cast<int>(m_sortedValues.size()) - 1), valueToCheck);
+            blockStartIndex, std::min(blockEndIndex, static_cast<int>(m_sortedValues.size()) - 1), target);
     }
 
 private:
@@ -56,7 +56,7 @@ private:
 
 // Let’s consider the following array: (0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610).
 // Length of the array is 16.
-// Jump search will find the value of 55 with the following steps assuming that the block size to be jumped is 4.
+// Jump search will find the target of 55 with the following steps assuming that the block size to be jumped is 4.
 // STEP 1: Jump from index 0 to index 4;
 // STEP 2: Jump from index 4 to index 8;
 // STEP 3: Jump from index 8 to index 12;
@@ -64,9 +64,9 @@ private:
 // STEP 5: Perform linear search from index 8 to get the element 55.
 
 // What is the optimal block size to be skipped?
-// In the worst case, we have to do n/m jumps and if the last checked value is greater than the element to be searched
+// In the worst case, we have to do n/m jumps and if the last checked target is greater than the element to be searched
 // for, we perform m-1 comparisons more for linear search. Therefore the total number of comparisons in the worst case
-// will be ((n/m) + m-1). The value of the function ((n/m) + m-1) will be minimum when m = √n. Therefore, the best step
+// will be ((n/m) + m-1). The target of the function ((n/m) + m-1) will be minimum when m = √n. Therefore, the best step
 // size is m = √n.
 
 // This is better than a linear search, but worse than a binary search.
