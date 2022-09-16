@@ -81,8 +81,8 @@ public:
     SizeArray const& getSizesOfRootsArray() const { return m_sizesOfRoots; }
 
 private:
-    void initialize()  // runs in linear time
-    {
+    void initialize() {
+        // runs in linear time
         std::iota(m_relativeRoots.begin(), m_relativeRoots.end(), 0);
         std::fill(m_sizesOfRoots.begin(), m_sizesOfRoots.end(), 1);
     }
@@ -102,6 +102,10 @@ private:
     SizeArray m_sizesOfRoots;
 };
 
+}  // namespace algorithm
+
+}  // namespace alba
+
 // Proof
 // Depth of any node x is at most log2 (SIZE)
 // When does the depth of x increase? Increase by 1 when tree T1 containing x is merged into another tree T2.
@@ -112,8 +116,4 @@ private:
 // The efficiency of the union-find structure depends on how the sets are joined.
 // It turns out that we can follow a simple strategy:
 // always connect the representative of the smaller set to the representative of the larger set (if equal, we can make
-// an arbitrary choice). Using this strategy, the length of any chain will be O(logn).
-
-}  // namespace algorithm
-
-}  // namespace alba
+// an arbitrary choice). Using this strategy, the length of any chain will be O(log n).

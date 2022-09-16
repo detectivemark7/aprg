@@ -62,10 +62,8 @@ public:
         clear();
         initializeWithStartVertices(startVertices);
         m_initializeDataFunction(startVertices);
-        for (Vertex const& startVertex :
-             b_startVertices
-                 .getVertices())  // to maintain order, get the vertices in start vertices (because its sorted)
-        {
+        // to maintain order, get the vertices in start vertices (because its sorted)
+        for (Vertex const& startVertex : b_startVertices.getVertices()) {
             traverseUsingDfs(startVertex);
         }
     }

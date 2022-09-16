@@ -35,8 +35,8 @@ public:
     RootArray const& getRootArray() const { return m_roots; }
 
 private:
-    void initialize()  // runs in linear time
-    {
+    void initialize() {
+        // runs in linear time
         std::iota(m_roots.begin(), m_roots.end(), 0);
     }
 
