@@ -141,13 +141,13 @@ NumberType getSquareRootUsingBinarySearch(NumberType const radicand) {
     return (low * low > radicand) ? low - 1 : low;
 
     // Some end cases analysis:
-    // -> If range is one element[a], loop ends, we get check value
-    // -> If range is two elements[a,b]:
+    // -> If interval is one element[a], loop ends, we get check value
+    // -> If interval is two elements[a,b]:
     // ---> middleSquared < target -> low moves to right, only b retains (target might be to the left)
     // ---> middleSquared == target -> low moves to right, only b retains (target might be to the left)
     // ---> target < middleSquared -> high moves to left, only a retains
-    // -> If range is three elements, this reduces to one element
-    // -> If range is four elements, this reduces to one element or two elements
+    // -> If interval is three elements, this reduces to one element
+    // -> If interval is four elements, this reduces to one element or two elements
 }
 
 bool isPerfectSquare(AlbaNumber const& value);                            // pass as const reference
