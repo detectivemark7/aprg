@@ -242,8 +242,8 @@ protected:
         // used in deletion (hibbard approach)
         if (nodePointer) {
             if (nodePointer->left) {
-                return getMinimumNodePointerReferenceStartingOnThisNode(
-                    nodePointer->left);  // find the left most node until null
+                // find the left most node until null
+                return getMinimumNodePointerReferenceStartingOnThisNode(nodePointer->left);
             } else {
                 return nodePointer;
             }
@@ -266,14 +266,13 @@ protected:
                 // place the keys of the minimum on this node and then delete it
                 // why are we using deletion of minimum on the right instead of deletion of maximum in the left?
                 // -> No real reason.
-                NodeUniquePointer& minimumOnTheRight(
-                    getMinimumNodePointerReferenceStartingOnThisNode(nodePointer->right));
-                if (!minimumOnTheRight) {
-                    nodePointer.reset(nullptr);
-                } else {
+                if (nodePointer->right) {
+                    NodeUniquePointer& minimumOnTheRight(
+                        getMinimumNodePointerReferenceStartingOnThisNode(nodePointer->right));
                     copyNodeContents(*nodePointer, *minimumOnTheRight);
-                    // delete minimum on right
                     deleteMinimumStartingOnThisNode(minimumOnTheRight);
+                } else {
+                    nodePointer = std::move(nodePointer->left);
                 }
             }
             if (nodePointer) {
