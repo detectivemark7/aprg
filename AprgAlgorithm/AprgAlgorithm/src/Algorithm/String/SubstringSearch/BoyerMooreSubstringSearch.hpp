@@ -18,22 +18,19 @@ public:
     static constexpr Index INVALID_POSITION = -1;
     using SkipTable = std::array<Index, RADIX>;
 
-    BoyerMooreSubstringSearch(std::string const& substringToMatch)
-        : m_substringToMatch(substringToMatch), m_rightMostLetterIndex{} {
-        initialize();
-    }
+    BoyerMooreSubstringSearch(std::string const& query) : m_query(query), m_rightMostLetterIndex{} { initialize(); }
 
-    Index search(std::string const& mainString) {
+    Index search(std::string const& searchSpace) {
         Index result(static_cast<Index>(std::string::npos));
-        Index mainLength(mainString.size());
-        Index substringLength(m_substringToMatch.size());
+        Index searchSpaceLength(searchSpace.length());
+        Index queryLength(m_query.length());
         int skipValue(0);
-        for (Index searchIndex = 0; searchIndex + substringLength <= mainLength; searchIndex += skipValue) {
+        for (Index searchIndex = 0; searchIndex + queryLength <= searchSpaceLength; searchIndex += skipValue) {
             skipValue = 0;
-            for (Index rightMostMismatch = substringLength - 1; rightMostMismatch >= 0; --rightMostMismatch) {
+            for (Index rightMostMismatch = queryLength - 1; rightMostMismatch >= 0; --rightMostMismatch) {
                 // if mismatch
-                if (m_substringToMatch[rightMostMismatch] != mainString[searchIndex + rightMostMismatch]) {
-                    Index letterIndex(m_rightMostLetterIndex[mainString[searchIndex + rightMostMismatch]]);
+                if (m_query[rightMostMismatch] != searchSpace[searchIndex + rightMostMismatch]) {
+                    Index letterIndex(m_rightMostLetterIndex[searchSpace[searchIndex + rightMostMismatch]]);
                     if (letterIndex + 1 < static_cast<Index>(rightMostMismatch)) {
                         // (Case 1: "Mismatch character is not in pattern")
                         // This happens if letterIndex is -1.
@@ -64,13 +61,13 @@ private:
             m_rightMostLetterIndex[i] = INVALID_POSITION;  // assign negative one for case 1
         }
         Index substringIndex = 0;
-        for (char const c : m_substringToMatch) {
+        for (char const c : m_query) {
             // if there are multiple instances of letter, it overwrites (right most position is taken)
             m_rightMostLetterIndex[c] = substringIndex++;
         }
     }
 
-    std::string m_substringToMatch;
+    std::string m_query;
     SkipTable m_rightMostLetterIndex;
 };
 
