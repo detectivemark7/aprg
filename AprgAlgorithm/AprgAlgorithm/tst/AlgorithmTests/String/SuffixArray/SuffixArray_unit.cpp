@@ -32,19 +32,19 @@ TEST(SuffixArrayTest, GetRankWorks) {
     EXPECT_EQ(2, suffixArray.getRank("LetsSingInstead"));
 }
 
-TEST(SuffixArrayTest, GetSuffixAtWorks) {
+TEST(SuffixArrayTest, GetSuffixViewAtWorks) {
     SuffixArrayForTest suffixArray("LetsDanceToThisSong");
 
-    EXPECT_EQ("DanceToThisSong", suffixArray.getSuffixAt(0));
-    EXPECT_EQ("LetsDanceToThisSong", suffixArray.getSuffixAt(1));
-    EXPECT_EQ("Song", suffixArray.getSuffixAt(2));
-    EXPECT_EQ("ThisSong", suffixArray.getSuffixAt(3));
-    EXPECT_EQ("ToThisSong", suffixArray.getSuffixAt(4));
-    EXPECT_EQ("anceToThisSong", suffixArray.getSuffixAt(5));
-    EXPECT_EQ("ceToThisSong", suffixArray.getSuffixAt(6));
-    EXPECT_EQ("eToThisSong", suffixArray.getSuffixAt(7));
-    EXPECT_EQ("etsDanceToThisSong", suffixArray.getSuffixAt(8));
-    EXPECT_EQ("g", suffixArray.getSuffixAt(9));
+    EXPECT_EQ("DanceToThisSong", suffixArray.getSuffixViewAt(0));
+    EXPECT_EQ("LetsDanceToThisSong", suffixArray.getSuffixViewAt(1));
+    EXPECT_EQ("Song", suffixArray.getSuffixViewAt(2));
+    EXPECT_EQ("ThisSong", suffixArray.getSuffixViewAt(3));
+    EXPECT_EQ("ToThisSong", suffixArray.getSuffixViewAt(4));
+    EXPECT_EQ("anceToThisSong", suffixArray.getSuffixViewAt(5));
+    EXPECT_EQ("ceToThisSong", suffixArray.getSuffixViewAt(6));
+    EXPECT_EQ("eToThisSong", suffixArray.getSuffixViewAt(7));
+    EXPECT_EQ("etsDanceToThisSong", suffixArray.getSuffixViewAt(8));
+    EXPECT_EQ("g", suffixArray.getSuffixViewAt(9));
 }
 
 TEST(SuffixArrayTest, GetLongestCommonPrefixOfTwoSuffixesWorks) {
