@@ -20,10 +20,7 @@ private:
         return 0;
     }
 
-    int searchUsingOneLoop(
-        std::string const& searchSpace,
-        std::string const& query)  // implementation with one loop
-    {
+    int searchUsingOneLoop(std::string const& searchSpace, std::string const& query) {
         int result(static_cast<int>(std::string::npos));
         int searchSpaceLength(searchSpace.length());
         int queryLength(query.length());
@@ -43,10 +40,7 @@ private:
         return result;
     }
 
-    int searchUsingTwoLoops(
-        std::string const& searchSpace,
-        std::string const& query)  // implementation with two loops
-    {
+    int searchUsingTwoLoops(std::string const& searchSpace, std::string const& query) {
         int result(static_cast<int>(std::string::npos));
         int searchSpaceLength(searchSpace.length());
         int queryLength(query.length());
