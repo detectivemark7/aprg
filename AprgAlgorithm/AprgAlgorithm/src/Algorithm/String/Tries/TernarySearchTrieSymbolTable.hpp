@@ -16,7 +16,7 @@ public:
     using BaseClass = BaseTernarySearchTrie<
         TernarySearchTrieSymbolTableNode<ValueTemplateType>, BaseStringSymbolTable<ValueTemplateType>>;
     using Key = typename BaseClass::Key;
-    using Keys = typename BaseClass::Keys;
+    using Strings = typename BaseClass::Strings;
     using Node = typename BaseClass::Node;
     using Value = ValueTemplateType;
     using NodeUniquePointer = std::unique_ptr<Node>;
@@ -42,15 +42,15 @@ public:
         }
     }
 
-    Keys getAllKeysWithPrefix(Key const& prefix) const override {
-        Keys result;
+    Strings getAllKeysWithPrefix(Key const& prefix) const override {
+        Strings result;
         Node const* const firstNode(this->getStartingOnThisNode(b_root, prefix, 0));
         if (firstNode != nullptr) {
             ValueUniquePointer const& valueUniquePointer(firstNode->valueUniquePointer);
             if (valueUniquePointer) {
                 result.emplace_back(prefix);
             }
-            collectAllKeysAtNode(firstNode->mid.get(), prefix, result);
+            collectAllKeysAtNode(firstNode->mid.get(), std::string(prefix), result);
         }
         return result;
     }
@@ -111,11 +111,12 @@ protected:
     }
 
     void collectAllKeysAtNode(
-        Node const* const currentNodePointer, Key const& previousPrefix, Keys& collectedKeys) const override {
+        Node const* const currentNodePointer, std::string const& previousPrefix,
+        Strings& collectedKeys) const override {
         if (currentNodePointer != nullptr) {
             ValueUniquePointer const& valueUniquePointer(currentNodePointer->valueUniquePointer);
             collectAllKeysAtNode(currentNodePointer->left.get(), previousPrefix, collectedKeys);
-            Key currentPrefix(previousPrefix + currentNodePointer->c);
+            std::string currentPrefix(previousPrefix + currentNodePointer->c);
             if (valueUniquePointer) {
                 collectedKeys.emplace_back(currentPrefix);
             }
@@ -125,14 +126,14 @@ protected:
     }
 
     void collectKeysThatMatchAtNode(
-        Node const* const currentNodePointer, Key const& previousPrefix, Key const& patternToMatch,
-        Keys& collectedKeys) const override {
+        Node const* const currentNodePointer, std::string const& previousPrefix, Key const& patternToMatch,
+        Strings& collectedKeys) const override {
         if (currentNodePointer != nullptr) {
             int previousPrefixLength = previousPrefix.length();
             int lastIndexToMatch = patternToMatch.length() - 1;
             char currentChar = currentNodePointer->c;
             char charToMatch = patternToMatch[previousPrefixLength];
-            Key currentPrefix(previousPrefix + currentNodePointer->c);
+            std::string currentPrefix(previousPrefix + currentNodePointer->c);
             if (charToMatch < currentChar) {
                 collectKeysThatMatchAtNode(
                     currentNodePointer->left.get(), previousPrefix, patternToMatch, collectedKeys);

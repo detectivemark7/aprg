@@ -118,7 +118,7 @@ void testDeleteBasedOnKeyWithInt() {
 
 template <typename Trie>
 void testGetKeysWithInt() {
-    using Keys = typename Trie::Keys;
+    using Strings = typename Trie::Strings;
     Trie trie;
     trie.put("she", 0);
     trie.put("sells", 1);
@@ -130,15 +130,15 @@ void testGetKeysWithInt() {
     trie.put("shore", 7);
     trie.put("s", 8);
 
-    Keys keysToVerify(trie.getKeys());
+    Strings keysToVerify(trie.getKeys());
 
-    Keys expectedKeys{"by", "s", "sea", "sells", "she", "shells", "shore", "the"};
+    Strings expectedKeys{"by", "s", "sea", "sells", "she", "shells", "shore", "the"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 
 template <typename Trie>
 void testGetAllKeysWithPrefixWithInt() {
-    using Keys = typename Trie::Keys;
+    using Strings = typename Trie::Strings;
     Trie trie;
     trie.put("she", 0);
     trie.put("sells", 1);
@@ -150,15 +150,15 @@ void testGetAllKeysWithPrefixWithInt() {
     trie.put("shore", 7);
     trie.put("s", 8);
 
-    Keys keysToVerify(trie.getAllKeysWithPrefix("s"));
+    Strings keysToVerify(trie.getAllKeysWithPrefix("s"));
 
-    Keys expectedKeys{"s", "sea", "sells", "she", "shells", "shore"};
+    Strings expectedKeys{"s", "sea", "sells", "she", "shells", "shore"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 
 template <typename Trie>
 void testGetAllKeysThatMatchWithInt() {
-    using Keys = typename Trie::Keys;
+    using Strings = typename Trie::Strings;
     Trie trie;
     trie.put("she", 0);
     trie.put("sells", 1);
@@ -170,9 +170,9 @@ void testGetAllKeysThatMatchWithInt() {
     trie.put("shore", 7);
     trie.put("s", 8);
 
-    Keys keysToVerify(trie.getAllKeysThatMatch("s.."));
+    Strings keysToVerify(trie.getAllKeysThatMatch("s.."));
 
-    Keys expectedKeys{"sea", "she"};
+    Strings expectedKeys{"sea", "she"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <string_view>
 #include <vector>
 
 namespace alba {
@@ -9,8 +9,8 @@ namespace algorithm {
 
 class BaseStringSet {
 public:
-    using Key = std::string;
-    using Keys = std::vector<Key>;
+    using Key = std::string_view;
+    using Strings = std::vector<std::string>;
 
     virtual ~BaseStringSet() = default;  // virtual destructor because of virtual functions (vtable exists)
 
@@ -23,9 +23,9 @@ public:
     virtual void put(Key const& key) = 0;               // put key-value pair
     virtual void deleteBasedOnKey(Key const& key) = 0;  // remove key (and its value) from the symbol table
 
-    virtual Keys getKeys() const = 0;                                       // get all keys in sorted order
-    virtual Keys getAllKeysWithPrefix(Key const& prefix) const = 0;         // all the keys having s as a prefix
-    virtual Keys getAllKeysThatMatch(Key const& patternToMatch) const = 0;  // all the keys having s as a prefix
+    virtual Strings getKeys() const = 0;                                       // get all keys in sorted order
+    virtual Strings getAllKeysWithPrefix(Key const& prefix) const = 0;         // all the keys having s as a prefix
+    virtual Strings getAllKeysThatMatch(Key const& patternToMatch) const = 0;  // all the keys having s as a prefix
 };
 
 }  // namespace algorithm

@@ -98,7 +98,7 @@ TEST(TernarySearchTrieSubstringsSetTest, DeleteBasedOnKeyWorks) {
 }
 
 TEST(TernarySearchTrieSubstringsSetTest, GetKeysWorks) {
-    using Keys = typename TrieForTest::Keys;
+    using Strings = typename TrieForTest::Strings;
     TrieForTest trie;
     trie.put("she");
     trie.put("sells");
@@ -110,15 +110,15 @@ TEST(TernarySearchTrieSubstringsSetTest, GetKeysWorks) {
     trie.put("shore");
     trie.put("s");
 
-    Keys keysToVerify(trie.getKeys());
+    Strings keysToVerify(trie.getKeys());
 
-    Keys expectedKeys{"b",    "by",    "s",      "se",  "sea",  "sel",   "sell", "sells", "sh", "she",
+    Strings expectedKeys{"b",    "by",    "s",      "se",  "sea",  "sel",   "sell", "sells", "sh", "she",
                       "shel", "shell", "shells", "sho", "shor", "shore", "t",    "th",    "the"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 
 TEST(TernarySearchTrieSubstringsSetTest, GetAllKeysWithPrefixWorks) {
-    using Keys = typename TrieForTest::Keys;
+    using Strings = typename TrieForTest::Strings;
     TrieForTest trie;
     trie.put("she");
     trie.put("sells");
@@ -130,15 +130,15 @@ TEST(TernarySearchTrieSubstringsSetTest, GetAllKeysWithPrefixWorks) {
     trie.put("shore");
     trie.put("s");
 
-    Keys keysToVerify(trie.getAllKeysWithPrefix("s"));
+    Strings keysToVerify(trie.getAllKeysWithPrefix("s"));
 
-    Keys expectedKeys{"s",   "se",   "sea",   "sel",    "sell", "sells", "sh",
+    Strings expectedKeys{"s",   "se",   "sea",   "sel",    "sell", "sells", "sh",
                       "she", "shel", "shell", "shells", "sho",  "shor",  "shore"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 
 TEST(TernarySearchTrieSubstringsSetTest, GetAllKeysThatMatchWorks) {
-    using Keys = typename TrieForTest::Keys;
+    using Strings = typename TrieForTest::Strings;
     TrieForTest trie;
     trie.put("she");
     trie.put("sells");
@@ -150,9 +150,9 @@ TEST(TernarySearchTrieSubstringsSetTest, GetAllKeysThatMatchWorks) {
     trie.put("shore");
     trie.put("s");
 
-    Keys keysToVerify(trie.getAllKeysThatMatch("s.."));
+    Strings keysToVerify(trie.getAllKeysThatMatch("s.."));
 
-    Keys expectedKeys{"sea", "sel", "she"};
+    Strings expectedKeys{"sea", "sel", "she"};
     EXPECT_EQ(expectedKeys, keysToVerify);
 }
 

@@ -12,7 +12,7 @@ class BaseTernarySearchTrie : public BaseDataStructure {
 public:
     using BaseClass = BaseDataStructure;
     using Key = typename BaseClass::Key;
-    using Keys = typename BaseClass::Keys;
+    using Strings = typename BaseClass::Strings;
     using Node = NodeTemplateType;
     using NodeUniquePointer = std::unique_ptr<Node>;
 
@@ -41,14 +41,14 @@ public:
 
     void deleteBasedOnKey(Key const& key) override { deleteBasedOnKeyStartingOnThisNode(m_root, key, 0); }
 
-    Keys getKeys() const override {
-        Keys result;
+    Strings getKeys() const override {
+        Strings result;
         collectAllKeysAtNode(m_root.get(), std::string(), result);
         return result;
     }
 
-    Keys getAllKeysThatMatch(Key const& patternToMatch) const override {
-        Keys result;
+    Strings getAllKeysThatMatch(Key const& patternToMatch) const override {
+        Strings result;
         collectKeysThatMatchAtNode(m_root.get(), std::string(), patternToMatch, result);
         return result;
     }
@@ -58,10 +58,10 @@ protected:
     virtual int getLengthOfLongestPrefixStartingOnThisNode(
         NodeUniquePointer const& currentNodePointer, Key const& keyToCheck, int const index) const = 0;
     virtual void collectAllKeysAtNode(
-        Node const* const currentNodePointer, Key const& previousPrefix, Keys& collectedKeys) const = 0;
+        Node const* const currentNodePointer, std::string const& previousPrefix, Strings& collectedKeys) const = 0;
     virtual void collectKeysThatMatchAtNode(
-        Node const* const currentNodePointer, Key const& previousPrefix, Key const& patternToMatch,
-        Keys& collectedKeys) const = 0;
+        Node const* const currentNodePointer, std::string const& previousPrefix, Key const& patternToMatch,
+        Strings& collectedKeys) const = 0;
     virtual void deleteBasedOnKeyStartingOnThisNode(
         NodeUniquePointer& currentNodePointer, Key const& key, int const index) = 0;
 
