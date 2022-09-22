@@ -36,12 +36,6 @@ public:
         return result;
     }
 
-    void put(Key const& key, Value const& value) override {
-        if (!key.empty()) {
-            putStartingOnThisNode(b_root, key, value, 0);
-        }
-    }
-
     Strings getAllKeysWithPrefix(Key const& prefix) const override {
         Strings result;
         Node const* const firstNode(this->getStartingOnThisNode(b_root, prefix, 0));
@@ -53,6 +47,12 @@ public:
             collectAllKeysAtNode(firstNode->mid.get(), std::string(prefix), result);
         }
         return result;
+    }
+
+    void put(Key const& key, Value const& value) override {
+        if (!key.empty()) {
+            putStartingOnThisNode(b_root, key, value, 0);
+        }
     }
 
 protected:

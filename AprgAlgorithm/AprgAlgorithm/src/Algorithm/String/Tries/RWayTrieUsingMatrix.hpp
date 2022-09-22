@@ -222,7 +222,7 @@ private:
                     if (valueUniquePointer) {
                         collectedKeys.emplace_back(newPrefix);
                     }
-                    collectAllKeysAtNode(nodePointer->nextNodeId, std::string(newPrefix), collectedKeys);
+                    collectAllKeysAtNode(nodePointer->nextNodeId, newPrefix, collectedKeys);
                 }
             }
         }
@@ -239,7 +239,7 @@ private:
                     if ('.' == charToMatch || charToMatch == static_cast<char>(c)) {
                         NodePointer const& nodePointer(m_nodePointerMatrix.getEntryConstReference(c, nodeId));
                         if (nodePointer) {
-                            Key newPrefix = previousPrefix + static_cast<char>(c);
+                            std::string newPrefix(previousPrefix + static_cast<char>(c));
                             if (newPrefix.length() == patternToMatch.length()) {
                                 ValueUniquePointer const& valueUniquePointer(nodePointer->valueUniquePointer);
                                 if (valueUniquePointer) {
@@ -247,7 +247,7 @@ private:
                                 }
                             } else {
                                 collectKeysThatMatchAtNode(
-                                    nodePointer->nextNodeId, std::string(newPrefix), patternToMatch, collectedKeys);
+                                    nodePointer->nextNodeId, newPrefix, patternToMatch, collectedKeys);
                             }
                         }
                     }

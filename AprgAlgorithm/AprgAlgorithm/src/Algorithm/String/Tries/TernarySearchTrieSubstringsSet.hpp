@@ -18,12 +18,6 @@ public:
 
     TernarySearchTrieSubstringsSet() : b_root(BaseClass::m_root) {}
 
-    void put(Key const& key) override {
-        if (!key.empty()) {
-            putStartingOnThisNode(b_root, key, 0);
-        }
-    }
-
     Strings getAllKeysWithPrefix(Key const& prefix) const override {
         Strings result;
         Node const* const firstNode(this->getStartingOnThisNode(b_root, prefix, 0));
@@ -32,6 +26,12 @@ public:
             collectAllKeysAtNode(firstNode->mid.get(), std::string(prefix), result);
         }
         return result;
+    }
+
+    void put(Key const& key) override {
+        if (!key.empty()) {
+            putStartingOnThisNode(b_root, key, 0);
+        }
     }
 
 protected:
