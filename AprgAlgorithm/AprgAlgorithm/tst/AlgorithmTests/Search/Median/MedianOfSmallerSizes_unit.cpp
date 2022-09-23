@@ -1,4 +1,4 @@
-#include <Algorithm/Search/UniqueProblems/Median/MedianOfSmallerSizes.hpp>
+#include <Algorithm/Search/Median/MedianOfSmallerSizes.hpp>
 
 #include <gtest/gtest.h>
 

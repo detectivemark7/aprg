@@ -15,12 +15,19 @@ public:
     using Permutations = std::vector<Objects>;
     using BooleanVector = std::vector<bool>;
 
-    struct RecursionData {
+    struct BuildingRecursionData {
         Permutations& permutations;
         Permutation currentPermutation;
         BooleanVector isProcessed;
         Objects const& objects;
         int const targetPermutationLength;
+    };
+
+    struct SwappingRecursionData {
+        Permutations& permutations;
+        Permutation currentPermutation;
+        int lowIndex;
+        int highIndex;
     };
 
     // rule of five or six
@@ -44,9 +51,9 @@ public:
         return result;
     }
 
-    static Permutations generatePermutationsUsingRecursion(Objects const& objects) {
+    static Permutations generatePermutationsByBuilding(Objects const& objects) {
         // Like subsets, permutations can be generated using recursion.
-        // The following function search goes through the permutations of the set {0,1,...,n-1}.
+        // The followIndexing function search goes through the permutations of the set {0,1,...,n-1}.
         // The function builds a vector permutation that contains the permutation,
         // and the search begins when the function is called without parameters..
 
@@ -55,25 +62,49 @@ public:
         // If the size of permutation equals the size of the set, a permutation has been generated.
 
         Permutations result;
-        RecursionData recursionData(createRecursionData(result, objects, objects.size()));
-        collectPermutationsUsingRecursion(recursionData);
+        BuildingRecursionData recursionData(createBuildingRecursionData(result, objects, objects.size()));
+        collectPermutationsByBuilding(recursionData);
         return result;
     }
 
-    static Permutations generatePermutationsWithLength(Objects const& objects, int const targetPermutationLength) {
+    static Permutations generatePermutationsByBuildingWithLength(
+        Objects const& objects, int const targetPermutationLength) {
         Permutations result;
-        RecursionData recursionData(
-            createRecursionData(result, objects, std::min(targetPermutationLength, static_cast<int>(objects.size()))));
-        collectPermutationsUsingRecursion(recursionData);
+        BuildingRecursionData recursionData(createBuildingRecursionData(
+            result, objects, std::min(targetPermutationLength, static_cast<int>(objects.size()))));
+        collectPermutationsByBuilding(recursionData);
+        return result;
+    }
+
+    static Permutations generatePermutationsBySwapping(Objects const& objects) {
+        Permutations result;
+        SwappingRecursionData recursionData(
+            createSwappingRecursionData(result, objects, 0, static_cast<int>(objects.size()) - 1));
+        collectPermutationsBySwapping(recursionData);
+        return result;
+    }
+
+    static Permutations generatePermutationsBySwappingInRange(
+        Objects const& objects, int const lowIndex, int const highIndex) {
+        Permutations result;
+        SwappingRecursionData recursionData(createSwappingRecursionData(result, objects, lowIndex, highIndex));
+        collectPermutationsBySwapping(recursionData);
         return result;
     }
 
 private:
-    static RecursionData createRecursionData(Permutations& permutations, Objects const& objects, int const length) {
-        return RecursionData{permutations, Permutation(), BooleanVector(objects.size(), false), objects, length};
+    static BuildingRecursionData createBuildingRecursionData(
+        Permutations& permutations, Objects const& objects, int const length) {
+        return BuildingRecursionData{
+            permutations, Permutation(), BooleanVector(objects.size(), false), objects, length};
     }
 
-    static void collectPermutationsUsingRecursion(RecursionData& recursionData) {
+    static SwappingRecursionData createSwappingRecursionData(
+        Permutations& permutations, Objects const& objects, int const lowIndex, int const highIndex) {
+        return SwappingRecursionData{permutations, objects, lowIndex, highIndex};
+    }
+
+    static void collectPermutationsByBuilding(BuildingRecursionData& recursionData) {
         if (static_cast<int>(recursionData.currentPermutation.size()) == recursionData.targetPermutationLength) {
             recursionData.permutations.emplace_back(recursionData.currentPermutation);
         } else {
@@ -85,10 +116,29 @@ private:
                 if (!isProcessed[index]) {
                     currentPermutation.emplace_back(objects[index]);
                     isProcessed[index] = true;
-                    collectPermutationsUsingRecursion(recursionData);
+                    collectPermutationsByBuilding(recursionData);
                     isProcessed[index] = false;
                     currentPermutation.pop_back();
                 }
+            }
+        }
+    }
+
+    static void collectPermutationsBySwapping(SwappingRecursionData& recursionData) {
+        if (recursionData.lowIndex == recursionData.highIndex) {
+            recursionData.permutations.emplace_back(recursionData.currentPermutation);
+        } else {
+            Permutation& currentPermutation(recursionData.currentPermutation);
+
+            for (int swapIndex = recursionData.lowIndex; swapIndex <= recursionData.highIndex; swapIndex++) {
+                std::swap(currentPermutation[recursionData.lowIndex], currentPermutation[swapIndex]);
+                ++recursionData.lowIndex;
+
+                collectPermutationsBySwapping(recursionData);
+
+                // Go back to original permutation (backtrack)
+                --recursionData.lowIndex;
+                std::swap(currentPermutation[recursionData.lowIndex], currentPermutation[swapIndex]);
             }
         }
     }
