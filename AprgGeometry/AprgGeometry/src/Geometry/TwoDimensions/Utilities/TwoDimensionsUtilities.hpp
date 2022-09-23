@@ -35,6 +35,8 @@ bool isPointInLine(Point const& point, Line const& line);
 bool isCongruent(Triangle const& triangle1, Triangle const& triangle2);
 bool areLinesParallel(Line const& line1, Line const& line2);
 bool areLinesPerpendicular(Line const& line1, Line const& line2);
+bool doesTheTwoLineSegmentsIntersect(LineSegment const& segment1, LineSegment const& segment2);
+bool isPointInsideTriangle(Triangle const& triangle, Point const& point);
 
 double getDistance(Point const& point1, Point const& point2);
 double getDistance(Line const& line, Point const& point);
@@ -60,7 +62,7 @@ Vector constructDeltaVector(Line const& line);
 
 ConicSectionType getConicSectionBasedOnEccentricity(double const eccentricity);
 ConicSectionType getConicSectionBasedOnGeneralForm(
-    double const a, double const b, double const c, double const e, double const f);
+    double const a, double const b, double const c, double const d, double const e);
 Quadrant getQuadrantOfAPoint(Point const& point);
 RotationDirection getRotationDirectionTraversing3Points(Point const a, Point const b, Point const c);
 
@@ -93,6 +95,7 @@ Points getMergedPointsInIncreasingX(Points const& firstPointsToBeMerged, Points 
 Points getMergedPointsInDecreasingX(Points const& firstPointsToBeMerged, Points const& secondPointsToBeMerged);
 Points getPointsInSortedIncreasingX(Points const& pointsToBeSorted);  // UT
 Points getPointsInSortedDecreasingX(Points const& pointsToBeSorted);
+Points getConvexHullPointsUsingJarvisAlgorithm(Points const& points);
 Points getConvexHullPointsUsingGrahamScan(Points const& points);
 
 Line getLineWithSameSlope(Line const& line, Point const& point);
@@ -114,18 +117,23 @@ template <int numberOfVertices>
 bool isPointInsidePolygon(
     Polygon<numberOfVertices> const& polygon, Point const& point, Point const& pointForRayTesting) {
     // Point inside a polygon
-    // Let us now consider the problem of testing whether a point is located inside or outside a polygon.
-    // A convenient way to solve the problem is to send a ray from the point to an arbitrary direction
-    // and calculate the number of times it touches the boundary of the polygon.
-    // If the number is odd, the point is inside the polygon, and if the number is even, the point is outside the
-    // polygon.
+    // -> Given a polygon and a point ‘p‘, find if ‘p‘ lies inside the polygon or not.
+    // -> The points lying on the border are considered inside.
+    // 1) Draw a horizontal line to the right of each point and extend it to infinity
+    // 2) Count the number of times the line intersects with polygon edges.
+    // 3) A point is inside the polygon if either count of intersections is odd or point lies on an edge of polygon.
+    // ---> If none of the conditions is true, then point lies outside.
+    // -> Let us now consider the problem of testing whether a point is located inside or outside a polygon.
+    // ---> A convenient way to solve the problem is to send a ray from the point to an arbitrary direction
+    // ---> and calculate the number of times it touches the boundary of the polygon.
+    // ---> If the number is odd, the point is inside the polygon,
+    // ---> and if the number is even, the point is outside the polygon.
 
     LineSegments lineSegments(polygon.getLineSegments());
     LineSegment rayLineSegment(point, pointForRayTesting);
     int numberOfIntersections = std::count_if(
         lineSegments.cbegin(), lineSegments.cend(), [&rayLineSegment](LineSegment const& lineSegmentInPolygon) {
-            Point pointOfIntersection(getIntersectionOfTwoLineSegment(rayLineSegment, lineSegmentInPolygon));
-            return std::isfinite(pointOfIntersection.getX()) && std::isfinite(pointOfIntersection.getY());
+            return doesTheTwoLineSegmentsIntersect(rayLineSegment, lineSegmentInPolygon);
         });
     return mathHelper::isOdd(numberOfIntersections);
 }

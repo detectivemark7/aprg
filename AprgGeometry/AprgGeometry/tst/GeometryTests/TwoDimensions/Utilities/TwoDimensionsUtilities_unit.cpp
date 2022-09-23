@@ -49,6 +49,56 @@ TEST(TwoDimensionsUtilitiesTest, IsCongruentWorksForTriangles) {
         isCongruent(Triangle(Point(0, 0), Point(0, 1), Point(1, 0)), Triangle(Point(0, 0), Point(0, 1), Point(2, 0))));
 }
 
+TEST(TwoDimensionsUtilitiesTest, AreLinesParallelWorks) {
+    Line commonLine(Point(0, 0), Point(2, 2));
+    Line crossLine(Point(0, 2), Point(2, 0));
+    Line parallelLine(Point(2, 2), Point(3, 3));
+    Line horizontal(Point(0, 0), Point(5, 0));
+    Line vertical(Point(0, 0), Point(0, 5));
+
+    EXPECT_FALSE(areLinesParallel(commonLine, crossLine));
+    EXPECT_TRUE(areLinesParallel(commonLine, parallelLine));
+    EXPECT_TRUE(areLinesParallel(horizontal, horizontal));
+    EXPECT_TRUE(areLinesParallel(vertical, vertical));
+    EXPECT_FALSE(areLinesParallel(horizontal, vertical));
+    EXPECT_FALSE(areLinesParallel(vertical, horizontal));
+}
+
+TEST(TwoDimensionsUtilitiesTest, AreLinesPerpendicularWorks) {
+    Line commonLine(Point(0, 0), Point(2, 2));
+    Line crossLine(Point(0, 2), Point(2, 0));
+    Line parallelLine(Point(2, 2), Point(3, 3));
+    Line horizontal(Point(0, 0), Point(5, 0));
+    Line vertical(Point(0, 0), Point(0, 5));
+
+    EXPECT_TRUE(areLinesPerpendicular(commonLine, crossLine));
+    EXPECT_FALSE(areLinesPerpendicular(commonLine, parallelLine));
+    EXPECT_FALSE(areLinesPerpendicular(horizontal, horizontal));
+    EXPECT_FALSE(areLinesPerpendicular(vertical, vertical));
+    EXPECT_TRUE(areLinesPerpendicular(horizontal, vertical));
+    EXPECT_TRUE(areLinesPerpendicular(vertical, horizontal));
+}
+
+TEST(TwoDimensionsUtilitiesTest, DoesTheTwoLineSegmentsIntersectWorks) {
+    LineSegment commonSegment(Point(0, 0), Point(2, 2));
+    LineSegment crossSegment(Point(0, 2), Point(2, 0));
+    LineSegment parallelIntersecting(Point(2, 2), Point(3, 3));
+    LineSegment parallelNotIntersecting(Point(2, 1), Point(3, 2));
+    LineSegment perpendicularNotIntersecting(Point(2, 1), Point(3, 0));
+
+    EXPECT_TRUE(doesTheTwoLineSegmentsIntersect(commonSegment, crossSegment));
+    EXPECT_TRUE(doesTheTwoLineSegmentsIntersect(commonSegment, parallelIntersecting));
+    EXPECT_FALSE(doesTheTwoLineSegmentsIntersect(commonSegment, parallelNotIntersecting));
+    EXPECT_FALSE(doesTheTwoLineSegmentsIntersect(commonSegment, perpendicularNotIntersecting));
+}
+
+TEST(TwoDimensionsUtilitiesTest, IsPointInsideTriangleWorks) {
+    Triangle triangle(Point(10, 30), Point(0, 0), Point(20, 0));
+
+    EXPECT_TRUE(isPointInsideTriangle(triangle, Point(10, 10)));
+    EXPECT_FALSE(isPointInsideTriangle(triangle, Point(10, 100)));
+}
+
 TEST(TwoDimensionsUtilitiesTest, IsPointInsidePolygonWorks) {
     Triangle triangle(Point(0, 0), Point(0, 4), Point(4, 0));
 
@@ -184,7 +234,7 @@ TEST(TwoDimensionsUtilitiesTest, VerticalLineAndHorizontalLineIntersectionCanBeF
 TEST(TwoDimensionsUtilitiesTest, GetIntersectionOfTwoLineSegmentWorks) {
     LineSegment commonSegment(Point(0, 0), Point(2, 2));
     LineSegment crossSegment(Point(0, 2), Point(2, 0));
-    LineSegment parallelSegment(Point(2, 2), Point(3, 3));
+    LineSegment parallelSegment(Point(3, 3), Point(4, 4));
     LineSegment segmentWithPointInLine1(Point(2, 2), Point(3, 4));
     LineSegment segmentWithPointInLine2(Point(3, 4), Point(2, 2));
 
@@ -332,7 +382,8 @@ TEST(TwoDimensionsUtilitiesTest, GetRotationDirectionTraversing3PointsWorks) {
         getRotationDirectionTraversing3Points(Point(0, 0), Point(2, 2), Point(1, 3)));
     EXPECT_EQ(
         RotationDirection::ClockWise, getRotationDirectionTraversing3Points(Point(0, 0), Point(2, 2), Point(3, 1)));
-    EXPECT_EQ(RotationDirection::None, getRotationDirectionTraversing3Points(Point(0, 0), Point(2, 2), Point(3, 3)));
+    EXPECT_EQ(
+        RotationDirection::Collinear, getRotationDirectionTraversing3Points(Point(0, 0), Point(2, 2), Point(3, 3)));
 }
 
 TEST(TwoDimensionsUtilitiesTest, GetRotationDirectionTraversing3PointsWorksOnDeterminingPointLocation) {
@@ -348,7 +399,7 @@ TEST(TwoDimensionsUtilitiesTest, GetRotationDirectionTraversing3PointsWorksOnDet
 
     EXPECT_EQ(RotationDirection::CounterClockWise, getRotationDirectionTraversing3Points(s1, s2, Point(1, 3)));
     EXPECT_EQ(RotationDirection::ClockWise, getRotationDirectionTraversing3Points(s1, s2, Point(3, 1)));
-    EXPECT_EQ(RotationDirection::None, getRotationDirectionTraversing3Points(s1, s2, Point(3, 3)));
+    EXPECT_EQ(RotationDirection::Collinear, getRotationDirectionTraversing3Points(s1, s2, Point(3, 3)));
 }
 
 TEST(TwoDimensionsUtilitiesTest, GetAngleOfPointWithRespectToOriginWorks) {
@@ -414,6 +465,16 @@ TEST(TwoDimensionsUtilitiesTest, PointsInParabolaCanBeConnected) {
     EXPECT_EQ(Point(1.6, 9), connectedPoints[8]);
     EXPECT_EQ(Point(1.8, 10), connectedPoints[9]);
     EXPECT_EQ(Point(2, 11), connectedPoints[10]);
+}
+
+TEST(TwoDimensionsUtilitiesTest, GetConvexHullPointsUsingJarvisAlgorithmWorks) {
+    Points inputPoints{{-7, 8}, {-4, 6},  {2, 6},  {6, 4},   {8, 6},   {7, -2}, {4, -6},  {8, -7}, {0, 0},
+                       {3, -2}, {6, -10}, {0, -6}, {-9, -5}, {-8, -2}, {-8, 0}, {-10, 3}, {-2, 2}, {-10, 4}};
+    Points actualPoints(getConvexHullPointsUsingJarvisAlgorithm(inputPoints));
+
+    Points expectedPoints{Point(-10, 3), Point(-9, -5), Point(6, -10), Point(8, -7),
+                          Point(8, 6),   Point(-7, 8),  Point(-10, 4)};
+    ASSERT_EQ(expectedPoints, actualPoints);
 }
 
 TEST(TwoDimensionsUtilitiesTest, GetConvexHullPointsUsingGrahamScanWorks) {
