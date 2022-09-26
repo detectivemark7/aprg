@@ -7,14 +7,16 @@ namespace alba {
 
 namespace algebra {
 
-using BaseExpressionAndFunctionsRetriever = BaseRetriever<TermSet>;
-
-class ExpressionAndFunctionsRetriever final : public BaseExpressionAndFunctionsRetriever {
+class ExpressionAndFunctionsRetriever final : public BaseRetriever {
 public:
-    ExpressionAndFunctionsRetriever();
+    TermSet const& getExpressionsAndFunctions() const;
+
     void retrieveFromPolynomial(Polynomial const&) override;
     void retrieveFromExpression(Expression const& expression) override;
     void retrieveFromFunction(Function const& functionObject) override;
+
+private:
+    TermSet m_expressionsAndFunctions;
 };
 
 }  // namespace algebra

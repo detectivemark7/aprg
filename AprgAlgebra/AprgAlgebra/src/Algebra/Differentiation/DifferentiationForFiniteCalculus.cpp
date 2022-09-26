@@ -68,17 +68,17 @@ Equation DifferentiationForFiniteCalculus::differentiateMultipleTimes(
 Term DifferentiationForFiniteCalculus::differentiateTerm(Term const& term) const {
     Term result;
     if (term.isConstant()) {
-        result = differentiate(term.getConstantConstReference());
+        result = differentiate(term.getAsConstant());
     } else if (term.isVariable()) {
-        result = differentiate(term.getVariableConstReference());
+        result = differentiate(term.getAsVariable());
     } else if (term.isMonomial()) {
-        result = differentiate(term.getMonomialConstReference());
+        result = differentiate(term.getAsMonomial());
     } else if (term.isPolynomial()) {
-        result = differentiate(term.getPolynomialConstReference());
+        result = differentiate(term.getAsPolynomial());
     } else if (term.isExpression()) {
-        result = differentiate(term.getExpressionConstReference());
+        result = differentiate(term.getAsExpression());
     } else if (term.isFunction()) {
-        result = differentiate(term.getFunctionConstReference());
+        result = differentiate(term.getAsFunction());
     }
     return result;
 }

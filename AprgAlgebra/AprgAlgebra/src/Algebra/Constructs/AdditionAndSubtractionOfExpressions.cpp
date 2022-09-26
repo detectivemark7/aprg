@@ -131,7 +131,7 @@ void AdditionAndSubtractionOfExpressions::prepareCommonParts(Terms& commonParts)
     for (Term& commonPart : commonParts) {
         commonPart.simplify();
         if (commonPart.isExpression()) {
-            commonPart.getExpressionReference().sort();
+            commonPart.getAsExpressionReference().sort();
         }
     }
 }

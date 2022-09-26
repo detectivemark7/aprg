@@ -19,7 +19,7 @@ Terms factorizeTerms(Terms const& terms) {
     Terms result;
     for (Term const& term : terms) {
         if (term.isPolynomial()) {
-            Polynomial simplifiedPolynomial(term.getPolynomialConstReference());
+            Polynomial simplifiedPolynomial(term.getAsPolynomial());
             simplifiedPolynomial.simplify();
             Polynomials polynomialFactors(factorizeAPolynomial(simplifiedPolynomial));
             for (Polynomial const& polynomialFactor : polynomialFactors) {
@@ -27,7 +27,7 @@ Terms factorizeTerms(Terms const& terms) {
             }
         } else if (term.isExpression()) {
             if (shouldSimplifyExpressionsToFactors()) {
-                Terms factors(factorizeAnExpression(term.getExpressionConstReference()));
+                Terms factors(factorizeAnExpression(term.getAsExpression()));
                 result.reserve(result.size() + factors.size());
                 copy(factors.cbegin(), factors.cend(), back_inserter(result));
             } else {

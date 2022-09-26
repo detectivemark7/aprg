@@ -61,7 +61,7 @@ bool Polynomial::isEmpty() const { return m_monomials.empty(); }
 
 bool Polynomial::isSimplified() const { return m_isSimplified; }
 
-Monomials const& Polynomial::getMonomialsConstReference() const { return m_monomials; }
+Monomials const& Polynomial::getMonomials() const { return m_monomials; }
 
 Monomials& Polynomial::getMonomialsReference() {
     clearSimplifiedFlag();
@@ -97,7 +97,7 @@ void Polynomial::addMonomial(Monomial const& monomial) {
         if (canBeMergedInAMonomialByAdditionOrSubtraction(monomialInternal, monomial)) {
             isFoundInPolynomial = true;
             monomialInternal.setConstant(
-                monomialInternal.getConstantConstReference() + monomial.getConstantConstReference());
+                monomialInternal.getCoefficient() + monomial.getCoefficient());
         }
     }
     if (!isFoundInPolynomial) {
@@ -107,7 +107,7 @@ void Polynomial::addMonomial(Monomial const& monomial) {
 }
 
 void Polynomial::addPolynomial(Polynomial const& polynomial) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         addMonomial(monomial);
     }
     clearSimplifiedFlag();
@@ -115,14 +115,14 @@ void Polynomial::addPolynomial(Polynomial const& polynomial) {
 
 void Polynomial::multiplyNumber(AlbaNumber const& number) {
     for (Monomial& monomial : m_monomials) {
-        monomial.setConstant(monomial.getConstantConstReference() * number);
+        monomial.setConstant(monomial.getCoefficient() * number);
     }
     clearSimplifiedFlag();
 }
 
 void Polynomial::divideNumber(AlbaNumber const& number) {
     for (Monomial& monomial : m_monomials) {
-        monomial.setConstant(monomial.getConstantConstReference() / number);
+        monomial.setConstant(monomial.getCoefficient() / number);
     }
     clearSimplifiedFlag();
 }
@@ -137,7 +137,7 @@ void Polynomial::multiplyMonomial(Monomial const& monomial) {
 void Polynomial::multiplyPolynomial(Polynomial const& polynomial) {
     Monomials monomialsCopy(m_monomials);
     m_monomials.clear();
-    for (Monomial const& monomial2 : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial2 : polynomial.getMonomials()) {
         for (Monomial const& monomial1 : monomialsCopy) {
             Monomial newMonomial(monomial1);
             newMonomial.multiplyMonomial(monomial2);

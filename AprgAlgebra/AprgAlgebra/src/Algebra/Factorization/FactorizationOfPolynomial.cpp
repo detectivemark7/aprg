@@ -42,7 +42,7 @@ Polynomials factorizeCommonMonomial(Polynomial const& polynomial) {
 
 void factorizeCommonMonomialIfPossible(Polynomials& result, Polynomial const& polynomial) {
     if (!isOneMonomial(polynomial)) {
-        Monomial gcfMonomial(getGcfMonomialInMonomials(polynomial.getMonomialsConstReference()));
+        Monomial gcfMonomial(getGcfMonomialInMonomials(polynomial.getMonomials()));
         if (!isTheValue(gcfMonomial, 1)) {
             Polynomial reducedPolynomial(polynomial);
             reducedPolynomial.divideMonomial(gcfMonomial);
@@ -149,7 +149,7 @@ int getDeltaSize(Polynomials const& polynomials, int const originalSize) {
 }
 
 bool isFactorizeUsingPatternsNeeded(Polynomial const& polynomial) {
-    return polynomial.getMonomialsConstReference().size() == 2 &&
+    return polynomial.getMonomials().size() == 2 &&
            hasAMonomialWithDegreeMoreThanOneOrFractional(polynomial);
 }
 
@@ -158,7 +158,7 @@ bool isFactorizeIncreasingAndDecreasingExponentsFormNeeded(Polynomial const& pol
 }
 
 bool isFactorizeBySplittingToSmallerPolynomialsNeeded(Polynomial const& polynomial) {
-    return polynomial.getMonomialsConstReference().size() >= 4 && hasAMonomialWithMultipleVariables(polynomial);
+    return polynomial.getMonomials().size() >= 4 && hasAMonomialWithMultipleVariables(polynomial);
 }
 
 }  // namespace Factorization

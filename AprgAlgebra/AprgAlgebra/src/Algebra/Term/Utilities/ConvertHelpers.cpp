@@ -20,7 +20,7 @@ bool canBeConvertedToMonomial(Term const& term) {
     TermType termType(term.getTermType());
     bool isPolynomialWithOneMonomial(false);
     if (term.isPolynomial()) {
-        isPolynomialWithOneMonomial = isOneMonomial(term.getPolynomialConstReference());
+        isPolynomialWithOneMonomial = isOneMonomial(term.getAsPolynomial());
     }
     return TermType::Constant == termType || TermType::Variable == termType || TermType::Monomial == termType ||
            isPolynomialWithOneMonomial;
@@ -75,7 +75,7 @@ Term convertMonomialToSimplestTerm(Monomial const& monomial) {
     if (isTheValue(monomial, 0)) {
         newTerm = 0;
     } else if (isConstantOnly(monomial)) {
-        newTerm = monomial.getConstantConstReference();
+        newTerm = monomial.getCoefficient();
     } else if (isVariableOnly(monomial)) {
         newTerm = getFirstVariableName(monomial);
     }
@@ -97,7 +97,7 @@ Term convertExpressionToSimplestTerm(Expression const& expression) {
     if (expression.isEmpty()) {
         newTerm.clear();
     } else if (expression.containsOnlyOnePositivelyAssociatedTerm()) {
-        Term const& term = static_cast<Term const&>(expression.getFirstTermConstReference());
+        Term const& term = static_cast<Term const&>(expression.getFirstTerm());
         newTerm = term;
         newTerm.simplify();
     }

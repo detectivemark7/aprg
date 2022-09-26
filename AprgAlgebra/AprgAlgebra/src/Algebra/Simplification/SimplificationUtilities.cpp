@@ -103,7 +103,7 @@ void simplifyTermsWithDetailsInExpressionToACommonDenominator(Expression& expres
              expression.getTermsWithAssociationReference().getTermsWithDetailsReference()) {
             Term& term(getTermReferenceFromUniquePointer(termWithDetails.baseTermPointer));
             if (term.isExpression()) {
-                Expression& subExpression(term.getExpressionReference());
+                Expression& subExpression(term.getAsExpressionReference());
                 isChanged =
                     isChanged ||
                     simplifyToACommonDenominatorForExpressionAndReturnIfAdditionOrSubtractionOfTermsOverTermsOccurred(
@@ -122,7 +122,7 @@ void simplifyAndCopyTermsAndChangeOperatorLevelIfNeeded(
     for (TermWithDetails const& oldTermWithDetails : oldTermsWithDetails) {
         Term const& term(getTermConstReferenceFromUniquePointer(oldTermWithDetails.baseTermPointer));
         if (term.isExpression()) {
-            Expression subExpression(term.getExpressionConstReference());
+            Expression subExpression(term.getAsExpression());
             subExpression.simplify();
             TermAssociationType subExpressionAssociation(oldTermWithDetails.association);
             simplifyAndCopyTermsFromAnExpressionAndChangeOperatorLevelIfNeeded(

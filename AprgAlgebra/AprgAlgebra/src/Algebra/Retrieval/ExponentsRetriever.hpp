@@ -7,11 +7,14 @@ namespace alba {
 
 namespace algebra {
 
-using BaseExponentsRetriever = BaseRetriever<AlbaNumbersSet>;
-
-class ExponentsRetriever final : public BaseExponentsRetriever {
+class ExponentsRetriever final : public BaseRetriever {
 public:
+    AlbaNumbersSet const& getExponents() const;
+
     void retrieveFromMonomial(Monomial const& monomial) override;
+
+private:
+    AlbaNumbersSet m_exponents;
 };
 
 }  // namespace algebra

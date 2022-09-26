@@ -35,7 +35,7 @@ public:
     std::string getFunctionName() const;
     std::string getDebugString() const;
     AlbaNumber performFunctionAndReturnResultIfPossible() const;
-    BaseTerm const& getInputTermConstReference() const;
+    BaseTerm const& getInputTerm() const;
     EvaluationFunction const& getEvaluationFunction() const;
 
     BaseTerm& getInputTermReference();

@@ -101,8 +101,8 @@ bool willYieldToExtremumValue(
             SubstitutionOfVariablesToValues substitutionOfX({{variableName, valueUsedForChecking}});
             Term fOfX(substitutionOfX.performSubstitutionTo(term));
             if (fOfX.isConstant()) {
-                bool isMaximum(fOfC.getConstantValueConstReference() >= fOfX.getConstantValueConstReference());
-                bool isMinimum(fOfC.getConstantValueConstReference() <= fOfX.getConstantValueConstReference());
+                bool isMaximum(fOfC.getAsNumber() >= fOfX.getAsNumber());
+                bool isMinimum(fOfC.getAsNumber() <= fOfX.getAsNumber());
                 if ((isMaximum && ExtremumType::Maximum == extremumType) ||
                     (isMinimum && ExtremumType::Minimum == extremumType)) {
                     result = true;
@@ -126,7 +126,7 @@ bool isDerivativeZeroOnPossibleExtremum(
         getDerivativeAtUsingLimit(term, variableName, valueAtPossibleExtremum, LimitAtAValueApproachType::BothSides));
     bool hasRelativeExtremum = willYieldToRelativeMaximumValue(term, variableName, valueAtPossibleExtremum, interval) ||
                                willYieldToRelativeMinimumValue(term, variableName, valueAtPossibleExtremum, interval);
-    return hasRelativeExtremum && derivative.isConstant() && derivative.getConstantValueConstReference() == 0;
+    return hasRelativeExtremum && derivative.isConstant() && derivative.getAsNumber() == 0;
 }
 
 bool isDecreasingAt(Term const& term, string const& variableName, AlbaNumber const& value) {
@@ -136,7 +136,7 @@ bool isDecreasingAt(Term const& term, string const& variableName, AlbaNumber con
     Term firstDerivativeValue(substitution.performSubstitutionTo(firstDerivativeTerm));
     bool result(false);
     if (firstDerivativeValue.isConstant()) {
-        result = firstDerivativeValue.getConstantValueConstReference() < 0;
+        result = firstDerivativeValue.getAsNumber() < 0;
     }
     return result;
 }
@@ -148,7 +148,7 @@ bool isIncreasingAt(Term const& term, string const& variableName, AlbaNumber con
     Term firstDerivativeValue(substitution.performSubstitutionTo(firstDerivativeTerm));
     bool result(false);
     if (firstDerivativeValue.isConstant()) {
-        result = firstDerivativeValue.getConstantValueConstReference() > 0;
+        result = firstDerivativeValue.getAsNumber() > 0;
     }
     return result;
 }
@@ -160,7 +160,7 @@ bool isConcaveDownwardAt(Term const& term, string const& variableName, AlbaNumbe
     Term secondDerivativeValue(substitution.performSubstitutionTo(secondDerivativeTerm));
     bool result(false);
     if (secondDerivativeValue.isConstant()) {
-        result = secondDerivativeValue.getConstantValueConstReference() < 0;
+        result = secondDerivativeValue.getAsNumber() < 0;
     }
     return result;
 }
@@ -172,7 +172,7 @@ bool isConcaveUpwardAt(Term const& term, string const& variableName, AlbaNumber 
     Term secondDerivativeValue(substitution.performSubstitutionTo(firstDerivativeTerm));
     bool result(false);
     if (secondDerivativeValue.isConstant()) {
-        result = secondDerivativeValue.getConstantValueConstReference() > 0;
+        result = secondDerivativeValue.getAsNumber() > 0;
     }
     return result;
 }
@@ -189,7 +189,7 @@ bool hasPointOfInflectionAt(Term const& term, string const& variableName, AlbaNu
         SubstitutionOfVariablesToValues substitution({{variableName, value}});
         Term secondDerivativeValue(substitution.performSubstitutionTo(secondDerivativeTerm));
         if (secondDerivativeValue.isConstant()) {
-            result = secondDerivativeValue.getConstantValueConstReference() == 0;
+            result = secondDerivativeValue.getAsNumber() == 0;
         }
     }
     return result;
@@ -211,8 +211,8 @@ bool isRolleTheoremSatisfied(
     Term fb(substitution.performSubstitutionTo(term));
 
     bool result(false);
-    if (fa.isConstant() && fb.isConstant() && AlbaNumber(0) == fa.getConstantValueConstReference() &&
-        AlbaNumber(0) == fb.getConstantValueConstReference()) {
+    if (fa.isConstant() && fb.isConstant() && AlbaNumber(0) == fa.getAsNumber() &&
+        AlbaNumber(0) == fb.getAsNumber()) {
         AlbaNumberIntervals continuityDomainIntervals(getContinuityDomain(term).getAcceptedIntervals());
         AlbaNumberIntervals differentiabilityDomainIntervals(
             getDifferentiabilityDomain(term, variableName).getAcceptedIntervals());
@@ -225,7 +225,7 @@ bool isRolleTheoremSatisfied(
             Term firstDerivativeTerm(differentiation.differentiate(term));
             substitution.putVariableWithValue(variableName, c);
             Term fPrimeC(substitution.performSubstitutionTo(firstDerivativeTerm));
-            result = fPrimeC.isConstant() && AlbaNumber(0) == fPrimeC.getConstantValueConstReference();
+            result = fPrimeC.isConstant() && AlbaNumber(0) == fPrimeC.getAsNumber();
         }
     }
     return result;
@@ -247,7 +247,7 @@ AlbaNumbers getInputValuesInIntervalWithSameAsMeanOfInterval(
     Term fb(substitution.performSubstitutionTo(term));
     AlbaNumbers result;
     if (fa.isConstant() && fb.isConstant()) {
-        AlbaNumber mean = (fb.getConstantValueConstReference() - fa.getConstantValueConstReference()) / (b - a);
+        AlbaNumber mean = (fb.getAsNumber() - fa.getAsNumber()) / (b - a);
         Differentiation differentiation(variableName);
         Term fPrime(differentiation.differentiate(term));
         Equation derivativeEqualsMeanEquation(fPrime, "=", mean);
@@ -275,8 +275,8 @@ AlbaNumbers getInputValuesForCauchyMeanValueTheorem(
     Term gb(substitution.performSubstitutionTo(denominator));
     AlbaNumbers result;
     if (fa.isConstant() && fb.isConstant()) {
-        AlbaNumber cauchyValue = (fb.getConstantValueConstReference() - fa.getConstantValueConstReference()) /
-                                 (gb.getConstantValueConstReference() - ga.getConstantValueConstReference());
+        AlbaNumber cauchyValue = (fb.getAsNumber() - fa.getAsNumber()) /
+                                 (gb.getAsNumber() - ga.getAsNumber());
         Differentiation differentiation(variableName);
         Term fPrime(differentiation.differentiate(numerator));
         Term gPrime(differentiation.differentiate(denominator));
@@ -399,7 +399,7 @@ MinimumAndMaximum getMinimumAndMaximumAtClosedInterval(
             substitution.putVariableWithValue(variableName, valueToCheck);
             Term evaluatedTerm(substitution.performSubstitutionTo(term));
             if (evaluatedTerm.isConstant()) {
-                AlbaNumber evaluatedValue(evaluatedTerm.getConstantValueConstReference());
+                AlbaNumber evaluatedValue(evaluatedTerm.getAsNumber());
                 if (isFirst) {
                     result.minimumInputOutputValues.first = valueToCheck;
                     result.minimumInputOutputValues.second = evaluatedValue;
@@ -440,16 +440,16 @@ Extrema getRelativeExtrema(Term const& term, string const& variableName) {
         Term evaluatedTerm(substitution.performSubstitutionTo(term));
         if (secondDerivativeTermAtCriticalValue.isConstant() && evaluatedTerm.isConstant()) {
             AlbaNumber secondDerivativeValueAtCriticalValue(
-                secondDerivativeTermAtCriticalValue.getConstantValueConstReference());
+                secondDerivativeTermAtCriticalValue.getAsNumber());
             if (secondDerivativeValueAtCriticalValue.isAFiniteValue()) {
                 if (secondDerivativeValueAtCriticalValue < 0) {
                     result.emplace_back(Extremum{
                         ExtremumType::Maximum,
-                        {valueWhenFirstDerivativeIsZero, evaluatedTerm.getConstantValueConstReference()}});
+                        {valueWhenFirstDerivativeIsZero, evaluatedTerm.getAsNumber()}});
                 } else if (secondDerivativeValueAtCriticalValue > 0) {
                     result.emplace_back(Extremum{
                         ExtremumType::Minimum,
-                        {valueWhenFirstDerivativeIsZero, evaluatedTerm.getConstantValueConstReference()}});
+                        {valueWhenFirstDerivativeIsZero, evaluatedTerm.getAsNumber()}});
                 }
             }
         }
@@ -529,7 +529,7 @@ void determineExtrema(
         for (Term const& secondDerivative : secondDerivatives) {
             Term secondDerivativeSubstituted(substitution.performSubstitutionTo(secondDerivative));
             if (secondDerivativeSubstituted.isConstant()) {
-                AlbaNumber const& secondDerivativeValue(secondDerivativeSubstituted.getConstantValueConstReference());
+                AlbaNumber const& secondDerivativeValue(secondDerivativeSubstituted.getAsNumber());
                 if (ExtremumType::Maximum == extremumType) {
                     if (secondDerivativeValue > 0) {
                         extremumType = ExtremumType::SaddlePoint;

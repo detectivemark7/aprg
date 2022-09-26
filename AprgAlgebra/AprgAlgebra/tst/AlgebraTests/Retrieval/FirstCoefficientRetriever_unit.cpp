@@ -14,7 +14,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromEquationsWorks) {
 
     retriever.retrieveFromEquations({equation1, equation2});
 
-    EXPECT_EQ(AlbaNumber(34), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(34), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromEquationWorks) {
@@ -25,7 +25,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromEquationWorks) {
 
     retriever.retrieveFromEquation(equation);
 
-    EXPECT_EQ(AlbaNumber(34), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(34), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromTermWorks) {
@@ -41,7 +41,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromTermWorks) {
     retriever.retrieveFromTerm(createExpressionIfPossible({678, "+", Monomial(576, {{"x", 9}})}));
     retriever.retrieveFromTerm(functionObject);
 
-    EXPECT_EQ(AlbaNumber(1.234), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(1.234), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromConstantWorks) {
@@ -49,7 +49,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromConstantWorks) {
 
     retriever.retrieveFromConstant(Constant(1.234));
 
-    EXPECT_EQ(AlbaNumber(1.234), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(1.234), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromVariableWorks) {
@@ -57,7 +57,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromVariableWorks) {
 
     retriever.retrieveFromVariable(Variable("x"));
 
-    EXPECT_EQ(AlbaNumber(1), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(1), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromMonomialWorks) {
@@ -65,7 +65,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromMonomialWorks) {
 
     retriever.retrieveFromMonomial(Monomial(34, {{"x", 5}, {"y", 6}}));
 
-    EXPECT_EQ(AlbaNumber(34), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(34), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromPolynomialWorks) {
@@ -73,7 +73,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromPolynomialWorks) {
 
     retriever.retrieveFromPolynomial(Polynomial{Monomial(516, {{"x", 7}}), Monomial(643, {{"y", 8}})});
 
-    EXPECT_EQ(AlbaNumber(516), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(516), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromExpressionWorks) {
@@ -81,7 +81,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromExpressionWorks) {
 
     retriever.retrieveFromExpression(createExpressionIfPossible({678, "+", Monomial(576, {{"x", 9}})}));
 
-    EXPECT_EQ(AlbaNumber(678), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(678), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromFunctionWorks) {
@@ -92,7 +92,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromFunctionWorks) {
 
     retriever.retrieveFromFunction(functionObject);
 
-    EXPECT_EQ(AlbaNumber(4516), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(4516), retriever.getFirstCoefficient());
 }
 
 TEST(FirstCoefficientRetrieverTest, RetrieveFromPolynomialsWorks) {
@@ -103,7 +103,7 @@ TEST(FirstCoefficientRetrieverTest, RetrieveFromPolynomialsWorks) {
 
     retriever.retrieveFromPolynomials(polynomials);
 
-    EXPECT_EQ(AlbaNumber(516), retriever.getSavedData());
+    EXPECT_EQ(AlbaNumber(516), retriever.getFirstCoefficient());
 }
 
 }  // namespace algebra

@@ -37,8 +37,8 @@ public:
     bool operator<(Monomial const& second) const;
     bool isSimplified() const;
 
-    AlbaNumber const& getConstantConstReference() const;
-    VariablesToExponentsMap const& getVariablesToExponentsMapConstReference() const;
+    AlbaNumber const& getCoefficient() const;
+    VariablesToExponentsMap const& getVariablesToExponentsMap() const;
     AlbaNumber getExponentForVariable(std::string const& variableName) const;
 
     void clear();

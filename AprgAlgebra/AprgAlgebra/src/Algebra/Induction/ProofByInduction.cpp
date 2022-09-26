@@ -26,7 +26,7 @@ bool ProofByInduction::isCorrectOnASpecificValue(AlbaNumber const& value) const 
     SubstitutionOfVariablesToValues substitution{{m_variableName, value}};
     Term guessTerm(substitution.performSubstitutionTo(m_guessExpression));
     if (guessTerm.isConstant()) {
-        valueFromGuess = guessTerm.getConstantValueConstReference();
+        valueFromGuess = guessTerm.getAsNumber();
     }
     return valueFromManual == valueFromGuess;
 }

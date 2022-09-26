@@ -265,7 +265,7 @@ Term SimplificationOfExpression::getEachBasesRaisedToConstantIfPossible(TermRais
             if (bases.size() > 1) {
                 TermsRaiseToNumbers termsRaiseToNumbers;
                 termsRaiseToNumbers.putTerms(bases, TermAssociationType::Positive);
-                termsRaiseToNumbers.multiplyToExponents(exponent.getConstantValueConstReference());
+                termsRaiseToNumbers.multiplyToExponents(exponent.getAsNumber());
                 Term combinedTerm(termsRaiseToNumbers.getCombinedTerm());
                 if (!hasDoubleValues(combinedTerm) && !hasNonRealFiniteNumbers(combinedTerm)) {
                     result = combinedTerm;
@@ -330,16 +330,16 @@ void SimplificationOfExpression::convertPolynomialOverPolynomialIfNeeded() {
 
 void SimplificationOfExpression::convertPolynomialToPolynomialOverPolynomial(Term& term) {
     if (term.isPolynomial()) {
-        PolynomialOverPolynomial pop(term.getPolynomialConstReference(), createPolynomialFromNumber(1));
+        PolynomialOverPolynomial pop(term.getAsPolynomial(), createPolynomialFromNumber(1));
         pop.simplify();
         if (!isTheValue(pop.getDenominator(), 1)) {
             term = createExpressionIfPossible({pop.getNumerator(), "/", pop.getDenominator()});
         }
     } else if (term.isExpression()) {
-        convertPolynomialToPolynomialOverPolynomial(term.getExpressionReference());
+        convertPolynomialToPolynomialOverPolynomial(term.getAsExpressionReference());
     } else if (term.isFunction()) {
         convertPolynomialToPolynomialOverPolynomial(
-            getTermReferenceFromBaseTerm(term.getFunctionReference().getInputTermReference()));
+            getTermReferenceFromBaseTerm(term.getAsFunctionReference().getInputTermReference()));
     }
 }
 

@@ -69,13 +69,13 @@ TEST(ConvertHelpersTest, SimplifyAndConvertMonomialToSimplestTermWorks) {
     Term termToVerify4(simplifyAndConvertMonomialToSimplestTerm(Monomial(10, {{"x", 0}})));
 
     ASSERT_EQ(TermType::Constant, termToVerify1.getTermType());
-    EXPECT_DOUBLE_EQ(0, termToVerify1.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, termToVerify1.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify2.getTermType());
-    EXPECT_DOUBLE_EQ(6, termToVerify2.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(6, termToVerify2.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Variable, termToVerify3.getTermType());
-    EXPECT_EQ("x", termToVerify3.getVariableConstReference().getVariableName());
+    EXPECT_EQ("x", termToVerify3.getAsVariable().getVariableName());
     ASSERT_EQ(TermType::Constant, termToVerify4.getTermType());
-    EXPECT_DOUBLE_EQ(10, termToVerify4.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(10, termToVerify4.getAsNumber().getDouble());
 }
 
 TEST(ConvertHelpersTest, SimplifyAndConvertPolynomialToSimplestTermWorks) {
@@ -85,11 +85,11 @@ TEST(ConvertHelpersTest, SimplifyAndConvertPolynomialToSimplestTermWorks) {
         simplifyAndConvertPolynomialToSimplestTerm(Polynomial{Monomial(6, {{"x", 1}}), Monomial(-6, {{"x", 1}})}));
 
     ASSERT_EQ(TermType::Constant, termToVerify1.getTermType());
-    EXPECT_DOUBLE_EQ(0, termToVerify1.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, termToVerify1.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify2.getTermType());
-    EXPECT_DOUBLE_EQ(6, termToVerify2.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(6, termToVerify2.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify3.getTermType());
-    EXPECT_DOUBLE_EQ(0, termToVerify3.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, termToVerify3.getAsNumber().getDouble());
 }
 
 TEST(ConvertHelpersTest, SimplifyAndConvertExpressionToSimplestTermWorks) {
@@ -106,13 +106,13 @@ TEST(ConvertHelpersTest, SimplifyAndConvertExpressionToSimplestTermWorks) {
 
     ASSERT_EQ(TermType::Empty, termToVerify1.getTermType());
     ASSERT_EQ(TermType::Constant, termToVerify2.getTermType());
-    EXPECT_DOUBLE_EQ(88, termToVerify2.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(88, termToVerify2.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify3.getTermType());
-    EXPECT_DOUBLE_EQ(88, termToVerify3.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(88, termToVerify3.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify4.getTermType());
-    EXPECT_DOUBLE_EQ(88, termToVerify4.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(88, termToVerify4.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify5.getTermType());
-    EXPECT_DOUBLE_EQ(88, termToVerify5.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(88, termToVerify5.getAsNumber().getDouble());
 }
 
 TEST(ConvertHelpersTest, SimplifyAndConvertFunctionToSimplestTermWorks) {
@@ -127,7 +127,7 @@ TEST(ConvertHelpersTest, SimplifyAndConvertFunctionToSimplestTermWorks) {
     Term termToVerify3(simplifyAndConvertFunctionToSimplestTerm(function3));
 
     ASSERT_TRUE(termToVerify1.isFunction());
-    EXPECT_EQ(function1, termToVerify1.getFunctionConstReference());
+    EXPECT_EQ(function1, termToVerify1.getAsFunction());
     EXPECT_EQ(Term(5), termToVerify2);
     EXPECT_EQ(Term(10), termToVerify3);
 }
@@ -139,14 +139,14 @@ TEST(ConvertHelpersTest, ConvertMonomialToSimplestTermWorks) {
     Term termToVerify4(convertMonomialToSimplestTerm(Monomial(10, {{"x", 0}})));
 
     ASSERT_EQ(TermType::Constant, termToVerify1.getTermType());
-    EXPECT_DOUBLE_EQ(0, termToVerify1.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, termToVerify1.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify2.getTermType());
-    EXPECT_DOUBLE_EQ(6, termToVerify2.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(6, termToVerify2.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Variable, termToVerify3.getTermType());
-    EXPECT_EQ("x", termToVerify3.getVariableConstReference().getVariableName());
+    EXPECT_EQ("x", termToVerify3.getAsVariable().getVariableName());
     ASSERT_EQ(TermType::Monomial, termToVerify4.getTermType());
     Monomial monomialToExpect(10, {{"x", 0}});
-    EXPECT_EQ(monomialToExpect, termToVerify4.getMonomialConstReference());
+    EXPECT_EQ(monomialToExpect, termToVerify4.getAsMonomial());
 }
 
 TEST(ConvertHelpersTest, ConvertPolynomialToSimplestTermWorks) {
@@ -155,12 +155,12 @@ TEST(ConvertHelpersTest, ConvertPolynomialToSimplestTermWorks) {
     Term termToVerify3(convertPolynomialToSimplestTerm(Polynomial{Monomial(6, {{"x", 1}}), Monomial(-6, {{"x", 1}})}));
 
     ASSERT_EQ(TermType::Constant, termToVerify1.getTermType());
-    EXPECT_DOUBLE_EQ(0, termToVerify1.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, termToVerify1.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Constant, termToVerify2.getTermType());
-    EXPECT_DOUBLE_EQ(6, termToVerify2.getConstantValueConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(6, termToVerify2.getAsNumber().getDouble());
     ASSERT_EQ(TermType::Polynomial, termToVerify3.getTermType());
     Polynomial polynomialToExpect{Monomial(6, {{"x", 1}}), Monomial(-6, {{"x", 1}})};
-    EXPECT_EQ(polynomialToExpect, termToVerify3.getPolynomialConstReference());
+    EXPECT_EQ(polynomialToExpect, termToVerify3.getAsPolynomial());
 }
 
 TEST(ConvertHelpersTest, ConvertExpressionToSimplestTermWorks) {
@@ -189,10 +189,10 @@ TEST(ConvertHelpersTest, ConvertFunctionToSimplestTermWorks) {
 
     Term termToExpect(createExpressionIfPossible({ln("x"), "+", ln("y"), "-", ln("z")}));
     ASSERT_TRUE(termToVerify1.isFunction());
-    EXPECT_EQ(function1, termToVerify1.getFunctionConstReference());
+    EXPECT_EQ(function1, termToVerify1.getAsFunction());
     EXPECT_EQ(Term(5), termToVerify2);
     ASSERT_TRUE(termToVerify3.isFunction());
-    EXPECT_EQ(function3, termToVerify3.getFunctionConstReference());
+    EXPECT_EQ(function3, termToVerify3.getAsFunction());
     EXPECT_EQ(termToExpect, termToVerify4);
 }
 

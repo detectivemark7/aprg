@@ -28,7 +28,7 @@ bool isContinuousAt(
     Term substitutedResult(substitution.performSubstitutionTo(term));
     if (substitutedResult.isConstant()) {
         AlbaNumber limitAtValue(getLimitAtAValueByApproachType(term, variableName, valueToApproach, limitApproachType));
-        AlbaNumber const& substitutedResultValue(substitutedResult.getConstantValueConstReference());
+        AlbaNumber const& substitutedResultValue(substitutedResult.getAsNumber());
         result = isAlmostEqualForLimitChecking(substitutedResultValue, limitAtValue);
     }
     return result;
@@ -72,8 +72,8 @@ bool isIntermediateValueTheoremSatisfied(
     substitution.putVariableWithValue(variableName, secondValue);
     Term outputOfSecond(substitution.performSubstitutionTo(term));
     if (outputOfFirst.isConstant() && outputOfSecond.isConstant()) {
-        AlbaNumber outputValueOfFirst(outputOfFirst.getConstantValueConstReference());
-        AlbaNumber outputValueOfSecond(outputOfSecond.getConstantValueConstReference());
+        AlbaNumber outputValueOfFirst(outputOfFirst.getAsNumber());
+        AlbaNumber outputValueOfSecond(outputOfSecond.getAsNumber());
         SolutionSet continuityDomain(getContinuityDomain(term));
         AlbaNumberIntervals const& continuityDomainIntervals(continuityDomain.getAcceptedIntervals());
         AlbaNumberInterval firstAndSecondInterval(createCloseEndpoint(firstValue), createCloseEndpoint(secondValue));
@@ -95,7 +95,7 @@ ContinuityType getContinuityTypeAt(Term const& term, string const& variableName,
         AlbaNumber limitAtValueInPositiveSide(getLimitAtAValueInThePositiveSide(term, variableName, value));
         AlbaNumber limitAtValueInNegativeSide(getLimitAtAValueInTheNegativeSide(term, variableName, value));
         if (isAlmostEqualForLimitChecking(limitAtValueInPositiveSide, limitAtValueInNegativeSide)) {
-            AlbaNumber const& substitutedResultValue(substitutedResult.getConstantValueConstReference());
+            AlbaNumber const& substitutedResultValue(substitutedResult.getAsNumber());
             if (isAlmostEqualForLimitChecking(limitAtValueInPositiveSide, substitutedResultValue)) {
                 result = ContinuityType::ContinuousAtBothSides;
             } else {

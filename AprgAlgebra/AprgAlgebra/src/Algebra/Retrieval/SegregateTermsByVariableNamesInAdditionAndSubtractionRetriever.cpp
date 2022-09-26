@@ -58,13 +58,6 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
     saveTerm(Term(monomial), numberOfTimesFound, lastVariableNameFound);
 }
 
-void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromPolynomial(
-    Polynomial const& polynomial) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
-        retrieveFromMonomial(monomial);
-    }
-}
-
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromExpression(
     Expression const& expression) {
     if (OperatorLevel::AdditionAndSubtraction == expression.getCommonOperatorLevel()) {
@@ -80,7 +73,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
         string lastVariableNameFound;
         VariableNamesRetriever variableNamesRetriever;
         variableNamesRetriever.retrieveFromExpression(expression);
-        VariableNamesSet const& namesInExpression(variableNamesRetriever.getSavedData());
+        VariableNamesSet const& namesInExpression(variableNamesRetriever.getVariableNames());
         for (auto& variableNameAndTermPair : m_variableNameToTermMap) {
             if (namesInExpression.find(variableNameAndTermPair.first) != namesInExpression.cend()) {
                 lastVariableNameFound = variableNameAndTermPair.first;
@@ -97,7 +90,7 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
     string lastVariableNameFound;
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromFunction(functionObject);
-    VariableNamesSet const& namesInFunction(variableNamesRetriever.getSavedData());
+    VariableNamesSet const& namesInFunction(variableNamesRetriever.getVariableNames());
     for (auto& variableNameAndTermPair : m_variableNameToTermMap) {
         if (namesInFunction.find(variableNameAndTermPair.first) != namesInFunction.cend()) {
             lastVariableNameFound = variableNameAndTermPair.first;
@@ -105,22 +98,6 @@ void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFro
         }
     }
     saveTerm(Term(functionObject), numberOfTimesFound, lastVariableNameFound);
-}
-
-void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::retrieveFromTerm(Term const& term) {
-    if (term.isConstant()) {
-        retrieveFromConstant(term.getConstantConstReference());
-    } else if (term.isVariable()) {
-        retrieveFromVariable(term.getVariableConstReference());
-    } else if (term.isMonomial()) {
-        retrieveFromMonomial(term.getMonomialConstReference());
-    } else if (term.isPolynomial()) {
-        retrieveFromPolynomial(term.getPolynomialConstReference());
-    } else if (term.isExpression()) {
-        retrieveFromExpression(term.getExpressionConstReference());
-    } else if (term.isFunction()) {
-        retrieveFromFunction(term.getFunctionConstReference());
-    }
 }
 
 void SegregateTermsByVariableNamesInAdditionAndSubtractionRetriever::initializeWithVariableNames(

@@ -85,7 +85,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateWorksForExpression) {
     EXPECT_EQ(termToExpect1, integrationForX.integrate(expression1));
     EXPECT_EQ(termToExpect2, integrationForX.integrate(expression2));
     ASSERT_TRUE(termToVerify.isConstant());
-    EXPECT_TRUE(termToVerify.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify.getAsNumber().isNotANumber());
 }
 
 TEST(IntegrationForFiniteCalculusTest, IntegrateWorksForFunction) {
@@ -94,7 +94,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateWorksForFunction) {
     Term termToVerify(integrationForX.integrate(sin("x")));
 
     ASSERT_TRUE(termToVerify.isConstant());
-    EXPECT_TRUE(termToVerify.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify.getAsNumber().isNotANumber());
 }
 
 TEST(IntegrationForFiniteCalculusTest, IntegrateWithPlusCWorks) {
@@ -140,7 +140,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateTermWorks) {
     EXPECT_EQ(termToExpect4, termToVerify4);
     EXPECT_EQ(termToExpect5, termToVerify5);
     ASSERT_TRUE(termToVerify6.isConstant());
-    EXPECT_TRUE(termToVerify6.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify6.getAsNumber().isNotANumber());
 }
 
 TEST(IntegrationForFiniteCalculusTest, IntegrateConstantWorks) {
@@ -184,7 +184,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateMonomialWorks) {
     EXPECT_EQ(termToExpect2, termToVerify2);
     EXPECT_EQ(termToExpect3, termToVerify3);
     ASSERT_TRUE(termToVerify4.isConstant());
-    EXPECT_TRUE(termToVerify4.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify4.getAsNumber().isNotANumber());
     EXPECT_EQ(termToExpect5, termToVerify5);
 }
 
@@ -217,7 +217,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateExpressionWorks) {
     EXPECT_EQ(termToExpect1, termToVerify1);
     EXPECT_EQ(termToExpect2, termToVerify2);
     ASSERT_TRUE(termToVerify3.isConstant());
-    EXPECT_TRUE(termToVerify3.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify3.getAsNumber().isNotANumber());
 }
 
 TEST(IntegrationForFiniteCalculusTest, IntegrateWorksWithTermRaiseToTerm) {
@@ -246,7 +246,7 @@ TEST(IntegrationForFiniteCalculusTest, IntegrateFunctionWorks) {
 
     Term termToVerify(integrationForX.integrateFunction(sin("x")));
     ASSERT_TRUE(termToVerify.isConstant());
-    EXPECT_TRUE(termToVerify.getConstantValueConstReference().isNotANumber());
+    EXPECT_TRUE(termToVerify.getAsNumber().isNotANumber());
 }
 
 }  // namespace algebra

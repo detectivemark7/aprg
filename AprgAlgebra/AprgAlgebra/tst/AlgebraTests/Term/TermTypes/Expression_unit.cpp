@@ -168,14 +168,14 @@ TEST(ExpressionTest, GetCommonOperatorLevelWorks) {
     EXPECT_EQ(OperatorLevel::RaiseToPower, expression7.getCommonOperatorLevel());
 }
 
-TEST(ExpressionTest, GetFirstTermConstReferenceWorks) {
+TEST(ExpressionTest, GetFirstTermWorks) {
     Expression expression1(createExpressionIfPossible({5412}));
     Expression expression2(createExpressionIfPossible({695, "+", "interest"}));
     Expression expression3(createExpressionIfPossible({"-", 16}));
 
-    EXPECT_EQ(Term(5412), getTermConstReferenceFromBaseTerm(expression1.getFirstTermConstReference()));
-    EXPECT_EQ(Term(695), getTermConstReferenceFromBaseTerm(expression2.getFirstTermConstReference()));
-    EXPECT_EQ(Term(16), getTermConstReferenceFromBaseTerm(expression3.getFirstTermConstReference()));
+    EXPECT_EQ(Term(5412), getTermConstReferenceFromBaseTerm(expression1.getFirstTerm()));
+    EXPECT_EQ(Term(695), getTermConstReferenceFromBaseTerm(expression2.getFirstTerm()));
+    EXPECT_EQ(Term(16), getTermConstReferenceFromBaseTerm(expression3.getFirstTerm()));
 }
 
 TEST(ExpressionTest, GetFirstAssociationTypeWorks) {
@@ -1459,12 +1459,12 @@ TEST(ExpressionTest, ClearAllInnerSimplifiedFlagsWorks) {
     Expression expression(innerTerm);
     expression.setAsSimplified();
     EXPECT_TRUE(expression.isSimplified());
-    EXPECT_TRUE(getTermConstReferenceFromBaseTerm(expression.getFirstTermConstReference()).isSimplified());
+    EXPECT_TRUE(getTermConstReferenceFromBaseTerm(expression.getFirstTerm()).isSimplified());
 
     expression.clearAllInnerSimplifiedFlags();
 
     EXPECT_FALSE(expression.isSimplified());
-    EXPECT_FALSE(getTermConstReferenceFromBaseTerm(expression.getFirstTermConstReference()).isSimplified());
+    EXPECT_FALSE(getTermConstReferenceFromBaseTerm(expression.getFirstTerm()).isSimplified());
 }
 
 TEST(ExpressionTest, OutputStreamOperatorWorks) {

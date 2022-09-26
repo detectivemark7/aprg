@@ -51,10 +51,10 @@ TEST(SummationTest, ExperimentalTest2) {
     int s = 500;
     int minOfRSMinus1(min(r, s) - 1);
     Term summationFormula(summation.getSum(1, "minOfRSMinus1"));
-    Polynomials polynomials(factorizeAPolynomial(summationFormula.getPolynomialConstReference()));
+    Polynomials polynomials(factorizeAPolynomial(summationFormula.getAsPolynomial()));
     SubstitutionOfVariablesToValues substitution{{"R", r}, {"C", s}, {"minOfRSMinus1", minOfRSMinus1}};
     long long result =
-        substitution.performSubstitutionTo(summationFormula).getConstantValueConstReference().getInteger();
+        substitution.performSubstitutionTo(summationFormula).getAsNumber().getInteger();
     long long display = result % 1000000007;
 
     for (Polynomial const& polynomial : polynomials) {

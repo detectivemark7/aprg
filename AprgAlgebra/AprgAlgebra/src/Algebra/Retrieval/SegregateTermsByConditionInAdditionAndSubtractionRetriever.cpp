@@ -1,7 +1,6 @@
 #include "SegregateTermsByConditionInAdditionAndSubtractionRetriever.hpp"
 
 #include <Algebra/Term/Operators/TermOperators.hpp>
-#include <Algebra/Term/Utilities/BaseTermHelpers.hpp>
 #include <Algebra/Term/Utilities/TermUtilities.hpp>
 
 using namespace std;
@@ -34,12 +33,6 @@ void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromMon
     saveTerm(Term(monomial));
 }
 
-void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromPolynomial(Polynomial const& polynomial) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
-        retrieveFromMonomial(monomial);
-    }
-}
-
 void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromExpression(Expression const& expression) {
     if (OperatorLevel::AdditionAndSubtraction == expression.getCommonOperatorLevel()) {
         for (TermWithDetails const& termWithDetails : expression.getTermsWithAssociation().getTermsWithDetails()) {
@@ -56,22 +49,6 @@ void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromExp
 
 void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromFunction(Function const& functionObject) {
     saveTerm(Term(functionObject));
-}
-
-void SegregateTermsByConditionInAdditionAndSubtractionRetriever::retrieveFromTerm(Term const& term) {
-    if (term.isConstant()) {
-        retrieveFromConstant(term.getConstantConstReference());
-    } else if (term.isVariable()) {
-        retrieveFromVariable(term.getVariableConstReference());
-    } else if (term.isMonomial()) {
-        retrieveFromMonomial(term.getMonomialConstReference());
-    } else if (term.isPolynomial()) {
-        retrieveFromPolynomial(term.getPolynomialConstReference());
-    } else if (term.isExpression()) {
-        retrieveFromExpression(term.getExpressionConstReference());
-    } else if (term.isFunction()) {
-        retrieveFromFunction(term.getFunctionConstReference());
-    }
 }
 
 void SegregateTermsByConditionInAdditionAndSubtractionRetriever::saveTerm(Term const& term) {

@@ -284,7 +284,7 @@ void TermsOverTerms::putTermsOnNumeratorAndDenominatorBasedFromTermsRaiseToTerms
                 numeratorTerms.emplace_back(termRaiseToTerms.getCombinedTerm());
             }
         } else {
-            AlbaNumber const& exponentValue(exponent.getConstantValueConstReference());
+            AlbaNumber const& exponentValue(exponent.getAsNumber());
             if (isANegativeTerm(exponent)) {
                 populateTermsWithBase(denominatorTerms, base, exponentValue);
             } else if (!isTheValue(exponent, 0)) {
@@ -355,7 +355,7 @@ void TermsOverTerms::putTermsToRetainAndOnTheOtherSide(
         bool isNeededToPutOnTheOtherSide(false);
         Term transformedTermOnTheOtherSide;
         if (termToCheck.isExpression()) {
-            Expression const& expression(termToCheck.getExpressionConstReference());
+            Expression const& expression(termToCheck.getAsExpression());
             TermsWithDetails const& termsWithDetails(expression.getTermsWithAssociation().getTermsWithDetails());
             if (OperatorLevel::RaiseToPower == expression.getCommonOperatorLevel() && termsWithDetails.size() == 2) {
                 Term const& base(getTermConstReferenceFromUniquePointer(termsWithDetails[0].baseTermPointer));

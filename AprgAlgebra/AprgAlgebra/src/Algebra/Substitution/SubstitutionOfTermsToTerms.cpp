@@ -62,9 +62,9 @@ Term SubstitutionOfTermsToTerms::performSubstitutionTo(Term const& term) const {
     if (isTermFound(term)) {
         newTerm = getTermForTerm(term);
     } else if (term.isExpression()) {
-        newTerm = performSubstitutionTo(term.getExpressionConstReference());
+        newTerm = performSubstitutionTo(term.getAsExpression());
     } else if (term.isFunction()) {
-        newTerm = performSubstitutionTo(term.getFunctionConstReference());
+        newTerm = performSubstitutionTo(term.getAsFunction());
     }
     return newTerm;
 }
@@ -87,7 +87,7 @@ Expression SubstitutionOfTermsToTerms::performSubstitutionForExpression(Expressi
 Function SubstitutionOfTermsToTerms::performSubstitutionForFunction(Function const& functionObject) const {
     Function newFunction(functionObject);
     getTermReferenceFromBaseTerm(newFunction.getInputTermReference()) =
-        performSubstitutionTo(functionObject.getInputTermConstReference());
+        performSubstitutionTo(functionObject.getInputTerm());
     newFunction.simplify();
     return newFunction;
 }

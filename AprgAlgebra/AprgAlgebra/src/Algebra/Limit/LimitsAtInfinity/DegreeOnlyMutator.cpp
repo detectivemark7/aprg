@@ -39,7 +39,7 @@ void DegreeOnlyMutator::mutateExpression(Expression& expression) {
 
 AlbaNumber DegreeOnlyMutator::getMaxDegreeForVariable(Polynomial const& polynomial) {
     AlbaNumber maxDegreeForVariable;
-    auto const& monomials(polynomial.getMonomialsConstReference());
+    auto const& monomials(polynomial.getMonomials());
     if (!monomials.empty()) {
         maxDegreeForVariable = monomials.front().getExponentForVariable(m_variableName);
         for (auto it = monomials.cbegin() + 1; it != monomials.cend(); it++) {

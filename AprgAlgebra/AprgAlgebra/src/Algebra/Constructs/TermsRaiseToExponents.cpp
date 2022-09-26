@@ -129,7 +129,7 @@ void TermsRaiseToExponents<ExponentType, BaseRaiseToExponentType>::putTerm(
     int sign = (association == TermAssociationType::Positive) ? 1 : -1;
     if (canBeConvertedToMonomial(term)) {
         Monomial monomial(createMonomialIfPossible(term));
-        AlbaNumber const& constant(monomial.getConstantConstReference());
+        AlbaNumber const& constant(monomial.getCoefficient());
         if (constant != 1) {
             if (constant.isFractionType()) {
                 AlbaNumber::FractionData fractionData(constant.getFractionData());
@@ -143,7 +143,7 @@ void TermsRaiseToExponents<ExponentType, BaseRaiseToExponentType>::putTerm(
                 m_baseToExponentMap[Term(constant)] += ExponentType(sign);
             }
         }
-        for (auto const& variableExponentPair : monomial.getVariablesToExponentsMapConstReference()) {
+        for (auto const& variableExponentPair : monomial.getVariablesToExponentsMap()) {
             m_baseToExponentMap[Term(variableExponentPair.first)] += ExponentType(variableExponentPair.second * sign);
         }
     } else {

@@ -1,5 +1,6 @@
 #include "DomainAndRange.hpp"
 
+#include <Algebra/Retrieval/SingleVariableNameRetriever.hpp>
 #include <Algebra/Retrieval/VariableNamesRetriever.hpp>
 #include <Algebra/Solution/SolutionUtilities.hpp>
 #include <Algebra/Solution/Solver/OneEquationOneVariable/OneEquationOneVariableEqualitySolver.hpp>
@@ -38,20 +39,19 @@ SolutionSet calculateDomainUsingTransitionValues(
 
 SolutionSet calculateDomainForTermWithOneVariable(AlbaNumbers const& valuesToCheck, Term const& term) {
     SolutionSet domain;
-    VariableNamesRetriever variableNamesRetriever;
-    variableNamesRetriever.retrieveFromTerm(term);
-    VariableNamesSet const& variableNames(variableNamesRetriever.getSavedData());
-    if (variableNames.empty()) {
+    SingleVariableNameRetriever retriever;
+    retriever.retrieveFromTerm(term);
+    if (retriever.hasNoVariables()) {
         domain.addAcceptedInterval(createAllRealValuesInterval());
-    } else if (variableNames.size() == 1) {
-        string variableName = *variableNames.cbegin();
+    } else if (retriever.hasOnlyASingleVariable()) {
+        string variableName(retriever.getSingleVariableNameIfItExistsAsTheOnlyOneOtherwiseItsEmpty());
         SubstitutionOfVariablesToValues substitution;
         domain = calculateDomainUsingTransitionValues(valuesToCheck, [&](AlbaNumber const& value) {
             substitution.putVariableWithValue(variableName, value);
             Term computedTerm(substitution.performSubstitutionTo(term));
             AlbaNumber computedValue;
             if (computedTerm.isConstant()) {
-                computedValue = computedTerm.getConstantValueConstReference();
+                computedValue = computedTerm.getAsNumber();
             }
             return computedValue;
         });
@@ -68,7 +68,7 @@ SolutionSet calculateDomainForEquation(
     SolutionSet domain;
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromEquation(equation);
-    VariableNamesSet const& variableNames(variableNamesRetriever.getSavedData());
+    VariableNamesSet const& variableNames(variableNamesRetriever.getVariableNames());
     string inputName, outputName;
     retrieveTwoVariableNames(inputName, outputName, variableNames, variableNameToCheck);
     if (!inputName.empty() && !outputName.empty()) {
@@ -86,7 +86,7 @@ SolutionSet calculateRangeForEquation(
     SolutionSet domain;
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromEquation(equation);
-    VariableNamesSet const& variableNames(variableNamesRetriever.getSavedData());
+    VariableNamesSet const& variableNames(variableNamesRetriever.getVariableNames());
     string inputName, outputName;
     retrieveTwoVariableNames(inputName, outputName, variableNames, variableNameToCheck);
     if (!inputName.empty() && !outputName.empty()) {

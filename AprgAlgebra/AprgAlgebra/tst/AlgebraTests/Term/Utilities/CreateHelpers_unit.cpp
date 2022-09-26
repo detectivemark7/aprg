@@ -113,21 +113,21 @@ TEST(CreateHelpersTest, CreateExpressionIfPossibleDoesNotSimplifyExpressionInAEx
     EXPECT_EQ(TermAssociationType::Positive, termsToVerify1[0].association);
     Term const& termToVerify1(getTermConstReferenceFromUniquePointer(termsToVerify1[0].baseTermPointer));
     ASSERT_TRUE(termToVerify1.isExpression());
-    Expression const& expressionToTest2(termToVerify1.getExpressionConstReference());
+    Expression const& expressionToTest2(termToVerify1.getAsExpression());
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest2.getCommonOperatorLevel());
     TermsWithDetails const& termsToVerify2(expressionToTest2.getTermsWithAssociation().getTermsWithDetails());
     ASSERT_EQ(1U, termsToVerify2.size());
     EXPECT_EQ(TermAssociationType::Positive, termsToVerify2[0].association);
     Term const& termToVerify2(getTermConstReferenceFromUniquePointer(termsToVerify2[0].baseTermPointer));
     ASSERT_TRUE(termToVerify2.isExpression());
-    Expression const& expressionToTest3(termToVerify2.getExpressionConstReference());
+    Expression const& expressionToTest3(termToVerify2.getAsExpression());
     EXPECT_EQ(OperatorLevel::Unknown, expressionToTest3.getCommonOperatorLevel());
     TermsWithDetails const& termsToVerify3(expressionToTest3.getTermsWithAssociation().getTermsWithDetails());
     ASSERT_EQ(1U, termsToVerify3.size());
     EXPECT_EQ(TermAssociationType::Positive, termsToVerify3[0].association);
     Term const& termToVerify3(getTermConstReferenceFromUniquePointer(termsToVerify3[0].baseTermPointer));
     ASSERT_TRUE(termToVerify3.isConstant());
-    EXPECT_EQ(Constant(88), termToVerify3.getConstantConstReference());
+    EXPECT_EQ(Constant(88), termToVerify3.getAsConstant());
 }
 
 TEST(CreateHelpersTest, CreateExpressionIfPossibleDoesNotSimplify) {
@@ -175,7 +175,7 @@ TEST(CreateHelpersTest, CreateFunctionWithEmptyInputExpressionWorks) {
     Function absoluteValueFunction(createFunctionWithEmptyInputExpression("abs"));
 
     EXPECT_EQ("abs", absoluteValueFunction.getFunctionName());
-    EXPECT_TRUE(getTermConstReferenceFromBaseTerm(absoluteValueFunction.getInputTermConstReference()).isEmpty());
+    EXPECT_TRUE(getTermConstReferenceFromBaseTerm(absoluteValueFunction.getInputTerm()).isEmpty());
 }
 
 TEST(CreateHelpersTest, CreateFunctionInAnFunctionWorks) {

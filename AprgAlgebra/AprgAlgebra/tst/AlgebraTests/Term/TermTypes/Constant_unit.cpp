@@ -15,11 +15,11 @@ TEST(ConstantTest, ConstantsAreConstructedCorrectly) {
     Constant constant4(AlbaNumber::createFraction(-415, 41745));
     Constant constant5(-85.45631);
 
-    EXPECT_DOUBLE_EQ(0, constant1.getNumberConstReference().getDouble());
-    EXPECT_DOUBLE_EQ(3484, constant2.getNumberConstReference().getDouble());
-    EXPECT_DOUBLE_EQ(-1561, constant3.getNumberConstReference().getDouble());
-    EXPECT_DOUBLE_EQ(-0.0099413103365672533, constant4.getNumberConstReference().getDouble());
-    EXPECT_DOUBLE_EQ(-85.45631, constant5.getNumberConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(0, constant1.getNumber().getDouble());
+    EXPECT_DOUBLE_EQ(3484, constant2.getNumber().getDouble());
+    EXPECT_DOUBLE_EQ(-1561, constant3.getNumber().getDouble());
+    EXPECT_DOUBLE_EQ(-0.0099413103365672533, constant4.getNumber().getDouble());
+    EXPECT_DOUBLE_EQ(-85.45631, constant5.getNumber().getDouble());
 }
 
 TEST(ConstantTest, EqualityOperatorWorks) {
@@ -57,10 +57,10 @@ TEST(ConstantTest, LessThanOperatorWorks) {
 
 TEST(ConstantTest, SettingANewNumberWorks) {
     Constant constant(3484);
-    EXPECT_DOUBLE_EQ(3484, constant.getNumberConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(3484, constant.getNumber().getDouble());
 
     constant.setNumber(4521);
-    EXPECT_DOUBLE_EQ(4521, constant.getNumberConstReference().getDouble());
+    EXPECT_DOUBLE_EQ(4521, constant.getNumber().getDouble());
 }
 
 TEST(ConstantTest, OutputStreamOperatorWorks) {

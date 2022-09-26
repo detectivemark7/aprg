@@ -60,7 +60,7 @@ bool TermsWithAssociation::isEmpty() const { return m_termsWithDetails.empty(); 
 
 int TermsWithAssociation::getSize() const { return m_termsWithDetails.size(); }
 
-BaseTerm const& TermsWithAssociation::getFirstTermConstReference() const {
+BaseTerm const& TermsWithAssociation::getFirstTerm() const {
     return getBaseTermConstReferenceFromUniquePointer(m_termsWithDetails.front().baseTermPointer);
 }
 

@@ -116,12 +116,12 @@ AlbaNumbers SeriesBasedOnFormula::getBoundValues() const {
         SubstitutionOfVariablesToValues substitution{{m_variableName, extremumIndex}};
         Term secondDerivativeAtExtrema(substitution.performSubstitutionTo(secondDerivative));
         if (secondDerivativeAtExtrema.isConstant()) {
-            boundValues.emplace_back(secondDerivativeAtExtrema.getConstantValueConstReference());
+            boundValues.emplace_back(secondDerivativeAtExtrema.getAsNumber());
         }
     }
     Term valueTermAtInfinity(getValueAtInfinity());
     if (isARealFiniteConstant(valueTermAtInfinity)) {
-        boundValues.emplace_back(valueTermAtInfinity.getConstantValueConstReference());
+        boundValues.emplace_back(valueTermAtInfinity.getAsNumber());
     }
     return boundValues;
 }

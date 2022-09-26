@@ -1,6 +1,7 @@
 #include "ReduceEquationsBySubstitution.hpp"
 
 #include <Algebra/Isolation/IsolationOfOneVariableOnEqualityEquation.hpp>
+#include <Algebra/Retrieval/SingleVariableNameRetriever.hpp>
 #include <Algebra/Retrieval/VariableNamesRetriever.hpp>
 #include <Algebra/Substitution/SubstitutionOfVariablesToTerms.hpp>
 
@@ -16,7 +17,7 @@ void reduceEquationsBySubstitution(Equations& substitutedEquations, VariableName
     VariableNamesRetriever unknownsRetriever;
     unknownsRetriever.retrieveFromEquations(substitutedEquations);
     bool areVariableAndEquationSelected(true);
-    while (areVariableAndEquationSelected && unknownsRetriever.getSavedData().size() > 1) {
+    while (areVariableAndEquationSelected && unknownsRetriever.getVariableNames().size() > 1) {
         areVariableAndEquationSelected = false;
         string selectedVariableName;
         int selectedEquationIndex(0);
@@ -26,7 +27,7 @@ void reduceEquationsBySubstitution(Equations& substitutedEquations, VariableName
         substituteEquationForSelectedEquationIndex(
             substitutedEquations, areVariableAndEquationSelected, selectedVariableName, selectedEquationIndex);
         removeEquationsWithoutUnknowns(substitutedEquations);
-        unknownsRetriever.getSavedDataReference().clear();
+        unknownsRetriever.getVariableNamesReference().clear();
         unknownsRetriever.retrieveFromEquations(substitutedEquations);
     }
 }
@@ -73,18 +74,14 @@ void removeEquationsWithoutUnknowns(Equations& substitutedEquations) {
     substitutedEquations.erase(
         remove_if(
             substitutedEquations.begin(), substitutedEquations.end(),
-            [](Equation const& equation) {
-                VariableNamesRetriever unknownsRetriever;
-                unknownsRetriever.retrieveFromEquation(equation);
-                return unknownsRetriever.getSavedData().empty();
-            }),
+            [](Equation const& equation) { return hasNoVariables(equation); }),
         substitutedEquations.end());
 }
 
 VariableNamesSet getVariablesNamesToCheck(Equations const& equations, VariableNamesSet const& variableNamesToIgnore) {
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromEquations(equations);
-    VariableNamesSet variableNamesToCheck(variableNamesRetriever.getSavedData());
+    VariableNamesSet variableNamesToCheck(variableNamesRetriever.getVariableNames());
     for (string const& variableNameToIgnore : variableNamesToIgnore) {
         variableNamesToCheck.erase(variableNameToIgnore);
     }

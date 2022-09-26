@@ -68,9 +68,7 @@ bool Expression::isSimplified() const { return m_isSimplified; }
 
 OperatorLevel Expression::getCommonOperatorLevel() const { return m_commonOperatorLevel; }
 
-BaseTerm const& Expression::getFirstTermConstReference() const {
-    return m_termsWithAssociation.getFirstTermConstReference();
-}
+BaseTerm const& Expression::getFirstTerm() const { return m_termsWithAssociation.getFirstTerm(); }
 
 TermAssociationType Expression::getFirstAssociationType() const {
     return m_termsWithAssociation.getFirstAssociationType();
@@ -152,7 +150,7 @@ void Expression::putTermWithSubtractionIfNeeded(BaseTerm const& baseTerm) {
 void Expression::putTermWithMultiplicationIfNeeded(BaseTerm const& baseTerm) {
     Term const& term(getTermConstReferenceFromBaseTerm(baseTerm));
     if (term.isExpression()) {
-        putExpressionWithMultiplication(term.getExpressionConstReference());
+        putExpressionWithMultiplication(term.getAsExpression());
     } else {
         putOnlyTermWithMultiplicationIfNeeded(baseTerm);
     }
@@ -428,7 +426,7 @@ void Expression::putTermForExpressionAndNonExpressions(
     BaseTerm const& baseTerm, TermAssociationType const overallAssociation) {
     Term const& term(getTermConstReferenceFromBaseTerm(baseTerm));
     if (term.isExpression()) {
-        Expression const& expression(term.getExpressionConstReference());
+        Expression const& expression(term.getAsExpression());
         if (!expression.isEmpty()) {
             if (m_commonOperatorLevel == expression.getCommonOperatorLevel() ||
                 OperatorLevel::Unknown == expression.getCommonOperatorLevel()) {
@@ -446,11 +444,11 @@ void Expression::putTermWithRaiseToPowerForExpressionAndNonExpressions(
     BaseTerm const& baseTerm, TermAssociationType const overallAssociation) {
     Term const& term(getTermConstReferenceFromBaseTerm(baseTerm));
     if (term.isExpression()) {
-        Expression const& expression(term.getExpressionConstReference());
+        Expression const& expression(term.getAsExpression());
         TermsWithAssociation const& termsWithAssociation(expression.getTermsWithAssociation());
         if (1 == termsWithAssociation.getSize() &&
             TermAssociationType::Positive == termsWithAssociation.getTermsWithDetails().front().association) {
-            putTerm(termsWithAssociation.getFirstTermConstReference(), overallAssociation);
+            putTerm(termsWithAssociation.getFirstTerm(), overallAssociation);
         } else {
             putTerm(baseTerm, overallAssociation);
         }
@@ -471,7 +469,7 @@ void Expression::putTermsWithAssociation(
 }
 
 void Expression::distributeAndMultiply(Polynomial const& polynomial, Expression const& expression) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         Expression monomialExpression(createExpressionIfPossible({monomial}));
         monomialExpression.putTermWithMultiplicationIfNeeded(Term(expression));
         putTermWithAdditionIfNeeded(Term(monomialExpression));
@@ -479,7 +477,7 @@ void Expression::distributeAndMultiply(Polynomial const& polynomial, Expression 
 }
 
 void Expression::distributeAndMultiply(Expression const& expression, Polynomial const& polynomial) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         Expression expressionTerm(expression);
         expressionTerm.putTermWithMultiplicationIfNeeded(Term(monomial));
         putTermWithAdditionIfNeeded(Term(expressionTerm));
@@ -487,13 +485,13 @@ void Expression::distributeAndMultiply(Expression const& expression, Polynomial 
 }
 
 void Expression::distributeAndMultiply(Polynomial const& polynomial, TermsWithDetails const& termsWithDetails) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         distributeAndMultiply(Term(monomial), termsWithDetails);
     }
 }
 
 void Expression::distributeAndMultiply(TermsWithDetails const& termsWithDetails, Polynomial const& polynomial) {
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         distributeAndMultiply(termsWithDetails, Term(monomial));
     }
 }

@@ -29,7 +29,7 @@ bool SimplificationOfFunctionToTerm::shouldNotSimplifyLogarithmicFunctionsByRedu
 
 Term SimplificationOfFunctionToTerm::simplifyToTerm(Function const& functionObject) {
     Term result;
-    Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+    Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
     if (inputTerm.isConstant()) {
         result = Term(functionObject.performFunctionAndReturnResultIfPossible());
     } else if (isTrigonometricFunction(functionObject)) {
@@ -50,7 +50,7 @@ Term SimplificationOfFunctionToTerm::simplifyTrigometricFunctionToExpression(Fun
     Term result;
     string functionName(functionObject.getFunctionName());
     if (shouldSimplifyTrigonometricFunctionsToSinAndCos()) {
-        Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+        Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
         if ("tan" == functionName) {
             result = Term(createExpressionIfPossible({sin(inputTerm), "/", cos(inputTerm)}));
         } else if ("csc" == functionName) {
@@ -67,10 +67,10 @@ Term SimplificationOfFunctionToTerm::simplifyTrigometricFunctionToExpression(Fun
 Term SimplificationOfFunctionToTerm::simplifyLogarithmicFunctionToExpression(Function const& functionObject) {
     Term result;
     if (!shouldNotSimplifyLogarithmicFunctionsByReducingTheOperatorLevel()) {
-        Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+        Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
         if (inputTerm.isExpression()) {
             Expression resultExpression;
-            Expression const& inputExpression(inputTerm.getExpressionConstReference());
+            Expression const& inputExpression(inputTerm.getAsExpression());
             if (OperatorLevel::MultiplicationAndDivision == inputExpression.getCommonOperatorLevel()) {
                 TermsWithDetails newTermsWithDetails(inputExpression.getTermsWithAssociation().getTermsWithDetails());
                 for (TermWithDetails& newTermWithDetails : newTermsWithDetails) {

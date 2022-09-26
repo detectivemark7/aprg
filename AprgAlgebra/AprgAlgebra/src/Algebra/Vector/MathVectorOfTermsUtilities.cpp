@@ -207,7 +207,7 @@ SegregateTermsByConditionInAdditionAndSubtractionRetriever getRetrieverForCompar
         [&](Term const& term) -> bool {
         VariableNamesRetriever retriever;
         retriever.retrieveFromTerm(term);
-        VariableNamesSet const& names(retriever.getSavedData());
+        VariableNamesSet const& names(retriever.getVariableNames());
         bool isCurrentCoordinateFound = names.find(coordinateVariableName) != names.cend();
         bool isOneOfTheOtherPreviousCoordinatesFound(false);
         for (string const& processedCoordinate : processedCoordinates) {

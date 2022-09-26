@@ -8,6 +8,7 @@
 #include <Algebra/Integration/IntegrationUtilities.hpp>
 #include <Algebra/Isolation/IsolationOfOneVariableOnEqualityEquation.hpp>
 #include <Algebra/KnownExpressionsAndEquations/TrigonometricEquations.hpp>
+#include <Algebra/Retrieval/SingleVariableNameRetriever.hpp>
 #include <Algebra/Retrieval/SubTermsRetriever.hpp>
 #include <Algebra/Retrieval/VariableNamesRetriever.hpp>
 #include <Algebra/Substitution/SubstitutionOfTermsToTerms.hpp>
@@ -88,7 +89,7 @@ Term Integration::integrateAtDefiniteTerms(Term const& term, Term const& lowerEn
 }
 
 Monomial Integration::integrateConstant(Constant const& constant) {
-    return Monomial(constant.getNumberConstReference(), {{getCurrentVariableToIntegrate(), 1}});
+    return Monomial(constant.getNumber(), {{getCurrentVariableToIntegrate(), 1}});
 }
 
 Monomial Integration::integrateVariable(Variable const& variable) {
@@ -116,7 +117,7 @@ Term Integration::integrateMonomial(Monomial const& monomial) {
 
 Term Integration::integratePolynomial(Polynomial const& polynomial) {
     Term result;
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         result = result + integrateMonomial(monomial);
     }
     result.simplify();
@@ -138,17 +139,17 @@ Term Integration::integrateFunction(Function const& functionObject) {
 Term Integration::integrateIntenally(Term const& term) {
     Term result;
     if (term.isConstant()) {
-        result = integrate(term.getConstantConstReference());
+        result = integrate(term.getAsConstant());
     } else if (term.isVariable()) {
-        result = integrate(term.getVariableConstReference());
+        result = integrate(term.getAsVariable());
     } else if (term.isMonomial()) {
-        result = integrate(term.getMonomialConstReference());
+        result = integrate(term.getAsMonomial());
     } else if (term.isPolynomial()) {
-        result = integrate(term.getPolynomialConstReference());
+        result = integrate(term.getAsPolynomial());
     } else if (term.isExpression()) {
-        result = integrate(term.getExpressionConstReference());
+        result = integrate(term.getAsExpression());
     } else if (term.isFunction()) {
-        result = integrate(term.getFunctionConstReference());
+        result = integrate(term.getAsFunction());
     }
     return result;
 }
@@ -178,7 +179,7 @@ Term Integration::integrateMonomialWhenExponentIsNegativeOne(Monomial const& mon
 Monomial Integration::integrateMonomialWhenExponentIsNotNegativeOne(Monomial const& monomial) const {
     Monomial result(monomial);
     bool hasVariabletoIntegrate(false);
-    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMapConstReference()) {
+    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMap()) {
         string const& variableName(variableExponentPair.first);
         AlbaNumber const& exponent(variableExponentPair.second);
         if (isVariableToIntegrate(variableName)) {
@@ -201,7 +202,7 @@ Term Integration::integrateAsTermOrExpressionIfNeeded(Expression const& expressi
         Term simplifiedTerm(expression);
         simplifyForIntegration(simplifiedTerm, configuration);
         if (simplifiedTerm.isExpression()) {
-            integrateSimplifiedExpressionOnly(result, simplifiedTerm.getExpressionConstReference(), configuration);
+            integrateSimplifiedExpressionOnly(result, simplifiedTerm.getAsExpression(), configuration);
         } else {
             result = integrateInternallyWithPurpose(simplifiedTerm, IntegrationPurpose::NoChange);
         }
@@ -294,7 +295,7 @@ Term Integration::integrateFunctionInternally(Function const& functionObject) {
 }
 
 void Integration::integrateFunctionOnly(Term& result, Function const& functionObject) const {
-    Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+    Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
     if (wouldDifferentiationYieldToAConstant(inputTerm)) {
         string const& functionName(functionObject.getFunctionName());
         if ("abs" == functionName) {
@@ -321,8 +322,8 @@ void Integration::integrateFunctionOnly(Term& result, Function const& functionOb
 }
 
 void Integration::integrateRecognizedFunctionsSquared(Term& result, Term const& functionTerm) const {
-    Function const& functionObject(functionTerm.getFunctionConstReference());
-    Term const& inputOfFunctionTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+    Function const& functionObject(functionTerm.getAsFunction());
+    Term const& inputOfFunctionTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
     if (wouldDifferentiationYieldToAConstant(inputOfFunctionTerm)) {
         string const& functionName(functionObject.getFunctionName());
         if (functionName == "sec") {
@@ -391,10 +392,9 @@ void Integration::integrateChangingTermRaiseToNonChangingTerm(Term& result, Term
             integrateRecognizedFunctionsSquared(result, base);
         }
         if (result.isEmpty() && base.isFunction() && exponent.isConstant()) {
-            Function const& functionObject(base.getFunctionConstReference());
-            Term const& functionInputTerm(
-                getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
-            AlbaNumber const& exponentValue(exponent.getConstantValueConstReference());
+            Function const& functionObject(base.getAsFunction());
+            Term const& functionInputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
+            AlbaNumber const& exponentValue(exponent.getAsNumber());
             string const& functionName(functionObject.getFunctionName());
             bool isExponentGreaterThan1 = exponentValue.isIntegerType() && exponentValue > 1;
             if (functionName == "sin" && isExponentGreaterThan1) {
@@ -542,11 +542,11 @@ void Integration::integrateUsingTrigonometricSubstitutionByFindingTwoTerms(
     if (termToSubstitute.isExpression()) {
         retrieveImportantTermsForTrigonometricSubstitutionInExpression(
             shouldProceedToTrigSub, commonFactor, firstAndSecondTerm, firstTerm, secondTerm,
-            termToSubstitute.getExpressionConstReference());
+            termToSubstitute.getAsExpression());
     } else if (termToSubstitute.isPolynomial()) {
         retrieveImportantTermsForTrigonometricSubstitutionInPolynomial(
             shouldProceedToTrigSub, commonFactor, firstAndSecondTerm, firstTerm, secondTerm,
-            termToSubstitute.getPolynomialConstReference());
+            termToSubstitute.getAsPolynomial());
     }
     if (shouldProceedToTrigSub) {
         shouldProceedToTrigSub = false;
@@ -620,7 +620,7 @@ void Integration::retrieveImportantTermsForTrigonometricSubstitutionInPolynomial
     if (factorizedPolynomials.size() == 1) {
         commonFactor = 1;
         Polynomial const& onlyPolynomial(factorizedPolynomials[0]);
-        Monomials const& onlyMonomials(factorizedPolynomials[0].getMonomialsConstReference());
+        Monomials const& onlyMonomials(factorizedPolynomials[0].getMonomials());
         if (2 == onlyMonomials.size()) {
             commonFactor = 1;
             firstAndSecondTerm = onlyPolynomial;
@@ -631,8 +631,8 @@ void Integration::retrieveImportantTermsForTrigonometricSubstitutionInPolynomial
     } else if (factorizedPolynomials.size() == 2) {
         Polynomial const& firstPolynomial(factorizedPolynomials[0]);
         Polynomial const& secondPolynomial(factorizedPolynomials[1]);
-        Monomials const& firstMonomials(firstPolynomial.getMonomialsConstReference());
-        Monomials const& secondMonomials(secondPolynomial.getMonomialsConstReference());
+        Monomials const& firstMonomials(firstPolynomial.getMonomials());
+        Monomials const& secondMonomials(secondPolynomial.getMonomials());
         if (1 == firstMonomials.size() || 2 == secondMonomials.size()) {
             commonFactor = firstMonomials[0];
             firstAndSecondTerm = secondPolynomial;
@@ -746,8 +746,8 @@ void Integration::integrateInMultiplicationOrDivisionByTryingReverseChainRule(
         TermsWithDetails termsInFirstTerms(termsWithDetailsInMultiplicationOrDivision);
         termsInFirstTerms.erase(termsInFirstTerms.cbegin() + i);
         Term firstTerm(createTermWithMultiplicationAndDivisionTermsWithDetails(termsInFirstTerms));
-        Term secondTerm(createTermWithMultiplicationAndDivisionTermsWithDetails(
-            {termsWithDetailsInMultiplicationOrDivision[i]}));
+        Term secondTerm(
+            createTermWithMultiplicationAndDivisionTermsWithDetails({termsWithDetailsInMultiplicationOrDivision[i]}));
         Term innerTermInFirstTerm;
         firstTerm.simplify();
         secondTerm.simplify();
@@ -777,10 +777,9 @@ void Integration::integrateUsingReverseChainRule(
 
 void Integration::findInnerAndOuterTermForChainRule(Term& innerTerm, Term& outerTerm) const {
     if (outerTerm.isFunction()) {
-        innerTerm =
-            getTermConstReferenceFromBaseTerm(outerTerm.getFunctionConstReference().getInputTermConstReference());
+        innerTerm = getTermConstReferenceFromBaseTerm(outerTerm.getAsFunction().getInputTerm());
     } else if (outerTerm.isExpression()) {
-        Expression const& expression(outerTerm.getExpressionConstReference());
+        Expression const& expression(outerTerm.getAsExpression());
         if (OperatorLevel::RaiseToPower == expression.getCommonOperatorLevel()) {
             TermRaiseToTerms termRaiseToTerms(expression.getTermsWithAssociation().getTermsWithDetails());
             Term const& base(termRaiseToTerms.getBase());
@@ -810,18 +809,15 @@ Term Integration::divideFirstTermAndDerivativeOfSecondTerm(Term const& firstTerm
 
 void Integration::integrateAsPolynomialOverPolynomialIfPossible(
     Term& result, Term const& term, bool const canProceedToPartialPolynomialFractions) {
-    VariableNamesRetriever retriever;
-    retriever.retrieveFromTerm(term);
-
-    VariableNamesSet const& variableNames(retriever.getSavedData());
-    if (variableNames.size() == 1) {
+    string singleVariableName(getSingleVariableNameIfItExistsAsTheOnlyOneOtherwiseItsEmpty(term));
+    if (!singleVariableName.empty()) {
         Term simplifiedTerm(term);
         simplifiedTerm.clearAllInnerSimplifiedFlags();
         simplifiedTerm.simplify();
         PolynomialOverPolynomialOptional popOptional(createPolynomialOverPolynomialFromTermIfPossible(simplifiedTerm));
         if (popOptional) {
             integrateAsPolynomialOverPolynomial(
-                result, popOptional.value(), *(variableNames.begin()), canProceedToPartialPolynomialFractions);
+                result, popOptional.value(), singleVariableName, canProceedToPartialPolynomialFractions);
         }
     }
 }
@@ -939,7 +935,7 @@ VariableNamesSet Integration::getNamesOfNewVariablesForPartialFraction(
     string const& originalVariableName, Polynomial const& numeratorWithNewVariables) const {
     VariableNamesRetriever namesRetriever;
     namesRetriever.retrieveFromPolynomial(numeratorWithNewVariables);
-    VariableNamesSet newVariableNames(namesRetriever.getSavedData());
+    VariableNamesSet newVariableNames(namesRetriever.getVariableNames());
     VariableNamesSet::iterator itToRemove = newVariableNames.find(originalVariableName);
     if (itToRemove != newVariableNames.end()) {
         newVariableNames.erase(itToRemove);
@@ -950,7 +946,7 @@ VariableNamesSet Integration::getNamesOfNewVariablesForPartialFraction(
 AlbaNumbersSet Integration::getExponentsForPartialFraction(
     string const& originalVariableName, Polynomial const& numeratorWithNewVariables) const {
     AlbaNumbersSet exponents;
-    for (Monomial const& monomialWithNewVariable : numeratorWithNewVariables.getMonomialsConstReference()) {
+    for (Monomial const& monomialWithNewVariable : numeratorWithNewVariables.getMonomials()) {
         exponents.emplace(monomialWithNewVariable.getExponentForVariable(originalVariableName));
     }
     return exponents;
@@ -969,11 +965,11 @@ void Integration::fillInMatrixForPartialFractions(
 void Integration::fillInMatrixForPartialFractionsWithVariableValues(
     NumberMatrix& matrixWithNewVariables, string const& originalVariableName, VariableNamesSet const& newVariableNames,
     AlbaNumbersSet const& exponents, Polynomial const& numeratorWithNewVariables) const {
-    for (Monomial const& monomialWithNewVariable : numeratorWithNewVariables.getMonomialsConstReference()) {
+    for (Monomial const& monomialWithNewVariable : numeratorWithNewVariables.getMonomials()) {
         bool isVariablePositionFound;
         int exponentPosition(0);
         int variablePosition(0);
-        for (auto const& variableExponentPair : monomialWithNewVariable.getVariablesToExponentsMapConstReference()) {
+        for (auto const& variableExponentPair : monomialWithNewVariable.getVariablesToExponentsMap()) {
             string const& variableName(variableExponentPair.first);
             AlbaNumber const& exponent(variableExponentPair.second);
             if (variableName == originalVariableName) {
@@ -991,7 +987,7 @@ void Integration::fillInMatrixForPartialFractionsWithVariableValues(
         }
         if (isVariablePositionFound) {
             matrixWithNewVariables.setEntry(
-                variablePosition, exponentPosition, monomialWithNewVariable.getConstantConstReference());
+                variablePosition, exponentPosition, monomialWithNewVariable.getCoefficient());
         }
     }
 }
@@ -999,9 +995,9 @@ void Integration::fillInMatrixForPartialFractionsWithVariableValues(
 void Integration::fillInMatrixForPartialFractionsWithOutputValues(
     NumberMatrix& matrixWithNewVariables, string const& originalVariableName, VariableNamesSet const& newVariableNames,
     AlbaNumbersSet const& exponents, Polynomial const& originalNumerator) const {
-    for (Monomial const& numeratorMonomial : originalNumerator.getMonomialsConstReference()) {
+    for (Monomial const& numeratorMonomial : originalNumerator.getMonomials()) {
         int exponentPosition(0);
-        for (auto const& variableExponentPair : numeratorMonomial.getVariablesToExponentsMapConstReference()) {
+        for (auto const& variableExponentPair : numeratorMonomial.getVariablesToExponentsMap()) {
             string const& variableName(variableExponentPair.first);
             AlbaNumber const& exponent(variableExponentPair.second);
             if (variableName == originalVariableName) {
@@ -1011,8 +1007,7 @@ void Integration::fillInMatrixForPartialFractionsWithOutputValues(
                 }
             }
         }
-        matrixWithNewVariables.setEntry(
-            newVariableNames.size(), exponentPosition, numeratorMonomial.getConstantConstReference());
+        matrixWithNewVariables.setEntry(newVariableNames.size(), exponentPosition, numeratorMonomial.getCoefficient());
     }
 }
 
@@ -1067,8 +1062,7 @@ void Integration::integrateByTryingIntegrationByParts(Term& result, Term const& 
 }
 
 void Integration::integrateUsingIntegrationByPartsByOneTermAndOne(Term& result, Term const& term) {
-    bool isAnInverseTrigonometricFunction =
-        term.isFunction() && isInverseTrigonometricFunction(term.getFunctionConstReference());
+    bool isAnInverseTrigonometricFunction = term.isFunction() && isInverseTrigonometricFunction(term.getAsFunction());
     if (isAnInverseTrigonometricFunction) {
         integrateUsingIntegrationByPartsAndCheckingPreviousValues(result, term, term, 1);
     }
@@ -1076,7 +1070,7 @@ void Integration::integrateUsingIntegrationByPartsByOneTermAndOne(Term& result, 
 
 void Integration::integrateUsingIntegrationByPartsByTryingTwoTerms(Term& result, Term const& term) {
     if (term.isExpression()) {
-        Expression const& expression(term.getExpressionConstReference());
+        Expression const& expression(term.getAsExpression());
         if (OperatorLevel::MultiplicationAndDivision == expression.getCommonOperatorLevel()) {
             TermsWithDetails const& termsWithDetailsInMultiplicationAndDivision(
                 expression.getTermsWithAssociation().getTermsWithDetails());
@@ -1150,11 +1144,10 @@ void Integration::integrateUsingPreviousIntegrationByPartsTerms(
                 currentTermToIntegrate = integrationByPartsTerms.uTimesDvToIntegrate;
                 accumulatedUTimesV = integrationByPartsTerms.uTimesV - (quotient * accumulatedUTimesV);
                 if (isFirstRelationshipFound) {
-                    accumulatedCoefficient = quotient.getConstantValueConstReference();
+                    accumulatedCoefficient = quotient.getAsNumber();
                     isFirstRelationshipFound = false;
                 } else {
-                    accumulatedCoefficient =
-                        AlbaNumber(-1) * quotient.getConstantValueConstReference() * accumulatedCoefficient;
+                    accumulatedCoefficient = AlbaNumber(-1) * quotient.getAsNumber() * accumulatedCoefficient;
                 }
                 isChanged = true;
                 didAccumulationUpdated = true;
@@ -1201,9 +1194,9 @@ void Integration::retrieveInputTermsAndTrigonometricExponents(
     for (auto const& termExponentPair : termsWithExponentsToCheck.getBaseToExponentMap()) {
         Term const& base(termExponentPair.first);
         AlbaNumber const& exponent(termExponentPair.second);
-        if (base.isFunction() && isTrigonometricFunction(base.getFunctionConstReference())) {
-            Function const& functionObject(base.getFunctionConstReference());
-            Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTermConstReference()));
+        if (base.isFunction() && isTrigonometricFunction(base.getAsFunction())) {
+            Function const& functionObject(base.getAsFunction());
+            Term const& inputTerm(getTermConstReferenceFromBaseTerm(functionObject.getInputTerm()));
             string const& functionName(functionObject.getFunctionName());
             if ("sin" == functionName) {
                 trigFunctionsInputTermToExponents[inputTerm].sinExponent += exponent;
@@ -1624,7 +1617,7 @@ bool Integration::isVariableToIntegrate(string const& variableName) const {
 bool Integration::isChangingTerm(Term const& term) const {
     VariableNamesRetriever retriever;
     retriever.retrieveFromTerm(term);
-    VariableNamesSet const& variableNames(retriever.getSavedData());
+    VariableNamesSet const& variableNames(retriever.getVariableNames());
     return any_of(variableNames.cbegin(), variableNames.cend(), [&](string const& variableName) {
         return isVariableToIntegrate(variableName);
     });
@@ -1634,9 +1627,9 @@ bool Integration::hasNonChangingTermRaiseToChangingTerm(Term const& term) const 
     SubTermsRetriever retriever;
     retriever.retrieveFromTerm(term);
     bool result(false);
-    for (Term const& retrievedTerm : retriever.getSavedData()) {
+    for (Term const& retrievedTerm : retriever.getSubTerms()) {
         if (retrievedTerm.isExpression()) {
-            Expression const& expression(retrievedTerm.getExpressionConstReference());
+            Expression const& expression(retrievedTerm.getAsExpression());
             if (OperatorLevel::RaiseToPower == expression.getCommonOperatorLevel()) {
                 TermRaiseToTerms termRaiseToTerms(expression.getTermsWithAssociation().getTermsWithDetails());
                 result = !isChangingTerm(termRaiseToTerms.getBase()) &&
@@ -1650,12 +1643,12 @@ bool Integration::hasNonChangingTermRaiseToChangingTerm(Term const& term) const 
 
 bool Integration::wouldDifferentiationYieldToAConstant(Term const& term) const {
     bool result(false);
-    if (term.isVariable() && isVariableToIntegrate(term.getVariableConstReference().getVariableName())) {
+    if (term.isVariable() && isVariableToIntegrate(term.getAsVariable().getVariableName())) {
         result = true;
     } else if (term.isMonomial()) {
-        result = term.getMonomialConstReference().getExponentForVariable(getCurrentVariableToIntegrate()) == 1;
+        result = term.getAsMonomial().getExponentForVariable(getCurrentVariableToIntegrate()) == 1;
     } else if (term.isPolynomial()) {
-        result = getDegreeForVariable(term.getPolynomialConstReference(), getCurrentVariableToIntegrate()) == 1;
+        result = getDegreeForVariable(term.getAsPolynomial(), getCurrentVariableToIntegrate()) == 1;
     }
     return result;
 }

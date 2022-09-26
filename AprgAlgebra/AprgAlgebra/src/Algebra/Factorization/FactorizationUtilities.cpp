@@ -22,7 +22,7 @@ namespace Factorization {
 
 bool areExponentsDivisible(Monomial const& monomial, int const divisor) {
     bool result(true);
-    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMapConstReference()) {
+    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMap()) {
         if (!variableExponentPair.second.isIntegerType() ||
             !isDivisible<long long int>(getAbsoluteValue(variableExponentPair.second.getInteger()), divisor)) {
             result = false;
@@ -37,7 +37,7 @@ bool isPerfectSquare(Monomial const& monomial) { return isPerfectNthPower(monomi
 bool isPerfectCube(Monomial const& monomial) { return isPerfectNthPower(monomial, 3); }
 
 bool isPerfectNthPower(Monomial const& monomial, int const nthPower) {
-    AlbaNumber constant(monomial.getConstantConstReference());
+    AlbaNumber constant(monomial.getCoefficient());
     bool result(false);
     if (constant.isIntegerType() && mathHelper::isPerfectNthPower(constant, nthPower)) {
         result = areExponentsDivisible(monomial, nthPower);
@@ -46,7 +46,7 @@ bool isPerfectNthPower(Monomial const& monomial, int const nthPower) {
 }
 
 bool doesNotNeedToBeFactorized(Polynomial const& polynomial) {
-    Monomials const& monomials(polynomial.getMonomialsConstReference());
+    Monomials const& monomials(polynomial.getMonomials());
     bool result(false);
     if (hasNonRealFiniteNumbers(polynomial)) {
         result = true;
@@ -56,11 +56,11 @@ bool doesNotNeedToBeFactorized(Polynomial const& polynomial) {
         Monomial const& first(monomials[0]);
         Monomial const& second(monomials[1]);
         bool areBothConstantIntegers =
-            first.getConstantConstReference().isIntegerType() && second.getConstantConstReference().isIntegerType();
-        bool areEitherConstantOne = first.getConstantConstReference() == 1 || second.getConstantConstReference() == 1;
+            first.getCoefficient().isIntegerType() && second.getCoefficient().isIntegerType();
+        bool areEitherConstantOne = first.getCoefficient() == 1 || second.getCoefficient() == 1;
         ExponentsRetriever retriever;
         retriever.retrieveFromPolynomial(polynomial);
-        AlbaNumbersSet const& exponents(retriever.getSavedData());
+        AlbaNumbersSet const& exponents(retriever.getExponents());
         bool areAllExponentsOneOrZero = all_of(exponents.cbegin(), exponents.cend(), [](AlbaNumber const& exponent) {
             return exponent == 0 || exponent == 1;
         });

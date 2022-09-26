@@ -102,7 +102,7 @@ void retrieveConstantAndNonConstantFactors(
         TermsRaiseToNumbers nonConstantRaiseToExponent;
         for (Term const& factor : factors) {
             if (factor.isConstant()) {
-                constantFactor *= factor.getConstantValueConstReference();
+                constantFactor *= factor.getAsNumber();
             } else {
                 nonConstantRaiseToExponent.putTerm(factor, TermAssociationType::Positive);
             }
@@ -215,7 +215,7 @@ TermsRaiseToNumbers getFactorizedItemsBasedFromCollectedData(
 bool dontFactorizeBaseBecauseBaseIsARaiseToPowerExpression(Term const& base) {
     bool result(false);
     if (base.isExpression()) {
-        result = OperatorLevel::RaiseToPower == base.getExpressionConstReference().getCommonOperatorLevel();
+        result = OperatorLevel::RaiseToPower == base.getAsExpression().getCommonOperatorLevel();
     }
     return result;
 }

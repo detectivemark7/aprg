@@ -16,24 +16,20 @@ bool canBeMergedInAMonomialByAdditionOrSubtraction(Term const& term1, Term const
     if (term1.isConstant() && term2.isConstant()) {
         result = true;
     } else if (term1.isVariable() && term2.isVariable()) {
-        result = canBeMergedInAMonomialByAdditionOrSubtraction(
-            term1.getVariableConstReference(), term2.getVariableConstReference());
+        result = canBeMergedInAMonomialByAdditionOrSubtraction(term1.getAsVariable(), term2.getAsVariable());
     } else if (term1.isMonomial() && term2.isMonomial()) {
-        result = canBeMergedInAMonomialByAdditionOrSubtraction(
-            term1.getMonomialConstReference(), term2.getMonomialConstReference());
+        result = canBeMergedInAMonomialByAdditionOrSubtraction(term1.getAsMonomial(), term2.getAsMonomial());
     } else if (term1.isMonomial() && term2.isVariable()) {
-        result = canBeMergedInAMonomialByAdditionOrSubtraction(
-            term1.getMonomialConstReference(), term2.getVariableConstReference());
+        result = canBeMergedInAMonomialByAdditionOrSubtraction(term1.getAsMonomial(), term2.getAsVariable());
     } else if (term1.isVariable() && term2.isMonomial()) {
-        result = canBeMergedInAMonomialByAdditionOrSubtraction(
-            term2.getMonomialConstReference(), term1.getVariableConstReference());
+        result = canBeMergedInAMonomialByAdditionOrSubtraction(term2.getAsMonomial(), term1.getAsVariable());
     }
     return result;
 }
 
 bool canBeMergedInAMonomialByAdditionOrSubtraction(Monomial const& monomial1, Monomial const& monomial2) {
-    Monomial::VariablesToExponentsMap const& variablesMap1(monomial1.getVariablesToExponentsMapConstReference());
-    Monomial::VariablesToExponentsMap const& variablesMap2(monomial2.getVariablesToExponentsMapConstReference());
+    Monomial::VariablesToExponentsMap const& variablesMap1(monomial1.getVariablesToExponentsMap());
+    Monomial::VariablesToExponentsMap const& variablesMap2(monomial2.getVariablesToExponentsMap());
     bool result(false);
     if (variablesMap1.size() == variablesMap2.size()) {
         using MapConstIterator = Monomial::VariablesToExponentsMap::const_iterator;
@@ -46,7 +42,7 @@ bool canBeMergedInAMonomialByAdditionOrSubtraction(Monomial const& monomial1, Mo
 }
 
 bool canBeMergedInAMonomialByAdditionOrSubtraction(Monomial const& monomial, Variable const& variable) {
-    Monomial::VariablesToExponentsMap const& variablesMap(monomial.getVariablesToExponentsMapConstReference());
+    Monomial::VariablesToExponentsMap const& variablesMap(monomial.getVariablesToExponentsMap());
     string variableName(variable.getVariableName());
     bool result(false);
     if (variablesMap.size() == 1) {
@@ -62,12 +58,12 @@ bool canBeMergedInAMonomialByAdditionOrSubtraction(Variable const& variable1, Va
 }
 
 bool doesCoefficientsHaveSameSign(Monomial const& monomial1, Monomial const& monomial2) {
-    return getSign(monomial1.getConstantConstReference()) == getSign(monomial2.getConstantConstReference());
+    return getSign(monomial1.getCoefficient()) == getSign(monomial2.getCoefficient());
 }
 
 bool hasNegativeExponents(Monomial const& monomial) {
     bool result(false);
-    for (auto const& variableExponentsPair : monomial.getVariablesToExponentsMapConstReference()) {
+    for (auto const& variableExponentsPair : monomial.getVariablesToExponentsMap()) {
         if (variableExponentsPair.second < 0) {
             result = true;
             break;
@@ -77,23 +73,23 @@ bool hasNegativeExponents(Monomial const& monomial) {
 }
 
 bool isConstantOnly(Monomial const& monomial) {
-    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMapConstReference());
+    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
     return variableToExponentMap.empty();
 }
 
 bool isVariableOnly(Monomial const& monomial) {
-    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMapConstReference());
-    return monomial.getConstantConstReference() == 1 && variableToExponentMap.size() == 1 &&
+    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
+    return monomial.getCoefficient() == 1 && variableToExponentMap.size() == 1 &&
            (variableToExponentMap.cbegin())->second == 1;
 }
 
 bool hasASingleVariable(Monomial const& monomial) {
-    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMapConstReference());
+    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
     return variableToExponentMap.size() == 1;
 }
 
 string getFirstVariableName(Monomial const& monomial) {
-    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMapConstReference());
+    Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
     string variableName;
     if (!variableToExponentMap.empty()) {
         variableName = (variableToExponentMap.cbegin())->first;
@@ -103,7 +99,7 @@ string getFirstVariableName(Monomial const& monomial) {
 
 AlbaNumber getDegree(Monomial const& monomial) {
     AlbaNumber degree;
-    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMapConstReference()) {
+    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMap()) {
         degree = degree + variableExponentPair.second;
     }
     return degree;
@@ -111,7 +107,7 @@ AlbaNumber getDegree(Monomial const& monomial) {
 
 AlbaNumber getMaxExponent(Monomial const& monomial) {
     AlbaNumber maxExponent;
-    auto const& variablesToExponentsMap(monomial.getVariablesToExponentsMapConstReference());
+    auto const& variablesToExponentsMap(monomial.getVariablesToExponentsMap());
     if (!variablesToExponentsMap.empty()) {
         auto it = variablesToExponentsMap.cbegin();
         maxExponent = it->second;
@@ -126,7 +122,7 @@ AlbaNumber getMaxExponent(Monomial const& monomial) {
 AlbaNumber getGcfOfExponentsInMonomial(Monomial const& monomial) {
     AlbaNumber commonExponent(1);
     bool isFirst(true);
-    for (auto const& variablePair : monomial.getVariablesToExponentsMapConstReference()) {
+    for (auto const& variablePair : monomial.getVariablesToExponentsMap()) {
         AlbaNumber const& exponent(variablePair.second);
         if (exponent.isIntegerOrFractionType()) {
             if (isFirst) {
@@ -144,7 +140,7 @@ AlbaNumber getGcfOfCoefficientsInMonomials(Monomials const& monomials) {
     AlbaNumber commonCoefficient(1);
     bool isFirst(true);
     for (Monomial const& monomial : monomials) {
-        AlbaNumber const& coefficient(monomial.getConstantConstReference());
+        AlbaNumber const& coefficient(monomial.getCoefficient());
         if (coefficient.isIntegerOrFractionType()) {
             if (isFirst) {
                 commonCoefficient = coefficient;
@@ -161,7 +157,7 @@ AlbaNumber getLcmOfCoefficientsInMonomials(Monomials const& monomials) {
     AlbaNumber commonCoefficient(1);
     bool isFirst(true);
     for (Monomial const& monomial : monomials) {
-        AlbaNumber const& coefficient(monomial.getConstantConstReference());
+        AlbaNumber const& coefficient(monomial.getCoefficient());
         if (coefficient.isIntegerOrFractionType()) {
             if (isFirst) {
                 commonCoefficient = coefficient;
@@ -179,7 +175,7 @@ AlbaNumber getCommonSignInMonomials(Monomials const& monomials) {
     bool isFirstMonomialNegative(false);
     int negativeSignCount(0);
     for (Monomial const& monomial : monomials) {
-        if (monomial.getConstantConstReference() < AlbaNumber(0)) {
+        if (monomial.getCoefficient() < AlbaNumber(0)) {
             negativeSignCount++;
             if (isFirstMonomial) {
                 isFirstMonomialNegative = true;
@@ -218,7 +214,7 @@ Monomial compareMonomialsAndSaveMinimumExponentsForEachVariable(
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromMonomial(firstMonomial);
     variableNamesRetriever.retrieveFromMonomial(secondMonomial);
-    for (string const& variableName : variableNamesRetriever.getSavedData()) {
+    for (string const& variableName : variableNamesRetriever.getVariableNames()) {
         newVariableExponentMap[variableName] = min(
             firstMonomial.getExponentForVariable(variableName), secondMonomial.getExponentForVariable(variableName));
     }
@@ -231,7 +227,7 @@ Monomial compareMonomialsAndSaveMaximumExponentsForEachVariable(
     VariableNamesRetriever variableNamesRetriever;
     variableNamesRetriever.retrieveFromMonomial(firstMonomial);
     variableNamesRetriever.retrieveFromMonomial(secondMonomial);
-    for (string const& variableName : variableNamesRetriever.getSavedData()) {
+    for (string const& variableName : variableNamesRetriever.getVariableNames()) {
         newVariableExponentMap[variableName] = max(
             firstMonomial.getExponentForVariable(variableName), secondMonomial.getExponentForVariable(variableName));
     }

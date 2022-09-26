@@ -67,7 +67,7 @@ void IsolationOfOneVariableOnEqualityEquation::isolateTermWithVariable(
         Polynomial polynomial(createPolynomialIfPossible(m_simplifiedLeftSideTerm));
         isolateTermWithVariable(variableName, polynomial, termWithVariable, termWithWithoutVariable);
     } else if (m_simplifiedLeftSideTerm.isExpression()) {
-        Expression const& expression(m_simplifiedLeftSideTerm.getExpressionConstReference());
+        Expression const& expression(m_simplifiedLeftSideTerm.getAsExpression());
         isolateTermWithVariable(variableName, expression, termWithVariable, termWithWithoutVariable);
     }
 }
@@ -88,7 +88,7 @@ void IsolationOfOneVariableOnEqualityEquation::isolateTermWithVariable(
         Monomials monomialsWithVariable;
         Monomials monomialsWithoutVariable;
         segregateMonomialsWithAndWithoutVariable(
-            polynomial.getMonomialsConstReference(), variableName, monomialsWithVariable, monomialsWithoutVariable);
+            polynomial.getMonomials(), variableName, monomialsWithVariable, monomialsWithoutVariable);
         Polynomial numerator(monomialsWithoutVariable);
         Polynomial denominator(monomialsWithVariable);
         numerator.multiplyNumber(-1);
@@ -142,7 +142,7 @@ bool IsolationOfOneVariableOnEqualityEquation::canBeIsolatedBasedOnExponent(
 AlbaNumber IsolationOfOneVariableOnEqualityEquation::getIdenticalExponentForVariableIfPossible(
     string const& variableName, Polynomial const& polynomial) const {
     AlbaNumber exponent;
-    for (Monomial const& monomial : polynomial.getMonomialsConstReference()) {
+    for (Monomial const& monomial : polynomial.getMonomials()) {
         AlbaNumber currentExponent = monomial.getExponentForVariable(variableName);
         if (currentExponent != 0) {
             if (exponent == 0) {

@@ -20,23 +20,23 @@ namespace algebra {
 
 void SignMutator::mutateTerm(Term& term) {
     if (term.isConstant()) {
-        mutateConstant(term.getConstantReference());
+        mutateConstant(term.getAsConstantReference());
     } else if (term.isVariable()) {
-        term = getTermForMutationOfVariable(term.getVariableConstReference());
+        term = getTermForMutationOfVariable(term.getAsVariable());
     } else if (term.isMonomial()) {
-        mutateMonomial(term.getMonomialReference());
+        mutateMonomial(term.getAsMonomialReference());
     } else if (term.isPolynomial()) {
-        mutatePolynomial(term.getPolynomialReference());
+        mutatePolynomial(term.getAsPolynomialReference());
     } else if (term.isExpression()) {
-        mutateExpression(term.getExpressionReference());
+        mutateExpression(term.getAsExpressionReference());
     } else if (term.isFunction()) {
-        term = getTermForMutationOfFunction(term.getFunctionConstReference());
+        term = getTermForMutationOfFunction(term.getAsFunction());
     }
     term.simplify();
 }
 
 void SignMutator::mutateConstant(Constant& constant) {
-    constant.setNumber(getSign(constant.getNumberConstReference()));
+    constant.setNumber(getSign(constant.getNumber()));
 }
 
 void SignMutator::mutateVariable(Variable&) {}
@@ -44,13 +44,13 @@ void SignMutator::mutateVariable(Variable&) {}
 void SignMutator::mutateMonomial(Monomial& monomial) {
     monomial = m_substitution.performSubstitutionForMonomial(monomial);
     monomial.simplify();
-    monomial.setConstant(getSign(monomial.getConstantConstReference()));
+    monomial.setConstant(getSign(monomial.getCoefficient()));
 }
 
 void SignMutator::mutatePolynomial(Polynomial& polynomial) {
     bool areAllTheValuesOne(true);
     bool areAllTheValuesNegativeOne(true);
-    Monomials mutatedMonomials(polynomial.getMonomialsConstReference());
+    Monomials mutatedMonomials(polynomial.getMonomials());
     for (Monomial& mutatedMonomial : mutatedMonomials) {
         mutateMonomial(mutatedMonomial);
         areAllTheValuesOne = areAllTheValuesOne && isTheValue(mutatedMonomial, 1);
@@ -72,7 +72,7 @@ void SignMutator::mutateExpression(Expression& expression) {
     Term simplifiedTerm(expression);
     simplifyTermToACommonDenominator(simplifiedTerm);
     if (simplifiedTerm.isExpression()) {
-        expression = simplifiedTerm.getExpressionConstReference();
+        expression = simplifiedTerm.getAsExpression();
         if (OperatorLevel::AdditionAndSubtraction == expression.getCommonOperatorLevel()) {
             mutateExpressionWithAdditionAndSubtraction(expression);
         } else if (OperatorLevel::MultiplicationAndDivision == expression.getCommonOperatorLevel()) {
@@ -109,7 +109,7 @@ Term SignMutator::getTermForMutationOfFunction(Function const& functionObject) {
     Term result(functionObject);
     result.simplify();
     if (result.isFunction()) {
-        Function const& simplifiedFunction(result.getFunctionConstReference());
+        Function const& simplifiedFunction(result.getAsFunction());
         string const& simplifiedFunctionName(simplifiedFunction.getFunctionName());
         if ("abs" == simplifiedFunctionName || "cosh" == simplifiedFunctionName || "sech" == simplifiedFunctionName ||
             "arccosh" == simplifiedFunctionName || "arcsech" == simplifiedFunctionName) {
@@ -169,7 +169,7 @@ void SignMutator::mutateExpressionWithRaiseToPower(Expression& expression) {
         Term mutatedExponent(termRaiseToTerms.getCombinedExponents());
         mutatedExponent.simplify();
         if (mutatedExponent.isConstant()) {
-            AlbaNumber const& exponentValue(mutatedExponent.getConstantValueConstReference());
+            AlbaNumber const& exponentValue(mutatedExponent.getAsNumber());
             expression = createOrCopyExpressionFromATerm(AlbaNumber(-1) ^ exponentValue);
         }
     }
