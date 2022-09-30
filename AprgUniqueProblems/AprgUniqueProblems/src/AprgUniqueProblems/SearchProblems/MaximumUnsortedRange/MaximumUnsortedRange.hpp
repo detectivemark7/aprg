@@ -26,10 +26,10 @@ public:
             Index startIndex(getStartIndex(valuesToSort));
             if (startIndex + 1 < static_cast<Index>(valuesToSort.size())) {
                 Index endIndex(getEndIndex(valuesToSort));
-                ValuePair minMaxPair(getMinMaxPairInUnsorted(valuesToSort, startIndex, endIndex));
+                auto [minValue, maxValue] = getMinMaxPairInUnsorted(valuesToSort, startIndex, endIndex);
                 result = {
-                    getAdjustedStartIndex(valuesToSort, startIndex, minMaxPair.first),
-                    getAdjustedEndIndex(valuesToSort, endIndex, minMaxPair.second)};
+                    getAdjustedStartIndex(valuesToSort, startIndex, minValue),
+                    getAdjustedEndIndex(valuesToSort, endIndex, maxValue)};
             }
         }
         return result;
@@ -57,7 +57,7 @@ private:
     }
 
     ValuePair getMinMaxPairInUnsorted(Values const& valuesToSort, Index const startIndex, Index const endIndex) const {
-        auto const& [minIt, maxIt] =
+        auto&& [minIt, maxIt] =
             std::minmax_element(valuesToSort.cbegin() + startIndex, valuesToSort.cbegin() + endIndex + 1);
         return ValuePair(*minIt, *maxIt);
     }
@@ -74,7 +74,7 @@ private:
         Index adjustedEndIndex(endIndex);
         while (adjustedEndIndex + 1 < static_cast<Index>(valuesToSort.size()) &&
                valuesToSort[adjustedEndIndex + 1] < maximum) {
-            adjustedEndIndex++;
+            ++adjustedEndIndex;
         }
         return adjustedEndIndex;
     }
