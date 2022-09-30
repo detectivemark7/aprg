@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Common/Bit/AlbaBitManipulation.hpp>
+#include <Common/Time/AlbaDateTimeConstants.hpp>
 
 #include <cstdint>
 #include <ostream>
@@ -29,6 +30,7 @@ public:
     uint32_t getMonths() const;
     uint32_t getDays() const;
     uint32_t getTotalDays() const;
+    AlbaDateTimeConstants::DayOfTheWeek getDayOfTheWeek() const;
 
     void clear();
     void setTime(uint32_t const totalDays);

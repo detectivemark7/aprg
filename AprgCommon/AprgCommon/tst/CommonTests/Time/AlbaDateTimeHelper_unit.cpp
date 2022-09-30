@@ -248,6 +248,11 @@ TEST(AlbaDateTimeHelperTest, GetTotalSecondsWorks) {
     EXPECT_EQ(86399U, getTotalSeconds(23, 59, 59));
 }
 
+TEST(AlbaDateTimeHelperTest, GetDayOfTheWeekWorks) {
+    EXPECT_EQ(AlbaDateTimeConstants::THURSDAY, getDayOfTheWeek(2016, 11, 31));
+    EXPECT_EQ(AlbaDateTimeConstants::MONDAY, getDayOfTheWeek(2010, 8, 30));
+}
+
 TEST(AlbaDateTimeHelperTest, GetAndRemoveYearsFromNumberOfDaysWorks) {
     uint32_t totalDays = 0;
     EXPECT_EQ(0U, getAndRemoveYearsFromNumberOfDays(totalDays));

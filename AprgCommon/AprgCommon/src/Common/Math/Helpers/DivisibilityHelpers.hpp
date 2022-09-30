@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Common/Bit/AlbaBitValueUtilities.hpp>
+#include <Common/Math/Helpers/SignRelatedHelpers.hpp>
 #include <Common/Types/AlbaTypeHelper.hpp>
 
 namespace alba::mathHelper {
@@ -23,6 +25,20 @@ inline bool isOdd(NumberType const number) {
     static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
 
     return static_cast<bool>(number % 2);
+}
+
+template <typename NumberType>
+inline bool isDivisibleByThree(NumberType const number) {
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+
+    return AlbaBitValueUtilities<NumberType>::isMultipleOfThree(number);
+}
+
+template <typename NumberType>
+inline bool isDivisibleByNine(NumberType const number) {
+    static_assert(typeHelper::isIntegralType<NumberType>(), "Number type must be an integer");
+
+    return AlbaBitValueUtilities<NumberType>::isMultipleOfNine(number);
 }
 
 }  // namespace alba::mathHelper

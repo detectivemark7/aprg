@@ -44,16 +44,16 @@ void adjustLowerAndUpperIterators(
 template <typename ValueType, typename ContainerType>
 std::pair<typename ContainerType::const_iterator, typename ContainerType::const_iterator>
 getLowerAndUpperConstIteratorsForNonSet(ContainerType const& sortedContainer, ValueType const& value) {
-    auto lowerAndUpperItPair(std::equal_range(sortedContainer.cbegin(), sortedContainer.cend(), value));
-    adjustLowerAndUpperIterators(sortedContainer, value, lowerAndUpperItPair.first, lowerAndUpperItPair.second);
-    return lowerAndUpperItPair;
+    auto&& [lowerIt, upperIt] = std::equal_range(sortedContainer.cbegin(), sortedContainer.cend(), value);
+    adjustLowerAndUpperIterators(sortedContainer, value, lowerIt, upperIt);
+    return std::make_pair(lowerIt, upperIt);
 }
 
 template <typename ValueType, typename ContainerType>
 std::pair<ValueType, ValueType> getLowerAndUpperValuesForNonSet(
     ContainerType const& sortedContainer, ValueType const& value) {
-    auto lowerAndUpperIteratorPair(getLowerAndUpperConstIteratorsForNonSet(sortedContainer, value));
-    return std::pair<ValueType, ValueType>{*(lowerAndUpperIteratorPair.first), *(lowerAndUpperIteratorPair.second)};
+    auto&& [lowerIt, upperIt] = getLowerAndUpperConstIteratorsForNonSet(sortedContainer, value);
+    return std::make_pair(*lowerIt, *upperIt);
 }
 
 template <typename ValueType, typename ContainerType>
@@ -86,16 +86,16 @@ ContainerType getItemsInBetweenForNonSet(
 template <typename ValueType, typename ContainerType>
 std::pair<typename ContainerType::const_iterator, typename ContainerType::const_iterator>
 getLowerAndUpperConstIteratorsForSet(ContainerType const& setContainer, ValueType const& value) {
-    auto lowerAndUpperItPair(setContainer.equal_range(value));
-    adjustLowerAndUpperIterators(setContainer, value, lowerAndUpperItPair.first, lowerAndUpperItPair.second);
-    return lowerAndUpperItPair;
+    auto&& [lowerIt, upperIt] = setContainer.equal_range(value);
+    adjustLowerAndUpperIterators(setContainer, value, lowerIt, upperIt);
+    return std::make_pair(lowerIt, upperIt);
 }
 
 template <typename ValueType, typename ContainerType>
 std::pair<ValueType, ValueType> getLowerAndUpperValuesForSet(
     ContainerType const& setContainer, ValueType const& value) {
-    auto lowerAndUpperIteratorPair(getLowerAndUpperConstIteratorsForSet(setContainer, value));
-    return std::pair<ValueType, ValueType>{*(lowerAndUpperIteratorPair.first), *(lowerAndUpperIteratorPair.second)};
+    auto&& [lowerIt, upperIt] = getLowerAndUpperConstIteratorsForSet(setContainer, value);
+    return std::make_pair(*lowerIt, *upperIt);
 }
 
 template <typename ValueType, typename ContainerType>

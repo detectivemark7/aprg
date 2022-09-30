@@ -1,19 +1,20 @@
 #include "AlbaDateTime.hpp"
 
 #include <Common/Bit/AlbaBitManipulation.hpp>
-#include <Common/Time/AlbaDateTimeConstants.hpp>
 #include <Common/Time/AlbaDateTimeHelper.hpp>
 
 #include <iomanip>
 
+using namespace alba::dateTimeHelper;
+using namespace alba::AlbaDateTimeConstants;
 using namespace std;
 
 namespace alba {
 
 AlbaYearMonthDay AlbaYearMonthDay::createFromTotalDays(uint32_t const totalDays) {
     uint32_t remainingDays(totalDays);
-    uint32_t years(dateTimeHelper::getAndRemoveYearsFromNumberOfDays(remainingDays));
-    uint32_t month(dateTimeHelper::getAndRemoveMonthsFromNumberOfDays(remainingDays, years));
+    uint32_t years(getAndRemoveYearsFromNumberOfDays(remainingDays));
+    uint32_t month(getAndRemoveMonthsFromNumberOfDays(remainingDays, years));
     return AlbaYearMonthDay(
         static_cast<uint16_t>(years), static_cast<uint8_t>(month), static_cast<uint8_t>(remainingDays));
 }
@@ -49,12 +50,16 @@ uint32_t AlbaYearMonthDay::getTotalDays() const {
     return dateTimeHelper::getTotalDays(getYears(), getMonths(), getDays());
 }
 
+DayOfTheWeek AlbaYearMonthDay::getDayOfTheWeek() const {
+    return dateTimeHelper::getDayOfTheWeek(getYears(), getMonths(), getDays());
+}
+
 void AlbaYearMonthDay::clear() { m_yearMonthDay = 0; }
 
 void AlbaYearMonthDay::setTime(uint32_t const totalDays) {
     uint32_t remainingDays(totalDays);
-    uint32_t years(dateTimeHelper::getAndRemoveYearsFromNumberOfDays(remainingDays));
-    uint32_t month(dateTimeHelper::getAndRemoveMonthsFromNumberOfDays(remainingDays, years));
+    uint32_t years(getAndRemoveYearsFromNumberOfDays(remainingDays));
+    uint32_t month(getAndRemoveMonthsFromNumberOfDays(remainingDays, years));
     setTime(static_cast<uint16_t>(years), static_cast<uint8_t>(month), static_cast<uint8_t>(remainingDays));
 }
 
@@ -64,8 +69,8 @@ void AlbaYearMonthDay::setTime(uint16_t const years, uint8_t const month, uint8_
 
 AlbaHourMinuteSecond AlbaHourMinuteSecond::createFromTotalSeconds(uint32_t const totalSeconds) {
     uint32_t remainingSeconds(totalSeconds);
-    uint32_t hours(dateTimeHelper::getAndRemoveHoursFromNumberOfSeconds(remainingSeconds));
-    uint32_t minutes(dateTimeHelper::getAndRemoveMinutesFromNumberOfSeconds(remainingSeconds));
+    uint32_t hours(getAndRemoveHoursFromNumberOfSeconds(remainingSeconds));
+    uint32_t minutes(getAndRemoveMinutesFromNumberOfSeconds(remainingSeconds));
     return AlbaHourMinuteSecond(
         static_cast<uint8_t>(hours), static_cast<uint8_t>(minutes), static_cast<uint8_t>(remainingSeconds));
 }
@@ -102,8 +107,8 @@ void AlbaHourMinuteSecond::clear() { m_hourMinuteSecond = 0; }
 
 void AlbaHourMinuteSecond::setTime(uint32_t const totalSeconds) {
     uint32_t remainingSeconds(totalSeconds);
-    uint32_t hours(dateTimeHelper::getAndRemoveHoursFromNumberOfSeconds(remainingSeconds));
-    uint32_t minutes(dateTimeHelper::getAndRemoveMinutesFromNumberOfSeconds(remainingSeconds));
+    uint32_t hours(getAndRemoveHoursFromNumberOfSeconds(remainingSeconds));
+    uint32_t minutes(getAndRemoveMinutesFromNumberOfSeconds(remainingSeconds));
     setTime(static_cast<uint8_t>(hours), static_cast<uint8_t>(minutes), static_cast<uint8_t>(remainingSeconds));
 }
 
@@ -124,7 +129,7 @@ void AlbaDateTime::reorganizeValues() {
     uint32_t totalDays(getYearMonthDay().getTotalDays());
     uint32_t totalSeconds(getHourMinutesSecond().getTotalSeconds());
     uint32_t totalMicroSeconds(getMicroSeconds());
-    dateTimeHelper::reorganizeOverflowValues(totalDays, totalSeconds, totalMicroSeconds);
+    reorganizeOverflowValues(totalDays, totalSeconds, totalMicroSeconds);
     m_yearMonthDay.setTime(totalDays);
     m_hourMinuteSecond.setTime(totalSeconds);
     m_microseconds = totalMicroSeconds;
@@ -263,7 +268,7 @@ AlbaDateTime AlbaDateTime::addDateTimeMagnitude(
         firstDateTime.getHourMinutesSecond().getTotalSeconds() +
         secondDateTime.getHourMinutesSecond().getTotalSeconds());
     uint32_t totalMicroSeconds(firstDateTime.getMicroSeconds() + secondDateTime.getMicroSeconds());
-    dateTimeHelper::reorganizeOverflowValues(totalDays, totalSeconds, totalMicroSeconds);
+    reorganizeOverflowValues(totalDays, totalSeconds, totalMicroSeconds);
     result.m_yearMonthDay.setTime(totalDays);
     result.m_hourMinuteSecond.setTime(totalSeconds);
     result.m_microseconds = totalMicroSeconds;
@@ -282,7 +287,7 @@ AlbaDateTime AlbaDateTime::subtractDateTimeMagnitude(
     int32_t totalMicroSeconds(
         static_cast<int32_t>(firstDateTime.getMicroSeconds()) - static_cast<int32_t>(secondDateTime.getMicroSeconds()));
 
-    dateTimeHelper::reorganizeUnderflowValues(totalDays, totalSeconds, totalMicroSeconds);
+    reorganizeUnderflowValues(totalDays, totalSeconds, totalMicroSeconds);
     result.m_yearMonthDay.setTime(static_cast<uint32_t>(totalDays));
     result.m_hourMinuteSecond.setTime(static_cast<uint32_t>(totalSeconds));
     result.m_microseconds = static_cast<uint32_t>(totalMicroSeconds);
