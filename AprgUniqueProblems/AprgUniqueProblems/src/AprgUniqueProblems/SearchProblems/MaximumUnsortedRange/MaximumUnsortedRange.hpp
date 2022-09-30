@@ -12,10 +12,6 @@ namespace algorithm {
 template <typename Values>
 class MaximumUnsortedRange {
 public:
-    // Find the Minimum length Unsorted Subarray, sorting which makes the complete array sorted
-    // Given an unsorted array arr[0..n-1] of size n,
-    // find the minimum length subarray arr[s..e] such that sorting this subarray makes the whole array sorted.
-
     using Value = typename Values::value_type;
     using Index = int;
     using IndexPair = std::pair<Index, Index>;
@@ -61,9 +57,9 @@ private:
     }
 
     ValuePair getMinMaxPairInUnsorted(Values const& valuesToSort, Index const startIndex, Index const endIndex) const {
-        auto minmaxItPair =
+        auto const& [minIt, maxIt] =
             std::minmax_element(valuesToSort.cbegin() + startIndex, valuesToSort.cbegin() + endIndex + 1);
-        return ValuePair(*(minmaxItPair.first), *(minmaxItPair.second));
+        return ValuePair(*minIt, *maxIt);
     }
 
     Index getAdjustedStartIndex(Values const& valuesToSort, Index const startIndex, Value const& minimum) const {
@@ -87,6 +83,10 @@ private:
 }  // namespace algorithm
 
 }  // namespace alba
+
+// Find the Minimum length Unsorted Subarray, sorting which makes the complete array sorted
+// Given an unsorted array arr[0..n-1] of size n,
+// find the minimum length subarray arr[s..e] such that sorting this subarray makes the whole array sorted.
 
 // Solution:
 // 1) Find the candidate unsorted subarray

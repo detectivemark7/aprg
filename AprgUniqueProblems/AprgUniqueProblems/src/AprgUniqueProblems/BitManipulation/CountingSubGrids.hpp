@@ -7,7 +7,7 @@ namespace alba {
 
 class CountingSubGrids {
 public:
-    // Given an n£n grid whose each square is either black (1) or white (0), calculate the number of subgrids whose all
+    // Given an nxn grid whose each square is either black (1) or white (0), calculate the number of subgrids whose all
     // corners are black.
 
     using BitValue = uint64_t;

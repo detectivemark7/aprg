@@ -1,20 +1,20 @@
-#include "MaximizeProfitInKnapsack.hpp"
+#include "MaximizeProfitInZeroOneKnapsack.hpp"
 
 using namespace std;
 
 namespace alba {
 
-MaximizeProfitInKnapsack::MaximizeProfitInKnapsack(Weight const maximumWeight, Items const items)
+MaximizeProfitInZeroOneKnapsack::MaximizeProfitInZeroOneKnapsack(Weight const maximumWeight, Items const items)
     : m_maximumWeight(maximumWeight), m_items(items) {}
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingNaiveRecursion() const {
+MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingNaiveRecursion() const {
     // Time Complexity: O(2^n)
     // Auxiliary Space: O(1)
 
     return getBestProfitUsingNaiveRecursion(m_maximumWeight, 0);
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingMemoizationDP() const {
+MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingMemoizationDP() const {
     // Time Complexity: O(N*W).
     // -> As redundant calculations of states are avoided.
     // Auxiliary Space: O(N*W).
@@ -28,7 +28,7 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingMem
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIterativeDP() const {
+MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingIterativeDP() const {
     // Time Complexity: O(N*W).
     // -> where ‘N’ is the number of weight element and ‘W’ is capacity. As for every weight element we traverse through
     // all weight capacities 1<=w<=W. Auxiliary Space: O(N*W).
@@ -36,13 +36,12 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIte
 
     Profit result(0);
     if (!m_items.empty()) {
-        ProfitMatrix profitMatrix(m_maximumWeight + 1, m_items.size() + 1, 0);
+        Weight const& maximumWeightInIteration(m_maximumWeight + 1);
+        ProfitMatrix profitMatrix(maximumWeightInIteration, m_items.size() + 1, 0);
         Weight smallestItemWeight(getSmallestItemWeight());
         for (int itemIndex = static_cast<int>(m_items.size()) - 1; itemIndex >= 0; itemIndex--) {
-            Weight itemWeight(m_items[itemIndex].first);
-            Profit itemProfit(m_items[itemIndex].second);
-            for (Weight weight(smallestItemWeight); weight < static_cast<Index>(profitMatrix.getNumberOfColumns());
-                 weight++) {
+            auto const& [itemWeight, itemProfit] = m_items[itemIndex];
+            for (Weight weight(smallestItemWeight); weight < maximumWeightInIteration; weight++) {
                 if (weight >= itemWeight) {
                     Profit profit =
                         max(profitMatrix.getEntry(weight, itemIndex + 1),
@@ -56,7 +55,8 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIte
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIterativeDPAndSpaceEfficient() const {
+MaximizeProfitInZeroOneKnapsack::Profit
+MaximizeProfitInZeroOneKnapsack::getBestProfitUsingIterativeDPAndSpaceEfficient() const {
     // Complexity Analysis:
     // Time Complexity: O(N*W). As redundant calculations of states are avoided.
     // Auxiliary Space: O(W).  As we are using 1-D array instead of 2-D array.
@@ -69,13 +69,9 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIte
     if (!m_items.empty()) {
         Profits weightToProfit(m_maximumWeight + 1, 0);
         Weight smallestItemWeight(getSmallestItemWeight());
-        for (Item const& item : m_items) {
-            Weight itemWeight(item.first);
-            Profit itemProfit(item.second);
-
-            for (Weight weight = m_maximumWeight; weight >= smallestItemWeight;
-                 weight--)  // reverse traversal to avoid accessing already computed values
-            {
+        for (auto const& [itemWeight, itemProfit] : m_items) {
+            // reverse traversal to avoid accessing already computed values
+            for (Weight weight = m_maximumWeight; weight >= smallestItemWeight; weight--) {
                 if (weight >= itemWeight) {
                     weightToProfit[weight] =
                         max(weightToProfit[weight], weightToProfit[weight - itemWeight] + itemProfit);
@@ -87,12 +83,11 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingIte
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingNaiveRecursion(
+MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingNaiveRecursion(
     Weight const remainingWeight, ItemIndex const itemIndex) const {
     Profit result(0);
     if (itemIndex < static_cast<Index>(m_items.size())) {
-        Weight itemWeight(m_items[itemIndex].first);
-        Profit itemProfit(m_items[itemIndex].second);
+        auto const& [itemWeight, itemProfit] = m_items[itemIndex];
         if (remainingWeight >= itemWeight) {
             result =
                 max(getBestProfitUsingNaiveRecursion(remainingWeight, itemIndex + 1),
@@ -102,14 +97,13 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingNai
     return result;
 }
 
-MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingMemoizationDP(
+MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingMemoizationDP(
     ProfitMatrix& profitMatrix, Weight const remainingWeight, ItemIndex const itemIndex) const {
     Profit result = profitMatrix.getEntry(remainingWeight, itemIndex);
     if (UNUSED_VALUE == result) {
         result = 0;
         if (itemIndex < static_cast<ItemIndex>(m_items.size())) {
-            Weight itemWeight(m_items[itemIndex].first);
-            Profit itemProfit(m_items[itemIndex].second);
+            auto const& [itemWeight, itemProfit] = m_items[itemIndex];
             if (remainingWeight >= itemWeight) {
                 result =
                     max(getBestProfitUsingMemoizationDP(profitMatrix, remainingWeight, itemIndex + 1),
@@ -122,7 +116,7 @@ MaximizeProfitInKnapsack::Profit MaximizeProfitInKnapsack::getBestProfitUsingMem
     return result;
 }
 
-MaximizeProfitInKnapsack::Weight MaximizeProfitInKnapsack::getSmallestItemWeight() const {
+MaximizeProfitInZeroOneKnapsack::Weight MaximizeProfitInZeroOneKnapsack::getSmallestItemWeight() const {
     Weight result(m_items.front().first);
     for (auto it = m_items.cbegin() + 1; it != m_items.cend(); it++) {
         result = min(result, it->first);

@@ -37,7 +37,7 @@ private:
 // Given a rod of length n inches and an array of prices that includes prices of all pieces of size smaller than n.
 // Determine the maximum value obtainable by cutting up the rod and selling the pieces.
 
-// NOTE: This is almost the same with "MaximizeProfitInKnapsack"
+// NOTE: This is almost the same with "MaximizeProfitInZeroOneKnapsack"
 
 // For example, if the length of the rod is 8 and the values of different pieces are given as the following,
 // then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)

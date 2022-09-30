@@ -4,13 +4,13 @@
 
 namespace alba {
 
-class AllPartialSumsInKnapsack {
+class AllPartialSumsInZeroOneKnapsack {
 public:
     using Value = int;
     using Values = std::vector<Value>;
     using Booleans = std::vector<bool>;
 
-    AllPartialSumsInKnapsack(Values const& values);
+    AllPartialSumsInZeroOneKnapsack(Values const& values);
 
     Values getAllPossiblePartialSums() const;
     Values getAllPossiblePartialSumsBySettingFutureValues() const;
@@ -23,6 +23,8 @@ private:
 };
 
 }  // namespace alba
+
+// This is a variant of 0-1 Knapsack Problem
 
 // APPROACH:
 // 1) Dynamic Programming by Iterative method:

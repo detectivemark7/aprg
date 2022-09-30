@@ -108,9 +108,7 @@ NearestEqualCells::Coordinate NearestEqualCells::getCoordinateUsingBfs(
     Coordinate result{};
     bool isFirst(true);
     int minimumDistance{};
-    for (auto const& vertexDistancePair : bfs.getEndVertexToDistanceCountMap()) {
-        Coordinate const& coordinate(vertexDistancePair.first);
-        int distance(vertexDistancePair.second);
+    for (auto const& [coordinate, distance] : bfs.getEndVertexToDistanceCountMap()) {
         if (value == m_valueMatrix.getEntry(coordinate.first, coordinate.second) && firstCoordinate != coordinate) {
             if (isFirst) {
                 minimumDistance = distance;

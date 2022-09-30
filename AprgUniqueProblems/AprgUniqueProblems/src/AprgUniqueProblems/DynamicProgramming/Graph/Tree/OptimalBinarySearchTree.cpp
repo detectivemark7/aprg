@@ -41,12 +41,12 @@ OptimalBinarySearchTree::Cost OptimalBinarySearchTree::getMinimumCostUsingIterat
             [](ValueAndFrequencyPair const& pair) { return pair.second; });
         RangeQueryWithAccumulator<Frequencies> frequencyRange(frequencies, plus<Frequency>(), minus<Frequency>());
 
-        for (Index index = 0; index < numberOfPairs; index++)  // length = 1
-        {
+        // length = 1
+        for (Index index = 0; index < numberOfPairs; index++) {
             costMatrix.setEntry(index, index, m_valueAndFrequencyPairs[index].second);
         }
-        for (Index length = 2; length <= numberOfPairs; length++)  // length >= 2
-        {
+        // length >= 2
+        for (Index length = 2; length <= numberOfPairs; length++) {
             for (Index left = 0; left + length <= static_cast<Index>(costMatrix.getNumberOfColumns()); left++) {
                 Index right = left + length - 1;
                 Cost entryResult(MAX_COUNT);
@@ -78,12 +78,12 @@ OptimalBinarySearchTree::Cost OptimalBinarySearchTree::getMinimumCostUsingNaiveR
         for (Index possibleParent = left; possibleParent <= right; possibleParent++) {
             Cost costOfPossibleParent(getCost(depth, m_valueAndFrequencyPairs[possibleParent].second));
             if (left < possibleParent) {
-                costOfPossibleParent +=
-                    getMinimumCostUsingNaiveRecursion(depth + 1, left, possibleParent - 1);  // left child
+                // left child
+                costOfPossibleParent += getMinimumCostUsingNaiveRecursion(depth + 1, left, possibleParent - 1);
             }
             if (possibleParent < right) {
-                costOfPossibleParent +=
-                    getMinimumCostUsingNaiveRecursion(depth + 1, possibleParent + 1, right);  // right child
+                // right child
+                costOfPossibleParent += getMinimumCostUsingNaiveRecursion(depth + 1, possibleParent + 1, right);
             }
             result = min(result, costOfPossibleParent);
         }

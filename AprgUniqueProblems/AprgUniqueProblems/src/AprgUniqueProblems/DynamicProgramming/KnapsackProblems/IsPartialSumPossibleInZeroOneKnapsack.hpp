@@ -6,7 +6,7 @@
 
 namespace alba {
 
-class IsPartialSumPossibleInKnapsack {
+class IsPartialSumPossibleInZeroOneKnapsack {
 public:
     using Index = int;
     using Value = int;
@@ -16,7 +16,7 @@ public:
     using BooleanMatrix = matrix::AlbaMatrix<bool>;
     using StateMatrix = matrix::AlbaMatrix<State>;
 
-    IsPartialSumPossibleInKnapsack(Value const targetSum, Values const& values);
+    IsPartialSumPossibleInZeroOneKnapsack(Value const targetSum, Values const& values);
 
     bool isPartialSumPossibleUsingNaiveRecursion() const;
     bool isPartialSumPossibleUsingMemoizationDP() const;
@@ -33,6 +33,8 @@ private:
 };
 
 }  // namespace alba
+
+// This is a variant of 0-1 Knapsack Problem
 
 // APPROACH:
 // 1) Naive Recursion / Dynamic Programming by Memoization:

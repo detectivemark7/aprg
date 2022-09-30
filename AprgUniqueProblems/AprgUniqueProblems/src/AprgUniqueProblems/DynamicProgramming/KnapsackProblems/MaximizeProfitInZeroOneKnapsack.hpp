@@ -6,7 +6,7 @@
 
 namespace alba {
 
-class MaximizeProfitInKnapsack {
+class MaximizeProfitInZeroOneKnapsack {
 public:
     using Index = int;
     using Weight = int;
@@ -18,7 +18,7 @@ public:
     using ProfitMatrix = matrix::AlbaMatrix<Profit>;
     static constexpr Profit UNUSED_VALUE = std::numeric_limits<Profit>::max();
 
-    MaximizeProfitInKnapsack(Weight const maximumWeight, Items const items);
+    MaximizeProfitInZeroOneKnapsack(Weight const maximumWeight, Items const items);
 
     Profit getBestProfitUsingNaiveRecursion() const;
     Profit getBestProfitUsingMemoizationDP() const;
@@ -35,6 +35,8 @@ private:
 };
 
 }  // namespace alba
+
+// This is a variant of 0-1 Knapsack Problem
 
 // APPROACH:
 // 1) Naive Recursion / Dynamic Programming by Memoization:
