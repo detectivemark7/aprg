@@ -13,11 +13,11 @@ public:
 
     AlbaFakeCopyable(ObjectType const& object) : m_object(object) {}
 
-    AlbaFakeCopyable(AlbaFakeCopyable const&)  // copy constructor calls default constructor
-        : m_object() {}
+    // copy constructor calls default constructor
+    AlbaFakeCopyable(AlbaFakeCopyable const&) : m_object() {}
 
-    AlbaFakeCopyable& operator=(AlbaFakeCopyable const&)  // copy assignment calls default constructor
-    {}
+    // copy assignment calls default constructor
+    AlbaFakeCopyable& operator=(AlbaFakeCopyable const&) { return *this; }
 
     AlbaFakeCopyable(AlbaFakeCopyable&&) = default;
     AlbaFakeCopyable& operator=(AlbaFakeCopyable&&) = default;
