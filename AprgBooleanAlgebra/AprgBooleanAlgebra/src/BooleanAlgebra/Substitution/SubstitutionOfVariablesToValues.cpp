@@ -76,14 +76,14 @@ Expression SubstitutionOfVariablesToValues::performSubstitutionForExpression(Exp
 
 void SubstitutionOfVariablesToValues::putVariablesWithValues(
     initializer_list<VariableValuePair> const& variablesWithValues) {
-    for (VariableValuePair const& variableValuesPair : variablesWithValues) {
-        putVariableWithValue(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variableName, value] : variablesWithValues) {
+        putVariableWithValue(variableName, value);
     }
 }
 
 void SubstitutionOfVariablesToValues::putVariablesWithValues(VariablesToValuesMap const& variablesWithValues) {
-    for (auto const& variableValuesPair : variablesWithValues) {
-        putVariableWithValue(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variableName, value] : variablesWithValues) {
+        putVariableWithValue(variableName, value);
     }
 }
 

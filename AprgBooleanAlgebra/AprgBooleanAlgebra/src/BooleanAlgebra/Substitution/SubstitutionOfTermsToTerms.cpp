@@ -62,14 +62,14 @@ Expression SubstitutionOfTermsToTerms::performSubstitutionForExpression(Expressi
 }
 
 void SubstitutionOfTermsToTerms::putTermsToTermsMapping(initializer_list<TermTermPair> const& variablesWithValues) {
-    for (TermTermPair const& variableValuesPair : variablesWithValues) {
-        putTermToTermMapping(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variableName, value] : variablesWithValues) {
+        putTermToTermMapping(variableName, value);
     }
 }
 
 void SubstitutionOfTermsToTerms::putTermsToTermsMapping(TermToTermMap const& variablesWithValues) {
-    for (auto const& variableValuesPair : variablesWithValues) {
-        putTermToTermMapping(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variableName, value] : variablesWithValues) {
+        putTermToTermMapping(variableName, value);
     }
 }
 

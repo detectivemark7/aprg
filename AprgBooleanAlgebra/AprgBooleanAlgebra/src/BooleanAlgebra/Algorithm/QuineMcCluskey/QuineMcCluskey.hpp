@@ -113,8 +113,8 @@ public:
     }
 
     void fillComputationalTableWithMintermsWithZeroCommonalityCount() {
-        for (auto const& inputAndOutputPair : m_inputToOutputMap) {
-            addMintermForZeroCommonalityCount(inputAndOutputPair.first);
+        for (auto const& [input, output] : m_inputToOutputMap) {
+            addMintermForZeroCommonalityCount(input);
         }
     }
 
@@ -134,11 +134,11 @@ public:
 
     std::string getComputationTableString() const {
         std::stringstream ss;
-        for (auto const& numberOfOnesAndCommonalityCountImplicantsPair : m_computationalTable) {
-            ss << "Number of ones = " << numberOfOnesAndCommonalityCountImplicantsPair.first << "\n";
-            for (auto const& commonalityCountAndImplicantsPair : numberOfOnesAndCommonalityCountImplicantsPair.second) {
-                ss << "Commonality count = " << commonalityCountAndImplicantsPair.first << " with ";
-                printParameterWithName(ss, "Implicants", commonalityCountAndImplicantsPair.second);
+        for (auto const& [numberOfOnes, commonalityCountImplicantsPairs] : m_computationalTable) {
+            ss << "Number of ones = " << numberOfOnes << "\n";
+            for (auto const& [commonalityCount, implicants] : commonalityCountImplicantsPairs) {
+                ss << "Commonality count = " << commonalityCount << " with ";
+                printParameterWithName(ss, "Implicants", implicants);
                 ss << "\n";
             }
         }
@@ -357,9 +357,9 @@ public:
 private:
     Minterms getInputMintermsWithTrue() const {
         Minterms result;
-        for (auto inputOutputPair : m_inputToOutputMap) {
-            if (inputOutputPair.second == LogicalValue::True) {
-                result.emplace_back(inputOutputPair.first);
+        for (auto [input, output] : m_inputToOutputMap) {
+            if (output == LogicalValue::True) {
+                result.emplace_back(input);
             }
         }
         return result;
@@ -367,9 +367,9 @@ private:
 
     SetOfMinterms getSetOfInputMintermsWithTrue() const {
         SetOfMinterms result;
-        for (auto inputOutputPair : m_inputToOutputMap) {
-            if (inputOutputPair.second == LogicalValue::True) {
-                result.emplace(inputOutputPair.first);
+        for (auto [input, output] : m_inputToOutputMap) {
+            if (output == LogicalValue::True) {
+                result.emplace(input);
             }
         }
         return result;
