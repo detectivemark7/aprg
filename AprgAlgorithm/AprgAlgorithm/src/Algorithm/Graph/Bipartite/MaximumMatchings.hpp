@@ -99,13 +99,13 @@ private:
                 flowNetwork.connect(vertex, newSinkVertex, 1, 0);
             }
         }
-        for (Edge const& edge : graph.getEdges()) {
-            bool firstVertexColor = m_bipartiteChecker.hasFirstColor(edge.first);
-            bool secondVertexColor = m_bipartiteChecker.hasFirstColor(edge.second);
-            if (firstVertexColor && !secondVertexColor) {
-                flowNetwork.connect(edge.first, edge.second, 1, 0);
-            } else if (!firstVertexColor && secondVertexColor) {
-                flowNetwork.connect(edge.second, edge.first, 1, 0);
+        for (auto const& [startVertexOfEdge, endVertexOfEdge] : graph.getEdges()) {
+            bool startVertexColor = m_bipartiteChecker.hasFirstColor(startVertexOfEdge);
+            bool endVertexColor = m_bipartiteChecker.hasFirstColor(endVertexOfEdge);
+            if (startVertexColor && !endVertexColor) {
+                flowNetwork.connect(startVertexOfEdge, endVertexOfEdge, 1, 0);
+            } else if (!startVertexColor && endVertexColor) {
+                flowNetwork.connect(startVertexOfEdge, endVertexOfEdge, 1, 0);
             }
         }
         return flowNetwork;

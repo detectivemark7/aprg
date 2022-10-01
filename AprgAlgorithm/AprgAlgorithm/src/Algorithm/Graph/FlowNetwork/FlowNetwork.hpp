@@ -86,12 +86,12 @@ public:
     FlowDataType getDeltaFlowAt(Vertex const& vertex) const {
         // this is linear (not optimized)
         FlowDataType result{};
-        for (auto const& edgeAndDetailsPair : m_edgeToFlowEdgeDetailsMap) {
-            if (edgeAndDetailsPair.first.first == vertex) {
-                result -= edgeAndDetailsPair.second.flow;
+        for (auto const& [edge, details] : m_edgeToFlowEdgeDetailsMap) {
+            if (edge.first == vertex) {
+                result -= details.flow;
             }
-            if (edgeAndDetailsPair.first.second == vertex) {
-                result += edgeAndDetailsPair.second.flow;
+            if (edge.second == vertex) {
+                result += details.flow;
             }
         }
         return result;
@@ -129,11 +129,9 @@ public:
     FlowEdges getFlowEdgesWithVertex(Vertex const& vertex) const {
         // this is linear (not optimized)
         FlowEdges result;
-        for (auto const& edgeAndDetailsPair : m_edgeToFlowEdgeDetailsMap) {
-            if (edgeAndDetailsPair.first.first == vertex || edgeAndDetailsPair.first.second == vertex) {
-                result.emplace_back(FlowEdge{
-                    edgeAndDetailsPair.first.first, edgeAndDetailsPair.first.second, edgeAndDetailsPair.second.capacity,
-                    edgeAndDetailsPair.second.flow});
+        for (auto const& [edge, details] : m_edgeToFlowEdgeDetailsMap) {
+            if (edge.first == vertex || edge.second == vertex) {
+                result.emplace_back(FlowEdge{edge.first, edge.second, details.capacity, details.flow});
             }
         }
         return result;
@@ -182,9 +180,8 @@ private:
 
     friend std::ostream& operator<<(std::ostream& out, FlowNetwork const& graph) {
         out << static_cast<BaseClass const&>(graph) << "Flow edges: {";
-        for (auto const& edgeAndDetailsPair : graph.m_edgeToFlowEdgeDetailsMap) {
-            out << edgeAndDetailsPair.first.first << "->" << edgeAndDetailsPair.first.second
-                << "(capacity: " << edgeAndDetailsPair.second.capacity << " flow: " << edgeAndDetailsPair.second.flow
+        for (auto const& [edge, details] : graph.m_edgeToFlowEdgeDetailsMap) {
+            out << edge.first << "->" << edge.second << "(capacity: " << details.capacity << " flow: " << details.flow
                 << "), ";
         }
         out << "}";

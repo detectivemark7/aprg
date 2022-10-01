@@ -43,17 +43,16 @@ private:
     void checkAdjacentEdgesOfEdgeAndAddToMstIfNeeded(EdgeOrderedByWeight const& edgeOrderedByWeight) {
         // Since this is lazy algorithm (nearest vertices are not kept), we need to find which vertex/s is not included
         // in the tree
-        Vertex const& vertex1(edgeOrderedByWeight.first);
-        Vertex const& vertex2(edgeOrderedByWeight.second);
-        bool isVertex1NotProcessed(m_processedVertices.isNotFound(vertex1));
-        bool isVertex2NotProcessed(m_processedVertices.isNotFound(vertex2));
+        auto const& [startVertexOfEdge, endVertexOfEdge] = dynamic_cast<Edge const&>(edgeOrderedByWeight);
+        bool isVertex1NotProcessed(m_processedVertices.isNotFound(startVertexOfEdge));
+        bool isVertex2NotProcessed(m_processedVertices.isNotFound(endVertexOfEdge));
         if (isVertex1NotProcessed || isVertex2NotProcessed) {
-            m_minimumSpanningTreeEdges.emplace_back(createSortedEdge<Vertex, Edge>(vertex1, vertex2));
+            m_minimumSpanningTreeEdges.emplace_back(createSortedEdge<Vertex, Edge>(startVertexOfEdge, endVertexOfEdge));
             if (isVertex1NotProcessed) {
-                checkAdjacentEdgesOfVertex(vertex1);
+                checkAdjacentEdgesOfVertex(startVertexOfEdge);
             }
             if (isVertex2NotProcessed) {
-                checkAdjacentEdgesOfVertex(vertex2);
+                checkAdjacentEdgesOfVertex(endVertexOfEdge);
             }
         }
     }

@@ -32,11 +32,11 @@ public:
     }
 
     void retrieveVerticesWithColor(Vertices& verticesWithFirstColor, Vertices& verticesWithSecondColor) const {
-        for (auto const& vertexColorPair : m_vertexToColorMap) {
-            if (!vertexColorPair.second) {
-                verticesWithFirstColor.emplace_back(vertexColorPair.first);
+        for (auto const& [vertex, color] : m_vertexToColorMap) {
+            if (!color) {
+                verticesWithFirstColor.emplace_back(vertex);
             } else {
-                verticesWithSecondColor.emplace_back(vertexColorPair.first);
+                verticesWithSecondColor.emplace_back(vertex);
             }
         }
     }
@@ -60,8 +60,8 @@ private:
         for (Vertex const& vertex : vertices) {
             if (m_processedVertices.isNotFound(vertex)) {
                 checkUsingDfs(vertex);
-                if (!m_isBipartite)  // if not bipartite, stop (no use continuing on it)
-                {
+                if (!m_isBipartite) {
+                    // if not bipartite, stop (no use continuing on it)
                     break;
                 }
             }
@@ -73,12 +73,13 @@ private:
         bool vertexColor(m_vertexToColorMap[vertex]);
         for (Vertex const& adjacentVertex : m_graph.getAdjacentVerticesAt(vertex)) {
             if (m_processedVertices.isNotFound(adjacentVertex)) {
-                m_vertexToColorMap[adjacentVertex] =
-                    getTheOtherColor(vertexColor);  // assign the other color for unprocessed adjacent vertices
+                // assign the other color for unprocessed adjacent vertices
+                m_vertexToColorMap[adjacentVertex] = getTheOtherColor(vertexColor);
                 checkUsingDfs(adjacentVertex);
             } else if (vertexColor == m_vertexToColorMap[adjacentVertex]) {
-                m_isBipartite = false;  // two adjacent vertices can't be in the same color to be bipartite (colors
-                                        // needs to be alternating)
+                // two adjacent vertices can't be in the same color to be bipartite
+                // (colors needs to be alternating)
+                m_isBipartite = false;
                 break;
             }
         }

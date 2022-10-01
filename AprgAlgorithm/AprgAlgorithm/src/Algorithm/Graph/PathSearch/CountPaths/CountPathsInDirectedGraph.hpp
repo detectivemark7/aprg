@@ -31,8 +31,8 @@ private:
             m_vertexToTopologicalIndex[vertexInOrder] = index++;
         }
 
-        for (Edge const& edge : m_graph.getEdges()) {
-            m_vertexToDependentVertices[edge.second].emplace(edge.first);
+        for (auto const& [startVertexOfEdge, endVertexOfEdge] : m_graph.getEdges()) {
+            m_vertexToDependentVertices[endVertexOfEdge].emplace(startVertexOfEdge);
         }
     }
 

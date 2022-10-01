@@ -18,7 +18,7 @@ public:
 
     struct RecursionData {
         Combinations& combinations;
-        Combination& currentCombination;
+        Combination currentCombination;
         int currentIndex;
         Objects const& objects;
         int const targetCombinationLength;
@@ -34,17 +34,15 @@ public:
 
     static Combinations generateCombinationsWithLength(Objects const& objects, int const targetCombinationLength) {
         Combinations result;
-        Combination currentCombination;
-        RecursionData recursionData(createRecursionData(
-            result, currentCombination, objects, std::min(targetCombinationLength, static_cast<int>(objects.size()))));
+        RecursionData recursionData(
+            createRecursionData(result, objects, std::min(targetCombinationLength, static_cast<int>(objects.size()))));
         collectCombinationsUsingRecursion(recursionData);
         return result;
     }
 
 private:
-    static RecursionData createRecursionData(
-        Combinations& combinations, Combination& currentCombination, Objects const& objects, int const length) {
-        return RecursionData{combinations, currentCombination, 0, objects, length};
+    static RecursionData createRecursionData(Combinations& combinations, Objects const& objects, int const length) {
+        return RecursionData{combinations, Combination(), 0, objects, length};
     }
 
     static void collectCombinationsUsingRecursion(RecursionData& recursionData) {

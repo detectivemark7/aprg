@@ -21,10 +21,9 @@ public:
 
     void sort(Values& valuesToSort) const override {
         if (!valuesToSort.empty()) {
-            auto minmaxItPair = std::minmax_element(valuesToSort.cbegin(), valuesToSort.cend());
-            Value minimumValue = *(minmaxItPair.first);
-            Value maximumValue = *(minmaxItPair.second);
-            Value range = maximumValue - minimumValue + 1;  // Find range
+            auto&& [minIt, maxIt] = std::minmax_element(valuesToSort.cbegin(), valuesToSort.cend());
+            Value minimumValue = *minIt, maximumValue = *maxIt;
+            Value range = maximumValue - minimumValue + 1;
 
             // Create an array of vectors.
             // Size of array range.

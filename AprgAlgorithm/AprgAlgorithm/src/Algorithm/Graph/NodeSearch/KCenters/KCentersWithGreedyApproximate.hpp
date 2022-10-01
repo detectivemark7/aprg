@@ -36,9 +36,7 @@ private:
 
     void updateClosestDistances(Vertex const& currentCenter) {
         Bfs bfs(m_graph, {currentCenter});
-        for (auto const& endVertexAndDistanceSumPair : bfs.getEndVertexToDistanceSumMap()) {
-            Vertex const& vertex(endVertexAndDistanceSumPair.first);
-            Weight const& distance(endVertexAndDistanceSumPair.second);
+        for (auto const& [vertex, distance] : bfs.getEndVertexToDistanceSumMap()) {
             auto it = m_closestDistanceForVertex.find(vertex);
             if (it != m_closestDistanceForVertex.cend()) {
                 it->second = std::min(it->second, distance);
@@ -51,10 +49,10 @@ private:
     Vertex getVertexForMaximumClosestDistance() {
         Vertex result{};
         Weight maximumClosestDistance{};
-        for (auto const& vertexAndClosestDistancePair : m_closestDistanceForVertex) {
-            if (maximumClosestDistance < vertexAndClosestDistancePair.second) {
-                maximumClosestDistance = vertexAndClosestDistancePair.second;
-                result = vertexAndClosestDistancePair.first;
+        for (auto const& [vertex, closestDistance] : m_closestDistanceForVertex) {
+            if (maximumClosestDistance < closestDistance) {
+                maximumClosestDistance = closestDistance;
+                result = vertex;
             }
         }
         return result;

@@ -45,8 +45,7 @@ public:
 
     int getNumberOfVertices() const override {
         int result(0);
-        for (auto const& vertexAndAdjacencyListPair : m_adjacencyLists) {
-            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
+        for (auto const& [vertex, adjacencyList] : m_adjacencyLists) {
             if (!adjacencyList.empty()) {
                 result++;
             }
@@ -69,9 +68,7 @@ public:
 
     Vertices getVertices() const override {
         Vertices result;
-        for (auto const& vertexAndAdjacencyListPair : m_adjacencyLists) {
-            Vertex const& vertex(vertexAndAdjacencyListPair.first);
-            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
+        for (auto const& [vertex, adjacencyList] : m_adjacencyLists) {
             if (!adjacencyList.empty()) {
                 result.emplace_back(vertex);
             }
@@ -81,9 +78,7 @@ public:
 
     Edges getEdges() const override {
         Edges result;
-        for (auto const& vertexAndAdjacencyListPair : m_adjacencyLists) {
-            Vertex const& vertex1(vertexAndAdjacencyListPair.first);
-            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
+        for (auto const& [vertex1, adjacencyList] : m_adjacencyLists) {
             if (!adjacencyList.empty()) {
                 std::for_each(adjacencyList.lower_bound(vertex1), adjacencyList.cend(), [&](Vertex const& vertex2) {
                     result.emplace_back(vertex1, vertex2);
@@ -117,9 +112,7 @@ public:
 protected:
     friend std::ostream& operator<<(std::ostream& out, UndirectedGraphWithVertexToAdjacencyListsMap const& graph) {
         out << "Adjacency Lists: \n";
-        for (auto const& vertexAndAdjacencyListPair : graph.m_adjacencyLists) {
-            Vertex const& vertex(vertexAndAdjacencyListPair.first);
-            AdjacencyList const& adjacencyList(vertexAndAdjacencyListPair.second);
+        for (auto const& [vertex, adjacencyList] : graph.m_adjacencyLists) {
             if (!adjacencyList.empty()) {
                 out << "Adjacent with vertex " << vertex << ": {";
                 containerHelper::saveContentsToStream(out, adjacencyList, containerHelper::StreamFormat::String);
