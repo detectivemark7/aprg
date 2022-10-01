@@ -8,6 +8,29 @@ namespace alba {
 
 namespace math {
 
+TEST(OtherUtilitiesTest, IsFibonacciNumberWorks) {
+    // Is zero really a fibonacci number? Yes! the definitions says so.
+    EXPECT_TRUE(isAFibonacciNumber(0U));
+    EXPECT_TRUE(isAFibonacciNumber(1U));
+    EXPECT_TRUE(isAFibonacciNumber(2U));
+    EXPECT_TRUE(isAFibonacciNumber(3U));
+    EXPECT_FALSE(isAFibonacciNumber(4U));
+    EXPECT_TRUE(isAFibonacciNumber(21U));
+    EXPECT_TRUE(isAFibonacciNumber(34U));
+    EXPECT_FALSE(isAFibonacciNumber(35U));
+}
+
+TEST(OtherUtilitiesTest, IsALuckyNumberWorks) {
+    EXPECT_FALSE(isALuckyNumber(0U));
+    EXPECT_TRUE(isALuckyNumber(1U));
+    EXPECT_FALSE(isALuckyNumber(2U));
+    EXPECT_TRUE(isALuckyNumber(3U));
+    EXPECT_FALSE(isALuckyNumber(4U));
+    EXPECT_FALSE(isALuckyNumber(12U));
+    EXPECT_TRUE(isALuckyNumber(13U));
+    EXPECT_FALSE(isALuckyNumber(14U));
+}
+
 TEST(OtherUtilitiesTest, IsLagrangeTheoremTrueWorks) {
     EXPECT_TRUE(isLagrangeTheoremTrue(13U));
     EXPECT_TRUE(isLagrangeTheoremTrue(64U));
@@ -38,6 +61,15 @@ TEST(OtherUtilitiesTest, GetNthFibonacciNumberUsingBinetsFormulaWorks) {
     EXPECT_EQ(2U, getNthFibonacciNumberUsingBinetsFormula(3U));
     EXPECT_EQ(21U, getNthFibonacciNumberUsingBinetsFormula(8U));
     EXPECT_EQ(34U, getNthFibonacciNumberUsingBinetsFormula(9U));
+}
+
+TEST(OtherUtilitiesTest, GetNthFibonacciNumberUsingRecursionWorks) {
+    EXPECT_EQ(0U, getNthFibonacciNumberUsingRecursion(0U));
+    EXPECT_EQ(1U, getNthFibonacciNumberUsingRecursion(1U));
+    EXPECT_EQ(1U, getNthFibonacciNumberUsingRecursion(2U));
+    EXPECT_EQ(2U, getNthFibonacciNumberUsingRecursion(3U));
+    EXPECT_EQ(21U, getNthFibonacciNumberUsingRecursion(8U));
+    EXPECT_EQ(34U, getNthFibonacciNumberUsingRecursion(9U));
 }
 
 TEST(OtherUtilitiesTest, GetNthFibonacciUsingMatrixPowerWithLogarithmicTimeWorks) {
