@@ -4,7 +4,7 @@ using namespace std;
 
 namespace alba {
 
-MaximizeProfitInZeroOneKnapsack::MaximizeProfitInZeroOneKnapsack(Weight const maximumWeight, Items const items)
+MaximizeProfitInZeroOneKnapsack::MaximizeProfitInZeroOneKnapsack(Weight const maximumWeight, Items const& items)
     : m_maximumWeight(maximumWeight), m_items(items) {}
 
 MaximizeProfitInZeroOneKnapsack::Profit MaximizeProfitInZeroOneKnapsack::getBestProfitUsingNaiveRecursion() const {
