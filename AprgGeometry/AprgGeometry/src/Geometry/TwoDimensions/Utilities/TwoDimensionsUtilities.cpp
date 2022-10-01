@@ -190,9 +190,9 @@ double getMaximumManhattanDistanceOfTwoPoints(Points const& points) {
         rotatedXValues.emplace_back(getAbsoluteValue(point.getX() + point.getY()));
         rotatedYValues.emplace_back(getAbsoluteValue(point.getY() - point.getX()));
     }
-    auto minmaxXResult = std::minmax_element(rotatedXValues.cbegin(), rotatedXValues.cend());
-    auto minmaxYResult = std::minmax_element(rotatedYValues.cbegin(), rotatedYValues.cend());
-    return max(*(minmaxXResult.second) - *(minmaxXResult.first), *(minmaxYResult.second) - *(minmaxYResult.first));
+    auto&& [xMinIt, xMaxIt] = std::minmax_element(rotatedXValues.cbegin(), rotatedXValues.cend());
+    auto&& [yMinIt, yMaxIt] = std::minmax_element(rotatedYValues.cbegin(), rotatedYValues.cend());
+    return max(*xMaxIt - *xMinIt, *yMaxIt - *yMinIt);
 }
 
 double getCosineOfAngleUsing1Delta(double const deltaX1, double const deltaY1) {
@@ -694,14 +694,14 @@ Points getConvexHullPointsUsingGrahamScan(Points const& points) {
     int auxiliarySize = auxiliary.size();
 
     // Find bottom most left point
-    auto minmaxResult =
+    auto&& [minIt, maxIt] =
         minmax_element(auxiliary.begin(), auxiliary.end(), [](Point const& point1, Point const& point2) {
             if (point1.getY() == point2.getY()) {
                 return point1.getX() < point2.getX();
             }
             return point1.getY() < point2.getY();
         });
-    swap(*(minmaxResult.first), auxiliary.front());
+    swap(*minIt, auxiliary.front());
     Point const& firstPoint(auxiliary.front());
 
     // sort such that the points are in counter clockwise order
