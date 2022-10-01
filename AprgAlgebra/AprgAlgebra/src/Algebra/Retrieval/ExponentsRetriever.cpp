@@ -7,8 +7,8 @@ namespace algebra {
 AlbaNumbersSet const& ExponentsRetriever::getExponents() const { return m_exponents; }
 
 void ExponentsRetriever::retrieveFromMonomial(Monomial const& monomial) {
-    for (auto const& variableExponentsPair : monomial.getVariablesToExponentsMap()) {
-        m_exponents.emplace(variableExponentsPair.second);
+    for (auto const& [variableName, exponent] : monomial.getVariablesToExponentsMap()) {
+        m_exponents.emplace(exponent);
     }
 }
 

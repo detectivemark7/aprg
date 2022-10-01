@@ -181,9 +181,7 @@ void Differentiation::separateNonChangingAndChangingVariables(
     Monomial& nonChangingVariablesAndConstant, Monomial& changingVariables, Monomial const& monomial) const {
     nonChangingVariablesAndConstant = Monomial(monomial.getCoefficient(), {});
     changingVariables = Monomial(1, {});
-    for (auto const& variableExponentPair : monomial.getVariablesToExponentsMap()) {
-        string const& variableName(variableExponentPair.first);
-        AlbaNumber const& exponent(variableExponentPair.second);
+    for (auto const& [variableName, exponent] : monomial.getVariablesToExponentsMap()) {
         if (exponent != 0) {
             if (isChangingVariableName(variableName)) {
                 changingVariables.putVariableWithExponent(variableName, exponent);
@@ -196,9 +194,7 @@ void Differentiation::separateNonChangingAndChangingVariables(
 
 Polynomial Differentiation::differentiateMonomialWithChangingVariables(Monomial const& changingVariables) const {
     Polynomial result;
-    for (auto const& variableExponentPair : changingVariables.getVariablesToExponentsMap()) {
-        string const& variableName(variableExponentPair.first);
-        AlbaNumber const& exponent(variableExponentPair.second);
+    for (auto const& [variableName, exponent] : changingVariables.getVariablesToExponentsMap()) {
         Monomial monomialToAdd(changingVariables);
         DerivativeVariableName derivativeVariableName(variableName);
         if (isVariableToDifferentiate(variableName)) {

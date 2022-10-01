@@ -272,9 +272,7 @@ void TermsOverTerms::calculateBasesAndExponentsAndPutThatToNumeratorsAndDenomina
 
 void TermsOverTerms::putTermsOnNumeratorAndDenominatorBasedFromTermsRaiseToTerms(
     Terms& numeratorTerms, Terms& denominatorTerms, TermsRaiseToTerms const& termsRaiseToTerms) {
-    for (auto const& baseExponentPair : termsRaiseToTerms.getBaseToExponentMap()) {
-        Term const& base(baseExponentPair.first);
-        Term const& exponent(baseExponentPair.second);
+    for (auto const& [base, exponent] : termsRaiseToTerms.getBaseToExponentMap()) {
         if (!isIntegerConstant(exponent) || m_shouldSimplifyToFactors) {
             if (isANegativeTerm(exponent)) {
                 TermRaiseToTerms termRaiseToTerms(base, exponent * -1);
@@ -296,9 +294,7 @@ void TermsOverTerms::putTermsOnNumeratorAndDenominatorBasedFromTermsRaiseToTerms
 
 void TermsOverTerms::putTermsOnNumeratorAndDenominatorBasedFromTermsRaiseToNumbers(
     Terms& numeratorTerms, Terms& denominatorTerms, TermsRaiseToNumbers const& termsRaiseToNumbers) {
-    for (auto const& baseExponentPair : termsRaiseToNumbers.getBaseToExponentMap()) {
-        Term const& base(baseExponentPair.first);
-        AlbaNumber const& exponent(baseExponentPair.second);
+    for (auto const& [base, exponent] : termsRaiseToNumbers.getBaseToExponentMap()) {
         if (!exponent.isIntegerType() || m_shouldSimplifyToFactors) {
             if (exponent > 0) {
                 TermRaiseToANumber termRaiseToANumber(base, exponent);

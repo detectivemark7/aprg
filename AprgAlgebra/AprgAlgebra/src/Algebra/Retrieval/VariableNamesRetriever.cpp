@@ -13,8 +13,8 @@ void VariableNamesRetriever::retrieveFromVariable(Variable const& variable) {
 }
 
 void VariableNamesRetriever::retrieveFromMonomial(Monomial const& monomial) {
-    for (auto const& variableExponentsPair : monomial.getVariablesToExponentsMap()) {
-        m_variableNames.emplace(variableExponentsPair.first);
+    for (auto const& [variableName, exponent] : monomial.getVariablesToExponentsMap()) {
+        m_variableNames.emplace(variableName);
     }
 }
 

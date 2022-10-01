@@ -95,13 +95,11 @@ Equation SubstitutionOfVariablesToValues::performSubstitutionTo(Equation const& 
 Monomial SubstitutionOfVariablesToValues::performSubstitutionForMonomial(Monomial const& monomial) const {
     Monomial newMonomial(createMonomialFromNumber(monomial.getCoefficient()));
     Monomial::VariablesToExponentsMap previousVariableExponentMap(monomial.getVariablesToExponentsMap());
-    for (auto const& variableExponentPair : previousVariableExponentMap) {
-        if (isVariableFound(variableExponentPair.first)) {
-            newMonomial.setConstant(
-                newMonomial.getCoefficient() *
-                (getValueForVariable(variableExponentPair.first) ^ variableExponentPair.second));
+    for (auto const& [variableName, exponent] : previousVariableExponentMap) {
+        if (isVariableFound(variableName)) {
+            newMonomial.setConstant(newMonomial.getCoefficient() * (getValueForVariable(variableName) ^ exponent));
         } else {
-            newMonomial.putVariableWithExponent(variableExponentPair.first, variableExponentPair.second);
+            newMonomial.putVariableWithExponent(variableName, exponent);
         }
     }
     newMonomial.simplify();
@@ -134,14 +132,14 @@ Function SubstitutionOfVariablesToValues::performSubstitutionForFunction(Functio
 
 void SubstitutionOfVariablesToValues::putVariablesWithValues(
     initializer_list<VariableValuePair> const& variablesWithValues) {
-    for (VariableValuePair const& variableValuesPair : variablesWithValues) {
-        putVariableWithValue(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variable, value] : variablesWithValues) {
+        putVariableWithValue(variable, value);
     }
 }
 
 void SubstitutionOfVariablesToValues::putVariablesWithValues(VariablesToValuesMap const& variablesWithValues) {
-    for (auto const& variableValuesPair : variablesWithValues) {
-        putVariableWithValue(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variable, value] : variablesWithValues) {
+        putVariableWithValue(variable, value);
     }
 }
 

@@ -96,13 +96,13 @@ Expression SubstitutionOfVariablesToTerms::performSubstitutionForMonomial(Monomi
     Monomial remainingMonomial(createMonomialFromNumber(monomial.getCoefficient()));
     Monomial::VariablesToExponentsMap previousVariableExponentMap(monomial.getVariablesToExponentsMap());
     Expression substitutedExpressions;
-    for (auto const& variableExponentPair : previousVariableExponentMap) {
-        if (isVariableFound(variableExponentPair.first)) {
-            Expression substitutedExpression(getTermForVariable(variableExponentPair.first));
-            substitutedExpression.putTermWithRaiseToPowerIfNeeded(Term(variableExponentPair.second));
+    for (auto const& [variableName, exponent] : previousVariableExponentMap) {
+        if (isVariableFound(variableName)) {
+            Expression substitutedExpression(getTermForVariable(variableName));
+            substitutedExpression.putTermWithRaiseToPowerIfNeeded(Term(exponent));
             substitutedExpressions.putTermWithMultiplicationIfNeeded(Term(substitutedExpression));
         } else {
-            remainingMonomial.putVariableWithExponent(variableExponentPair.first, variableExponentPair.second);
+            remainingMonomial.putVariableWithExponent(variableName, exponent);
         }
     }
     Expression finalExpression(getBaseTermConstReferenceFromTerm(remainingMonomial));
@@ -137,14 +137,14 @@ Function SubstitutionOfVariablesToTerms::performSubstitutionForFunction(Function
 
 void SubstitutionOfVariablesToTerms::putVariablesWithTerms(
     initializer_list<VariableTermPair> const& variablesWithTerms) {
-    for (VariableTermPair const& variableValuesPair : variablesWithTerms) {
-        putVariableWithTerm(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variable, term] : variablesWithTerms) {
+        putVariableWithTerm(variable, term);
     }
 }
 
 void SubstitutionOfVariablesToTerms::putVariablesWithTerms(VariablesToTermsMap const& variablesWithTerms) {
-    for (auto const& variableValuesPair : variablesWithTerms) {
-        putVariableWithTerm(variableValuesPair.first, variableValuesPair.second);
+    for (auto const& [variable, term] : variablesWithTerms) {
+        putVariableWithTerm(variable, term);
     }
 }
 

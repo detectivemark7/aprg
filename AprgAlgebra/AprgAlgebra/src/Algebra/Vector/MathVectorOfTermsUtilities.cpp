@@ -230,11 +230,11 @@ void retrieveWithAndWithoutOtherCoordinates(
     retriever.retrieveFromTerm(termToAnalyze);
     termWithoutOtherCoordinates = retriever.getRemainingTerm();
     termWithOtherCoordinates = retriever.getTermWithMultipleVariableNames();
-    for (auto const& variableNameAndTermPair : retriever.getVariableNameToTermMap()) {
-        if (variableNameAndTermPair.first == coordinateVariableName) {
-            termWithoutOtherCoordinates += variableNameAndTermPair.second;
+    for (auto const& [variableName, term] : retriever.getVariableNameToTermMap()) {
+        if (variableName == coordinateVariableName) {
+            termWithoutOtherCoordinates += term;
         } else {
-            termWithOtherCoordinates += variableNameAndTermPair.second;
+            termWithOtherCoordinates += term;
         }
     }
 }

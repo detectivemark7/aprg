@@ -52,8 +52,8 @@ AlbaNumber getCoefficientOfMonomialWithVariableOnly(Polynomial const& polynomial
     for (Monomial const& monomial : polynomial.getMonomials()) {
         Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
         if (variableToExponentMap.size() == 1) {
-            auto const& variableExponentPair = *(variableToExponentMap.cbegin());
-            if (variableExponentPair.first == variableName) {
+            auto const& [variableNameFromMap, exponentFromMap] = *(variableToExponentMap.cbegin());
+            if (variableNameFromMap == variableName) {
                 coefficientValue = monomial.getCoefficient();
                 break;
             }
@@ -67,8 +67,8 @@ VariableToValueMap getCoefficientsForVariablesOnly(Polynomial const& polynomial)
     for (Monomial const& monomial : polynomial.getMonomials()) {
         Monomial::VariablesToExponentsMap const& variableToExponentMap(monomial.getVariablesToExponentsMap());
         if (variableToExponentMap.size() == 1) {
-            auto const& variableExponentPair = *(variableToExponentMap.cbegin());
-            result.emplace(variableExponentPair.first, monomial.getCoefficient());
+            auto const& [variableNameFromMap, exponentFromMap] = *(variableToExponentMap.cbegin());
+            result.emplace(variableNameFromMap, monomial.getCoefficient());
         }
     }
     return result;

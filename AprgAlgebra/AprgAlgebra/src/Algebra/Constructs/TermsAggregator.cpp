@@ -147,8 +147,8 @@ TermsAggregator::Indexes TermsAggregator::getNextOperatorIndexes(OperatorInputTy
             }
         }
     }
-    for (auto const& operatorLevelToIndexPair : operatorLevelToIndexMap) {
-        operatorIndexes.emplace_back(operatorLevelToIndexPair.second);
+    for (auto const& [operatorLevel, index] : operatorLevelToIndexMap) {
+        operatorIndexes.emplace_back(index);
     }
     return operatorIndexes;
 }

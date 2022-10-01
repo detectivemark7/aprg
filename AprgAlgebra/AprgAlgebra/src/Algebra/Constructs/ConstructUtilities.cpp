@@ -89,8 +89,7 @@ TermRaiseToANumber createTermRaiseToANumberFromTerm(Term const& term) {
 
 TermRaiseToANumber createTermRaiseToANumberFromMonomial(Monomial const& monomial) {
     Monomial newMonomial(monomial);
-    Monomial::VariablesToExponentsMap const& variablesToExponentsMap(
-        newMonomial.getVariablesToExponentsMap());
+    Monomial::VariablesToExponentsMap const& variablesToExponentsMap(newMonomial.getVariablesToExponentsMap());
     AlbaNumber exponent = (variablesToExponentsMap.size() == 1) ? (variablesToExponentsMap.cbegin())->second
                                                                 : getGcfOfExponentsInMonomial(newMonomial);
     newMonomial.raiseToPowerNumber(AlbaNumber(1) / exponent);
@@ -129,8 +128,7 @@ void createTermRaiseToANumberFromRaiseToPowerExpression(TermRaiseToANumber& resu
                 combinedExponentValue = combinedExponentValue * exponentTerm.getAsNumber();
                 exponentTerm.getAsConstantReference().setNumber(1);
             } else if (exponentTerm.isMonomial()) {
-                combinedExponentValue =
-                    combinedExponentValue * exponentTerm.getAsMonomial().getCoefficient();
+                combinedExponentValue = combinedExponentValue * exponentTerm.getAsMonomial().getCoefficient();
                 exponentTerm.getAsMonomialReference().setConstant(1);
             }
         }
@@ -160,9 +158,7 @@ void createTermRaiseToANumberFromMultiplicationAndDivisionExpression(
     bool isFirst(true);
     AlbaNumber commonExponent(1);
     bool areAllExponentsNegative(true);
-    for (auto const& baseExponentPair : termsRaiseToNumbers.getBaseToExponentMap()) {
-        Term const& base(baseExponentPair.first);
-        AlbaNumber const& exponent(baseExponentPair.second);
+    for (auto const& [base, exponent] : termsRaiseToNumbers.getBaseToExponentMap()) {
         if (!base.isConstant()) {
             if (exponent > 0) {
                 areAllExponentsNegative = false;
@@ -178,8 +174,8 @@ void createTermRaiseToANumberFromMultiplicationAndDivisionExpression(
     if (areAllExponentsNegative && commonExponent > 0) {
         commonExponent *= -1;
     }
-    for (auto& baseExponentPair : termsRaiseToNumbers.getBaseToExponentMap()) {
-        termsRaiseToNumbers.setBaseAndExponent(baseExponentPair.first, baseExponentPair.second / commonExponent);
+    for (auto const& [base, exponent] : termsRaiseToNumbers.getBaseToExponentMap()) {
+        termsRaiseToNumbers.setBaseAndExponent(base, exponent / commonExponent);
     }
 
     TermsOverTerms totWithoutCommonExponent(
@@ -194,8 +190,7 @@ TermRaiseToTerms createTermRaiseToTermsFromTerm(Term const& term) {
         TermRaiseToANumber termRaiseToANumber(createTermRaiseToANumberFromMonomial(term.getAsMonomial()));
         result.setBaseAndExponent(termRaiseToANumber.getBase(), termRaiseToANumber.getExponent());
     } else if (term.isPolynomial()) {
-        TermRaiseToANumber termRaiseToANumber(
-            createTermRaiseToANumberFromPolynomial(term.getAsPolynomial()));
+        TermRaiseToANumber termRaiseToANumber(createTermRaiseToANumberFromPolynomial(term.getAsPolynomial()));
         result.setBaseAndExponent(termRaiseToANumber.getBase(), termRaiseToANumber.getExponent());
     } else if (term.isExpression()) {
         result = createTermRaiseToTermsFromExpression(term.getAsExpression());
@@ -238,12 +233,9 @@ void createTermRaiseToTermsFromMultiplicationAndDivisionExpression(
 
     AlbaNumbers originalConstants;
     TermsWithDetails originalExponentsWithDetails;
-    for (auto const& baseExponentPair : originalTermsRaiseToTerms.getBaseToExponentMap()) {
-        Term const& base(baseExponentPair.first);
-        Term const& exponent(baseExponentPair.second);
+    for (auto const& [base, exponent] : originalTermsRaiseToTerms.getBaseToExponentMap()) {
         if (base.isConstant() && exponent.isConstant()) {
-            originalConstants.emplace_back(
-                base.getAsNumber() ^ exponent.getAsNumber());
+            originalConstants.emplace_back(base.getAsNumber() ^ exponent.getAsNumber());
         } else {
             originalBases.emplace_back(base);
             originalExponentsWithDetails.emplace_back(exponent, TermAssociationType::Positive);
