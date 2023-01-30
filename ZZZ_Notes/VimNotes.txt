@@ -68,6 +68,7 @@ Editors
 ---> if youre in normal mode, you press colon (you can see that cursor jump down to the bottom-left)
 ---> Basic X-commands:
 -----> ':q' means quit
+-----> ':q!' = quit without saving
 -----> ':w' means write (means save the file)
 -------> ':w [FILENAME]' save a new file
 -------> ':#,# w [FILENAME]' save the chunk of text between two lines (#,#)
@@ -156,10 +157,17 @@ Editors
 ---------> Forward Search: '/{regex}'
 ---------> Backward Search: '?{regex}'
 ---------> 'n' and 'N' for navigating matches (this is after performing the regex search)
+-----------> 'N' = go to next instance
+-----------> 'n' = go to previous instance
 -------> See Substitute section for search and replace
 -----> Composability of movement:
 -------> '5' then 'j' means go down 5 times
 -------> '3' then 'w' means move forward by 3 words
+-----> Goto line:
+-------> “G” = Go to end of file
+-------> #“G” = go to line #
+---------> 1G = go to line 1
+---------> 45G = go to line 45
 
 ---> Selection
 -----> Visual modes:
@@ -182,8 +190,10 @@ Editors
 -------> 'R' enter overwrite mode
 -----> Deleting text (goes into insert mode)
 -------> 'd{motion}' delete {motion}
----------> e.g. dw is delete word, 'd$' is delete to end of line, 'd0' is delete to beginning of line
--------> 'x' delete character (equal do 'dl')
+---------> 'dw' is delete word
+---------> 'd$' is delete to end of line
+---------> 'd0' is delete to beginning of line
+---------> 'dd' is delete line
 -------> Can be composed with movement keystrokes:
 ---------> 'd' then 'e' means delete to the end of the word
 ---------> 'd' then '$' means delete to the end of the line
@@ -192,6 +202,7 @@ Editors
 ---------> 'd' then '3' then 'j' means delete three lines down
 ---------> 'd' then '3' then 'w' means delete the next three words
 ---------> 'd' then 'l' means delete one thing to the right
+-------> 'x' delete character (equal do 'dl')
 ---------> 'x' means delete the character on the cursor
 -------> NOTE: this also can be done in the visual modes
 -----> Changing text (goes into insert mode)

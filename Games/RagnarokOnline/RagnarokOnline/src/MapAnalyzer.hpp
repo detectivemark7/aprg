@@ -22,9 +22,7 @@ class MapAnalyzer {
 public:
     MapAnalyzer();
 
-    void initialize();
     void analyze();
-    void sortData();
     void printResult() const;
 
     double getPotentialZenyFromMonster(Monster const& monster) const;
@@ -32,6 +30,10 @@ public:
     double getMultiplierForExperience(std::string const& mapName);
 
 private:
+    void gatherData();
+    void selectMaps();
+    void sortMaps();
+
     bool isDropRateAcceptable(double const dropRate) const;
     double getTalonRoDropRate(double const dropRate) const;
     double getBestPrice(Item const& item) const;
