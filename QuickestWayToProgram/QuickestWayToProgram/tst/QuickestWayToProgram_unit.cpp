@@ -29,7 +29,16 @@ int numberOfFilesToBeAnalyzedForExtraction;
 int numberOfFilesAnalyzedForExtraction;
 }  // namespace ProgressCounters
 
-bool canConstructVer2(string ransomNote, string magazine) {
+TEST(SampleTest, PrimerTest) {
+    int i;
+    double d;
+    d = i = 3.5;
+    ALBA_PRINT2(i, d);  // 3,3
+    i = d = 3.5;
+    ALBA_PRINT2(i, d);  // 3, 3.5
+}
+
+/*bool canConstructVer2(string ransomNote, string magazine) {
     array<int, 26> magazineLetterToCount{};
     auto itMagazine = magazine.begin();
 
@@ -178,7 +187,7 @@ TEST(SampleTest, KWeakestRows) {
     EXPECT_EQ(nullptr, result->next->next->next->next->next);
 }
 
-/*TEST(SampleTest, NumberOfSteps) {
+TEST(SampleTest, NumberOfSteps) {
     EXPECT_EQ(0, numberOfSteps(0));
     EXPECT_EQ(1, numberOfSteps(1));
     EXPECT_EQ(2, numberOfSteps(2));
