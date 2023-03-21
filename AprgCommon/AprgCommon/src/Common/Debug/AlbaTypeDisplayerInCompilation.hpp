@@ -3,11 +3,12 @@
 namespace alba {
 
 // NOTES on approach:
-// 1) To know the real type, DONT use std::type_info::name, 
+// 1) To know the real type, DONT use std::type_info::name,
 // because its required by the standard to change what is displayed.
 // 2) Boost.TypeIndex (.pretty_name()) provide accurate information in runtime, but we dont use boost.
 // 3) Print __PRETTY_FUNCTION__ or ALBA_MACROS_GET_PRETTY_FUNCTION it works!
 
+// Examples taken from Scott Meyers lecture.
 // NOTES on type deduction:
 // 1) auto type deduction is the same with template type deduction, except for brace initializer list (automatically
 // converts to std::initializer_list type) (ill-formed in C++17)

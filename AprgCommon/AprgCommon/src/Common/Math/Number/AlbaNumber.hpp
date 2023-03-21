@@ -77,7 +77,7 @@ public:
         static_assert(sizeof(ArithmeticType) <= 8, "Maximum size is 8 bytes/64 bits.");
         static_assert(
             !(sizeof(ArithmeticType) == 8 && typeHelper::isUnsignedType<ArithmeticType>()),
-            "Unsigned integer with 8 bytes/64 bits are not supported.");
+            "Unsigned integers with 8 bytes/64 bits are not supported.");
     }
 
     template <typename ArithmeticType>
