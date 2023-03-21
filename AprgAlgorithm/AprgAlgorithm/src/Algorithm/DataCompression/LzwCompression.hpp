@@ -43,8 +43,8 @@ public:
                 codeTrie.put(wholeInputString.substr(0, matchLength + 1), lastCode++);  // add new next code word
             }
             // remove processed part in the input:
-            wholeInputString = wholeInputString.substr(
-                matchLength);  // this is inefficient but trie only supports strings (not deque of chars)
+            wholeInputString = wholeInputString.substr(matchLength);
+            // this is inefficient but trie only supports strings (not deque of chars)
         }
         Code stopCodeWord(RADIX);
         writeCode(writer, stopCodeWord);  // write stop code word
