@@ -526,6 +526,12 @@ TEST(GetStringNumberFromStringTest, GetHexEquivalentOfCharacters) {
     EXPECT_EQ("FF", getHexEquivalentOfCharacters("\xff"));
 }
 
+TEST(GetStringFromStringTest, GetQuotedString) {
+    EXPECT_EQ(
+        R"("std::quoted() quotes this string and embedded \"quotes\" too")",
+        getQuotedString(R"(std::quoted() quotes this string and embedded "quotes" too)"));
+}
+
 TEST(UtilitiesStringTest, ConstructFileLocator) { EXPECT_FALSE(constructFileLocator(__FILE__, __LINE__).empty()); }
 
 TEST(UtilitiesStringTest, RandomString100Characters) {

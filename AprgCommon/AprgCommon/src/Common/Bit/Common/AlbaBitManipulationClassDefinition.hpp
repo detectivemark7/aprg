@@ -12,8 +12,8 @@ public:
 
     // rule of five or six
     AlbaBitManipulation() = delete;
-    ~AlbaBitManipulation() =
-        delete;  // disallow allocation on stack, only on heap(but no constructor so not possible as well)
+    ~AlbaBitManipulation() = delete;
+    // disallow allocation on stack, only on heap(but no constructor so not possible as well)
     AlbaBitManipulation(AlbaBitManipulation const &) = delete;
     AlbaBitManipulation &operator=(AlbaBitManipulation const &) = delete;
     AlbaBitManipulation(AlbaBitManipulation &&) = delete;

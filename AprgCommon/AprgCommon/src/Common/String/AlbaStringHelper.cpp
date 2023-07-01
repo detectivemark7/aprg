@@ -526,6 +526,12 @@ string getHexEquivalentOfCharacters(string_view stringToCheck) {
     return ss.str();
 }
 
+string getQuotedString(string_view stringToCheck) {
+    stringstream ss;
+    ss << std::quoted(string(stringToCheck));  // remove temporary string object when quoted has string view
+    return ss.str();
+}
+
 string constructFileLocator(string_view file, int const lineNumber) {
     stringstream ss;
     ss << file.substr(file.find_last_of('\\') + 1) << "[" << lineNumber << "]";
@@ -678,6 +684,7 @@ void splitToStringsUsingASeriesOfDelimeters(
 
 string getStringWithJustifyAlignment(string_view mainString, size_t const targetLength) {
     string result;
+    result.reserve(targetLength);
     string noRedundantWhiteSpace(getStringWithoutRedundantWhiteSpace(mainString));
     string noWhiteSpace(getStringWithoutWhiteSpace(mainString));
     if (mainString.empty()) {

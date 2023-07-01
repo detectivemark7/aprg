@@ -33,7 +33,7 @@ TEST(AlbaAnyTest, CopyAssignmentWorks) {
 TEST(AlbaAnyTest, MoveConstructorWorks) {
     AlbaAny originalAny(1234);
 
-    AlbaAny movedAny(move(originalAny));
+    AlbaAny movedAny(std::move(originalAny));
 
     EXPECT_FALSE(originalAny.hasContent());
     EXPECT_EQ(1234, movedAny.getContentAs<int>());
@@ -42,7 +42,7 @@ TEST(AlbaAnyTest, MoveConstructorWorks) {
 TEST(AlbaAnyTest, MoveAssignmentWorks) {
     AlbaAny originalAny(1234);
 
-    AlbaAny assignedAny = move(originalAny);
+    AlbaAny assignedAny = std::move(originalAny);
 
     EXPECT_FALSE(originalAny.hasContent());
     EXPECT_EQ(1234, assignedAny.getContentAs<int>());

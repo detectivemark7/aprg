@@ -25,9 +25,9 @@ public:
 
     AlbaMathVector() : m_values{} {}
 
-    AlbaMathVector(ValuesInArray const& values) : m_values(values) {}
+    explicit AlbaMathVector(ValuesInArray const& values) : m_values(values) {}
 
-    AlbaMathVector(std::initializer_list<DataType> const& values) : m_values{} {
+    explicit AlbaMathVector(std::initializer_list<DataType> const& values) : m_values{} {
         size_t limit = std::min(SIZE, static_cast<size_t>(values.size()));
         std::copy(begin(values), begin(values) + limit, begin(m_values));
     }
@@ -45,10 +45,10 @@ public:
         return !(first == second);
     }
 
-    bool operator<(AlbaMathVectorType const& second) const  // this is added so it can be used in map
-    {
+    bool operator<(AlbaMathVectorType const& second) const {
+        // this is added so it can be used in map
         bool result(false);
-        auto&& [firstMismatchIt, secondMismatchIt] =
+        auto [firstMismatchIt, secondMismatchIt] =
             std::mismatch(m_values.cbegin(), m_values.cend(), second.m_values.cbegin());
         if (firstMismatchIt != m_values.cend()) {
             result = *firstMismatchIt < *secondMismatchIt;

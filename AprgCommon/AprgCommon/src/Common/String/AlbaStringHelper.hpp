@@ -136,6 +136,7 @@ std::string getStringByRepeatingUntilDesiredLength(std::string_view stringToRepe
 std::string getNumberAfterThisString(std::string_view mainString, std::string_view stringToSearch);
 std::string getHexNumberAfterThisString(std::string_view mainString, std::string_view stringToSearch);
 std::string getHexEquivalentOfCharacters(std::string_view stringToCheck);
+std::string getQuotedString(std::string_view stringToCheck);
 
 // Utilities
 

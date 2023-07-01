@@ -19,9 +19,9 @@ public:
         m_dataPointer = make_unique<int>(*parameter.m_dataPointer);
         return *this;
     }
-    SampleClass(SampleClass&& parameter) : m_dataPointer(move(parameter.m_dataPointer)) {}
+    SampleClass(SampleClass&& parameter) : m_dataPointer(std::move(parameter.m_dataPointer)) {}
     SampleClass& operator=(SampleClass&& parameter) {
-        m_dataPointer = move(parameter.m_dataPointer);
+        m_dataPointer = std::move(parameter.m_dataPointer);
         return *this;
     }
     unique_ptr<int> m_dataPointer;

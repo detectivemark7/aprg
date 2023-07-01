@@ -39,7 +39,7 @@ public:
         return *this;
     }
 
-    operator bool() const { return hasContent(); }
+    explicit operator bool() const { return hasContent(); }
 
     operator ContentType() const { return get(); }
 
@@ -144,7 +144,7 @@ public:
         return m_empty;
     }
 
-    operator bool() const { return m_hasContent; }
+    explicit operator bool() const { return m_hasContent; }
 
     operator ContentType&() const {
         if (m_hasContent && isContentPointerValid()) {

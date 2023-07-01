@@ -12,6 +12,8 @@ public:
     AlbaScopeGuard(OnExitFunction&& functionParameter);
     ~AlbaScopeGuard() noexcept;
 
+    void operator()();
+
 private:
     OnExitFunction m_onExitFunction;
 };

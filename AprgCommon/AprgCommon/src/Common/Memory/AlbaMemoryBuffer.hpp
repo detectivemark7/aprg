@@ -11,6 +11,7 @@ namespace alba {
 
 class AlbaMemoryBuffer {
 public:
+    using ByteType = uint8_t;
     using BufferContainer = std::vector<uint8_t>;
 
     AlbaMemoryBuffer() = default;
@@ -18,7 +19,12 @@ public:
 
     // rule of zero
 
-    operator bool() const;  // not explicit
+    explicit operator bool() const;  // not explicit
+    ByteType operator[](size_t const index) const;
+    ByteType& operator[](size_t const index);
+    // If a class has a subscript operator, it usually should define two versions:
+    // one that returns a plain reference and the other that is a const member and returns a reference to const.
+
     bool hasContent() const;
     size_t getSize() const;
     void const* getConstantBufferPointer() const;
