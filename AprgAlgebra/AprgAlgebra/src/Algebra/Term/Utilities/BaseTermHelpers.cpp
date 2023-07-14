@@ -11,7 +11,7 @@ BaseTermUniquePointer createBasePointer(BaseTerm const& baseTerm) {
 }
 
 BaseTermUniquePointer createBasePointer(BaseTerm&& baseTerm) {
-    return getTermRValueReferenceFromBaseTerm(move(baseTerm)).createBasePointerByMove();
+    return getTermRValueReferenceFromBaseTerm(std::move(baseTerm)).createBasePointerByMove();
 }
 
 BaseTermUniquePointer duplicateUniquePointer(BaseTermUniquePointer const& uniquePointer) {
