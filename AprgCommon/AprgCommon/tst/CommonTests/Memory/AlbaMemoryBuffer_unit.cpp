@@ -212,19 +212,25 @@ TEST(AlbaMemoryBufferTest, SaveObjectWorksOnPrimitiveTypes) {
     EXPECT_EQ(input, output);
 }
 
-TEST(AlbaMemoryBufferTest, SaveObjectWorksOnDynamicTypes) {
-    vector<int> testVector{11, 22, 33, 44, 55};
+TEST(AlbaMemoryBufferTest, SaveObjectWorksOnStandardLayoutTypes) {
     AlbaMemoryBuffer buffer;
-    struct SampleDynamicClass {
-        vector<int> integers;
+    struct SampleStandardLayoutClass {
+        bool field1;
+        char field2;
+        int field3;
     };
-    SampleDynamicClass dynamicInput;
-    dynamicInput.integers = testVector;
+    SampleStandardLayoutClass standardLayoutInput{};
+    standardLayoutInput.field1 = true;
+    standardLayoutInput.field2 = 'A';
+    standardLayoutInput.field3 = 0xA1BA;
 
-    buffer.saveObject<SampleDynamicClass>(dynamicInput);
 
-    SampleDynamicClass& output(buffer.retrieveObjectAsReference<SampleDynamicClass>());
-    EXPECT_EQ(testVector, output.integers);
+    buffer.saveObject<SampleStandardLayoutClass>(standardLayoutInput);
+
+    SampleStandardLayoutClass& output(buffer.retrieveObjectAsReference<SampleStandardLayoutClass>());
+    EXPECT_TRUE(output.field1);
+    EXPECT_EQ('A', output.field2);
+    EXPECT_EQ(0xA1BA, output.field3);
 }
 
 TEST(AlbaMemoryBufferTest, OutputStreamOperatorWorks) {
