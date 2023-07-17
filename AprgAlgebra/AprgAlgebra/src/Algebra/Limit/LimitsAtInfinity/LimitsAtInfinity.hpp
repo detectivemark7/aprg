@@ -27,7 +27,6 @@ private:
 
     Term m_simplifiedTermAtInfinity;
     std::string m_variableName;
-    bool m_isSimplifiedDenominatorZero;
     DegreeOnlyMutator m_degreeOnlyMutator;
     RemoveMonomialsWithNegativeExponentMutator m_removeMonomialsWithNegativeExponentMutator;
 };

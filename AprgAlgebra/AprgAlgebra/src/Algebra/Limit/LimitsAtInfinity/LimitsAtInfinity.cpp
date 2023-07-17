@@ -19,7 +19,6 @@ namespace algebra {
 LimitsAtInfinity::LimitsAtInfinity(Term const& term, string const& variableName)
     : m_simplifiedTermAtInfinity(term),
       m_variableName(variableName),
-      m_isSimplifiedDenominatorZero(false),
       m_degreeOnlyMutator(variableName),
       m_removeMonomialsWithNegativeExponentMutator(variableName) {
     simplify();
