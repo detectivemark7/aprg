@@ -11,9 +11,9 @@ set(TEST_MODE "ON")
 #Locate APRG Directory first because its used on other cmakes
 include(${APRG_FILE_EXTRACTOR_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
+
 if(WIN32)
     #set for path of 7Zip for windows 32
     add_definitions(-DPATH_OF_7Z_EXECUTABLE="${APRG_DIR}/AprgFileExtractor/7z32/7z.exe")
@@ -35,7 +35,7 @@ if (TEST_MODE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG}")
     add_executable(${OUTFILE} ${APRG_FILE_EXTRACTOR_SOURCES_AND_TESTS})
     include_directories(${APRG_FILE_EXTRACTOR_INCLUDE_DIRECTORIES} ${APRG_FILE_EXTRACTOR_TEST_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${OUTFILE} gtest APRG_COMMON APRG_GREP_STRING_EVALUATOR ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(${OUTFILE} APRG_COMMON APRG_GREP_STRING_EVALUATOR ${APRG_GTEST_DEPENDENCIES})
     add_test(${OUTFILE} ${OUTFILE})
 else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED}")
