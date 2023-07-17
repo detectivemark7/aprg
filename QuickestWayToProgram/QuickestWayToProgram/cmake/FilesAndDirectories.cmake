@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(QUICKEST_WAY_TO_PROGRAM_SOURCE_DIRECTORY
     ${QUICKEST_WAY_TO_PROGRAM_DIR}/src
 )
