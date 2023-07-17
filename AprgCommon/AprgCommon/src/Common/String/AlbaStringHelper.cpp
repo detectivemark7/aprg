@@ -498,7 +498,9 @@ string getNumberAfterThisString(string_view mainString, string_view stringToSear
     if (isNotNpos(static_cast<int>(firstIndexOfFirstString))) {
         size_t lastIndexOfFirstString = firstIndexOfFirstString + stringToSearch.length();
         size_t lastIndexOfNumber;
-        for (lastIndexOfNumber = lastIndexOfFirstString; isNumber(mainString[lastIndexOfNumber]); ++lastIndexOfNumber)
+        for (lastIndexOfNumber = lastIndexOfFirstString;
+             lastIndexOfNumber < mainString.length() && isNumber(mainString[lastIndexOfNumber]);
+             ++lastIndexOfNumber)
             ;
         result = mainString.substr(lastIndexOfFirstString, lastIndexOfNumber - lastIndexOfFirstString);
     }
@@ -511,7 +513,8 @@ string getHexNumberAfterThisString(string_view mainString, string_view stringToS
     if (isNotNpos(static_cast<int>(firstIndexOfFirstString))) {
         size_t lastIndexOfFirstString = firstIndexOfFirstString + stringToSearch.length();
         size_t lastIndexOfNumber(lastIndexOfFirstString);
-        for (; isHexDigit(mainString[lastIndexOfNumber]); ++lastIndexOfNumber)
+        for (; lastIndexOfNumber < mainString.length() && isHexDigit(mainString[lastIndexOfNumber]);
+             ++lastIndexOfNumber)
             ;
         result = mainString.substr(lastIndexOfFirstString, lastIndexOfNumber - lastIndexOfFirstString);
     }
