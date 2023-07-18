@@ -64,14 +64,16 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsHalfOfTheWholeDocument) {
     ASSERT_TRUE(outputTestFile.good());
     ASSERT_FALSE(outputTestFile.eof());
     EXPECT_TRUE(fileReader.isNotFinished());
-#ifdef OS_WINDOWS
+    
+#if defined(OS_WINDOWS) && (defined(__clang__) || defined(__GNUC__) || defined(__GNUG__))
+    // Covers Windows GCC and Clang
     // windows handling is problematic, tellg on windows works on mysterious ways
     EXPECT_EQ(R"(4)", fileReader.getLine());
     EXPECT_EQ(R"(5)", fileReader.getLine());
     EXPECT_EQ(R"(6)", fileReader.getLine());
     EXPECT_EQ(R"(7)", fileReader.getLine());
-#endif
-#ifdef OS_LINUX
+#else
+    // Covers Linux and MSVC windows
     EXPECT_EQ(R"(2)", fileReader.getLine());
     EXPECT_EQ(R"(3)", fileReader.getLine());
     EXPECT_EQ(R"(4)", fileReader.getLine());
@@ -146,13 +148,14 @@ TEST(AlbaCropFileTest, CropWorksWhenCropSizeIsHalfOfTheWholeDocumentAtTheStart) 
     ASSERT_TRUE(outputTestFile.good());
     ASSERT_FALSE(outputTestFile.eof());
     EXPECT_TRUE(fileReader.isNotFinished());
-#ifdef OS_WINDOWS
+#if defined(OS_WINDOWS) && (defined(__clang__) || defined(__GNUC__) || defined(__GNUG__))
+    // Covers Windows GCC and Clang
     // windows handling is problematic, tellg on windows works on mysterious ways
     EXPECT_EQ(R"(0)", fileReader.getLine());
     EXPECT_EQ(R"(1)", fileReader.getLine());
     EXPECT_EQ(R"(2)", fileReader.getLine());
-#endif
-#ifdef OS_LINUX
+#else
+    // Covers Linux and MSVC windows
     EXPECT_EQ(R"(0)", fileReader.getLine());
     EXPECT_EQ(R"(1)", fileReader.getLine());
     EXPECT_EQ(R"(2)", fileReader.getLine());
