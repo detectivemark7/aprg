@@ -2,6 +2,7 @@
 
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
 
+#include <array>
 #include <queue>
 #include <vector>
 

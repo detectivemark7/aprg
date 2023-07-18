@@ -3,6 +3,7 @@
 #include <AprgUniqueProblems/DynamicProgramming/SupersequenceAndSubsequence/IncreasingSubsequence/LongestIncreasingSubsequenceWithLinearithmicTime.hpp>
 
 #include <algorithm>
+#include <iterator>
 #include <numeric>
 
 using namespace std;
