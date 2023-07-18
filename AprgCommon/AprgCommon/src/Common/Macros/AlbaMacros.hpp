@@ -24,11 +24,19 @@
 
 // Macro operations
 #define ALBA_MACROS_GET_STRING_LITERAL(parameter) #parameter  // The number-sign or "stringizing" operator.
-//#define ALBA_MACROS_GET_CHAR_LITERAL(x) #@x // The charizing operator. Its not supported.
-//#define ALBA_MACROS_GET_AS_A_TOKEN(parameter) ##parameter //The double-number-sign or token-pasting operator (##).
-//This needs to be used in the macro.
-// Note: The token pasting operator can be used in combination with the counter value macro to generate new named
-// macros.
+// #define ALBA_MACROS_GET_CHAR_LITERAL(x) #@x // The charizing operator. Its not supported.
+// #define ALBA_MACROS_GET_AS_A_TOKEN(parameter) ##parameter //The double-number-sign or token-pasting operator (##).
+// Note:
+// The token-pasting operator(## operator), is a preprocessor operator in C++ that is used to concatenate two tokens.
+// Tokens are individual words or symbols in a C++ program.
+// The token-pasting operator can be used to do a variety of things, including:
+// 1) Concatenating two identifiers to form a new identifier.
+// For example, the expression ##foo##bar would expand to the identifier foobar.
+// 2) Concatenating a string literal and an identifier to form a new string literal.
+// For example, the expression "hello" ## "world" would expand to the string literal helloworld.
+// 3) Concatenating two macro definitions to form a new macro definition.
+// For example, the macro definition #define FOO bar and the macro definition
+// #define BAR baz could be concatenated to form the macro definition #define FOOBAR barbaz.
 
 // #pragma message macros
 #define ALBA_MACROS_VALUE_FOR_PRAGMA_MESSAGE(parameter) ALBA_MACROS_GET_STRING_LITERAL(parameter)
@@ -52,6 +60,17 @@
 // Anonymous variable
 #define ALBA_MACROS_GET_NAME_WITH_COUNT(prefixOfName) ALBA_MACROS_CONCATENATE(prefixOfName, __COUNTER__)
 
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+// This works for Clang and GCC only.
+// The MSVC (Microsoft Visual C++) compiler has a limitation when it comes to processing preprocessor macros with a
+// series of arguments separately. This limitation is due to the way the MSVC compiler handles macro expansion. In the
+// C/C++ preprocessor, macros can accept multiple arguments, and each argument can be expanded separately before being
+// substituted into the macro body. This is known as argument prescan. It allows macros to work with complex expressions
+// and perform operations on individual arguments. However, the MSVC compiler does not perform argument prescan for
+// macros by default. Instead, it performs macro expansion in a single pass, treating the entire argument list as a
+// single token. This means that the macro body is expanded with the entire series of arguments as a single unit,
+// without any separation between the individual arguments.
+
 // Count arguments macros
 #define ALBA_MACROS_COUNT_ARGUMENTS(...) \
     ALBA_MACROS_COUNT_ARGUMENTS_EXPANSION(__VA_ARGS__, ALBA_MACROS_COUNT_IN_REVERSE_SEQUENCE())
@@ -65,3 +84,4 @@
     63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36,   \
         35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, \
         7, 6, 5, 4, 3, 2, 1, 0
+#endif

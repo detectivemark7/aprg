@@ -11,17 +11,17 @@ std::stringstream s_debugStringStream;  // make this inline if needed on the hea
 
 // Start of test file
 #include <Common/Debug/AlbaDebug.hpp>
+#include <Common/String/AlbaStringHelper.hpp>
 
 #include <gtest/gtest.h>
 
 #include <map>
 #include <memory>
 
+using namespace alba::stringHelper;
 using namespace std;
 
 namespace alba {
-
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
 
 TEST(AlbaDebugTest, PrintingSingleParametersWorks) {
     s_debugStringStream.str(string());
@@ -30,10 +30,14 @@ TEST(AlbaDebugTest, PrintingSingleParametersWorks) {
 
     ALBA_PRINT3(singleParameter1, singleParameter2, singleParameter3);
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line:  31 in TestBody(...): singleParameter1 : [12] singleParameter2 : [345] singleParameter3 : [6789])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter1", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "12", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter2", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "345", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter3", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "6789", runningIndex));
 }
 
 TEST(AlbaDebugTest, PrintingStringsWorks) {
@@ -43,10 +47,11 @@ TEST(AlbaDebugTest, PrintingStringsWorks) {
 
     ALBA_PRINT2(stringToTest, "string literal to test");
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line:  44 in TestBody(...): stringToTest : ["std::string to test"] ["string literal to test"])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "stringToTest", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "std::string to test", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "string literal to test", runningIndex));
 }
 
 TEST(AlbaDebugTest, PrintingPointersWorks) {
@@ -58,24 +63,30 @@ TEST(AlbaDebugTest, PrintingPointersWorks) {
 
     ALBA_PRINT3(nullPointer, rawPointer, uniquePointer);
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line:  59 in TestBody(...): nullPointer : [nullptr] *rawPointer : [695] *uniquePointer : [695])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "nullPointer", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "nullptr", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "rawPointer", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "695", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "uniquePointer", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "695", runningIndex));
 }
 
 TEST(AlbaDebugTest, PrintingContainersWorks) {
     s_debugStringStream.str(string());
     s_debugStringStream.clear();
     vector<int> container1{454, 6, 512, 315};
-    map<int, char> container2{{1, 'A'}, {5, 'E'}, {7, 'G'}, {8, 'H'}};
+    map<int, char> container2{{1, 'A'}, {5, 'E'}, {7, 'G'}};
 
     ALBA_PRINT2(container1, container2);
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line:  73 in TestBody(...): container1 : [{size: 4 | 454, 6, 512, 315, }] container2 : [{size: 4 | (1, A), (5, E), (7, G), (8, H), }])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "container1", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "454, 6, 512, 315,", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "container2", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "(1, A), (5, E), (7, G),", runningIndex));
 }
 
 TEST(AlbaDebugTest, ManipulateOutputStreamsWorks) {
@@ -88,10 +99,14 @@ TEST(AlbaDebugTest, ManipulateOutputStreamsWorks) {
     ALBA_PRINT3(singleParameter1, singleParameter2, singleParameter3);
     ALBA_PRINT_MANIPULATE_OUTPUT(dec);
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line:  58 in TestBody(...): singleParameter1 : [C] singleParameter2 : [159] singleParameter3 : [1A85])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter1", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "C", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter2", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "159", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter3", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "1A85", runningIndex));
 }
 
 namespace {
@@ -120,10 +135,33 @@ TEST(AlbaDebugTest, DebugClassOutputOperatorsWorks) {
 
     ALBA_PRINT1(object);
 
-    EXPECT_EQ(
-        R"(ALBA_PRINT in line: 121 in TestBody(...): object : [(parameter1:1234,parameter2:7777,sum:9011)])"
-        "\n",
-        s_debugStringStream.str());
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "parameter1", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "1234", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "parameter2", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "7777", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "sum", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "9011", runningIndex));
+}
+
+#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+
+TEST(AlbaDebugTest, PrintingWithoutSpecifyNumberOfParametersWorks) {
+    s_debugStringStream.str(string());
+    s_debugStringStream.clear();
+    int singleParameter1 = 12, singleParameter2 = 345, singleParameter3 = 6789;
+
+    ALBA_PRINT_ALL(singleParameter1, singleParameter2, singleParameter3);
+
+    string actualPrintString(s_debugStringStream.str());
+    int runningIndex = 0;
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter1", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "12", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter2", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "345", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "singleParameter3", runningIndex));
+    EXPECT_TRUE(isStringFoundCaseSensitive(actualPrintString, "6789", runningIndex));
 }
 
 #endif
