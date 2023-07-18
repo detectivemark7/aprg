@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(APRG_LOCAL_SCREEN_MONITORING_SOURCE_DIRECTORY
     ${APRG_LOCAL_SCREEN_MONITORING_DIR}/src
 )
