@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(APRG_GNU_PLOT_SOURCE_DIRECTORY
     ${APRG_GNU_PLOT_DIR}/src
 )
