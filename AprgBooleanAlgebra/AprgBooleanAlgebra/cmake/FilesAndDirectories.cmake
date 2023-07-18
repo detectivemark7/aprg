@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(APRG_BOOLEAN_ALGEBRA_SOURCE_DIRECTORY
     ${APRG_BOOLEAN_ALGEBRA_DIR}/src
 )
