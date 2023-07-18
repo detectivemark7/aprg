@@ -64,11 +64,11 @@ void AprgFileExtractor::copyRelativeFilePathsFromCompressedFile(
     AlbaFileReader fileReader(tempFile);
     while (fileReader.isNotFinished()) {
         string lineInFile(fileReader.getLine());
-        if (stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(lineInFile, "Path = ")) {
+        if (stringHelper::isStringFoundCaseSensitive(lineInFile, "Path = ")) {
             path = stringHelper::getStringWithoutStartingAndTrailingWhiteSpace(
                 stringHelper::getStringAfterThisString(lineInFile, "Path = "));
-        } else if (stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(lineInFile, "Attributes = ")) {
-            if (!stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(
+        } else if (stringHelper::isStringFoundCaseSensitive(lineInFile, "Attributes = ")) {
+            if (!stringHelper::isStringFoundCaseSensitive(
                     stringHelper::getStringAfterThisString(lineInFile, "Attributes = "), "D")) {
                 files.emplace(path);
             }
