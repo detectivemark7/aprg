@@ -1,5 +1,7 @@
 #include "EquationOperator.hpp"
 
+#include <ostream>
+
 using namespace std;
 
 namespace alba {
