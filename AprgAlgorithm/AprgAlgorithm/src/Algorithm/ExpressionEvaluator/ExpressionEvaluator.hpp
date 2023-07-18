@@ -121,16 +121,16 @@ private:
     }
     void performOperationWithStacks(ValueStack& valueStack, OperatorStack& operatorStack) {
         if (!operatorStack.empty()) {
-            Term& operatorTerm(operatorStack.top());
+            Term operatorTerm(operatorStack.top());
             operatorStack.pop();
             if (operatorTerm.isPrefixUnaryOperator() && !valueStack.empty()) {
-                ValueTemplateType const& value(valueStack.top());
+                ValueTemplateType const value(valueStack.top());
                 valueStack.pop();
                 valueStack.push(performUnaryOperation(operatorTerm.getOperator(), value));
             } else if (operatorTerm.isBinaryOperator() && valueStack.size() >= 2) {
-                ValueTemplateType const& value1(valueStack.top());
+                ValueTemplateType const value1(valueStack.top());
                 valueStack.pop();
-                ValueTemplateType const& value2(valueStack.top());
+                ValueTemplateType const value2(valueStack.top());
                 valueStack.pop();
                 valueStack.push(performBinaryOperation(value1, operatorTerm.getOperator(), value2));
             }

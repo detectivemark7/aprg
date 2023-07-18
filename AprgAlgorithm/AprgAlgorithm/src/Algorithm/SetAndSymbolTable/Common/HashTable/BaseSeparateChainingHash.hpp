@@ -5,6 +5,7 @@
 #include <Algorithm/SetAndSymbolTable/SymbolTable/LinkedList/UnorderedLinkedListSymbolTable.hpp>
 #include <Algorithm/Sort/MergeSorter/MergeSorterUtilities.hpp>
 
+#include <array>
 #include <memory>
 
 namespace alba {

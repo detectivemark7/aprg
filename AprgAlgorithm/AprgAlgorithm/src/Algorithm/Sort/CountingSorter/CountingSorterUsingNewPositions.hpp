@@ -2,6 +2,7 @@
 
 #include <Algorithm/Sort/BaseSorter.hpp>
 
+#include <array>
 #include <functional>
 
 namespace alba {

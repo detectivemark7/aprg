@@ -2,6 +2,7 @@
 
 #include <Algorithm/Queue/BaseQueue.hpp>
 
+#include <array>
 #include <cassert>
 #include <memory>
 

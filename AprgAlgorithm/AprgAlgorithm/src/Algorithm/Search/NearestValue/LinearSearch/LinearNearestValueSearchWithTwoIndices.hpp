@@ -58,6 +58,9 @@ public:
                         result = std::distance(m_values.cbegin(), itHigher);
                     }
                 }
+                if (itLower == itHigher) {
+                    break;
+                }
             }
         }
         return result;

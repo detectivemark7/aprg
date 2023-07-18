@@ -49,6 +49,9 @@ private:
                 result = std::distance(m_values.cbegin(), itHigher);
                 break;
             }
+            if (itLower == itHigher) {
+                break;
+            }
         }
         return result;
     }

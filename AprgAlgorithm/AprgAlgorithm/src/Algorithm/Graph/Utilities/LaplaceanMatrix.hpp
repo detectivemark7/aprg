@@ -4,6 +4,8 @@
 #include <Algorithm/Graph/Utilities/GraphUtilities.hpp>
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
 
+#include <array>
+
 namespace alba {
 
 namespace algorithm {

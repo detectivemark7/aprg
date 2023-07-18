@@ -3,6 +3,8 @@
 #include <Algorithm/Graph/DirectedGraph/BaseDirectedGraph.hpp>
 #include <Common/Math/Matrix/AlbaMatrix.hpp>
 
+#include <array>
+
 namespace alba {
 
 namespace algorithm {

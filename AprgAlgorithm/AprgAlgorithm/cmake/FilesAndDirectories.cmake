@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(APRG_ALGORITHM_SOURCE_DIRECTORY
     ${APRG_ALGORITHM_DIR}/src
 )
