@@ -59,7 +59,7 @@ TEST(RealAutomationTest, DISABLED_TraverseTalonRoShops)  // DISABLED_
         bool isNextDisabled(false);
         while (fileReader.isNotFinished()) {
             string line(fileReader.getLineAndIgnoreWhiteSpaces());
-            if (isStringFoundInsideTheOtherStringCaseSensitive(
+            if (isStringFoundCaseSensitive(
                     line, R"(class="paginate_button page-item next disabled")")) {
                 isNextDisabled = true;
                 break;
@@ -115,7 +115,7 @@ TEST(RealAutomationTest, DISABLED_TraverseDatabaseOnRms) {
             bool isNextPageTextFound(false);
             while (fileReader.isNotFinished()) {
                 string line(fileReader.getLineAndIgnoreWhiteSpaces());
-                if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(title="Next page")")) {
+                if (isStringFoundCaseSensitive(line, R"(title="Next page")")) {
                     isNextPageTextFound = true;
                     break;
                 }
