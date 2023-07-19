@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(ASIL_BASEBAND_POOLING_AND_PROGRAMS_SOURCE_DIRECTORY
     ${ASIL_BASEBAND_POOLING_AND_PROGRAMS_DIR}/src
 )
