@@ -23,7 +23,7 @@ void RttAnalyzer2::processFile(string const& file) {
 
         while (logFileReader.isNotFinished()) {
             string lineInFile(logFileReader.getLineAndIgnoreWhiteSpaces());
-            if (isStringFoundInsideTheOtherStringNotCaseSensitive(
+            if (isStringFoundNotCaseSensitive(
                     lineInFile, "final RTT value reported to DSP explorer")) {
                 processLine(outputLogStream, lineInFile);
             }
@@ -57,9 +57,9 @@ void RttAnalyzer2::processFile2(string const& file) {
 
 void RttAnalyzer2::processLine2(string const& fileName, string const& line) {
     static string dateTime;
-    if (isStringFoundInsideTheOtherStringNotCaseSensitive(line, "2019 Apr")) {
+    if (isStringFoundNotCaseSensitive(line, "2019 Apr")) {
         dateTime = getStringInBetweenTwoStrings(line, "2019 Apr  3  ", "  [");
-    } else if (isStringFoundInsideTheOtherStringNotCaseSensitive(line, "RXD_FILT")) {
+    } else if (isStringFoundNotCaseSensitive(line, "RXD_FILT")) {
         unsigned int maxPos = convertStringToNumber<unsigned int>(getNumberAfterThisString(line, "max_pos[0]: "));
         unsigned int refPos = convertStringToNumber<unsigned int>(getNumberAfterThisString(line, "ref_pos: "));
         int difference = static_cast<int>(maxPos) - static_cast<int>(refPos);
@@ -81,7 +81,7 @@ void RttAnalyzer2::processFile3(string const& file) {
 
         while (logFileReader.isNotFinished()) {
             string lineInFile(logFileReader.getLineAndIgnoreWhiteSpaces());
-            if (isStringFoundInsideTheOtherStringNotCaseSensitive(lineInFile, "peak_pos_cx8")) {
+            if (isStringFoundNotCaseSensitive(lineInFile, "peak_pos_cx8")) {
                 processLine3(outputLogStream, lineInFile);
             }
         }

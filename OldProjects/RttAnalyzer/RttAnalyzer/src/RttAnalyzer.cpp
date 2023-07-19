@@ -31,21 +31,21 @@ void RttAnalyzer::processFile(std::string const& file) {
 
 void RttAnalyzer::processLine(std::string const& line) {
     static string dateTime;
-    if (isStringFoundInsideTheOtherStringNotCaseSensitive(line, "0x4178")) {
+    if (isStringFoundNotCaseSensitive(line, "0x4178")) {
         dateTime = getStringWithoutStartingAndTrailingWhiteSpace(getStringBeforeThisString(line, "["));
     } else if (
-        isStringFoundInsideTheOtherStringNotCaseSensitive(line, "PSC") &&
-        isStringFoundInsideTheOtherStringNotCaseSensitive(line, "(cx8)")) {
+        isStringFoundNotCaseSensitive(line, "PSC") &&
+        isStringFoundNotCaseSensitive(line, "(cx8)")) {
         strings titles;
         splitToStrings<SplitStringType::WithoutDelimeters>(titles, line, "|");
         processTitles(titles);
     } else if (
-        isStringFoundInsideTheOtherStringNotCaseSensitive(line, "SET") &&
-        isStringFoundInsideTheOtherStringNotCaseSensitive(line, "|")) {
+        isStringFoundNotCaseSensitive(line, "SET") &&
+        isStringFoundNotCaseSensitive(line, "|")) {
         strings values;
         splitToStrings<SplitStringType::WithoutDelimeters>(values, line, "|");
         processValues(dateTime, values);
-    } else if (!isStringFoundInsideTheOtherStringNotCaseSensitive(line, "------")) {
+    } else if (!isStringFoundNotCaseSensitive(line, "------")) {
         m_cx8IndexOptional.reset();
         m_pnPosIndexOptional.reset();
     }
@@ -55,24 +55,24 @@ void RttAnalyzer::processLine(std::string const& line) {
 void RttAnalyzer::processLine(std::string const& line)
 {
     static string dateTime;
-    if(isStringFoundInsideTheOtherStringNotCaseSensitive(line, "0x4179"))
+    if(isStringFoundNotCaseSensitive(line, "0x4179"))
     {
         dateTime = getStringWithoutStartingAndTrailingWhiteSpace(getStringBeforeThisString(line,"["));
     }
-    else if(isStringFoundInsideTheOtherStringNotCaseSensitive(line, "(Cx8)") &&
-isStringFoundInsideTheOtherStringNotCaseSensitive(line, "PN Pos"))
+    else if(isStringFoundNotCaseSensitive(line, "(Cx8)") &&
+isStringFoundNotCaseSensitive(line, "PN Pos"))
     {
         strings titles;
         splitToStrings<SplitStringType::WithoutDelimeters>(titles, line, "|");
         processTitles(titles);
     }
-    else if(isStringFoundInsideTheOtherStringNotCaseSensitive(line, "|"))
+    else if(isStringFoundNotCaseSensitive(line, "|"))
     {
         strings values;
         splitToStrings<SplitStringType::WithoutDelimeters>(values, line, "|");
         processValues(dateTime, values);
     }
-    else if(isStringFoundInsideTheOtherStringNotCaseSensitive(line, "-"))
+    else if(isStringFoundNotCaseSensitive(line, "-"))
     {
         m_posNumber = 0;
     }
@@ -87,7 +87,7 @@ isStringFoundInsideTheOtherStringNotCaseSensitive(line, "PN Pos"))
 void RttAnalyzer::processTitles(strings const& titles) {
     unsigned int index = 0;
     for (string const& title : titles) {
-        if (isStringFoundInsideTheOtherStringNotCaseSensitive(title, "(cx8)") && !m_cx8IndexOptional) {
+        if (isStringFoundNotCaseSensitive(title, "(cx8)") && !m_cx8IndexOptional) {
             m_cx8IndexOptional = index;
             break;
         }
@@ -101,11 +101,11 @@ void RttAnalyzer::processTitles(strings const& titles)
     unsigned int index=0;
     for(string const& title : titles)
     {
-        if(isStringFoundInsideTheOtherStringNotCaseSensitive(title, "(Cx8)") && !m_cx8IndexOptional)
+        if(isStringFoundNotCaseSensitive(title, "(Cx8)") && !m_cx8IndexOptional)
         {
             m_cx8IndexOptional.setValue(index);
         }
-        else if(isStringFoundInsideTheOtherStringNotCaseSensitive(title, "PN Pos") && !m_pnPosIndexOptional)
+        else if(isStringFoundNotCaseSensitive(title, "PN Pos") && !m_pnPosIndexOptional)
         {
             m_pnPosIndexOptional.setValue(index);
         }
