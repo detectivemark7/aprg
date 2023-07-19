@@ -11,9 +11,8 @@ set(TEST_MODE "ON")
 #Locate APRG Directory first because its used on other cmakes
 include(${HEART_TEE_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Include other projects
 include(${APRG_DIR}/gtest/AprgCmakeInclude/gtest.cmake)
@@ -34,7 +33,7 @@ if (TEST_MODE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG}")
     add_executable(${OUTFILE} ${HEART_TEE_SOURCES_AND_TESTS})
     include_directories(${HEART_TEE_INCLUDE_DIRECTORIES} ${HEART_TEE_TEST_INCLUDE_DIRECTORIES} ${SPECIAL_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${OUTFILE} gtest ${CMAKE_THREAD_LIBS_INIT} mysqlclient)
+    target_link_libraries(${OUTFILE} mysqlclient ${APRG_GTEST_DEPENDENCIES})
     add_test(${OUTFILE} ${OUTFILE})
 else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED}")
