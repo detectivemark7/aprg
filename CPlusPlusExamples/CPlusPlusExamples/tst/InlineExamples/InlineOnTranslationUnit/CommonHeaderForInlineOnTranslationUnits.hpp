@@ -7,15 +7,15 @@ namespace alba {
 namespace InlineOnTranslationUnits {
 
 constexpr int constInteger = 100;              // implicity inline (external linkage)
-inline int inlineIntegerWithDefinition = 200;  // explicitly inline(external linkage)
-inline int inlineIntegerWithDeclaration;       // explicitly inline(external linkage)
+inline int inlineIntegerWithDefinition = 200;  // explicitly inline (external linkage)
+inline int inlineIntegerWithDeclaration;       // explicitly inline (external linkage)
 extern inline int externInlineInteger;         // extern so declaration only (incomplete type)
-static inline int staticInlineInteger = 700;   // static overrides inline so it has internal linkage
-inline std::string inlineString{"800"};        // explicitly inline(external linkage)
+static inline int staticInlineInteger = 500;   // static overrides inline so it has internal linkage
+inline std::string inlineString{"600"};        // explicitly inline (external linkage)
 
 // same goes for functions (but there are no free const functions)
-constexpr int freeFunction()  // implicity inline (external linkage)
-{
+constexpr int freeFunction() {
+    // implicity inline (external linkage)
     return 1;
 }
 inline int inlineFreeFunction();  // explicitly inline (external linkage)
@@ -38,13 +38,16 @@ struct TranslationUnitValues {
     int constInteger;
     int inlineIntegerWithDefinition;
     int inlineIntegerWithDeclaration;
-    int inlineIntegerAtTranslationUnit;
-    int nonInlineAtTranslationUnit;
     int externInlineInteger;
     int staticInlineInteger;
     std::string inlineString;
+    int inlineIntegerAtTranslationUnit;
+    int nonInlineAtTranslationUnit;
+    int constIntegerInClass;
 };
 
+void restoreInitialValuesForTranslationUnit1();
+void restoreInitialValuesForTranslationUnit2();
 TranslationUnitValues getValuesInTranslationUnit1();
 TranslationUnitValues getValuesInTranslationUnit2();
 

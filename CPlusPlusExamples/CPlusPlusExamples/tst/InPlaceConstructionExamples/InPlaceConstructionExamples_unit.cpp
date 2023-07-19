@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
+#include <array>
 #include <initializer_list>
 #include <iostream>
 #include <memory>
