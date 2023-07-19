@@ -29,7 +29,16 @@ int numberOfFilesToBeAnalyzedForExtraction;
 int numberOfFilesAnalyzedForExtraction;
 }  // namespace ProgressCounters
 
-TEST(SampleTest, uninintializedcopyTest) {
+TEST(SampleTest, PrimerTest) {
+    int i;
+    double d;
+    d = i = 3.5;
+    ALBA_PRINT2(i, d);  // 3,3
+    i = d = 3.5;
+    ALBA_PRINT2(i, d);  // 3, 3.5
+}
+
+/*TEST(SampleTest, uninintializedcopyTest) {
     std::vector<int> v1 = {1, 2, 3, 4, 5};
     std::vector<int> v2(3);
 
@@ -40,15 +49,6 @@ TEST(SampleTest, uninintializedcopyTest) {
     }
 
     std::cout << "v1:" << v1.size() << " v2:" << v2.size() << std::endl;
-}
-
-/*TEST(SampleTest, PrimerTest) {
-    int i;
-    double d;
-    d = i = 3.5;
-    ALBA_PRINT2(i, d);  // 3,3
-    i = d = 3.5;
-    ALBA_PRINT2(i, d);  // 3, 3.5
 }
 
 bool canConstructVer2(string ransomNote, string magazine) {
