@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(CONVERT_PLMNID_TO_MCC_MNC_SOURCE_DIRECTORY
     ${CONVERT_PLMNID_TO_MCC_MNC_DIR}/src
 )
