@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(PERFORMANCE_ANALYZER_SOURCE_DIRECTORY
     ${PERFORMANCE_ANALYZER_DIR}/src
 )

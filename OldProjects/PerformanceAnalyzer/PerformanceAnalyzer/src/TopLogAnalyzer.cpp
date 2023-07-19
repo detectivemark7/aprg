@@ -64,7 +64,7 @@ void TopLogAnalyzer::readTopLogsAndSaveToDatabase(std::string const& pathOfTopLo
             saveDataFromHeaders(lineInLogs);
         } else if (
             m_state == TopLogAnalyzerState::BeforeColumnHeaders &&
-            stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "%Cpu0  :")) {
+            stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "%Cpu0  :")) {
             saveOverallCpuData(lineInLogs, currentEntry);
         }
         if (m_state == TopLogAnalyzerState::AfterColumnHeaders) {
@@ -98,13 +98,13 @@ stringHelper::strings TopLogAnalyzer::getProcessNamesForCpuReport() {
         [&](string const& firstProcessName, string const& secondProcessName) {
             bool result(false);
             bool isTcomTupcOnFirstProcess(
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "TCOM") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "Conman") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "Aalman"));
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "TCOM") ||
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "Conman") ||
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "Aalman"));
             bool isTcomTupcOnSecondProcess(
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "TCOM") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "Conman") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "Aalman"));
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "TCOM") ||
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "Conman") ||
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "Aalman"));
             double firstProcessCpuBasis(0);
             double secondProcessCpuBasis(0);
             if (m_processToCpuMemCollectionMap.find(firstProcessName) != m_processToCpuMemCollectionMap.end()) {
@@ -183,13 +183,13 @@ stringHelper::strings TopLogAnalyzer::getProcessNamesForMemReport() {
         [&](string const& firstProcessName, string const& secondProcessName) {
             bool result(false);
             bool isTcomTupcOnFirstProcess(
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "TCOM") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "Conman") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(firstProcessName, "Aalman"));
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "TCOM") ||
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "Conman") ||
+                stringHelper::isStringFoundNotCaseSensitive(firstProcessName, "Aalman"));
             bool isTcomTupcOnSecondProcess(
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "TCOM") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "Conman") ||
-                stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(secondProcessName, "Aalman"));
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "TCOM") ||
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "Conman") ||
+                stringHelper::isStringFoundNotCaseSensitive(secondProcessName, "Aalman"));
             double firstProcessMemBasis(0);
             double secondProcessMemBasis(0);
             if (m_processToCpuMemCollectionMap.find(firstProcessName) != m_processToCpuMemCollectionMap.end()) {
@@ -237,14 +237,14 @@ void TopLogAnalyzer::putEntriesInMemReport(
 }
 
 bool TopLogAnalyzer::isTopCommandFirstLine(string const& lineInLogs) const {
-    return stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "top - ");
+    return stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "top - ");
 }
 
 bool TopLogAnalyzer::isTopCommandHeaderLine(string const& lineInLogs) const {
-    return stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "PID") &&
-           stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "%CPU") &&
-           stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "%MEM") &&
-           stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, "COMMAND");
+    return stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "PID") &&
+           stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "%CPU") &&
+           stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "%MEM") &&
+           stringHelper::isStringFoundNotCaseSensitive(lineInLogs, "COMMAND");
 }
 
 void TopLogAnalyzer::saveAndClearCurrentEntry(DataEntry& currentEntry) {

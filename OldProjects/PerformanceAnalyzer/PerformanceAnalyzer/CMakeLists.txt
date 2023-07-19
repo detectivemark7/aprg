@@ -8,9 +8,8 @@ set(PERFORMANCE_ANALYZER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 #Locate APRG Directory first because its used on other cmakes
 include(${PERFORMANCE_ANALYZER_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Assign specific definitions
 if(WIN32)
@@ -37,6 +36,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG}")
 add_executable(${OUTFILE} ${PERFORMANCE_ANALYZER_SOURCES_AND_TESTS})
 include_directories(${PERFORMANCE_ANALYZER_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
 target_link_libraries(APRG_FILE_EXTRACTOR APRG_COMMON)
-target_link_libraries(${OUTFILE} ${CMAKE_THREAD_LIBS_INIT} WCDMA_TOOLS_BACKEND APRG_FILE_EXTRACTOR APRG_GREP_STRING_EVALUATOR APRG_COMMON gtest ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${OUTFILE} WCDMA_TOOLS_BACKEND APRG_FILE_EXTRACTOR APRG_GREP_STRING_EVALUATOR APRG_COMMON ${APRG_GTEST_DEPENDENCIES})
 add_test(${OUTFILE} ${OUTFILE})
 include(${APRG_DIR}/AprgCMakeHelpers/LastStep.cmake)
