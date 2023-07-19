@@ -8,9 +8,8 @@ set(BOOST_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 #Locate APRG Directory first because its used on other cmakes
 include(${BOOST_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Include other projects
 include(${APRG_DIR}/gtest/AprgCmakeInclude/gtest.cmake)
@@ -24,9 +23,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_RTTI}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG_WITH_RTTI}")
 add_executable(${OUTFILE} ${BOOST_TESTS})
 include_directories(${BOOST_INCLUDE_DIRECTORIES} ${BOOST_TEST_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
-if(WIN32)
-    set(IconvLibraryIfNeeded "iconv")
-endif()
-target_link_libraries(${OUTFILE} ${Boost_LIBRARIES} APRG_COMMON gtest ${CMAKE_THREAD_LIBS_INIT} ${IconvLibraryIfNeeded})
+target_link_libraries(${OUTFILE} APRG_COMMON ${Boost_LIBRARIES} ${APRG_ICONV_DEPENDENCIES} ${APRG_GTEST_DEPENDENCIES})
 add_test(${OUTFILE} ${OUTFILE})
 include(${APRG_DIR}/AprgCMakeHelpers/LastStep.cmake)
