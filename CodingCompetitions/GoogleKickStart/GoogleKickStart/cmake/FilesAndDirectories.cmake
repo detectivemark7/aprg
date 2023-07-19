@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(CODING_COMPETITIONS_COMMON_DIRECTORY
     ${APRG_DIR}/CodingCompetitions/Common
 )
