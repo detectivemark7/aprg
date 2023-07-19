@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(WCDMA_TOOLS_BACKEND_SOURCE_DIRECTORY
     ${WCDMA_TOOLS_BACKEND_DIR}/src
 )
