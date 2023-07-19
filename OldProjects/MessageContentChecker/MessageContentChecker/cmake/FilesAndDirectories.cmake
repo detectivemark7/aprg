@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(MESSAGE_CONTENT_CHECKER_SOURCE_DIRECTORY
     ${MESSAGE_CONTENT_CHECKER_DIR}/src
 )

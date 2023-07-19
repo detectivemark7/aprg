@@ -11,9 +11,8 @@ set(TEST_MODE "ON")
 #Locate APRG Directory first because its used on other cmakes
 include(${MESSAGE_CONTENT_CHECKER_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Include other projects
 include(${APRG_DIR}/gtest/AprgCmakeInclude/gtest.cmake)
@@ -23,7 +22,7 @@ include(${APRG_DIR}/AprgCommon/AprgCmakeInclude/AprgCommon.cmake)
 include(${MESSAGE_CONTENT_CHECKER_DIR}/cmake/FilesAndDirectories.cmake)
 
 #Assign Sack Directory
-set(SackDirectory "N:/Branches/ControlPlane/sbts1/tcom")
+set(SackDirectory "F:/Branches/ControlPlane/sbts1/tcom")
 
 set(SACKS_DIR_TO_INCLUDE
     ${SackDirectory}/I_Interface/Private/SC_TCOM/Temp
@@ -65,7 +64,7 @@ if (TEST_MODE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG}")
     add_executable(${OUTFILE} ${MESSAGE_CONTENT_CHECKER_SOURCES_AND_TESTS})
     include_directories(${MESSAGE_CONTENT_CHECKER_INCLUDE_DIRECTORIES} ${MESSAGE_CONTENT_CHECKER_TEST_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS} ${SACKS_DIR_TO_INCLUDE})
-    target_link_libraries(${OUTFILE} ${CMAKE_THREAD_LIBS_INIT} APRG_COMMON gtest ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(${OUTFILE} APRG_COMMON ${APRG_GTEST_DEPENDENCIES})
     add_test(${OUTFILE} ${OUTFILE})
 else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED}")
