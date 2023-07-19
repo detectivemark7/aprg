@@ -33,7 +33,7 @@ void BtsLogAnalyzer::processFileForToCountUsersWithTracing(string const& filePat
     set<int> usersWithTracing;
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(
+        if (stringHelper::isStringFoundCaseSensitive(
                 lineInLogs, "RLH sends BB_UE_TRACING_REPORT_IND_MSG (0x515D)")) {
             int msgType =
                 stringHelper::convertHexStringToNumber<int>(getNumberAfterThisString(lineInLogs, "msgType: 0x"));
@@ -76,13 +76,13 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath) {
     }
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        if (stringHelper::isStringFoundNotCaseSensitive(
                 lineInLogs, R"(id-radioLinkSetup , RadioLinkSetupRequestFDD)")) {
             startTimeFetchedOptional = getWireSharkTime(lineInLogs);
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(id-radioLinkSetup , RadioLinkSetupResponseFDD)")) {
             endTimeFetchedOptional = getWireSharkTime(lineInLogs);
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(CRNC-CommunicationContextID: )")) {
             int crnccId = stringHelper::convertStringToNumber<int>(
                 getNumberAfterThisString(lineInLogs, "CRNC-CommunicationContextID: "));
@@ -105,7 +105,7 @@ void BtsLogAnalyzer::processFileForWireSharkDelay(string const& filePath) {
                 // "<<m_totalDelay<<"\n";
                 m_wireSharkDelays.erase(crnccId);
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(No.     Time)")) {
+        } else if (stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(No.     Time)")) {
             startTimeFetchedOptional.reset();
             endTimeFetchedOptional.reset();
         }
@@ -123,7 +123,7 @@ void BtsLogAnalyzer::processFileForMsgQueuingTime(string const& filePath) {
     int numberOfPrints = 0;
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(lineInLogs, "MSG TIME, start queuing time")) {
+        if (stringHelper::isStringFoundCaseSensitive(lineInLogs, "MSG TIME, start queuing time")) {
             int msgQueuingTime =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "msgQueuingTime: "));
             totalMsgQueuingTime += msgQueuingTime;
@@ -150,7 +150,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlh(string const& filePath) {
                    << "\n";
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(CTRL_RLH_RlSetupReq3G)")) {
+        if (stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(CTRL_RLH_RlSetupReq3G)")) {
             UniqueId uniqueKey;
             uniqueKey.crnccId =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
@@ -163,7 +163,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlh(string const& filePath) {
             if (!logPrint.getBtsTime().isStartup()) {
                 delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(RLH_CTRL_RlSetupResp3G)")) {
             UniqueId uniqueKey;
             uniqueKey.crnccId =
@@ -207,7 +207,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlDeletion(string const& filePath)
     AlbaFileReader fileReader(inputLogFileStream);
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        if (stringHelper::isStringFoundNotCaseSensitive(
                 lineInLogs, R"(CTRL_RLH_RlDeletionReq3G)")) {
             UniqueId uniqueKey;
             uniqueKey.crnccId =
@@ -221,7 +221,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForRlDeletion(string const& filePath)
             if (!logPrint.getBtsTime().isStartup()) {
                 delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(RLH_CTRL_RlDeletionResp3G)")) {
             UniqueId uniqueKey;
             uniqueKey.crnccId =
@@ -303,7 +303,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
     while (fileReader.isNotFinished()) {
         UniqueId uniqueKey;
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        if (stringHelper::isStringFoundNotCaseSensitive(
                 lineInLogs, R"(INF/TCOM/G, decodeRadioLinkRequest API_TCOM_RNC_MSG)")) {
             int crnccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
             int nbccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "nbccId: "));
@@ -317,7 +317,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
                 grmFetchFileStream << crnccId << "," << nbccId << "," << transactionId << "," << setw(10) << difference
                                    << "\n";
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(INF/TCOM/G, Received API_TCOM_RNC_MSG)")) {
             uniqueKey.crnccId =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
@@ -330,7 +330,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
             if (!logPrint.getBtsTime().isStartup()) {
                 processMapInstance.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(INF/TCOM/G, Sending API_TCOM_RNC_MSG)")) {
             uniqueKey.crnccId =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
@@ -345,7 +345,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
                 processMapInstance.endTimeOptional = logPrint.getBtsTime();
                 messageDeliveryInstance.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(CTRL_RLH_RlSetupReq3G)")) {
             uniqueKey.crnccId =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
@@ -360,7 +360,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForMikhailKnife(string const& filePat
                 messageDeliveryInstance.endTimeOptional = logPrint.getBtsTime();
                 rlSetupMapInstance.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(RLH_CTRL_RlSetupResp3G)")) {
             uniqueKey.crnccId =
                 stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
@@ -437,7 +437,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForGrm(string const& filePath) {
     AlbaFileReader fileReader(inputLogFileStream);
     while (fileReader.isNotFinished()) {
         string lineInLogs(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        if (stringHelper::isStringFoundNotCaseSensitive(
                 lineInLogs, R"(INF/TCOM/G, Received API_TCOM_RNC_MSG)")) {
             int nbccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "nbccId: "));
             BtsLogDelay& delayForCrnccId = m_btsLogDelaysGrm[nbccId];
@@ -445,7 +445,7 @@ void BtsLogAnalyzer::processFileForBtsDelayForGrm(string const& filePath) {
             if (!logPrint.getBtsTime().isStartup()) {
                 delayForCrnccId.startTimeOptional = logPrint.getBtsTime();
             }
-        } else if (stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(
+        } else if (stringHelper::isStringFoundNotCaseSensitive(
                        lineInLogs, R"(CTRL_RLH_RlSetupReq3G)")) {
             int crnccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "crnccId: "));
             int nbccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "nbccId: "));
@@ -471,14 +471,14 @@ void BtsLogAnalyzer::processFileForBtsDelayForGrm(string const& filePath) {
                 m_btsLogDelaysGrm.erase(nbccId);
             }
         }
-        /*else if(stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(INF/TCOM/R,
+        /*else if(stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(INF/TCOM/R,
         CTRL_RLH_)")
-                || stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(INF/TCOM/R,
+                || stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(INF/TCOM/R,
         RLH_CTRL_)")
-                || stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(LRM_RL_)")
-                || stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs,
+                || stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(LRM_RL_)")
+                || stringHelper::isStringFoundNotCaseSensitive(lineInLogs,
         R"(TC_2_RL_SETUP_IND_MSG)")
-                || stringHelper::isStringFoundInsideTheOtherStringNotCaseSensitive(lineInLogs, R"(BB_2_RL_)")
+                || stringHelper::isStringFoundNotCaseSensitive(lineInLogs, R"(BB_2_RL_)")
                 )
         {
             int nbccId = stringHelper::convertStringToNumber<int>(getNumberAfterThisString(lineInLogs, "nbccId: "));
