@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(FESTER_ROBOT_SOURCE_DIRECTORY
     ${FESTER_ROBOT_DIR}/src
 )

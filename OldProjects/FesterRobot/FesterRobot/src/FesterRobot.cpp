@@ -106,7 +106,7 @@ void FesterRobot::runFesterFunctionInMatlab() {
 }
 
 bool FesterRobot::isRunningInClipboardData(string const& clipboardData) const {
-    return stringHelper::isStringFoundInsideTheOtherStringCaseSensitive(clipboardData, "running iteration");
+    return stringHelper::isStringFoundCaseSensitive(clipboardData, "running iteration");
 }
 
 bool FesterRobot::isRunningFinishedInClipboardData(string const& clipboardData) const {
