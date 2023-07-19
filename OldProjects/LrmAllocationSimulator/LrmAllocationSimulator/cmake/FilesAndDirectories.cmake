@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(LRM_ALLOCATION_SIMULATOR_SOURCE_DIRECTORY
     ${LRM_ALLOCATION_SIMULATOR_DIR}/src
 )
