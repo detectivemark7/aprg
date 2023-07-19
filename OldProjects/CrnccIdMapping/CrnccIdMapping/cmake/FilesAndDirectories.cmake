@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(CRNCCID_MAPPING_SOURCE_DIRECTORY
     ${CRNCCID_MAPPING_DIR}/src
 )
