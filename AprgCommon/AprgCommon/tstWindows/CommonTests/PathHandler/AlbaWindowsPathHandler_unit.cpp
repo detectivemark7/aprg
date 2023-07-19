@@ -11,6 +11,16 @@ using namespace std;
 
 namespace alba {
 
+TEST_F(AlbaWindowsPathHandlerTest, EmptyPathWorks) {
+    AlbaWindowsPathHandler pathHandler("");
+    EXPECT_TRUE(pathHandler.getDriveOrRoot().empty());
+    EXPECT_TRUE(pathHandler.getDirectory().empty());
+    EXPECT_TRUE(pathHandler.getFile().empty());
+    EXPECT_TRUE(pathHandler.getFilenameOnly().empty());
+    EXPECT_TRUE(pathHandler.getExtension().empty());
+    EXPECT_EQ(PathType::Empty, pathHandler.getPathType());
+}
+
 TEST_F(AlbaWindowsPathHandlerTest, FullPathWithOnlyDirectoryGiven_WindowsStyleInput) {
     AlbaWindowsPathHandler pathHandler(pathOfAprgDirectory + R"(AprgCommon\FilesForTests\)");
     EXPECT_EQ(getDriveOfAprgDir(), pathHandler.getDriveOrRoot());

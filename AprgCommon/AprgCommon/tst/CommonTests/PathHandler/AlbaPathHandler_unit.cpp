@@ -9,7 +9,16 @@ using namespace std;
 
 namespace alba {
 
-TEST(PathTest, FullPathWithDirectoryAndFileGiven) {
+TEST(AlbaPathHandlerTest, EmptyPathWorks) {
+    AlbaPathHandler pathHandler("");
+    EXPECT_TRUE(pathHandler.getDirectory().empty());
+    EXPECT_TRUE(pathHandler.getFile().empty());
+    EXPECT_TRUE(pathHandler.getFilenameOnly().empty());
+    EXPECT_TRUE(pathHandler.getExtension().empty());
+    EXPECT_EQ(PathType::Empty, pathHandler.getPathType());
+}
+
+TEST(AlbaPathHandlerTest, FullPathWithDirectoryAndFileGiven) {
     AlbaPathHandler pathHandler(R"(APRG_DRIVE:\APRG12345\Aprg!@#$%Common\Aprg1111Common\tst\76543.txt)", R"(\)");
     EXPECT_EQ(R"(APRG_DRIVE:\APRG12345\Aprg!@#$%Common\Aprg1111Common\tst\)", pathHandler.getDirectory());
     EXPECT_EQ("76543.txt", pathHandler.getFile());
@@ -19,7 +28,7 @@ TEST(PathTest, FullPathWithDirectoryAndFileGiven) {
     EXPECT_EQ("tst", pathHandler.getImmediateDirectoryName());
 }
 
-TEST(PathTest, FileOnly) {
+TEST(AlbaPathHandlerTest, FileOnly) {
     AlbaPathHandler pathHandler("src", R"(\)");
     EXPECT_TRUE(pathHandler.getDirectory().empty());
     EXPECT_EQ("src", pathHandler.getFile());
@@ -29,7 +38,7 @@ TEST(PathTest, FileOnly) {
     EXPECT_TRUE(pathHandler.getImmediateDirectoryName().empty());
 }
 
-TEST(PathTest, ReInputFile) {
+TEST(AlbaPathHandlerTest, ReInputFile) {
     AlbaPathHandler pathHandler("src", R"(\)");
     pathHandler.reInput();
     EXPECT_TRUE(pathHandler.getDirectory().empty());
@@ -40,7 +49,7 @@ TEST(PathTest, ReInputFile) {
     EXPECT_TRUE(pathHandler.getImmediateDirectoryName().empty());
 }
 
-TEST(PathTest, GoUpUntilLastFolder) {
+TEST(AlbaPathHandlerTest, GoUpUntilLastFolder) {
     AlbaPathHandler pathHandler(R"(APRG_DRIVE:\APRG12345\Aprg!@#$%Common\Aprg1111Common\tst\76543.txt)", R"(\)");
     EXPECT_EQ(R"(APRG_DRIVE:\APRG12345\Aprg!@#$%Common\Aprg1111Common\tst\76543.txt)", pathHandler.getFullPath());
     EXPECT_EQ(PathType::File, pathHandler.getPathType());

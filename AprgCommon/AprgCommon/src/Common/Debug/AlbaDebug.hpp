@@ -5,6 +5,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <string_view>
 
 namespace alba {
 
@@ -26,9 +27,15 @@ inline std::ofstream debugStream(ALBA_PRINT_EXTERNAL_OUTPUT_STREAM_FILE_PATH);
 
 // Internal macros
 // This is a revised approach in printing because of MSVC limitation on macros.
-#define Z_ALBA_PRINT_START                                                                              \
-    ALBA_PRINT_OUTPUT_STREAM << "ALBA_PRINT in line:" << std::setw(4) << ALBA_MACROS_GET_LINE << " in " \
-                             << ALBA_MACROS_GET_FUNCTION << "(...): ";
+inline std::string_view getShortenFunctionName(std::string_view longFunctionName) {
+    constexpr decltype(longFunctionName.length()) minimumLength = 40;
+    auto length = longFunctionName.length();
+    auto shortenLength = (std::min)(length, minimumLength);
+    return longFunctionName.substr(length - shortenLength, shortenLength);
+}
+#define Z_ALBA_PRINT_START                                                                                 \
+    ALBA_PRINT_OUTPUT_STREAM << "ALBA_PRINT in line:" << std::setw(4) << ALBA_MACROS_GET_LINE << " in ..." \
+                             << getShortenFunctionName(ALBA_MACROS_GET_FUNCTION) << "(...): ";
 #define Z_ALBA_PRINT_END ALBA_PRINT_OUTPUT_STREAM << std::endl
 #define Z_ALBA_PRINT_PARAMETER_ONLY(parameter) \
     printParameterWithName(ALBA_PRINT_OUTPUT_STREAM, ALBA_MACROS_GET_STRING_LITERAL(parameter), parameter);

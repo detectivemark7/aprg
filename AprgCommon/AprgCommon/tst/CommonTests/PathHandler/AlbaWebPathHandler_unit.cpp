@@ -9,7 +9,19 @@ using namespace std;
 
 namespace alba {
 
-TEST(WebPathTest, DirectoryWithColonAndFileGivenAndNoProtocol) {
+TEST(AlbaWebPathHandlerTest, EmptyPathWorks) {
+    AlbaWebPathHandler pathHandler("");
+    EXPECT_TRUE(pathHandler.getFullPath().empty());
+    EXPECT_FALSE(pathHandler.hasProtocol());
+    EXPECT_TRUE(pathHandler.getProtocol().empty());
+    EXPECT_TRUE(pathHandler.getDirectory().empty());
+    EXPECT_TRUE(pathHandler.getFile().empty());
+    EXPECT_TRUE(pathHandler.getFilenameOnly().empty());
+    EXPECT_TRUE(pathHandler.getExtension().empty());
+    EXPECT_EQ(PathType::Empty, pathHandler.getPathType());
+}
+
+TEST(AlbaWebPathHandlerTest, DirectoryWithColonAndFileGivenAndNoProtocol) {
     AlbaWebPathHandler pathHandler(R"(\\::://directory!@#$%12345\\\\/\\\\/file.txt)");
     EXPECT_FALSE(pathHandler.hasProtocol());
     EXPECT_TRUE(pathHandler.getProtocol().empty());
@@ -21,7 +33,7 @@ TEST(WebPathTest, DirectoryWithColonAndFileGivenAndNoProtocol) {
     EXPECT_EQ(PathType::File, pathHandler.getPathType());
 }
 
-TEST(WebPathTest, FullPathWithOnlyDirectoryGiven_HttpStyleInput) {
+TEST(AlbaWebPathHandlerTest, FullPathWithOnlyDirectoryGiven_HttpStyleInput) {
     AlbaWebPathHandler pathHandler(R"(hTTp://www.google.com\\\\/\\\\/!@#$%12345\\///)");
     EXPECT_TRUE(pathHandler.hasProtocol());
     EXPECT_EQ("http", pathHandler.getProtocol());
@@ -33,7 +45,7 @@ TEST(WebPathTest, FullPathWithOnlyDirectoryGiven_HttpStyleInput) {
     EXPECT_EQ(PathType::Directory, pathHandler.getPathType());
 }
 
-TEST(WebPathTest, FullPathWithQuestionMark) {
+TEST(AlbaWebPathHandlerTest, FullPathWithQuestionMark) {
     AlbaWebPathHandler pathHandler("http://a.mhcdn.net/store/manga/12114/001.0/compressed/r049.jpg?v=1354256522");
     EXPECT_TRUE(pathHandler.hasProtocol());
     EXPECT_EQ("http", pathHandler.getProtocol());
@@ -45,7 +57,7 @@ TEST(WebPathTest, FullPathWithQuestionMark) {
     EXPECT_EQ(PathType::File, pathHandler.getPathType());
 }
 
-TEST(WebPathTest, GotoLinkWhenNoProtocolIsGiven) {
+TEST(AlbaWebPathHandlerTest, GotoLinkWhenNoProtocolIsGiven) {
     AlbaWebPathHandler pathHandler(R"(hTTp://www.google.com\\\\/\\\\/!@#$%12345\\///NewFile1.txt)");
     pathHandler.gotoLink(R"(NewDirectory1\NewFile2.ext)");
 
@@ -59,7 +71,7 @@ TEST(WebPathTest, GotoLinkWhenNoProtocolIsGiven) {
     EXPECT_EQ(PathType::File, pathHandler.getPathType());
 }
 
-TEST(WebPathTest, GotoLinkWhenWithProtocolIsGiven) {
+TEST(AlbaWebPathHandlerTest, GotoLinkWhenWithProtocolIsGiven) {
     AlbaWebPathHandler pathHandler(R"(hTTp://www.google.com\\\\/\\\\/!@#$%12345\\///)");
     pathHandler.gotoLink(R"(ftP://www.yahoo.com\NewDirectory1\\NewFile2.ext)");
 
@@ -73,7 +85,7 @@ TEST(WebPathTest, GotoLinkWhenWithProtocolIsGiven) {
     EXPECT_EQ(PathType::File, pathHandler.getPathType());
 }
 
-TEST(WebPathTest, ProtocolCanBeChanged) {
+TEST(AlbaWebPathHandlerTest, ProtocolCanBeChanged) {
     AlbaWebPathHandler pathHandler("http://a.mhcdn.net/store/manga/12114/001.0/compressed/r049.jpg?v=1354256522");
     pathHandler.setProtocolWithSymbols("https://");
     EXPECT_TRUE(pathHandler.hasProtocol());
