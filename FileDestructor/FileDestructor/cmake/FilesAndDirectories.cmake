@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(FILE_DESTRUCTOR_SOURCE_DIRECTORY
     ${FILE_DESTRUCTOR_DIR}/src
 )
