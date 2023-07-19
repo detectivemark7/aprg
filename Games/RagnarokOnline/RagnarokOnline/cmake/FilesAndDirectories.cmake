@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(RAGNAROK_ONLINE_SOURCE_DIRECTORY
     ${RAGNAROK_ONLINE_DIR}/src
 )

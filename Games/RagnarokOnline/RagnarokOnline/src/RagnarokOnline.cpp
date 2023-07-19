@@ -37,7 +37,7 @@ bool Monster::isMvp() const {
 bool Monster::hasStoneCurseSkill() const {
     bool result(false);
     for (string const& monsterSkill : monsterSkills) {
-        if (isStringFoundInsideTheOtherStringCaseSensitive(monsterSkill, "Stone Curse")) {
+        if (isStringFoundCaseSensitive(monsterSkill, "Stone Curse")) {
             result = true;
             break;
         }
@@ -72,11 +72,11 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
     while (fileReader.isNotFinished()) {
         string line(fileReader.getLineAndIgnoreWhiteSpaces());
         bool shouldItemBeCleared(false);
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(table class="content_box_item")")) {
+        if (isStringFoundCaseSensitive(line, R"(table class="content_box_item")")) {
             isContextBoxEncountered = true;
             shouldItemBeCleared = true;
         }
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(class="content_box_body")")) {
+        if (isStringFoundCaseSensitive(line, R"(class="content_box_body")")) {
             isContextBoxEncountered = false;
             shouldItemBeCleared = true;
         }
@@ -89,14 +89,14 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
         }
 
         if (isContextBoxEncountered) {
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td valign="bottom"><b>)")) {
+            if (isStringFoundCaseSensitive(line, R"(<td valign="bottom"><b>)")) {
                 item.name = fixText(getStringInBetweenTwoStrings(line, R"(<td valign="bottom"><b>)", R"(</b>)"));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(Item ID#)")) {
+            if (isStringFoundCaseSensitive(line, R"(Item ID#)")) {
                 item.itemId = convertStringToNumber<unsigned int>(
                     fixText(getStringInBetweenTwoStrings(line, R"(Item ID#)", R"( ()")));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td class="bb" align="right">)")) {
+            if (isStringFoundCaseSensitive(line, R"(<td class="bb" align="right">)")) {
                 string value =
                     fixText(getStringInBetweenTwoStrings(line, R"(<td class="bb" align="right">)", R"(</td>)"));
                 if ("Type" == parameterName) {
@@ -126,23 +126,23 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
                 }
             }
             if ("Property" == parameterName) {
-                if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<th class="bb" align="right">)")) {
+                if (isStringFoundCaseSensitive(line, R"(<th class="bb" align="right">)")) {
                     item.property =
                         fixText(getStringInBetweenTwoStrings(line, R"(<th class="bb" align="right">)", R"(</th>)"));
                 }
             } else if ("Description" == parameterName) {
                 if (isDescriptionNotComplete) {
                     description += " ";
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</td>)")) {
+                    if (isStringFoundCaseSensitive(line, R"(</td>)")) {
                         description += getStringBeforeThisString(line, R"(</td>)");
                         isDescriptionNotComplete = false;
                         item.description = fixText(description);
                     } else {
                         description += line;
                     }
-                } else if (isStringFoundInsideTheOtherStringCaseSensitive(
+                } else if (isStringFoundCaseSensitive(
                                line, R"(<td colspan="9" class="bb" valign="top">)")) {
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</td>)")) {
+                    if (isStringFoundCaseSensitive(line, R"(</td>)")) {
                         description = getStringInBetweenTwoStrings(
                             line, R"(<td colspan="9" class="bb" valign="top">)", R"(</td>)");
                         isDescriptionNotComplete = false;
@@ -155,15 +155,15 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
             } else if ("Item Script" == parameterName) {
                 if (isItemScriptNotComplete) {
                     itemScript += " ";
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</div>)")) {
+                    if (isStringFoundCaseSensitive(line, R"(</div>)")) {
                         itemScript += getStringBeforeThisString(line, R"(</div>)");
                         isItemScriptNotComplete = false;
                         item.itemScript = fixText(itemScript);
                     } else {
                         itemScript += line;
                     }
-                } else if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<div class="db_script_txt">)")) {
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</div>)")) {
+                } else if (isStringFoundCaseSensitive(line, R"(<div class="db_script_txt">)")) {
+                    if (isStringFoundCaseSensitive(line, R"(</div>)")) {
                         itemScript = getStringInBetweenTwoStrings(line, R"(<div class="db_script_txt">)", R"(</div>)");
                         isItemScriptNotComplete = false;
                         item.itemScript = fixText(itemScript);
@@ -173,11 +173,11 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
                     }
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<th class="lmd")")) {
+            if (isStringFoundCaseSensitive(line, R"(<th class="lmd")")) {
                 parameterName = fixText(getStringInBetweenTwoStrings(line, R"(align="left">)", R"(</th>)"));
                 if ("Applicable Jobs" == parameterName) {
                     string lineWithJobs(line);
-                    while (isStringFoundInsideTheOtherStringCaseSensitive(lineWithJobs, R"(<td width="100">)")) {
+                    while (isStringFoundCaseSensitive(lineWithJobs, R"(<td width="100">)")) {
                         string value =
                             fixText(getStringInBetweenTwoStrings(lineWithJobs, R"(<td width="100">)", R"(</td>)"));
                         item.applicableJobs.emplace_back(value);
@@ -185,7 +185,7 @@ void RagnarokOnline::retrieveItemDataFromRmsWebPage(string const& filePathOfWebP
                     }
                 } else if ("Dropped By" == parameterName) {
                     string lineWithDroppedBy(line);
-                    while (isStringFoundInsideTheOtherStringCaseSensitive(
+                    while (isStringFoundCaseSensitive(
                         lineWithDroppedBy, R"(<div class="tipstext">)")) {
                         string monsterName = fixText(
                             getStringInBetweenTwoStrings(lineWithDroppedBy, ")\">", R"(<div class="tipstext">)"));
@@ -222,11 +222,11 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
     while (fileReader.isNotFinished()) {
         string line(fileReader.getLineAndIgnoreWhiteSpaces());
         bool shouldItemBeCleared(false);
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(table class="content_box_mob")")) {
+        if (isStringFoundCaseSensitive(line, R"(table class="content_box_mob")")) {
             isContextBoxEncountered = true;
             shouldItemBeCleared = true;
         }
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(class="content_box_body")")) {
+        if (isStringFoundCaseSensitive(line, R"(class="content_box_body")")) {
             isContextBoxEncountered = false;
             shouldItemBeCleared = true;
         }
@@ -239,17 +239,17 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
         }
 
         if (isContextBoxEncountered) {
-            if (isStringFoundInsideTheOtherStringCaseSensitive(
+            if (isStringFoundCaseSensitive(
                     line, R"(<div style="width: 400px; margin: 0px 5px;">)")) {
                 monster.name = fixText(
                     getStringInBetweenTwoStrings(line, R"(<div style="width: 400px; margin: 0px 5px;">)", R"(&nbsp;)"));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(Mob-ID#)")) {
+            if (isStringFoundCaseSensitive(line, R"(Mob-ID#)")) {
                 monster.monsterId = convertStringToNumber<unsigned int>(
                     fixText(getStringInBetweenTwoStrings(line, R"(Mob-ID#)", R"(</div>)")));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td class="bb")") &&
-                isStringFoundInsideTheOtherStringCaseSensitive(line, R"(align="right">)")) {
+            if (isStringFoundCaseSensitive(line, R"(<td class="bb")") &&
+                isStringFoundCaseSensitive(line, R"(align="right">)")) {
                 string value = fixText(getStringInBetweenTwoStrings(line, R"(align="right">)", R"(</td>)"));
                 if ("HP" == parameterName) {
                     monster.hp = convertStringToNumber<unsigned int>(value);
@@ -326,7 +326,7 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
                     monster.undeadPercentage = convertStringToNumber<unsigned int>(value);
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(onclick="return popItem)")) {
+            if (isStringFoundCaseSensitive(line, R"(onclick="return popItem)")) {
                 if ("Drops" == parameterName) {
                     string dropName = fixText(getStringInBetweenTwoStrings(line, R"(">)", R"(<b>)"));
                     string slot = fixText(getStringInBetweenTwoStrings(line, R"([</b>)", R"(<b>])"));
@@ -339,11 +339,11 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
                     monster.dropsWithRates.emplace_back(NameAndRate{dropName, convertStringToNumber<double>(dropRate)});
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<div class="tipstext">)") &&
-                isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</div>)")) {
+            if (isStringFoundCaseSensitive(line, R"(<div class="tipstext">)") &&
+                isStringFoundCaseSensitive(line, R"(</div>)")) {
                 if ("Mode" == parameterName) {
                     string modes = getStringInBetweenTwoStrings(line, R"(<div class="tipstext">)", R"(</div>)");
-                    while (isStringFoundInsideTheOtherStringCaseSensitive(modes, R"(<br>)")) {
+                    while (isStringFoundCaseSensitive(modes, R"(<br>)")) {
                         string mode(fixText(getStringBeforeThisString(modes, R"(<br>)")));
                         transformReplaceStringIfFound(mode, "- ", "");
                         monster.modes.emplace_back(mode);
@@ -351,18 +351,18 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
                     }
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td class="bb" width="180" valign="top">)")) {
+            if (isStringFoundCaseSensitive(line, R"(<td class="bb" width="180" valign="top">)")) {
                 string lineWithMaps(line);
-                while (isStringFoundInsideTheOtherStringCaseSensitive(lineWithMaps, "map_dim)\">")) {
+                while (isStringFoundCaseSensitive(lineWithMaps, "map_dim)\">")) {
                     string value = fixText(getStringInBetweenTwoStrings(lineWithMaps, "map_dim)\">", R"(</a>)"));
                     monster.maps.emplace_back(value);
                     lineWithMaps = getStringAfterThisString(lineWithMaps, "map_dim)\">");
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<table width="100%" border="0">)")) {
+            if (isStringFoundCaseSensitive(line, R"(<table width="100%" border="0">)")) {
                 if ("Monster Skills" == parameterName) {
                     string lineWithMonsterSkills(line);
-                    while (isStringFoundInsideTheOtherStringCaseSensitive(lineWithMonsterSkills, R"(circle.gif">)")) {
+                    while (isStringFoundCaseSensitive(lineWithMonsterSkills, R"(circle.gif">)")) {
                         string value =
                             fixText(getStringInBetweenTwoStrings(lineWithMonsterSkills, R"(circle.gif">)", R"(</td>)"));
                         monster.monsterSkills.emplace_back(value);
@@ -370,13 +370,13 @@ void RagnarokOnline::retrieveMonsterDataFromRmsWebPage(string const& filePathOfW
                     }
                 }
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<th class="lmd")")) {
+            if (isStringFoundCaseSensitive(line, R"(<th class="lmd")")) {
                 parameterName = fixText(getStringInBetweenTwoStrings(line, R"(align="left">)", R"(</th>)"));
-            } else if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(align="center">Drops</th>)")) {
+            } else if (isStringFoundCaseSensitive(line, R"(align="center">Drops</th>)")) {
                 parameterName = "Drops";
-            } else if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(align="center">Mode</th>)")) {
+            } else if (isStringFoundCaseSensitive(line, R"(align="center">Mode</th>)")) {
                 parameterName = "Mode";
-            } else if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(align="center">Monster Skills</th>)")) {
+            } else if (isStringFoundCaseSensitive(line, R"(align="center">Monster Skills</th>)")) {
                 parameterName = "Monster Skills";
             }
         }
@@ -403,11 +403,11 @@ void RagnarokOnline::retrieveMapDataFromRmsWebPage(string const& filePathOfWebPa
     while (fileReader.isNotFinished()) {
         string line(fileReader.getLineAndIgnoreWhiteSpaces());
         bool shouldItemBeCleared(false);
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(table class="content_box_db")")) {
+        if (isStringFoundCaseSensitive(line, R"(table class="content_box_db")")) {
             isContextBoxEncountered = true;
             shouldItemBeCleared = true;
         }
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(class="content_box_body")")) {
+        if (isStringFoundCaseSensitive(line, R"(class="content_box_body")")) {
             isContextBoxEncountered = false;
             shouldItemBeCleared = true;
         }
@@ -419,23 +419,23 @@ void RagnarokOnline::retrieveMapDataFromRmsWebPage(string const& filePathOfWebPa
         }
 
         if (isContextBoxEncountered) {
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(- Map: )") &&
-                isStringFoundInsideTheOtherStringCaseSensitive(line, R"( -)")) {
+            if (isStringFoundCaseSensitive(line, R"(- Map: )") &&
+                isStringFoundCaseSensitive(line, R"( -)")) {
                 map.name = fixText(getStringInBetweenTwoStrings(line, R"(- Map: )", R"( -)"));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<b>Map: )") &&
-                isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</b>)")) {
+            if (isStringFoundCaseSensitive(line, R"(<b>Map: )") &&
+                isStringFoundCaseSensitive(line, R"(</b>)")) {
                 map.name = fixText(getStringInBetweenTwoStrings(line, R"(<b>Map: )", R"(</b>)"));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td class="bborder" align="right">)") &&
-                isStringFoundInsideTheOtherStringCaseSensitive(line, R"(</td>)")) {
+            if (isStringFoundCaseSensitive(line, R"(<td class="bborder" align="right">)") &&
+                isStringFoundCaseSensitive(line, R"(</td>)")) {
                 map.fullName =
                     fixText(getStringInBetweenTwoStrings(line, R"(<td class="bborder" align="right">)", R"(</td>)"));
             }
-            if (isStringFoundInsideTheOtherStringCaseSensitive(
+            if (isStringFoundCaseSensitive(
                     line, R"(Click on a monster below to view its detail:)")) {
                 string lineWithMonsters(line);
-                while (isStringFoundInsideTheOtherStringCaseSensitive(
+                while (isStringFoundCaseSensitive(
                     lineWithMonsters, "onmouseout=\"hideddrivetip_image()\">")) {
                     MonsterDetailsOnRoMap monsterDetailsOnMap{};
                     string wholeMonsterString = getStringInBetweenTwoStrings(
@@ -445,7 +445,7 @@ void RagnarokOnline::retrieveMapDataFromRmsWebPage(string const& filePathOfWebPa
                     monsterDetailsOnMap.monsterName =
                         fixText(getStringBeforeThisString(wholeMonsterString, R"(<b>(</b>)"));
                     transformReplaceStringIfFound(monsterDetailsOnMap.monsterName, "[MVP]", "");
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(wholeSpawnString, "/")) {
+                    if (isStringFoundCaseSensitive(wholeSpawnString, "/")) {
                         monsterDetailsOnMap.spawnCount = convertStringToNumber<unsigned int>(
                             fixText(getStringBeforeThisString(wholeSpawnString, R"(/)")));
                         monsterDetailsOnMap.spawnRate = fixText(getStringAfterThisString(wholeSpawnString, R"(/)"));
@@ -488,9 +488,9 @@ void RagnarokOnline::retrieveShopDataFromTalonRoWebPage(string const& filePathOf
     fileReader.setMaxBufferSize(100000);
     while (fileReader.isNotFinished()) {
         string line(fileReader.getLineAndIgnoreWhiteSpaces());
-        if (isStringFoundInsideTheOtherStringCaseSensitive(line, R"(<td class="sorting_1">)")) {
+        if (isStringFoundCaseSensitive(line, R"(<td class="sorting_1">)")) {
             string lineWithItems(line);
-            while (isStringFoundInsideTheOtherStringCaseSensitive(lineWithItems, R"(<td class="sorting_1">)")) {
+            while (isStringFoundCaseSensitive(lineWithItems, R"(<td class="sorting_1">)")) {
                 string itemString = getStringInBetweenTwoStrings(
                     lineWithItems, R"(<td class="sorting_1">)", R"(<span class="d-none">)");
                 lineWithItems = getStringAfterThisString(lineWithItems, R"(<td class="sorting_1">)");
@@ -820,8 +820,8 @@ string RagnarokOnline::fixText(string const& text) {
     transformReplaceStringIfFound(fixedText, "<br>", " ");
     transformReplaceStringIfFound(fixedText, "&amp;", "&");
     transformReplaceStringIfFound(fixedText, "&nbsp;", " ");
-    while (isStringFoundInsideTheOtherStringCaseSensitive(fixedText, "<") &&
-           isStringFoundInsideTheOtherStringCaseSensitive(fixedText, ">")) {
+    while (isStringFoundCaseSensitive(fixedText, "<") &&
+           isStringFoundCaseSensitive(fixedText, ">")) {
         string htmlTag("<");
         htmlTag += getStringInBetweenTwoStrings(fixedText, "<", ">");
         htmlTag += ">";
