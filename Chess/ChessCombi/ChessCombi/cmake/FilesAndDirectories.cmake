@@ -1,6 +1,3 @@
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/PrintMacros.cmake)
-
 set(CHESS_COMBI_SOURCE_DIRECTORY
     ${CHESS_COMBI_DIR}/src
 )
