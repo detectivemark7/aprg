@@ -8,10 +8,8 @@ set(DD_CREATOR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 #Locate APRG Directory first because its used on other cmakes
 include(${DD_CREATOR_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/FileAndDirectoryMacros.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Assign specific definitions
 add_definitions(-DCCS_BIG_ENDIAN)
@@ -32,7 +30,7 @@ include(${DD_CREATOR_DIR}/cmake/FeatureFilesAndDirectories.cmake)
 add_definitions(-DLOG_LOCATION="${DD_CREATOR_DIR}/../DesignDocumentCreatorLogs")
 
 #Assign Sack Directory
-set(SackDirectory "N:/Branches/ControlPlane/sbts1/tcom")
+set(SackDirectory "F:/Branches/ControlPlane/sbts1/tcom")
 
 set(SACKS_DIR_TO_INCLUDE
     ${SackDirectory}/I_Interface/Private/SC_TCOM/Temp
@@ -91,6 +89,6 @@ include_directories(
     ${SACKS_DIR_TO_INCLUDE}
     ${GTEST_INCLUDE_DIRS}
 )
-target_link_libraries(${OUTFILE} ${CMAKE_THREAD_LIBS_INIT} APRG_COMMON gtest ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${OUTFILE} APRG_COMMON ${APRG_GTEST_DEPENDENCIES})
 add_test(${OUTFILE} ${OUTFILE})
 include(${APRG_DIR}/AprgCMakeHelpers/LastStep.cmake)
