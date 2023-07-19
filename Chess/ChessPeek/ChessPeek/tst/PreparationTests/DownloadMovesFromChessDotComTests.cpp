@@ -308,17 +308,17 @@ bool readHtmlFileIfValid(WebPageInfo& pageInfo, string const& htmlFile) {
                     string moveList = getStringInBetween(
                         line, R"(<div class="suggested-moves-suggested-moves-list">)", R"(</div></li>)", index);
                     int moveListIndex = 0;
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(
+                    if (isStringFoundCaseSensitive(
                             moveList, R"("suggested-moves-suggested-white")")) {
                         moveInfo.whiteWinPercentage = getStringInBetween(
                             moveList, R"(<span class="suggested-moves-percent-label">)", R"(</span>)", moveListIndex);
                     }
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(
+                    if (isStringFoundCaseSensitive(
                             moveList, R"("suggested-moves-suggested-draw")")) {
                         moveInfo.drawPercentage = getStringInBetween(
                             moveList, R"(<span class="suggested-moves-percent-label">)", R"(</span>)", moveListIndex);
                     }
-                    if (isStringFoundInsideTheOtherStringCaseSensitive(
+                    if (isStringFoundCaseSensitive(
                             moveList, R"("suggested-moves-suggested-black")")) {
                         moveInfo.blackWinPercentage = getStringInBetween(
                             moveList, R"(<span class="suggested-moves-percent-label">)", R"(</span>)", moveListIndex);

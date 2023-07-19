@@ -11,9 +11,8 @@ set(TEST_MODE "ON")
 #Locate APRG Directory first because its used on other cmakes
 include(${CHESS_PEEK_DIR}/cmake/LocateAprgDirectory.cmake)
 
-#Assign common flags, definitions and macros
-include(${APRG_DIR}/AprgCMakeHelpers/CommonFlags.cmake)
-include(${APRG_DIR}/AprgCMakeHelpers/CommonDefinitions.cmake)
+#Assign macros, common flags, definitions and other common steps
+include(${APRG_DIR}/AprgCMakeHelpers/AllCommonSteps.cmake)
 
 #Include other projects
 include(${APRG_DIR}/gtest/AprgCmakeInclude/gtest.cmake)
@@ -32,7 +31,7 @@ if (TEST_MODE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${APRG_COMPILER_FLAGS_FOR_DEBUG}")
     add_executable(${OUTFILE} ${CHESS_PEEK_SOURCES_AND_TESTS})
     include_directories(${CHESS_PEEK_INCLUDE_DIRECTORIES} ${CHESS_PEEK_TEST_INCLUDE_DIRECTORIES} ${GTEST_INCLUDE_DIRS})
-    target_link_libraries(${OUTFILE} ${CMAKE_THREAD_LIBS_INIT} CHESS_UTILITIES APRG_LOCAL_USER_AUTOMATION APRG_BITMAP APRG_LOCAL_SCREEN_MONITORING APRG_COMMON gtest ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(${OUTFILE} CHESS_UTILITIES APRG_LOCAL_USER_AUTOMATION APRG_BITMAP APRG_LOCAL_SCREEN_MONITORING APRG_COMMON ${APRG_GTEST_DEPENDENCIES})
     add_test(${OUTFILE} ${OUTFILE})
 else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${APRG_COMPILER_FLAGS_FOR_RELEASE_WITH_SPEED}")
