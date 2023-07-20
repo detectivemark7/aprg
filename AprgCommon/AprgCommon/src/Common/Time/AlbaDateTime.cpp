@@ -305,7 +305,7 @@ ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<printFormat> const&)
 
 template <>
 ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<AlbaDateTime::PrintFormat::Type1> const& printObject) {
-    AlbaDateTime const& dateTime(*printObject.dateTimePointer);
+    AlbaDateTime const& dateTime(printObject.savedDateTime);
     out << setfill(' ');
     out << setw(2) << dateTime.m_sign << " * ";
     out << setfill('0');
@@ -321,7 +321,7 @@ ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<AlbaDateTime::PrintF
 
 template <>
 ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<AlbaDateTime::PrintFormat::Type2> const& printObject) {
-    AlbaDateTime const& dateTime(*printObject.dateTimePointer);
+    AlbaDateTime const& dateTime(printObject.savedDateTime);
     out << setfill('0');
     out << setw(2) << dateTime.getHours() << ":";
     out << setw(2) << dateTime.getMinutes() << ":";
@@ -331,7 +331,7 @@ ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<AlbaDateTime::PrintF
 
 template <>
 ostream& operator<<(ostream& out, AlbaDateTime::PrintObject<AlbaDateTime::PrintFormat::Type3> const& printObject) {
-    AlbaDateTime const& dateTime(*printObject.dateTimePointer);
+    AlbaDateTime const& dateTime(printObject.savedDateTime);
     out << setfill('0');
     out << setw(2) << dateTime.getHours() << ":";
     out << setw(2) << dateTime.getMinutes() << ":";
