@@ -90,7 +90,7 @@ public:
         }
     }
 
-    void clear() {
+    void clear() override {
         m_numberOfVertices = 0;
         m_numberOfEdges = 0;
         for (Vertex vertex = 0; vertex < static_cast<Vertex>(m_adjacencyLists.size()); vertex++) {

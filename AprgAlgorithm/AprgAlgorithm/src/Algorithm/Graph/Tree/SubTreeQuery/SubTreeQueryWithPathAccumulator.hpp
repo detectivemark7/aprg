@@ -30,7 +30,7 @@ public:
     Vertices const& getAccumulatedValuesOfPaths() const { return m_accumulatedValuesOfPaths; }
 
     Vertex getAccumulatedValueOfPathThatStartsAtTopAndEndsAt(Vertex const& vertex) {
-        Vertex result;
+        Vertex result{};
         auto it = m_vertexToIndexMap.find(vertex);
         if (it != m_vertexToIndexMap.cend()) {
             result = m_accumulatedValuesOfPaths[it->second];

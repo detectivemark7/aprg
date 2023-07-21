@@ -64,6 +64,7 @@ public:
     }
 
 private:
+    using Graph::connect;  // prevents clang warning about hiding an overloaded virtual function
     bool hasNoDuplicateWeights(Weights const& sortedWeights) const {
         return std::adjacent_find(sortedWeights.cbegin(), sortedWeights.cend()) == sortedWeights.cend();
     }

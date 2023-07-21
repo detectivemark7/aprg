@@ -102,7 +102,7 @@ public:
         }
     }
 
-    void clear() {
+    void clear() override {
         m_numberOfEdges = 0;
         m_adjacencyMatrix.clearAndResize(MAX_VERTEX_VALUE, MAX_VERTEX_VALUE);
     }
