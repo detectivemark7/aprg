@@ -1,5 +1,6 @@
+#include "AlbaLinuxPathHandlerTest.hpp"
+
 #include <Common/String/AlbaStringHelper.hpp>
-#include <CommonTests/PathHandler/AlbaLinuxPathHandlerTest.hpp>
 
 using namespace alba::stringHelper;
 using namespace std;
