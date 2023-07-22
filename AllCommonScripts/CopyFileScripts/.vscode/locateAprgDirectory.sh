@@ -4,18 +4,18 @@ findAprgDirectory() {
 	# Set variable values
 	aprgDirectory=""
 	local aprgDirectoryName="aprg"
-	local inputDirectory=$1
+	local inputDirectory=$(realpath "$1")
 	local localScriptName="locateAprgDirectory"
 	
 	# Validate input
 	if ! [ -d "$inputDirectory" ]; then
-		echo "$localScriptName:$LINENO The input directory [$inputDirectory] is not a directory"
+		echo "$localScriptName:$LINENO: The input directory [$inputDirectory] is not a directory"
 		return 1
 	fi
 	
 	# Display variable values
-	echo "$localScriptName:$LINENO The aprg directory name is [$aprgDirectoryName]."
-	echo "$localScriptName:$LINENO The input directory is [$inputDirectory] for searching [$aprgDirectoryName] directory."
+	echo "$localScriptName:$LINENO: The aprg directory name is [$aprgDirectoryName]."
+	echo "$localScriptName:$LINENO: The input directory is [$inputDirectory] for searching [$aprgDirectoryName] directory."
 	
 	# Set variables for search
 	searchingDirectory="$inputDirectory"
@@ -34,9 +34,9 @@ findAprgDirectory() {
 	
 	# Validate output
 	if [ "$searchingDirectory" == "/" ]; then
-		echo "$localScriptName:$LINENO The directory name [$aprgDirectoryName] is not found in any parent directories of [$inputDirectory]."
+		echo "$localScriptName:$LINENO: The directory name [$aprgDirectoryName] is not found in any parent directories of [$inputDirectory]."
 		return 1
 	fi
 	
-	echo "$localScriptName:$LINENO The aprg directory is [$aprgDirectory]."
+	echo "$localScriptName:$LINENO: The aprg directory is [$aprgDirectory]."
 }
