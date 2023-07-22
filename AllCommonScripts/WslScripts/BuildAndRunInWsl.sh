@@ -3,12 +3,13 @@
 # Set variable values
 projectName=$1
 scriptOption=$2
+firstArgument=$3
 scriptPath=$(realpath "$0")
 scriptName=$(basename "$0")
 scriptDirectory=$(dirname "$0")
 aprgDirectory=$(realpath "$scriptDirectory/../../")
 WslBuildFolderName="WslBuild"
-firstArgument=$3
+numberOfCoresInTheSystem=$(nproc)
 exitCode=0
 
 # Source needed scripts
@@ -44,15 +45,15 @@ if [ "$scriptOption" == "clean" ]; then
 	fi
 elif [ "$scriptOption" == "buildWithGcc" ]; then
 	cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ "../$projectName/"
-	make -j8
+	make -j$numberOfCoresInTheSystem
 	exitCode=$?
 elif [ "$scriptOption" == "buildWithClang" ]; then
 	cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ "../$projectName/"
-	make -j8
+	make -j$numberOfCoresInTheSystem
 	exitCode=$?
 elif [ "$scriptOption" == "buildWithClangWithAsan" ]; then
 	cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_C_FLAGS:STRING="${CMAKE_C_FLAGS} -g --coverage -fsanitize=address -fno-omit-frame-pointer" -DCMAKE_CXX_FLAGS:STRING="${CMAKE_C_FLAGS} -g --coverage -fsanitize=address -fno-omit-frame-pointer" "../$projectName/"
-	make -j8
+	make -j$numberOfCoresInTheSystem
 	exitCode=$?
 elif [ "$scriptOption" == "runFileWithProjectName" ]; then
 	scriptPrint $scriptName $LINENO "Running executable: [$(pwd)/$projectName]."

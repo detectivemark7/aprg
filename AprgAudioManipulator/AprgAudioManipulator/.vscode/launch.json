@@ -12,7 +12,8 @@
             "args": [
                 "outputWithHighlighting",
                 "${workspaceFolderBasename}",
-                "runFileWithProjectName"
+                "runFileWithProjectName",
+                "" //"--gtest_filter=*.*"
             ],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
@@ -39,7 +40,9 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/../VisualStudioBuild/build/visualstudio-windows-msvc-debug/Debug/${workspaceFolderBasename}.exe",
-            "args": [],
+            "args": [
+                "" //"--gtest_filter=*.*"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

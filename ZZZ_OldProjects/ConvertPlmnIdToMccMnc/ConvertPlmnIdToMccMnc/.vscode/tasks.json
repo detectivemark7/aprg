@@ -121,7 +121,7 @@
 				"outputWithHighlighting",
 				"${workspaceFolderBasename}",
 				"runFileWithProjectName",
-				"--gtest_filter=*.*"
+				"" //"--gtest_filter=*.*"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
@@ -178,7 +178,9 @@
 			"label": "Run the local MSVC target",
 			"type": "shell",
 			"command": "${workspaceFolder}/../VisualStudioBuild/build/visualstudio-windows-msvc-debug/Debug/${workspaceFolderBasename}.exe",
-			"args": [],
+			"args": [
+				"" //"--gtest_filter=*.*"
+			],
 			"group": "test",
 			"presentation": {
 				"reveal": "always",
