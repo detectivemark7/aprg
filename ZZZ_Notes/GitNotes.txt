@@ -192,6 +192,12 @@ Less common commands:
 ---> git rebase --continue
 -----> to apply the changes of the history/log
 
+-> Fix a git lock:
+rm -f .git/index.lock
+
+-> Verify the integrity of your Git repository
+git fsck
+
 -> stash
 ---> git stash
 -----> save the changes in git and revert the local files to latest commit
