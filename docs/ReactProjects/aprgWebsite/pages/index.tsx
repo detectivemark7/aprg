@@ -14,12 +14,14 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to APRG!
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
+          As for the goal of this project, it's pretty straightforward: There is NO goal! <br />
+          I'm an engineer who finds joy in crafting elegant solutions using clever abstractions. <br />
+          Simplicity is my mantra, and I strive to create code that is both easy to understand and efficient. <br />
+          In this project, there are no rigid rules or strict restrictions – it's all about having a good time while coding! <br />
         </p>
 
         <div className={styles.grid}>
