@@ -24,7 +24,7 @@ jobs:
         run: cd docs/ReactProjects/aprgWebsite && pwd
         
       - name: Installing my packages
-        run: pwd && npm ci
+        run: pwd && ls -la && npm ci
 
       - name: Build my App
         run: npm run build && npm run export && touch ./out/.nojekyll
