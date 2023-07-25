@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  buildAprgWebsite:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +21,10 @@ jobs:
           node-version: '18.2'
 
       - name: Change directory to aprg website
-        run: cd docs/ReactProjects/aprgWebsite
+        run: cd docs/ReactProjects/aprgWebsite && pwd
         
       - name: Installing my packages
-        run: npm ci
+        run: pwd && npm ci
 
       - name: Build my App
         run: npm run build && npm run export && touch ./out/.nojekyll
