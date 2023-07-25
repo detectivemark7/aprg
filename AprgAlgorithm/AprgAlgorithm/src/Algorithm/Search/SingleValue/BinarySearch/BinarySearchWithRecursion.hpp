@@ -1,0 +1,89 @@
+#pragma once
+
+#include <Algorithm/Utilities/IndexHelper.hpp>
+
+namespace alba {
+
+namespace algorithm {
+
+template <typename Values>
+class BinarySearchWithRecursion {
+public:
+    using Index = int;
+    using Value = typename Values::value_type;
+    static constexpr Index INVALID_INDEX = getInvalidIndex<Index>();
+
+    BinarySearchWithRecursion(Values const& sortedValues) : m_sortedValues(sortedValues) {}
+
+    Index getIndexOfValue(Value const& target) const {
+        Index result(INVALID_INDEX);
+        if (!m_sortedValues.empty()) {
+            result = getIndexUsingInterval(0, m_sortedValues.size() - 1, target);
+        }
+        return result;
+    }
+
+    Index getIndexOfValue(Index const startIndex, Index const endIndex, Value const& target) const {
+        Index result(INVALID_INDEX);
+        if (startIndex < static_cast<Index>(m_sortedValues.size()) &&
+            endIndex < static_cast<Index>(m_sortedValues.size()) && startIndex <= endIndex) {
+            result = getIndexUsingInterval(startIndex, endIndex, target);
+        }
+        return result;
+    }
+
+private:
+    Index getIndexUsingInterval(Index const lowIndex, Index const highIndex, Value const& target) const {
+        Index result(INVALID_INDEX);
+        if (lowIndex <= highIndex) {
+            Index middleIndex = getMidpointOfIndexes(lowIndex, highIndex);
+            Value middleValue(m_sortedValues[middleIndex]);
+            if (middleValue < target) {
+                result = getIndexUsingInterval(middleIndex + 1, highIndex, target);
+            } else if (target < middleValue) {
+                result = getIndexUsingInterval(lowIndex, middleIndex - 1, target);
+            } else {  // middleValue == target
+                result = middleIndex;
+            }
+        }
+        return result;
+    }
+
+    Values const& m_sortedValues;
+};
+
+}  // namespace algorithm
+
+}  // namespace alba
+
+// Binary Search: Search a sorted array by repeatedly dividing the search interval in half.
+// Begin with an interval covering the whole array.
+// If the target of the search key is less than the item in the middle of the interval, narrow the interval to the lower
+// half. Otherwise, narrow it to the upper half. Repeatedly check until the target is found or the interval is empty.
+
+// We basically ignore half of the elements just after one comparison.
+// Compare x with the middle element.
+// If x matches with the middle element, we return the mid index.
+// Else If x is greater than the mid element, then x can only lie in the right half subarray after the mid element. So
+// we recur for the right half. Else (x is smaller) recur for the left half.
+
+// Time Complexity:
+// The time complexity of Binary Search can be written as
+// T(n) = T(n/2) + c
+// The above recurrence can be solved either using the Recurrence Tree method or Master method.
+// It falls in case II of the Master Method and the solution of the recurrence is Theta(Logn) .
+// Auxiliary Space: O(1) in case of iterative implementation. In the case of recursive implementation, O(Logn) recursion
+// call stack space.
+
+// Note, its better to have:
+// -> int mid = low + (high – low)/2;
+// Maybe, you wonder why we are calculating the middle index this way, we can simply add the lower and higher index and
+// divide it by 2.
+// -> int mid = (low + high)/2;
+// But if we calculate the middle index like this means our code is not 100% correct, it contains bugs.
+// That is, it fails for larger values of int variables low and high.
+// Specifically, it fails if the sum of low and high is greater than the maximum positive int target(231 – 1).
+// The sum overflows to a negative target and the target stays negative when divided by 2. In java, it throws
+// ArrayIndexOutOfBoundException.
+// -> int mid = low + (high – low)/2;
+// So it’s better to use it like this. This bug applies equally to merge sort and other divide and conquer algorithms.
