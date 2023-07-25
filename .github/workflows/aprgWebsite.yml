@@ -7,8 +7,8 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github'
-      - 'docs/ReactProjects/aprgWebsite'
+      - '.github/**'
+      - 'docs/ReactProjects/aprgWebsite/**'
 
 jobs:
   buildAprgWebsite:
