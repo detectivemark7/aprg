@@ -19,12 +19,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18.2'
-
-      - name: Change directory to aprg website
-        run: cd docs/ReactProjects/aprgWebsite && pwd
         
       - name: Installing my packages
-        run: pwd && ls -la && npm ci
+        run: cd docs/ReactProjects/aprgWebsite && pwd && ls -la && npm ci
 
       - name: Build my App
         run: npm run build && npm run export && touch ./out/.nojekyll
