@@ -1,2 +1,0 @@
-havent tried it yet, it should be
-sudo apt-get install something

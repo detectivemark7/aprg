@@ -1,8 +1,0 @@
-
-Main page:
-http://www.gnuplot.info/download.html
-https://sourceforge.net/projects/gnuplot/files/gnuplot/
-
-Add to windows path:
-C:\Program Files\gnuplot\bin
-
