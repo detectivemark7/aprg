@@ -27,7 +27,7 @@ jobs:
         run: cd docs/ReactProjects/aprgWebsite && npm ci
 
       - name: Build my App
-        run: cd docs/ReactProjects/aprgWebsite npm run build && npm run export && touch ./out/.nojekyll
+        run: cd docs/ReactProjects/aprgWebsite && npm run build && npm run export && touch ./out/.nojekyll
 
       - name: Deploy 🚀
         uses: actions/deploy-pages@v2
