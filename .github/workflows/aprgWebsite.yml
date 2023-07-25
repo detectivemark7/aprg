@@ -24,7 +24,7 @@ jobs:
         run: cd docs/ReactProjects/aprgWebsite && pwd && ls -la && npm ci
 
       - name: Build my App
-        run: npm run build && npm run export && touch ./out/.nojekyll
+        run: cd docs/ReactProjects/aprgWebsite && pwd && ls -la && npm run build && npm run export && touch ./out/.nojekyll
 
       - name: Deploy 🚀
         uses: actions/deploy-pages@v2
